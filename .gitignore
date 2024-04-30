@@ -1,0 +1,7 @@
+# ignore all executable files
+helper.txt
+
+# ignore extra directories
+sample/
+old_codes/
+scrap/

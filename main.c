@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include "./include/basic.h"
 
 int main (void) {
 	printf ("Hello, World!\n");

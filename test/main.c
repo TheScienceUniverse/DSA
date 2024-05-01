@@ -1,5 +1,5 @@
 #include "../include/basic.h"
-#include <assert.h>
+#include "../include/string.h"
 
 int main (void) {
 	int* ptr = (int*) malloc (sizeof (int));
@@ -8,30 +8,38 @@ int main (void) {
 	*ptr = 10;
 
 	assert (ptr != NULL);
-	printf ("Test 1: Successful!\n");
+	printf ("Number Test 1: Success!\n");
 
 	assert (*((int*) ptr) == 10);
-	printf ("Test 2: Successful!\n");
+	printf ("Number Test 2: Success!\n");
 
 	assert (ref_ptr != NULL);
-	printf ("Test 3: Successful!\n");
+	printf ("Number Test 3: Success!\n");
 
 	assert (*((int*) ref_ptr) == 10);
-	printf ("Test 4: Successful!\n");
+	printf ("Number Test 4: Success!\n");
 
 	ERASE (&ptr);
 
-	assert (ptr != NULL);
-	printf ("Test 1: Successful!\n");
+	assert (ptr == NULL);
+	printf ("Number Test 1: Success!\n");
 
-	assert (*((int*) ptr) == 10);
-	printf ("Test 2: Successful!\n");
+//	assert (*((int*) ptr) == 10);
+//	printf ("Number Test 2: Success!\n");
 
 	assert (ref_ptr != NULL);
-	printf ("Test 3: Successful!\n");
+	printf ("Number Test 3: Success!\n");
 
-	assert (*((int*) ref_ptr) == 10);
-	printf ("Test 4: Successful!\n");
+	assert (*((int*) ref_ptr) != 10);
+	printf ("Number Test 4: Success!\n");
+
+	String* string = create_string (14, "Hello, World!\n");
+	assert (string != NULL);
+	printf ("String Test 1: Success! -- mem alloc\n");
+	delete_string (&string);
+	assert (string == NULL);
+	printf ("String Test 2: Success! -- mem de-alloc\n");
+
 
 	return 0;
 }

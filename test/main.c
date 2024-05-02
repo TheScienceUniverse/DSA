@@ -1,5 +1,6 @@
 #include "../include/basic.h"
 #include "../include/string.h"
+#include "../include/data.h"
 
 int main (void) {
 	int* ptr = (int*) malloc (sizeof (int));
@@ -39,6 +40,20 @@ int main (void) {
 	delete_string (&string);
 	assert (string == NULL);
 	printf ("String Test 2: Success! -- mem de-alloc\n");
+
+	int n = 10;
+
+	Data* data = create_data (DT_Integer, sizeof (n), &n);
+	
+	assert (data != NULL);
+	printf ("Data Test 1: Success! -- mem alloc\n");
+
+	display_data_properties (data);
+
+	delete_data (&data);
+
+	assert (data == NULL);
+	printf ("Data Test 2: Success! -- mem de-alloc\n");
 
 
 	return 0;

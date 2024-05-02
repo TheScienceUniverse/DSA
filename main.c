@@ -1,6 +1,6 @@
 #include "./include/basic.h"
 #include "./include/string.h"
-#include <stdio.h>
+#include "./include/data.h"
 
 int main (void) {
 	int* ptr = (int*) malloc (sizeof (int));
@@ -24,6 +24,10 @@ int main (void) {
 	delete_string (&string);
 	printf ("string: %p\n", string);
 
+	int n = 10;
+	Data* data = create_data(DT_Integer, sizeof (n), &n);
+	display_data_properties (data);
+	delete_data (&data);
 
 	return 0;
 }

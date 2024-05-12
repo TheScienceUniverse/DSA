@@ -1,10 +1,6 @@
 all: ./bin/dsa ./bin/test
 
-<<<<<<< HEAD
-./bin/dsa: main.c ./include/string.h ./include/data.h ./lib/string.o ./lib/data.o ./lib/list.o ./lib/node.o
-=======
-./bin/dsa: main.c ./include/string.h ./include/data.h ./lib/string.o ./lib/data.o
->>>>>>> parent of 1053039 (feat (datatype): add List)
+./bin/dsa: main.c ./include/string.h ./include/data.h ./lib/string.o ./lib/data.o ./lib/list.o
 	@echo "-> Building main executable..."
 	gcc -Wall -Werror -o ./bin/dsa ./lib/*.o main.c
 	@echo "...Done"
@@ -19,19 +15,11 @@ all: ./bin/dsa ./bin/test
 	gcc -Wall -Werror -o ./lib/data.o -c ./src/data.c
 	@echo "...Done"
 
-<<<<<<< HEAD
 ./lib/list.o: ./include/list.h ./src/list.c
 	@echo "-> Creating lib object file for Data..."
 	gcc -Wall -Werror -o ./lib/list.o -c ./src/list.c
 	@echo "...Done"
 
-./lib/node.o: ./include/node.h ./src/node.c
-	@echo "-> Creating lib object file for Data..."
-	gcc -Wall -Werror -o ./lib/node.o -c ./src/node.c
-	@echo "...Done"
-
-=======
->>>>>>> parent of 1053039 (feat (datatype): add List)
 ./bin/test: ./test/main.c
 	@echo "-> Building test executable..."
 	gcc -Wall -Werror -o ./bin/test ./lib/*.o ./test/main.c

@@ -1,11 +1,7 @@
 #include "./include/basic.h"
 #include "./include/string.h"
 #include "./include/data.h"
-<<<<<<< HEAD
 #include "./include/list.h"
-#include "./include/node.h"
-=======
->>>>>>> parent of 1053039 (feat (datatype): add List)
 
 int main (void) {
 	int* ptr = (int*) malloc (sizeof (int));
@@ -30,11 +26,10 @@ int main (void) {
 	printf ("string: %p\n", string);
 
 	int n = 10;
-	Data* data = create_data(DT_Integer, sizeof (n), &n);
+	Data* data = create_data (DT_Integer, sizeof (n), &n);
 	display_data_properties (data);
 	delete_data (&data);
 
-<<<<<<< HEAD
 	List* list = create_list (0);
 	data = create_data (DT_Integer, sizeof (n), &n);
 	add_to_list (list, data, true);
@@ -42,13 +37,5 @@ int main (void) {
 	delete_list (&list);
 	delete_data (&data);
 
-	Node* node = create_node (N_Undefined);
-	set_node_name (node, 5, "Node1");
-	display_node_details (node);
-	delete_node (&node);
-
-
-=======
->>>>>>> parent of 1053039 (feat (datatype): add List)
 	return 0;
 }

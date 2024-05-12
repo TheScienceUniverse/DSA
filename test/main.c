@@ -1,6 +1,7 @@
 #include "../include/basic.h"
 #include "../include/string.h"
 #include "../include/data.h"
+#include "../include/list.h"
 
 int main (void) {
 	int* ptr = (int*) malloc (sizeof (int));
@@ -55,6 +56,16 @@ int main (void) {
 	assert (data == NULL);
 	printf ("Data Test 2: Success! -- mem de-alloc\n");
 
+
+	List* list = create_list (3);
+	data = create_data (DT_Integer, sizeof (int), &n);
+
+	display_list (list);
+	add_to_list (list, data, true);
+	display_list (list);
+	delete_list (&list);
+
+	display_data (data);
 
 	return 0;
 }

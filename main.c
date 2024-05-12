@@ -2,6 +2,7 @@
 #include "./include/string.h"
 #include "./include/data.h"
 #include "./include/list.h"
+#include "./include/node.h"
 
 int main (void) {
 	int* ptr = (int*) malloc (sizeof (int));
@@ -36,6 +37,11 @@ int main (void) {
 	display_list (list);
 	delete_list (&list);
 	delete_data (&data);
+
+	Node* node = create_node (N_Undefined);
+	set_node_name (node, 5, "Node1");
+	display_node (node);
+	delete_node (&node);
 
 	return 0;
 }

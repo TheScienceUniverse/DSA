@@ -3,6 +3,7 @@
 #include "../include/data.h"
 #include "../include/list.h"
 #include "../include/node.h"
+#include "../include/linked_list.h"
 
 int main (void) {
 	int* ptr = (int*) malloc (sizeof (int));
@@ -69,6 +70,16 @@ int main (void) {
 	Node* node = create_node (N_Undefined);
 	set_node_name (node, 5, "Node1");
 	display_node (node);
+	delete_node (&node);
+
+	Linked_List* linked_list = create_linked_list ();
+	node = create_node (N_Undefined);
+	set_node_name (node, 5, "node1");
+	attach_node_at_last (linked_list, node);
+	set_node_name (node, 5, "node2");
+	attach_node_at_first (linked_list, node);
+	display_linked_list (linked_list);
+	delete_linked_list (&linked_list);
 	delete_node (&node);
 
 	return 0;

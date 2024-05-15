@@ -1,6 +1,6 @@
 all: ./bin/dsa ./bin/test
 
-./bin/dsa: main.c ./include/string.h ./include/data.h ./lib/string.o ./lib/data.o ./lib/list.o ./lib/node.o ./lib/linked_list.o ./lib/stack.o ./lib/queue.o
+./bin/dsa: main.c ./include/string.h ./include/data.h ./lib/string.o ./lib/data.o ./lib/list.o ./lib/node.o ./lib/linked_list.o ./lib/stack.o ./lib/queue.o ./lib/tree.o
 	@echo "-> Building main executable..."
 	gcc -Wall -Werror -o ./bin/dsa ./lib/*.o main.c
 	@echo "...Done"
@@ -38,6 +38,11 @@ all: ./bin/dsa ./bin/test
 ./lib/queue.o: ./include/queue.h ./src/queue.c
 	@echo "-> Creating lib object file for Data..."
 	gcc -Wall -Werror -o ./lib/queue.o -c ./src/queue.c
+	@echo "...Done"
+
+./lib/tree.o: ./include/tree.h ./src/tree.c
+	@echo "-> Creating lib object file for Data..."
+	gcc -Wall -Werror -o ./lib/tree.o -c ./src/tree.c
 	@echo "...Done"
 
 

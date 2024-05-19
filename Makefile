@@ -51,10 +51,21 @@ all: ./bin/dsa ./bin/test
 	@echo "...Done"
 
 
-./bin/test: ./test/main.c
+./bin/test: ./test/main.c ./lib/test_basic.o ./lib/test_string.o
 	@echo "-> Building test executable..."
 	gcc -Wall -Werror -o ./bin/test ./lib/*.o ./test/main.c
 	@echo "...Done"
+
+./lib/test_basic.o: ./include/basic.h ./include/test.h ./test/basic.c
+	@echo "-> Creating lib object file for Data..."
+	gcc -Wall -Werror -o ./lib/test_basic.o -c ./test/basic.c
+	@echo "...Done"
+
+./lib/test_string.o: ./include/string.h ./include/test.h ./test/string.c
+	@echo "-> Creating lib object file for Data..."
+	gcc -Wall -Werror -o ./lib/test_string.o -c ./test/string.c
+	@echo "...Done"
+
 
 PHONY: clean
 

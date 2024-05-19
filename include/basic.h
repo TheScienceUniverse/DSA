@@ -14,9 +14,13 @@
 #define BYTE unsigned char
 
 // updated version of free to avoid dangling pointer
-#define ERASE(address) {\
-	free (*address);\
-	*address = NULL;\
+#define ERASE(address) {	\
+	if (*address != NULL) {	\
+		free (*address);	\
+	}						\
+	*address = NULL;		\
 }
+
+void test_basic (void);
 
 #endif	// BASIC_H

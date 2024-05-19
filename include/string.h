@@ -12,6 +12,7 @@ typedef struct STRING {
 
 // ---------- x ----------
 
+void test_string (void);
 void display_raw_string (int length, char* address);		// prints string // takes length and address pointer
 char* char_array_to_pointer (int length, char* address);	// converts character array to string object
 String* create_string (int length, char* address);			// creates string object // pass NULL as argument if empty string to be created

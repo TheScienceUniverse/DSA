@@ -13,9 +13,9 @@
 
 #define TEST(cond, msg) {												\
 	if (cond) {															\
-		printf ("[" COLOR_PASSED "PASSED" COLOR_OFF "]: (%s)\n", msg);	\
+		printf ("\t[" COLOR_PASSED "PASSED" COLOR_OFF "]: (%s)\n", msg);	\
 	} else {															\
-		printf ("[" COLOR_FAILED "FAILED" COLOR_OFF "]: (%s)			\
+		printf ("\t[" COLOR_FAILED "FAILED" COLOR_OFF "]: (%s)			\
 			file:%s line:%d\n", msg, __FILE__, __LINE__);				\
 	}																	\
 }

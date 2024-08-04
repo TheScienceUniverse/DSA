@@ -26,6 +26,7 @@ typedef struct DATA {
 
 // ---------- x ----------
 
+void test_data (void);
 Data* create_data (Data_Type data_type, int block_size, void* address);
 Data* duplicate_data (Data* data);
 void delete_data (Data** data_address);

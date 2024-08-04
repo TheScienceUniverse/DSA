@@ -1,76 +1,57 @@
-all: ./bin/dsa ./bin/test
+VPATH := ./include ./src ./lib
+vpath %.h ./include
+vpath %.c ./src
+vpath %.o ./lib
 
-./bin/dsa: main.c ./include/string.h ./include/data.h ./lib/string.o ./lib/data.o ./lib/list.o ./lib/node.o ./lib/linked_list.o ./lib/stack.o ./lib/queue.o ./lib/tree.o ./lib/graph.o
-	@echo "-> Building main executable..."
-	gcc -Wall -Werror -o ./bin/dsa ./lib/*.o main.c
-	@echo "...Done"
+CC = gcc
+INCDIR = -I.
+SRCDIR = ./src
+LIBDIR = ./lib
+EXEDIR = ./bin
+TSTDIR = ./test
+OPTIMIZATION = -O0
+OBJECT_NAMES = string data list node linked_list stack queue tree graph
+OBJECTS := $(foreach f_name, $(OBJECT_NAMES), $(LIBDIR)/$(f_name).o)
+TSTECTS := $(foreach f_name, $(OBJECT_NAMES), $(TSTDIR)/$(f_name).o)
+EXECUTABLE := $(EXEDIR)/dsa
+TSTCUTABLE := $(EXEDIR)/test
+CFLAGS = -Wall -Wextra -g $(INCDIR) $(OPTIMIZATION)
+CFLAGS_EXTRA = -fpic
 
-./lib/string.o: ./include/string.h ./src/string.c
-	@echo "-> Creating lib object file for String..."
-	gcc -Wall -Werror -o ./lib/string.o -c ./src/string.c
-	@echo "...Done"
+all: $(EXECUTABLE)
 
-./lib/data.o: ./include/data.h ./src/data.c
-	@echo "-> Creating lib object file for Data..."
-	gcc -Wall -Werror -o ./lib/data.o -c ./src/data.c
-	@echo "...Done"
+$(EXECUTABLE): $(OBJECTS)
+	@echo "-> Linking all object files and generating executable binary file ..."
+	@$(CC) $(CFLAGS) -o $@ $(CFLAGS_EXTRA) $^ ./main.c
+	@chmod +x $(EXECUTABLE)
+#	@echo "... Done!"
+#	@echo
 
-./lib/list.o: ./include/list.h ./src/list.c
-	@echo "-> Creating lib object file for Data..."
-	gcc -Wall -Werror -o ./lib/list.o -c ./src/list.c
-	@echo "...Done"
+$(LIBDIR)/%.o: $(SRCDIR)/%.c
+	@echo " + Compiling "$*" ..."
+	@$(CC) $(CFLAGS) -o $@ -c $(CFLAGS_EXTRA) $^
+#	@echo "... Done!"
+#	@echo
 
-./lib/node.o: ./include/node.h ./src/node.c
-	@echo "-> Creating lib object file for Data..."
-	gcc -Wall -Werror -o ./lib/node.o -c ./src/node.c
-	@echo "...Done"
+$(TSTCUTABLE): $(TSTECTS)
+	@echo "-> Linking all object files and generating test binary file ..."
+	@$(CC) $(CFLAGS) -o $@ $(CFLAGS_EXTRA) $^ ./test/main.c
+	@chmod +x $(TSTCUTABLE)
+#	@echo "... Done!"
+#	@echo
 
-./lib/linked_list.o: ./include/linked_list.h ./src/linked_list.c
-	@echo "-> Creating lib object file for Data..."
-	gcc -Wall -Werror -o ./lib/linked_list.o -c ./src/linked_list.c
-	@echo "...Done"
-
-./lib/stack.o: ./include/stack.h ./src/stack.c
-	@echo "-> Creating lib object file for Data..."
-	gcc -Wall -Werror -o ./lib/stack.o -c ./src/stack.c
-	@echo "...Done"
-
-./lib/queue.o: ./include/queue.h ./src/queue.c
-	@echo "-> Creating lib object file for Data..."
-	gcc -Wall -Werror -o ./lib/queue.o -c ./src/queue.c
-	@echo "...Done"
-
-./lib/tree.o: ./include/tree.h ./src/tree.c
-	@echo "-> Creating lib object file for Data..."
-	gcc -Wall -Werror -o ./lib/tree.o -c ./src/tree.c
-	@echo "...Done"
-
-./lib/graph.o: ./include/graph.h ./src/graph.c
-	@echo "-> Creating lib object file for Data..."
-	gcc -Wall -Werror -o ./lib/graph.o -c ./src/graph.c
-	@echo "...Done"
+$(TSTDIR)/%.o: $(TSTDIR)/%.c
+	@echo " + Compiling "$*" ..."
+	@$(CC) $(CFLAGS) -o $@ -c $(CFLAGS_EXTRA) $^
+#	@echo "... Done!"
+#	@echo
 
 
-./bin/test: ./test/main.c ./lib/test_basic.o ./lib/test_string.o
-	@echo "-> Building test executable..."
-	gcc -Wall -Werror -o ./bin/test ./lib/*.o ./test/main.c
-	@echo "...Done"
-
-./lib/test_basic.o: ./include/basic.h ./include/test.h ./test/basic.c
-	@echo "-> Creating lib object file for Data..."
-	gcc -Wall -Werror -o ./lib/test_basic.o -c ./test/basic.c
-	@echo "...Done"
-
-./lib/test_string.o: ./include/string.h ./include/test.h ./test/string.c
-	@echo "-> Creating lib object file for Data..."
-	gcc -Wall -Werror -o ./lib/test_string.o -c ./test/string.c
-	@echo "...Done"
-
-
-PHONY: clean
+.PHONY: clean
 
 clean:
-	@echo "-> Removing everything but source files..."
-	rm ./bin/* ./lib/*
-	@echo "...Done"
-	@echo
+	@echo "-> Removing everything but source files ..."
+	@-rm -f $(OBJECTS) $(EXECUTABLE)
+	@echo "... Done"
+#	@echo
+

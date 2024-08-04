@@ -1,7 +1,10 @@
 # ignore all executable files
-helper.txt
+*.txt
+*.bkp
 
 # ignore extra directories
 sample/
 old_codes/
 scrap/
+lib/
+bin/

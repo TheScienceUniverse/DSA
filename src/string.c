@@ -6,13 +6,50 @@ void display_raw_string (int length, char* address) {
 	}
 }
 
+bool compare_raw_strings_shh (size_t length1, char* string1, size_t length2, char* string2) {
+	if (length1 != length2) {
+		return false;
+	}
+
+	if (string1 == string2) {
+		return true;
+	}
+
+	bool result = true;
+	char* c1 = string1;
+	char* c2 = string2;
+
+	for (size_t i = 0; i < length1; ++i) {
+		if (*c1 != *c2) {
+			result = false;
+			break;
+		}
+
+		++c1;
+		++c2;
+	}
+
+	return result;
+}
+
 char* char_array_to_pointer (int length, char* str) {
 	char* string = (char*) malloc (length);
 	string = memcpy (string, str, length);
 	return string;
 }
 
-String* create_string (int length, char* str) {
+void copy_raw_char_stream (size_t len, void* src_addr, void* dst_addr) {
+	BYTE *b_src = src_addr;
+	BYTE *b_dst = dst_addr;
+
+	while (len--) {
+		*b_dst = *b_src;
+		++b_dst;
+		++b_src;
+	}
+}
+
+String* create_string (int len, char* str) {
 	String* string = (String*) malloc (sizeof (String));
 
 	if (string != NULL) {
@@ -20,12 +57,12 @@ String* create_string (int length, char* str) {
 		string -> address = NULL;
 	}
 
-	if (length > 0 && str != NULL) {
-		string -> length = length;
-		string -> address = malloc (length);
+	if (len > 0 && str != NULL) {
+		string -> length = len;
+		string -> address = (char*) malloc (len * sizeof (char));
 
 		if (string -> address != NULL) {
-			string -> address = char_array_to_pointer (length, str);
+			copy_raw_char_stream (len, str, string -> address);
 		}
 	}
 

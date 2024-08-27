@@ -1,4 +1,4 @@
-# Issue (Bug Report)
+# Issue (Feature Request)
 
 ## ⭐ Title
 
@@ -6,7 +6,7 @@
 
 | Name | About | Title | Labels | Assignees |
 | :---: | :---: | :---: | :---: | :---: |
-| 🐛 Bug Report | Area of Bug | A brief summary 🤔 | ```bug``` | @*GitHub-UserName* |
+| ⚠️ Found a Problem | Area of Problem | A brief summary 🤔 | -label:problem | @*GitHub-UserName* |
 
 
 ## 📋 Checklist:

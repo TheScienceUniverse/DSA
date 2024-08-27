@@ -6,7 +6,7 @@
 
 | Name | About | Title | Labels | Assignees |
 | :---: | :---: | :---: | :---: | :---: |
-| ⚠️ Found a Problem | Area of Problem | A brief summary 🤔 | ```problem``` | @*GitHub-UserName* |
+| ⁉️ Need help | Area of Help | A brief summary 🤔 | -label:help | @*GitHub-UserName* |
 
 
 ## 📋 Checklist:

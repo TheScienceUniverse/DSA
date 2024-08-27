@@ -6,7 +6,7 @@
 
 | Name | About | Title | Labels | Assignees |
 | :---: | :---: | :---: | :---: | :---: |
-| 🚀 Feature Request | Area of Change | A brief summary 🤔 | ```feature``` | @*GitHub-UserName* |
+| 🚀 Feature Request | Area of Change | A brief summary 🤔 | -label:feature | @*GitHub-UserName* |
 
 
 ## 📋 Checklist:

@@ -1,6 +1,6 @@
 #include "../include/data.h"
 
-Data* create_data (Data_Type data_type, int block_size, void* address) {
+Data* create_data (Data_Type data_type, size_t block_size, void* address) {
 	if (data_type == DT_Undefined || block_size == 0) {
 		return NULL;
 	}
@@ -30,6 +30,22 @@ Data* create_data (Data_Type data_type, int block_size, void* address) {
 	return data;
 }
 
+void delete_data (Data** data_address) {
+	if (*data_address == NULL) {
+		// perror ("Data does not exist to delete!");
+		return;
+	}
+
+	Data* data = *data_address;
+
+	if (data -> address != NULL) {
+		ERASE (&(data -> address), data -> size);
+	}
+
+	data = NULL;
+	ERASE (data_address, sizeof (Data));
+}
+
 void forget_data (Data** data_address) {
 	if (*data_address == NULL) {
 		// perror ("Data does not exist to forget!");
@@ -42,22 +58,6 @@ void forget_data (Data** data_address) {
 		data -> address = NULL;
 		data -> type = DT_Undefined;
 	}
-}
-
-void delete_data (Data** data_address) {
-	if (*data_address == NULL) {
-		// perror ("Data does not exist to delete!");
-		return;
-	}
-
-	Data* data = *data_address;
-
-	if (data -> address != NULL) {
-		ERASE (&(data -> address));
-	}
-
-	data = NULL;
-	ERASE (data_address);
 }
 
 Data* duplicate_data (Data* data) {
@@ -119,7 +119,7 @@ void display_data_properties (Data* data) {
 			printf ("Data (Integer) : %d\n", *((int*) data -> address));
 			break;
 		case DT_String:
-			printf ("Data (String) [%d]: ", data -> size);
+			printf ("Data (String) [%zu]: ", data -> size);
 			display_raw_string (data -> size, (char*) data -> address);
 			printf ("\n");
 			break;
@@ -128,8 +128,8 @@ void display_data_properties (Data* data) {
 	}
 }
 
-void display_binary_data (int size, BYTE* address) {
-	for (int i = 0; i < size; i++) {
+void display_binary_data (size_t size, BYTE* address) {
+	for (size_t i = 0; i < size; i++) {
 		printf ("%02x", *(address + i));
 	}
 }
@@ -142,7 +142,7 @@ Data* create_range_data (int start, int end) {
 	*(address + 1) = end;
 
 	Data* data = create_data (DT_Range, block_size, address);
-	ERASE (&address);
+	ERASE (&address, block_size);
 
 	return data;
 }
@@ -179,7 +179,7 @@ bool are_data_equal (Data* data1, Data* data2) {
 	bool result = false;
 	BYTE* ptr1;
 	BYTE* ptr2;
-	int i;
+	size_t i;
 
 	if (data1 -> type == data2 -> type
 		&& data1 -> size == data2 -> size

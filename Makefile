@@ -9,49 +9,55 @@ SRCDIR = ./src
 LIBDIR = ./lib
 EXEDIR = ./bin
 TSTDIR = ./test
+BLDDIR = ./
 OPTIMIZATION = -O0
-OBJECT_NAMES = string data list node linked_list stack queue tree graph
+OBJECT_NAMES = basic string data list node linked_list stack queue tree graph
 OBJECTS := $(foreach f_name, $(OBJECT_NAMES), $(LIBDIR)/$(f_name).o)
-TSTECTS := $(foreach f_name, $(OBJECT_NAMES), $(TSTDIR)/$(f_name).o)
+TSTECTS := $(foreach f_name, $(OBJECT_NAMES), $(LIBDIR)/test_$(f_name).o)
 EXECUTABLE := $(EXEDIR)/dsa
 TSTCUTABLE := $(EXEDIR)/test
 CFLAGS = -Wall -Wextra -g $(INCDIR) $(OPTIMIZATION)
-CFLAGS_EXTRA = -fpic
+CFLAGS_EXTRA = -fPIC -shared# [1] position-indepedent-code
 
-all: $(EXECUTABLE)
+all: $(EXECUTABLE) $(TSTCUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
 	@echo "-> Linking all object files and generating executable binary file ..."
-	@$(CC) $(CFLAGS) -o $@ $(CFLAGS_EXTRA) $^ ./main.c
+	@$(CC) $(CFLAGS) -o $@ $^ ./main.c
 	@chmod +x $(EXECUTABLE)
 #	@echo "... Done!"
 #	@echo
 
 $(LIBDIR)/%.o: $(SRCDIR)/%.c
 	@echo " + Compiling "$*" ..."
-	@$(CC) $(CFLAGS) -o $@ -c $(CFLAGS_EXTRA) $^
+	@$(CC) $(CFLAGS) $(CFLAGS_EXTRA) -o $@ -c $^
 #	@echo "... Done!"
 #	@echo
 
+test: $(TSTCUTABLE)
+
 $(TSTCUTABLE): $(TSTECTS)
 	@echo "-> Linking all object files and generating test binary file ..."
-	@$(CC) $(CFLAGS) -o $@ $(CFLAGS_EXTRA) $^ ./test/main.c
+	@$(CC) $(CFLAGS) -o $@ ./test_main.c $(OBJECTS) $^
 	@chmod +x $(TSTCUTABLE)
 #	@echo "... Done!"
 #	@echo
 
-$(TSTDIR)/%.o: $(TSTDIR)/%.c
-	@echo " + Compiling "$*" ..."
-	@$(CC) $(CFLAGS) -o $@ -c $(CFLAGS_EXTRA) $^
+$(LIBDIR)/test_%.o: $(TSTDIR)/%.c
+	@echo " + Compiling test_"$*" ..."
+	@$(CC) $(CFLAGS) $(CFLAGS_EXTRA) -o $@ -c $^
 #	@echo "... Done!"
 #	@echo
 
 
-.PHONY: clean
+.PHONY: clean again
 
 clean:
-	@echo "-> Removing everything but source files ..."
-	@-rm -f $(OBJECTS) $(EXECUTABLE)
+	@echo "-> Removing generated files ..."
+	@-rm -f $(OBJECTS) $(EXECUTABLE) $(TSTCUTABLE)
+	@-rm -f ./lib/* ./bin/*
 	@echo "... Done"
 #	@echo
 
+again:
+	@make clean && make

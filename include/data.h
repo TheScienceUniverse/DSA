@@ -20,20 +20,19 @@ typedef enum DATA_TYPE {
 
 typedef struct DATA {
 	Data_Type type;
-	int size;
+	size_t size;
 	void* address;
 } Data;
 
 // ---------- x ----------
 
-void test_data (void);
-Data* create_data (Data_Type data_type, int block_size, void* address);
+Data* create_data (Data_Type data_type, size_t block_size, void* address);
 Data* duplicate_data (Data* data);
 void delete_data (Data** data_address);
 void forget_data (Data** data_address);
 void display_data (Data* data);
 void display_data_properties (Data* data);
-void display_binary_data (int size, BYTE* address);
+void display_binary_data (size_t size, BYTE* address);
 Data* create_range_data (int start, int end);
 void display_range_data (Data* data);
 bool are_data_equal (Data* data1, Data* data2);

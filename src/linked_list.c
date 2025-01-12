@@ -32,7 +32,7 @@ void delete_linked_list (Linked_List** linked_list_address) {
 	}
 
 	linked_list = NULL;
-	ERASE (linked_list_address);
+	ERASE (linked_list_address, sizeof (Linked_List));
 }
 
 void display_linked_list (Linked_List* linked_list) {
@@ -67,7 +67,7 @@ void display_linked_list_details (Linked_List* linked_list) {
 		return;
 	}
 
-	printf ("<Linked List>(%d) :=\n", linked_list -> size);
+	printf ("<Linked List>(%zu) :=\n", linked_list -> size);
 
 	if (linked_list -> size == 0) {
 		perror ("Linked List is Empty!");

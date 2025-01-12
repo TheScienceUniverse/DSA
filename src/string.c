@@ -1,7 +1,7 @@
 #include "../include/string.h"
 
-void display_raw_string (int length, char* address) {
-	for (int i = 0; i < length; i++) {
+void display_raw_string (size_t length, char* address) {
+	for (size_t i = 0; i < length; i++) {
 		printf ("%c", *(address + i));
 	}
 }
@@ -32,7 +32,7 @@ bool compare_raw_strings_shh (size_t length1, char* string1, size_t length2, cha
 	return result;
 }
 
-char* char_array_to_pointer (int length, char* str) {
+char* char_array_to_pointer (size_t length, char* str) {
 	char* string = (char*) malloc (length);
 	string = memcpy (string, str, length);
 	return string;
@@ -49,7 +49,7 @@ void copy_raw_char_stream (size_t len, void* src_addr, void* dst_addr) {
 	}
 }
 
-String* create_string (int len, char* str) {
+String* create_string (size_t len, char* str) {
 	String* string = (String*) malloc (sizeof (String));
 
 	if (string != NULL) {
@@ -67,6 +67,23 @@ String* create_string (int len, char* str) {
 	}
 
 	return string;
+}
+
+void delete_string (String** string_address) {
+	if (*string_address == NULL) {
+		// perror ("String is empty to delete!");
+		return;
+	}
+
+	String* string = *string_address;
+
+	if (string -> address != NULL) {
+		ERASE (&(string -> address), string -> length);
+	}
+
+	string = NULL;
+
+	ERASE (string_address, sizeof (String));
 }
 
 String* duplicate_string (String* old_string) {
@@ -93,24 +110,8 @@ String* duplicate_string (String* old_string) {
 	return new_string;
 }
 
-void delete_string (String** string_address) {
-	if (*string_address == NULL) {
-		// perror ("String is empty to delete!");
-		return;
-	}
-
-	String* string = *string_address;
-
-	if (string -> address != NULL) {
-		ERASE (&string -> address);
-	}
-
-	string = NULL;
-	ERASE (string_address);
-}
-
 void display_string_properties (String* string) {
-	printf ("String [%d]: ", string -> length);
+	printf ("String [%zu]: ", string -> length);
 	display_string (string);
 	printf ("\n");
 }
@@ -138,7 +139,7 @@ bool are_strings_equal (String* string1, String* string2)  {
 	}
 
 	bool result = true;
-	int i;
+	size_t i;
 
 	if (string1 -> length != string2 -> length) {
 		result = false;

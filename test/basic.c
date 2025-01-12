@@ -1,5 +1,4 @@
 #include "../include/test.h"
-#include "../include/basic.h"
 
 void test_basic (void) {
 	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Basic]\n" RESET_STYLE);
@@ -16,7 +15,7 @@ void test_basic (void) {
 	TEST (ptr == vptr, "Address validation check");
 	TEST (n == *ptr, "Content check");
 
-	ERASE (&ptr);
+	ERASE (&ptr, sizeof (int));
 
 	TEST (sizeof (int*) == sizeof (ptr), "De-allocated block-size check");
 	TEST (NULL == ptr, "Address nullify check");

@@ -1,12 +1,13 @@
 #include "./include/basic.h"
-#include "./include/string.h"
+/*#include "./include/string.h"
 #include "./include/data.h"
 #include "./include/list.h"
 #include "./include/node.h"
 #include "./include/linked_list.h"
-
+*/
 int main (void) {
-	int* ptr = (int*) malloc (sizeof (int));
+	printf("hello\n");
+/*	int* ptr = (int*) malloc (sizeof (int));
 	void* ref_ptr = ptr;
 
 	*ptr = 10;
@@ -54,6 +55,6 @@ int main (void) {
 	delete_linked_list (&linked_list);
 	delete_node (&node);
 
-
+*/
 	return 0;
 }

@@ -62,10 +62,10 @@ void delete_node (Node** node_address) {
 	delete_data (&node -> data);
 
 	node = NULL;
-	ERASE (node_address);
+	ERASE (node_address, sizeof (Node));
 }
 
-void set_node_name (Node* node, int length, char* name) {
+void set_node_name (Node* node, size_t length, char* name) {
 	if (node == NULL) {
 		perror ("Error! => Node doesn't exist.\n");
 		return;
@@ -164,5 +164,5 @@ void delete_temporary_node (Node** node_address) {
 	forget_data (&(node -> data));
 	forget_list (&(node -> address_list));
 
-	ERASE (node_address);
+	ERASE (node_address, sizeof (Node));
 }

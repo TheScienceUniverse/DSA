@@ -32,7 +32,7 @@ void delete_stack (Stack** stack_address) {
 	}
 
 	stack = NULL;
-	ERASE (stack_address);
+	ERASE (stack_address, sizeof (Stack));
 }
 
 void display_stack (Stack* stack) {
@@ -67,7 +67,7 @@ void display_stack_details (Stack* stack) {
 		return;
 	}
 
-	printf ("<Linked List>(%d) :=\n", stack -> size);
+	printf ("<Linked List>(%zu) :=\n", stack -> size);
 
 	if (stack -> size == 0) {
 		perror ("Linked List is Empty!");

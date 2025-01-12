@@ -32,7 +32,7 @@ void delete_queue (Queue** queue_address) {
 	}
 
 	queue = NULL;
-	ERASE (queue_address);
+	ERASE (queue_address, sizeof (Queue));
 }
 
 void display_queue (Queue* queue) {
@@ -67,7 +67,7 @@ void display_queue_details (Queue* queue) {
 		return;
 	}
 
-	printf ("<Linked List>(%d) :=\n", queue -> size);
+	printf ("<Linked List>(%zu) :=\n", queue -> size);
 
 	if (queue -> size == 0) {
 		perror ("Linked List is Empty!");

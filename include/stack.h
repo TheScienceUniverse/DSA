@@ -9,7 +9,7 @@
 
 typedef struct STACK {
 	String* name;
-	int size;
+	size_t size;
 	Node* first_node;
 	Node* last_node;
 } Stack;

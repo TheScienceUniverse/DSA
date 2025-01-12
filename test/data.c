@@ -1,6 +1,4 @@
 #include "../include/test.h"
-#include "../include/basic.h"
-#include "../include/data.h"
 
 /*
 Data* create_data (Data_Type data_type, int block_size, void* address);

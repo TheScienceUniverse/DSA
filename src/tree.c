@@ -26,7 +26,7 @@ void delete_tree (Tree** tree_address) {
 	}
 
 	if ((*tree_address) -> node_count == 0) {
-		ERASE (tree_address);
+		ERASE (tree_address, sizeof (Tree));
 		return;
 	}
 
@@ -72,7 +72,7 @@ void delete_tree (Tree** tree_address) {
 
 	node = NULL;
 	tree = NULL;
-	ERASE (tree_address);
+	ERASE (tree_address, sizeof (Tree));
 }
 
 void display_tree (Tree* tree) {

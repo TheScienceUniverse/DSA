@@ -44,7 +44,7 @@ void delete_graph (Graph** graph_address) {
 	}
 
 	graph = NULL;
-	ERASE (graph_address);
+	ERASE (graph_address, sizeof (Graph));
 }
 
 Route* create_route_data (char symbol, Vertex* next_vertex) {

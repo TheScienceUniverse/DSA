@@ -68,7 +68,7 @@ void delete_list (List** list_address) {
 	}
 
 	list = NULL;
-	ERASE (list_address);
+	ERASE (list_address, sizeof (List));
 }
 
 void add_to_list (List* list, void* data, bool data_copy_needed) {

@@ -9,7 +9,7 @@
 
 typedef struct QUEUE {
 	String* name;
-	int size;
+	size_t size;
 	Node* first_node;
 	Node* last_node;
 } Queue;

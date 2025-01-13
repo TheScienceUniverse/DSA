@@ -14,5 +14,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Clean Build
+    - name: Set up directories
+      run: mkdir lib bin
+
+    - name: Clean build
       run: make again

@@ -50,7 +50,7 @@ $(LIBDIR)/test_%.o: $(TSTDIR)/%.c
 #	@echo
 
 
-.PHONY: clean again
+.PHONY: clean again check flow
 
 clean:
 	@echo "-> Removing generated files ..."
@@ -61,3 +61,29 @@ clean:
 
 again:
 	@make clean && make
+
+check:
+	./bin/test
+
+flow:
+	@tabs 4
+	@echo "	basic";
+	@echo "	|";
+	@echo "	+->	string";
+	@echo "		|";
+	@echo "		+->	data";
+	@echo "			|";
+	@echo "			+->	chunk";
+	@echo "				|";
+	@echo "				+->	list";
+	@echo "				+->	list2";
+	@echo "					|";
+	@echo "					+->	node";
+	@echo "						|";
+	@echo "						+->	linked_list";
+	@echo "							|";
+	@echo "							+->	stack";
+	@echo "							+->	queue";
+	@echo "								|";
+	@echo "								+->	tree";
+	@echo "								+->	graph";

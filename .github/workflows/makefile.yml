@@ -19,3 +19,6 @@ jobs:
 
     - name: Clean build
       run: make again
+
+    - name: Unit test
+      run: make check

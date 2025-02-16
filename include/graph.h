@@ -50,6 +50,6 @@ Route* create_route_data (char symbol, Vertex* next_vertex);
 void add_edge_to_graph (Graph* graph, Vertex* vertex1, Vertex* vertex2, Data* weight);
 void display_graph (Graph* graph);
 void display_graph_details (Graph* graph);
-Vertex* get_vertex_by_id_from_graph (Graph* graph, int id);
+Vertex* get_vertex_by_id_from_graph (Graph* graph, size_t id);
 
 #endif  // GRAPH_H

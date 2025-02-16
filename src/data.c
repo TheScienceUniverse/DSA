@@ -204,3 +204,37 @@ bool are_data_equal (Data* data1, Data* data2) {
 
 	return result;
 }
+
+bool is_data_memory_erased (void** data_addresses) {
+	if (NULL == data_addresses) {
+		return false;
+	}
+
+	bool status = true;
+
+	if (
+		!check_mem_zero (*(data_addresses + 0), sizeof (void*))
+		&& !check_mem_zero (*(data_addresses + 1), sizeof (void*))
+		&& !check_mem_zero (*(data_addresses + 2), sizeof (void*))
+		&& !check_mem_zero (*(data_addresses + 3), sizeof (void*))
+	) {
+		status = false;
+	}
+
+	return status;
+}
+
+void** capture_data_addresses (Data* data) {
+	if (NULL == data) {
+		return NULL;
+	}
+
+	void** addresses = malloc (4 * sizeof (void*));
+
+	*(addresses + 0) = &(data);	// base address
+	*(addresses + 1) = &(data -> type);
+	*(addresses + 1) = &(data -> size);
+	*(addresses + 2) = &(data -> address);
+
+	return addresses;
+}

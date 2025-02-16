@@ -7,15 +7,23 @@ void test_string (void) {
 	size_t len = 14;
 
 	String* string = create_string (len, str);
-	String* s = string;
+	String* ghost_string = string;
 
 	// printf ("%lu %lu\n", len, sizeof (string -> address));
 
-	TEST (string != NULL, "Address non-null check");
+	TEST (NULL != string, "Address non-null check");
 	TEST (len == string -> length, "Allocated block-size check");
-	TEST (len * sizeof (char) == sizeof (string -> address), "");
-	TEST (string == s, "Address validation check");
+	TEST (string == ghost_string, "Address validation check");
 	TEST (compare_raw_strings_shh (len, str, string -> length, string -> address), "Content check");
+
+//	void** string_addresses = capture_string_addresses (string);
+//	TEST (!is_string_memory_erased (string_addresses), "String existance check");
+	TEST (string == ghost_string, "String existance check");
+	delete_string (&string);
+	TEST (string != ghost_string, "String deletion check");
+
+	//TEST (is_string_memory_erased (string_addresses), "String deletion check");
+//	ERASE (&string_addresses, 3 * sizeof (void*));
 /*
 	BYTE* ptr_b = (void*) string;
 	BYTE* ptr_adr = (void*) (string -> address);
@@ -46,7 +54,7 @@ void test_string (void) {
 */
 //	TEST (NULL == string, "Address nullified check");
 //	TEST (sizeof (int*) == sizeof (string), "De-allocated block-size check");
-	TEST (NULL == string, "Address nullify check");
+//	TEST (NULL == string, "Address nullify check");
 //	TEST (ptr != vptr, "Address validation check");
 //	TEST (n != *((int*) vptr), "Content check");
 

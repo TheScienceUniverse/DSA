@@ -1,13 +1,31 @@
 #include "../include/basic.h"
 
-void fill_with_zero (void* pointer, size_t data_length) {
-	if (pointer == NULL || data_length == 0) {
+void fill_mem_zero (void* base_address, size_t num_bytes) {
+	if (base_address == NULL || num_bytes == 0) {
 		return;
 	}
 
-	BYTE* ptr = pointer;
+	BYTE* ptr = base_address;
 
-	while (data_length--) {
+	while (num_bytes--) {
 		*ptr++ = 0;
 	}
+}
+
+bool check_mem_zero (void* base_address, size_t num_bytes) {
+	if (base_address == NULL || num_bytes == 0) {
+		return false;
+	}
+
+	bool status = true;
+	BYTE* ptr = base_address;
+
+	while (num_bytes--) {
+		if (0 != *ptr++) {
+			status = false;
+			break;
+		}
+	}
+
+	return status;
 }

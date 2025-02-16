@@ -20,7 +20,7 @@ void delete_graph (Graph** graph_address) {
 	Graph* graph = *graph_address;
 	Vertex* vertex;
 	Edge* edge;
-	int i;
+	size_t i;
 	
 	// removing dependencies...
 	for (i = 0; i < graph -> vertex_list -> item_count; i++) {
@@ -158,7 +158,7 @@ void display_edge_list (List* edge_list) {
 		return;
 	}
 
-	for (int i = 0; i < edge_list -> item_count; i++) {
+	for (size_t i = 0; i < edge_list -> item_count; i++) {
 		display_edge (*(edge_list -> item_addresses + i));
 	}
 }
@@ -184,18 +184,16 @@ void display_graph_details (Graph* graph) {
 		return;
 	}
 
-	printf ("List of Vertices (%d) : [", graph -> vertex_list -> item_count);
+	printf ("List of Vertices (%lu) : [", graph -> vertex_list -> item_count);
 
-	int i;
-
-	for  (i = 0; i < graph -> vertex_list -> item_count; i++) {
+	for  (size_t i = 0; i < graph -> vertex_list -> item_count; i++) {
 		printf ("\n\t");
 		display_node (*(graph -> vertex_list -> item_addresses + i));
 	}
 
 	printf ("\n]\n");
 
-	printf ("List of Edges (%d) : [", graph -> edge_list -> item_count);
+	printf ("List of Edges (%lu) : [", graph -> edge_list -> item_count);
 	display_edge_list (graph -> edge_list);
 	printf ("\n]\n");
 }
@@ -207,7 +205,7 @@ void export_graph_data_for_web_view (Graph* graph) {
 	}
 
 	FILE* fpo = fopen ("../web/graph/data.js", "wb+");
-	int i;
+	size_t i;
 	Vertex* vertex;
 	Edge* edge;
 
@@ -232,7 +230,7 @@ void export_graph_data_for_web_view (Graph* graph) {
 		}
 
 		edge = *(graph -> edge_list -> item_addresses + i);
-		fprintf (fpo, "[\"%s\", \"%s\", \"%s\", \"W%d\"]\n", edge -> name -> address, edge -> vertex1 -> name -> address, edge -> vertex2 -> name -> address, i);
+		fprintf (fpo, "[\"%s\", \"%s\", \"%s\", \"W%lu\"]\n", edge -> name -> address, edge -> vertex1 -> name -> address, edge -> vertex2 -> name -> address, i);
 	}
 
 	fprintf (fpo, "];");
@@ -240,7 +238,7 @@ void export_graph_data_for_web_view (Graph* graph) {
 	fclose (fpo);
 }
 
-Vertex* get_vertex_by_id_from_graph (Graph* graph, int id) {
+Vertex* get_vertex_by_id_from_graph (Graph* graph, size_t id) {
 	if (graph == NULL) {
 		perror ("Graph does not exist to get vertex from!");
 		return NULL;

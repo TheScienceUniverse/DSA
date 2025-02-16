@@ -32,7 +32,7 @@ void delete_tree (Tree** tree_address) {
 
 	Tree* tree = *tree_address;
 	List* list = create_list (tree -> node_count);
-	int i, list_index = 0;
+	size_t i, list_index = 0;
 	Node* node;
 	Node* child_node;
 	Node* x_node;
@@ -49,11 +49,7 @@ void delete_tree (Tree** tree_address) {
 
 		i = node -> address_list -> item_count;
 
-		while (--i) {
-			if (i < 0) {
-				break;
-			}
-
+		while (i--) {
 			child_node = *(node -> address_list -> item_addresses + i);
 			push_tree_node_to_stack (stack, child_node);
 		}
@@ -86,7 +82,7 @@ void display_tree (Tree* tree) {
 		return;
 	}
 
-	int i, depth = 0;
+	size_t i, depth = 0;
 	Node* node;
 	Node* child_node;
 	Node* x_node;
@@ -183,7 +179,7 @@ void display_relation_with_root (Tree* tree, Node* node) {
 	delete_stack (&stack);
 }
 
-int get_tree_node_depth (Tree* tree, Node* node) {
+size_t get_tree_node_depth (Tree* tree, Node* node) {
 	if (tree == NULL) {
 		perror ("Tree does not exist to get depth!");
 		return -1;
@@ -199,7 +195,7 @@ int get_tree_node_depth (Tree* tree, Node* node) {
 		return -1;
 	}
 
-	int depth = 0;
+	size_t depth = 0;
 	Node* parent_node;
 
 	while ((parent_node = get_parent_node (node)) != NULL) {
@@ -230,7 +226,7 @@ void display_child_node_list (Node* node) {
 
 	printf ("[");
 
-	for (int i = 1; i < node -> address_list -> item_count; i++) {
+	for (size_t i = 1; i < node -> address_list -> item_count; i++) {
 		display_node (*(node -> address_list -> item_addresses + i));
 
 		if (i < node -> address_list -> item_count - 1) {
@@ -255,7 +251,7 @@ Node* get_parent_node (Node* node) {
 	return *(node -> address_list -> item_addresses + 0);
 }
 
-Node* get_Nth_child_node (Node* parent_node, int n) {
+Node* get_Nth_child_node (Node* parent_node, size_t n) {
 	if (parent_node == NULL) {
 		perror ("Given Node doesn't exists");
 		return NULL;
@@ -310,7 +306,7 @@ void append_child_node (Tree* tree, Node* parent_node, Node* child_node) {
 	child_node = duplicate_node (child_node);
 	*(child_node -> address_list -> item_addresses + 0) = parent_node;
 	add_to_list (parent_node -> address_list, child_node, false);
-	++ (tree -> node_count);
+	++(tree -> node_count);
 }
 
 void push_tree_node_to_stack (Stack* stack, Node* node) {
@@ -349,7 +345,7 @@ Node* search_tree_by_node_name (Tree* tree, String* name) {
 
 	Node* x_node;
 	Node* node;
-	int i;
+	size_t i;
 	bool found = false;
 	void** address;
 	Queue* queue = create_queue ();
@@ -370,11 +366,7 @@ Node* search_tree_by_node_name (Tree* tree, String* name) {
 		i = node -> address_list -> item_count;
 		address = node -> address_list -> item_addresses;
 
-		while (--i) {													
-			if (i <= 0) {
-				break;
-			}
-
+		while (i--) {													
 			++address;
 			enqueue_tree_node_to_queue (queue, *(address));
 		}	
@@ -418,7 +410,7 @@ void display_sub_tree (Node* node) {
 	delete_tree (&tree);
 }
 
-int count_tree_nodes (Tree* tree) {
+size_t count_tree_nodes (Tree* tree) {
 	if (tree -> root_node == NULL) {
 		perror ("Tree does not exist to count nodes");
 		return -1;
@@ -429,8 +421,7 @@ int count_tree_nodes (Tree* tree) {
 		return -1;
 	}
 	
-	int node_count = 0;
-	int i;
+	size_t i, node_count = 0;
 	Node* node;
 	Node* child_node;
 	Node* x_node;
@@ -447,11 +438,7 @@ int count_tree_nodes (Tree* tree) {
 		++node_count;
 		i = node -> address_list -> item_count;
 
-		while (--i) {
-			if (i < 0) {
-				break;
-			}
-
+		while (i--) {
 			child_node = *(node -> address_list -> item_addresses + i);
 			push_tree_node_to_stack (stack, child_node);
 		}
@@ -527,8 +514,8 @@ void delete_node_from_tree (Tree* tree, Node* node)  {
 	sub_tree = NULL;
 }
 
-void print_node_depth_whitespace (int depth) {
-	int i;
+void print_node_depth_whitespace (size_t depth) {
+	size_t i;
 
 	if (depth > 0) {
 		for (i = 0; i < depth; i++) {
@@ -579,8 +566,8 @@ void export_tree_data_for_web_view (Tree* tree) {
 	FILE* fpo = fopen ("../web/tree/data.js", "wb+");
 
 	List* list = create_list (tree -> node_count);
-	int list_index = 0;
-	int i, linked_address_count, j;
+	size_t list_index = 0;
+	size_t i, linked_address_count, j;
 
 	Node* node;
 	Node* child_node;

@@ -8,23 +8,28 @@
 #include <string.h>
 #include <stdarg.h>
 #include <stdbool.h>
+#include <unistd.h>
 
 // ---------- x ----------
 
 #define BYTE unsigned char
 
-void fill_with_zero (void* pointer, size_t data_length);
+#define IDENTICAL 0		// everything same
+#define EQUAL 1			// just value same
+#define DIFFERENT -1	// completely not same
+
+
+void fill_mem_zero (void* base_address, size_t num_bytes);
+bool check_mem_zero (void* base_address, size_t num_bytes);
 
 // updated version of free to avoid dangling pointer
-#define ERASE(pointer_address,data_length) {		\
-	if (*pointer_address != NULL) {					\
-		free (*pointer_address);					\
-	}												\
-													\
-	fill_with_zero (*pointer_address, data_length);	\
-	*pointer_address = NULL;						\
+// can not fill_mem_zero to pointer_address becase it will corrupt memory
+#define ERASE(pointer_address,data_length) {	\
+	if (NULL != *pointer_address) {				\
+		free (*pointer_address);				\
+	}											\
+												\
+	*pointer_address = NULL;					\
 }
-
-void test_basic (void);
 
 #endif	// BASIC_H

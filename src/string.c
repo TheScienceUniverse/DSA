@@ -77,13 +77,28 @@ void delete_string (String** string_address) {
 
 	String* string = *string_address;
 
-	if (string -> address != NULL) {
+	if (string -> address != NULL && string -> length > 0) {
 		ERASE (&(string -> address), string -> length);
 	}
 
 	string = NULL;
 
 	ERASE (string_address, sizeof (String));
+}
+
+void display_string_properties (String* string) {
+	printf ("String [%zu]: ", string -> length);
+	display_string (string);
+	printf ("\n");
+}
+
+void display_string (String* string) {
+	if (string == NULL) {
+		// perror ("String does not exist to display!");
+		return;
+	}
+
+	display_raw_string (string -> length, string -> address);
 }
 
 String* duplicate_string (String* old_string) {
@@ -108,21 +123,6 @@ String* duplicate_string (String* old_string) {
 	}
 
 	return new_string;
-}
-
-void display_string_properties (String* string) {
-	printf ("String [%zu]: ", string -> length);
-	display_string (string);
-	printf ("\n");
-}
-
-void display_string (String* string) {
-	if (string == NULL) {
-		// perror ("String does not exist to display!");
-		return;
-	}
-
-	display_raw_string (string -> length, string -> address);
 }
 
 void concatenate_strings (int count, ...) {
@@ -176,4 +176,35 @@ String* append_integer_to_raw_string (char* str, int number) {
 	free (number_str_buffer);
 
 	return string;
+}
+
+bool is_string_memory_erased (void** string_addresses) {
+	if (NULL == string_addresses) {
+		return false;
+	}
+
+	bool status = true;
+
+	if (
+		!check_mem_zero (*(string_addresses + 0), sizeof (void*))
+		&& !check_mem_zero (*(string_addresses + 1), sizeof (void*))
+		&& !check_mem_zero (*(string_addresses + 2), sizeof (void*))
+	) {
+		status = false;
+	}
+
+	return status;
+}
+
+void** capture_string_addresses (String* string) {
+	if (NULL == string) {
+		return NULL;
+	}
+
+	void** addresses = malloc (3 * sizeof (void*));
+	*(addresses + 0) = &(string);	// base address
+	*(addresses + 1) = &(string -> length);
+	*(addresses + 2) = &(string -> address);
+
+	return addresses;
 }

@@ -12,5 +12,5 @@ int main (void) {
 	test_tree ();
 	test_graph ();
 
-	return 0;
+	return EXIT_SUCCESS;
 }

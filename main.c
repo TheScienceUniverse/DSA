@@ -1,10 +1,10 @@
 #include "./include/basic.h"
-/*#include "./include/string.h"
+#include "./include/string.h"
 #include "./include/data.h"
 #include "./include/list.h"
 #include "./include/node.h"
 #include "./include/linked_list.h"
-*/
+
 int main (void) {
 	printf("hello\n");
 /*	int* ptr = (int*) malloc (sizeof (int));
@@ -56,5 +56,5 @@ int main (void) {
 	delete_node (&node);
 
 */
-	return 0;
+	return EXIT_SUCCESS;
 }

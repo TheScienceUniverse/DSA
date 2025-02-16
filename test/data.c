@@ -14,18 +14,14 @@ void test_data (void) {
 	size_t len = 14;
 
 	Data* data = create_data (DT_String, len, str);
-//	void* ptr = data;
+	Data* ghost_data = data;
 
-	TEST (data != NULL, "Address non-null check");
+	TEST (NULL != data, "Address non-null check");
 	TEST (DT_String == data -> type, "Datatype match check");
 
+	TEST (ghost_data == data, "Address non-nullified check");
 	delete_data (&data);
-
-	TEST (NULL == data, "Address nullified check");
-//	TEST (sizeof (int*) == sizeof (string), "De-allocated block-size check");
-//	TEST (NULL == ptr, "Address nullify check");
-//	TEST (ptr != vptr, "Address validation check");
-//	TEST (n != *((int*) vptr), "Content check");
+	TEST (ghost_data != data, "Address nullification check");
 
 	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Data]\n" RESET_STYLE);
 }

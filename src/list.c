@@ -1,6 +1,6 @@
 #include "../include/list.h"
 
-List* create_list (int item_count) {
+List* create_list (size_t item_count) {
 	List* list = (List*) malloc (sizeof (List));
 
 	if (list == NULL) {
@@ -9,6 +9,10 @@ List* create_list (int item_count) {
 
 	list -> item_count = 0;
 	list -> item_addresses = NULL;
+
+	if (item_count == 0) {
+		return list;
+	}
 
 	if (item_count < 10) {
 		while (item_count--) {
@@ -31,7 +35,7 @@ List* duplicate_list (List* old_list) {
 	List* new_list = create_list (old_list -> item_count);
 
 	if (new_list != NULL) {
-		for (int i = 0; i < new_list -> item_count; i++) {
+		for (size_t i = 0; i < new_list -> item_count; i++) {
 			*(new_list -> item_addresses + i) = *(old_list -> item_addresses + i);
 		}
 	}
@@ -47,7 +51,7 @@ void forget_list (List** list_address) {
 
 	List* list = *list_address;
 
-	for (int i = 0; i < list -> item_count; i++) {
+	for (size_t i = 0; i < list -> item_count; i++) {
 		*(list -> item_addresses + i) = NULL;
 	}
 }
@@ -60,9 +64,8 @@ void delete_list (List** list_address) {
 
 	List* list = *list_address;
 	Data* data;
-	int i;
 
-	for (i = 0; i < list -> item_count; i++) {
+	for (size_t i = 0; i < list -> item_count; i++) {
 		data = *(list -> item_addresses + i);
 		delete_data (&data);
 	}
@@ -94,12 +97,11 @@ void display_list (List* list) {
 		return;
 	}
 
-	int i;
 	Data* data;
 
-	printf ("List (%d) : [", list -> item_count);
+	printf ("List (%lu) : [", list -> item_count);
 
-	for (i = 0; i < list -> item_count; i++) {
+	for (size_t i = 0; i < list -> item_count; i++) {
 		data = *(list -> item_addresses + i);
 
 		if (i != 0) {
@@ -123,12 +125,11 @@ void display_list_addresses (List* list) {
 		return;
 	}
 
-	int i;
 	void* address;
 
-	printf ("List (%d) : [", list -> item_count);
+	printf ("List (%lu) : [", list -> item_count);
 
-	for (i = 0; i < list -> item_count; i++) {
+	for (size_t i = 0; i < list -> item_count; i++) {
 		address = *(list -> item_addresses + i);
 
 		if (i != 0) {
@@ -142,16 +143,15 @@ void display_list_addresses (List* list) {
 }
 
 bool remove_address_from_list (List* list, void* address) {	// this does not hard delete memory data, just forgets or removes the address from list
-	int index = search_in_address_list (list, address);
+	size_t index = search_in_address_list (list, address);
 
 	if (index < 1) {
 		return false;
 	}
 
-	int i;
 	void** ptr = list -> item_addresses + index;
 
-	for (i = index; i < list -> item_count - 1; i++) {
+	for (size_t i = index; i < list -> item_count - 1; i++) {
 		*ptr = *(ptr + 1);
 		++ptr;
 	}
@@ -162,7 +162,7 @@ bool remove_address_from_list (List* list, void* address) {	// this does not har
 	return true;
 }
 
-int search_in_address_list (List* list, void* address) {
+size_t search_in_address_list (List* list, void* address) {
 	if (list == NULL) {
 		perror ("List does not exist to search address in");
 		return -1;
@@ -173,7 +173,7 @@ int search_in_address_list (List* list, void* address) {
 		return -1;
 	}
 
-	int i = 0;
+	size_t i = 0;
 	void** p = list -> item_addresses;
 
 	for (i = 0; i < list -> item_count; i++) {

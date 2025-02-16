@@ -27,11 +27,11 @@ typedef struct DATA {
 // ---------- x ----------
 
 Data* create_data (Data_Type data_type, size_t block_size, void* address);
-Data* duplicate_data (Data* data);
 void delete_data (Data** data_address);
+Data* duplicate_data (Data* data);
 void forget_data (Data** data_address);
-void display_data (Data* data);
 void display_data_properties (Data* data);
+void display_data (Data* data);
 void display_binary_data (size_t size, BYTE* address);
 Data* create_range_data (int start, int end);
 void display_range_data (Data* data);

@@ -4,7 +4,7 @@ void test_chunk (void) {
 	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Chunk]\n" RESET_STYLE);
 
 	Chunk* chunk = create_chunk (0, 10);
-	display_chunk_properties (chunk);
+//	display_chunk_properties (chunk);
 
 	uint16_t x = 0x0ff0;
 	int n = 10;
@@ -24,7 +24,7 @@ void test_chunk (void) {
 		insert_data_into_chunk (chunk, data);
 		delete_data (&data);
 
-		display_chunk (chunk);
+//		display_chunk (chunk);
 	}
 
 	data = create_data (DT_Binary, sizeof (uint16_t), &x);
@@ -35,7 +35,13 @@ void test_chunk (void) {
 	insert_data_into_chunk (chunk, data);
 	delete_data (&data);
 
-	display_chunk (chunk);
+	display_linked_chunks (chunk);
+
+	data = delete_data_from_chunk (chunk);
+	display_linked_chunks (chunk);
+
+	data = delete_data_from_chunk (chunk);
+	display_linked_chunks (chunk);
 
 /*void delete_chunk (Chunk** chunk_address);
 void display_chunk_properties (Chunk* chunk);

@@ -29,6 +29,9 @@ void test_string (void);
 #include "./data.h"
 void test_data (void);
 
+#include "./chunk.h"
+void test_chunk (void);
+
 #include "./list.h"
 void test_list (void);
 

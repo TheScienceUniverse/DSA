@@ -1,12 +1,5 @@
 #include "../include/test.h"
 
-/*
-Data* create_data (Data_Type data_type, int block_size, void* address);
-Data* duplicate_data (Data* data);
-void delete_data (Data** data_address);
-*/
-
-
 void test_data (void) {
 	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Data]\n" RESET_STYLE);
 

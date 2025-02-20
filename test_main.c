@@ -4,6 +4,7 @@ int main (void) {
 	test_basic ();
 	test_string ();
 	test_data ();
+	test_chunk ();
 	test_list ();
 	test_node ();
 	test_linked_list ();

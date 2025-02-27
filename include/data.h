@@ -36,5 +36,7 @@ void display_binary_data (size_t size, BYTE* address);
 Data* create_range_data (int start, int end);
 void display_range_data (Data* data);
 bool are_data_equal (Data* data1, Data* data2);
+void copy_data (Data* src_data, Data* dst_data);
+void empty_data (Data* data);
 
 #endif	// DATA_H

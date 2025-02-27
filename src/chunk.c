@@ -10,7 +10,7 @@ Chunk* create_chunk (size_t chunk_id, size_t capacity) {
 	chunk -> id = 0;
 	chunk -> capacity = 0;
 	chunk -> data_count = 0;
-	chunk -> data_addresses = NULL;
+	chunk -> first_data_address = NULL;
 	chunk -> next_chunk = NULL;
 	chunk -> previous_chunk = NULL;
 
@@ -20,9 +20,9 @@ Chunk* create_chunk (size_t chunk_id, size_t capacity) {
 
 	chunk -> id = chunk_id;
 	chunk -> capacity = capacity;
-	chunk -> data_addresses = (Data**) calloc (capacity, sizeof (Data*));
+	chunk -> first_data_address = (Data*) calloc (capacity, sizeof (Data));
 
-	if (chunk -> data_addresses == NULL) {
+	if (chunk -> first_data_address == NULL) {
 		perror ("Unable to allocate memory!\n");
 		exit (1);
 	}
@@ -53,19 +53,13 @@ void delete_chunk (Chunk** chunk_address) {
 	previous_chunk = NULL;
 	next_chunk = NULL;
 
-	/* start deleting data addresses */
-	Data** data_address = chunk -> data_addresses;
-
-	for (size_t i = 0; i < chunk -> data_count; i++) {
-		delete_data (data_address);
-		data_address = data_address + 1;
-	}
-
+//	ERASE (&chunk -> first_data_address, sizeof (Data) * chunk -> capacity);
+	
 	chunk = NULL;
 	ERASE (chunk_address, sizeof (Chunk));
 }
 
-void display_chunk_properties (Chunk* chunk) {
+void display_chunk_details (Chunk* chunk) {
 	if (chunk == NULL) {
 		perror ("Chunk does not exist!");
 		return;
@@ -77,19 +71,19 @@ void display_chunk_properties (Chunk* chunk) {
 	printf ("Chunk capacity = %lu\n", chunk -> capacity);
 	printf ("Chunk data count = %lu\n", chunk -> data_count);
 
-	printf ("Chunk data list: [");
+	printf ("Chunk data list: [ ");
 
-	for (size_t i = 0; i < chunk -> data_count; i++) {
-		data = *(chunk -> data_addresses + i);
+	for (size_t i = 0; i < chunk -> capacity; i++) {
+		data = chunk -> first_data_address + i;
 
 		if (i != 0) {
-			printf (", ");
+			printf (" | ");
 		}
 
 		display_data (data);
 	}
 
-	printf ("]\n");
+	printf (" ]\n");
 }
 
 void display_chunk (Chunk* chunk) {
@@ -100,28 +94,32 @@ void display_chunk (Chunk* chunk) {
 
 	Data* data;
 
-	printf ("Chunk_%lu (%lu / %lu): [", chunk -> id, chunk -> data_count, chunk -> capacity);
+	printf ("Chunk_%lu (%lu / %lu): [ ", chunk -> id, chunk -> data_count, chunk -> capacity);
 
-	for (size_t i = 0; i < chunk -> data_count; i++) {
-		data = *(chunk -> data_addresses + i);
+	for (size_t i = 0; i < chunk -> capacity; i++) {
+		data = chunk -> first_data_address + i;
 
 		if (i != 0) {
-			printf (", ");
+			printf (" | ");
 		}
 
 		display_data (data);
 	}
 
-	printf ("]\n");
+	printf (" ]\n");
 }
 
 void display_linked_chunks (Chunk* chunk) {
 	Chunk* c = chunk;
 
+	printf ("----------\n");
+
 	while (c != NULL) {
 		display_chunk (c);
 		c = c -> next_chunk;
 	}
+	
+	printf ("----------\n");
 }
 
 /*
@@ -154,40 +152,40 @@ void forget_chunk (Chunk** chunk_address) {
 		*(chunk -> item_addresses + i) = NULL;
 	}
 }
+*/
 
-void display_chunk (Chunk* chunk) {
-	if (chunk -> item_count == 0) {
-		perror ("Chunk is Empty!");
-		return;
-	}
-
-	Data* data;
-
-	printf ("Chunk (%lu) : [", chunk -> item_count);
-
-	for (size_t i = 0; i < chunk -> item_count; i++) {
-		data = *(chunk -> item_addresses + i);
-
-		if (i != 0) {
-			printf (", ");
-		}
-
-		display_data (data);
-	}
-
-	printf ("]\n");
-}*/
-
-
-Chunk* get_last_chunk (Chunk* chunk) {
-	Chunk *last_chunk = chunk;
-
-	if (chunk == NULL) {
+Chunk* get_first_chunk (Chunk* chunk) {
+	if (NULL == chunk) {
 		perror ("Provided chunk does not exist!\n");
 		return NULL;
 	}
 
-	while (last_chunk -> next_chunk != NULL) {
+	Chunk *first_chunk = chunk;
+
+	if (NULL == chunk -> previous_chunk) {
+		return chunk;
+	}
+
+	while (NULL != first_chunk -> previous_chunk) {
+		first_chunk = first_chunk -> previous_chunk;
+	}
+
+	return first_chunk;
+}
+
+Chunk* get_last_chunk (Chunk* chunk) {
+	if (NULL == chunk) {
+		perror ("Provided chunk does not exist!\n");
+		return NULL;
+	}
+
+	if (NULL == chunk -> next_chunk) {
+		return chunk;
+	}
+
+	Chunk *last_chunk = chunk;
+
+	while (NULL != last_chunk -> next_chunk) {
 		last_chunk = last_chunk -> next_chunk;
 	}
 
@@ -205,12 +203,12 @@ Chunk* extend_chunk (Chunk* chunk) {
 }
 
 Chunk* reduce_chunk (Chunk* chunk) {
-	if (chunk == NULL) {
+	if (NULL == chunk) {
 		perror ("Chunk does not exist!\n");
 		return NULL;
 	}
 
-	if (chunk -> id == 0) {
+	if (0 == chunk -> id && chunk == get_first_chunk (chunk)) {
 		return chunk;
 	}
 
@@ -220,7 +218,7 @@ Chunk* reduce_chunk (Chunk* chunk) {
 	penultimate_chunk -> next_chunk = NULL;
 	last_chunk -> previous_chunk = NULL;
 
-	delete_chunk (&last_chunk);
+//	delete_chunk (&last_chunk);
 
 	return penultimate_chunk;
 }
@@ -236,18 +234,31 @@ void insert_data_into_chunk (Chunk* chunk, Data* data) {
 		return;
 	}
 
-	if (chunk -> capacity == chunk -> data_count) {
-		chunk = extend_chunk (chunk);
+	Chunk* last_chunk = get_last_chunk (chunk);
+
+	if (last_chunk -> capacity == last_chunk -> data_count) {
+		last_chunk = extend_chunk (last_chunk);
 	}
 
-	*(chunk -> data_addresses + chunk -> data_count++) = duplicate_data (data);
+	copy_data (data, last_chunk -> first_data_address + last_chunk -> data_count++);
 }
 
 Data* delete_data_from_chunk (Chunk* chunk) {
 	Chunk* last_chunk = get_last_chunk (chunk);
-	Data* data = *(last_chunk -> data_addresses + last_chunk -> data_count - 1);
+	Chunk* first_chunk = get_first_chunk (chunk);
 
-	delete_data (last_chunk -> data_addresses + last_chunk -> data_count - 1);
+	if (
+		last_chunk == first_chunk
+		&& last_chunk -> data_count == 0
+	) {
+		return NULL;
+	}
+
+	Data* data = last_chunk -> first_data_address + last_chunk -> data_count - 1;
+	Data* real_data = duplicate_data (data);
+
+	empty_data (data);
+
 	-- (last_chunk -> data_count);
 
 	if (
@@ -257,5 +268,5 @@ Data* delete_data_from_chunk (Chunk* chunk) {
 		last_chunk = reduce_chunk (last_chunk);
 	}
 
-	return data;
+	return real_data;
 }

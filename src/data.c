@@ -101,6 +101,7 @@ void display_data (Data* data) {
 			display_range_data (data);
 			break;
 		default:
+			display_byte_stream (data -> size, data -> address);
 			break;
 	}
 }
@@ -113,7 +114,9 @@ void display_data_properties (Data* data) {
 
 	switch (data -> type) {
 		case DT_Binary:
+			printf ("Data (Binary) : ");
 			display_binary_data (data -> size, (BYTE*) data -> address);
+			printf ("\n");
 			break;
 		case DT_Integer:
 			printf ("Data (Integer) : %d\n", *((int*) data -> address));
@@ -237,4 +240,42 @@ void** capture_data_addresses (Data* data) {
 	*(addresses + 2) = &(data -> address);
 
 	return addresses;
+}
+
+void copy_data (Data* src_data, Data* dst_data) {
+	if (NULL == src_data) {
+		perror ("Source Data does not exist to copy from!");
+		return;
+	}
+
+	if (NULL == dst_data) {
+		perror ("Destination Data does not exist to copy into!");
+		return;
+	}
+
+	if (NULL != src_data -> address) {
+		// ERASE (&(data -> address), data -> size);
+	}
+
+	dst_data -> type = src_data -> type;
+	dst_data -> size = src_data -> size;
+
+	free (dst_data -> address);
+	dst_data -> address = malloc (src_data -> size);
+	copy_byte_stream (src_data -> size, src_data -> address, dst_data -> address);
+}
+
+void empty_data (Data* data) {
+	if (NULL == data) {
+		// perror ("Data does not exist to delete!");
+		return;
+	}
+
+	if (data -> address != NULL) {
+		ERASE (&(data -> address), data -> size);
+	}
+
+	data -> type = DT_Undefined;
+	data -> size = 0;
+	data -> address = NULL;
 }

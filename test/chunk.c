@@ -7,53 +7,43 @@ void test_chunk (void) {
 //	display_chunk_properties (chunk);
 
 	uint16_t x = 0x0ff0;
-	int n = 10;
-	char* str = "Hello, World!";
+	int n = 0;
+	char* str = "HelloWorld";
 	Data* data;
 
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 200; i++) {
+		x ^= 0xffff;
 		data = create_data (DT_Binary, sizeof (uint16_t), &x);
 		insert_data_into_chunk (chunk, data);
 		delete_data (&data);
 
+		n += 10;
 		data = create_data (DT_Integer, sizeof (int), &n);
 		insert_data_into_chunk (chunk, data);
 		delete_data (&data);
 
-		data = create_data (DT_String, sizeof (str), str);
+		data = create_data (DT_String, 5, str);
 		insert_data_into_chunk (chunk, data);
 		delete_data (&data);
-
-//		display_chunk (chunk);
 	}
 
-	data = create_data (DT_Binary, sizeof (uint16_t), &x);
-	insert_data_into_chunk (chunk, data);
-	delete_data (&data);
+	display_linked_chunks (chunk);
 
-	data = create_data (DT_Integer, sizeof (int), &n);
-	insert_data_into_chunk (chunk, data);
-	delete_data (&data);
+	for (int i = 0; i < 300; i++) {
+		data = delete_data_from_chunk (chunk);
+		// display_data (data);
+		delete_data (&data);
+	}
 
 	display_linked_chunks (chunk);
 
-	data = delete_data_from_chunk (chunk);
+	for (int i = 0; i < 500; i++) {
+		data = delete_data_from_chunk (chunk);
+		// display_data (data);
+		delete_data (&data);
+	}
+
 	display_linked_chunks (chunk);
-
-	data = delete_data_from_chunk (chunk);
-	display_linked_chunks (chunk);
-
-/*void delete_chunk (Chunk** chunk_address);
-void display_chunk_properties (Chunk* chunk);
-void display_chunk (Chunk* chunk);
-Chunk* duplicate_chunk (Chunk* chunk);
-void forget_chunk (Chunk** chunk_address);
-Chunk* extend_chunk (Chunk* chunk);
-void insert_data_into_chunk (Chunk* chunk, Data* data);
-Data* delete_data_from_chunk (Chunk* chunk);
-*/
-
-//	printf("%lu\n", sysconf(_SC_PAGESIZE) / sizeof(void*));
 
 	delete_chunk (&chunk);
 

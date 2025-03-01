@@ -53,7 +53,7 @@ void delete_chunk (Chunk** chunk_address) {
 	previous_chunk = NULL;
 	next_chunk = NULL;
 
-//	ERASE (&chunk -> first_data_address, sizeof (Data) * chunk -> capacity);
+	ERASE (&(chunk -> first_data_address), sizeof (Data) * chunk -> capacity);
 	
 	chunk = NULL;
 	ERASE (chunk_address, sizeof (Chunk));

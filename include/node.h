@@ -4,7 +4,7 @@
 // ---------- x ----------
 
 #include "data.h"
-#include "list.h"
+#include "bare_list.h"
 
 // ---------- x ----------
 
@@ -20,7 +20,7 @@ typedef enum NODE_TYPE {
 typedef struct NODE {
 	Node_Type type;
 	String* name;
-	List* address_list;
+	Bare_List* address_list;
 	Data* data;
 } Node;
 

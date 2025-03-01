@@ -11,6 +11,11 @@ void test_chunk (void) {
 	char* str = "HelloWorld";
 	Data* data;
 
+	TEST (NULL != chunk, "Chunk created");
+	TEST (0 == chunk -> id, "Chunk start id check");
+	TEST (10 == chunk -> capacity, "Chunk default capacity check");
+	TEST (0 == chunk -> data_count, "Chunk default data count check");
+
 	for (int i = 0; i < 200; i++) {
 		x ^= 0xffff;
 		data = create_data (DT_Binary, sizeof (uint16_t), &x);
@@ -27,7 +32,14 @@ void test_chunk (void) {
 		delete_data (&data);
 	}
 
-	display_linked_chunks (chunk);
+	TEST (10 == chunk -> data_count, "Chunk filled with data");
+
+	Chunk* last_chunk = get_last_chunk (chunk);
+
+	TEST (NULL != last_chunk, "Last chunk exists");
+	TEST (0 < last_chunk -> id, "Data inserted into chunk");
+	TEST (59 == last_chunk -> id, "Last chunk id check");
+	TEST (10 == last_chunk -> data_count, "Last chunk filled with data");
 
 	for (int i = 0; i < 300; i++) {
 		data = delete_data_from_chunk (chunk);
@@ -35,7 +47,12 @@ void test_chunk (void) {
 		delete_data (&data);
 	}
 
-	display_linked_chunks (chunk);
+	last_chunk = get_last_chunk (chunk);
+
+	TEST (NULL != last_chunk, "Last chunk exists");
+	TEST (29 == last_chunk -> id, "Last chunk id check");
+	TEST (0 < last_chunk -> id, "Data deleted from chunk");
+	TEST (10 == last_chunk -> data_count, "Last chunk filled with data");
 
 	for (int i = 0; i < 500; i++) {
 		data = delete_data_from_chunk (chunk);
@@ -43,7 +60,13 @@ void test_chunk (void) {
 		delete_data (&data);
 	}
 
-	display_linked_chunks (chunk);
+	// display_linked_chunks (chunk);
+	last_chunk = get_last_chunk (chunk);
+
+	TEST (NULL != last_chunk, "Last chunk exists");
+	TEST (0 == last_chunk -> id, "Last chunk id check");
+	TEST (0 == last_chunk -> id, "All chunks empty");
+	TEST (0 == last_chunk -> data_count, "Last chunk empty");
 
 	delete_chunk (&chunk);
 

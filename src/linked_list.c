@@ -27,7 +27,7 @@ void delete_linked_list (Linked_List** linked_list_address) {
 	while (node != NULL) {
 		old_node = node;
 		node = *(node -> address_list -> item_addresses + 1);
-		forget_list (&(old_node -> address_list));
+		forget_bare_list (&(old_node -> address_list));
 		delete_node (&old_node);
 	}
 
@@ -170,7 +170,7 @@ void detach_node_from_first (Linked_List* linked_list, bool node_delete_needed) 
 	-- linked_list -> size;																			// decrease node count
 
 	if (node_delete_needed) {
-		forget_list (&(node -> address_list));
+		forget_bare_list (&(node -> address_list));
 		delete_node (&node);
 	}
 }
@@ -201,7 +201,7 @@ void detach_node_from_last (Linked_List* linked_list, bool node_delete_needed) {
 	-- linked_list -> size;																			// decrease node count
 
 	if (node_delete_needed) {
-		forget_list (&(node -> address_list));
+		forget_bare_list (&(node -> address_list));
 		delete_node (&node);
 	}
 }

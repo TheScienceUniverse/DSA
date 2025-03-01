@@ -20,7 +20,7 @@ typedef enum DATA_TYPE {
 
 typedef struct DATA {
 	Data_Type type;
-	size_t size;
+	size_t size;	// in bytes
 	void* address;
 } Data;
 

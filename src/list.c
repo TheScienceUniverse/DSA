@@ -3,29 +3,50 @@
 List* create_list (size_t item_count) {
 	List* list = (List*) malloc (sizeof (List));
 
+	auto size_t chunk_capacity = 0;
+	auto size_t chunk_count = 0;
+
 	if (list == NULL) {
 		return NULL;
 	}
 
 	list -> item_count = 0;
-	list -> item_addresses = NULL;
+	list -> chunk_count = 0;
+	list -> head_chunk = NULL;
+	list -> tail_chunk = NULL;
 
 	if (item_count == 0) {
 		return list;
 	}
 
-	if (item_count < 10) {
-		while (item_count--) {
-			add_to_list (list, NULL, false);
-		}
-	} else {
-		list -> item_count = item_count;
-		list -> item_addresses = (void**) malloc (list -> item_count * sizeof (void*));
-	}
+	set_list_chunk_cap_count (item_count, &chunk_capacity, &chunk_count);
+	printf ("calculated chunk capacity %lu and count %lu\n", chunk_capacity, chunk_count);
+
+	list -> head_chunk = create_chunk (0, chunk_capacity);	// default chunk
+	list -> tail_chunk = list -> head_chunk;
 
 	return list;
 }
 
+void delete_list (List** list_address) {
+	if (*list_address == NULL) {
+		perror ("List does not exist to Delete!");
+		return;
+	}
+
+	List* list = *list_address;
+	Chunk* chunk = list -> tail_chunk;
+
+	for (size_t i = 0; i < list -> chunk_count; i++) {
+		chunk = reduce_chunk (chunk);
+	}
+
+	delete_chunk (&chunk);
+
+	list = NULL;
+	ERASE (list_address, sizeof (List));
+}
+/*
 List* duplicate_list (List* old_list) {
 	if (old_list == NULL) {
 		perror ("List does not exist to Duplicate!");
@@ -56,24 +77,6 @@ void forget_list (List** list_address) {
 	}
 }
 
-void delete_list (List** list_address) {
-	if (*list_address == NULL) {
-		perror ("List does not exist to Delete!");
-		return;
-	}
-
-	List* list = *list_address;
-	Data* data;
-
-	for (size_t i = 0; i < list -> item_count; i++) {
-		data = *(list -> item_addresses + i);
-		delete_data (&data);
-	}
-
-	list = NULL;
-	ERASE (list_address, sizeof (List));
-}
-
 void add_to_list (List* list, void* data, bool data_copy_needed) {
 	if (list == NULL) {
 		perror ("List does not exist to add data!");
@@ -90,30 +93,54 @@ void add_to_list (List* list, void* data, bool data_copy_needed) {
 
 	++ list -> item_count;
 }
-
+*/
 void display_list (List* list) {
 	if (list -> item_count == 0) {
 		perror ("List is Empty!");
 		return;
 	}
 
-	Data* data;
+	Chunk* chunk = list -> head_chunk;
 
-	printf ("List (%lu) : [", list -> item_count);
-
-	for (size_t i = 0; i < list -> item_count; i++) {
-		data = *(list -> item_addresses + i);
-
-		if (i != 0) {
-			printf (", ");
-		}
-
-		display_data (data);
-	}
-
-	printf ("]\n");
+	display_linked_chunks (chunk);
 }
 
+void set_list_chunk_cap_count (size_t item_count, size_t* chunk_capacity, size_t* chunk_count) {
+	const size_t MIN_CHUNK_CAP = 10;	// minimum chunk capacity
+	const size_t MAX_CHUNK_CAP = 1000;	// maximum chunk capacity
+
+	size_t digit_count = get_number_of_digits (item_count, 10);
+	size_t capacity = exponentiate (10, digit_count);
+
+	if (item_count > capacity) {
+		capacity *= 10;
+	}
+
+	if ((capacity - item_count) / digit_count < 50) {
+		capacity /= 2;
+	}
+
+	if (MIN_CHUNK_CAP > capacity) {
+		capacity = MIN_CHUNK_CAP;
+	} else if (MAX_CHUNK_CAP < capacity) {
+		capacity = MAX_CHUNK_CAP;
+	}
+
+	*chunk_capacity = capacity;
+	*chunk_count = item_count / capacity;
+
+	if (0 == *chunk_count) {
+		*chunk_count = 1;
+	}
+}
+
+void insert_data_into_list (List* list, Data* data) {}
+
+size_t search_data_in_list (List* list, Data* data) {}
+
+void remove_data_from_list (List* list, Data* data) {}
+
+/*
 void display_list_addresses (List* list) {
 	if (list == NULL) {
 		//perror ("List does not exist to display!");
@@ -189,4 +216,4 @@ size_t search_in_address_list (List* list, void* address) {
 	}
 
 	return i;
-}
+}*/

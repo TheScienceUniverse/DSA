@@ -62,3 +62,24 @@ void display_byte_stream (size_t num_bytes, BYTE* base_address) {
 
 	printf ("\n");
 }
+
+size_t get_number_of_digits (size_t number, size_t base) {
+	size_t count = 0;
+
+	while (number != 0) {
+		++count;
+		number /= base;
+	}
+
+	return count;
+}
+
+size_t exponentiate (size_t base, size_t exponent) {
+	size_t result = base;
+
+	for (size_t i = 2; i < exponent; i++) {
+		result *= base;
+	}
+
+	return result;
+}

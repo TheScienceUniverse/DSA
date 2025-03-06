@@ -84,7 +84,7 @@ body:
   - type: dropdown
     id: operating-system
     attributes:
-      label: 🖳 What Operating System are you seeing the problem on?
+      label: 🖳 What Operating System are you using?
       multiple: true
       options:
         - Linux
@@ -94,7 +94,7 @@ body:
   - type: dropdown
     id: compiler
     attributes:
-      label: ♻️ What terminal are you seeing the problem on?
+      label: ♻️ What compiler are you using?
       multiple: true
       options:
         - GCC
@@ -104,7 +104,7 @@ body:
   - type: dropdown
     id: terminal
     attributes:
-      label: ⌨ What terminal are you seeing the problem on?
+      label: ⌨ What terminal are you using?
       multiple: true
       options:
         - Terminal

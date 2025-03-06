@@ -24,7 +24,7 @@ void set_list_chunk_cap_count (size_t expected_item_count, size_t* chunk_capacit
 void display_list_details (List* list);
 void display_list (List* list);
 void insert_data_into_list (List* list, Data* data);
-size_t search_data_in_list (List* list, Data* data);
-void remove_data_from_list (List* list, Data* data);
+List* search_data_in_list (List* list, Data* data);
+void delete_data_from_list (List* list, Data* data);
 
 #endif	// LIST_H

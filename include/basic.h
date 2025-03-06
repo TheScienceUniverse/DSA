@@ -15,9 +15,11 @@
 
 #define BYTE unsigned char
 
-#define IDENTICAL 0		// everything same
-#define EQUAL 1			// just value same
-#define DIFFERENT -1	// completely not same
+typedef enum COMPARE_STATUS {
+	Cmp_Identical
+	, Cmp_Equivalent
+	, Cmp_Different
+} Compare_Status;
 
 
 void fill_mem_zero (void* base_address, size_t num_bytes);

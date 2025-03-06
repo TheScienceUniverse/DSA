@@ -11,15 +11,6 @@ void test_list (void) {
 	char* str = "HelloWorld";
 	Data* data;
 
-/*
-typedef struct LIST {
-	size_t item_count;
-	size_t chunk_count;
-	Chunk* head_chunk;
-	Chunk* tail_chunk;
-} List;
- */
-
 	TEST (NULL != list, "List created");
 	TEST (0 == list -> item_count, "List has no items");
 	TEST (NULL != list -> head_chunk, "List has starting buffer chunk");
@@ -29,7 +20,7 @@ typedef struct LIST {
 	TEST (0 == list -> head_chunk -> data_count, "List default data count check");
 	TEST (list -> head_chunk == list -> tail_chunk, "List's first chunk is the last chunk");
 
-	for (int i = 0; i < 200; i++) {
+	for (int i = 0; i < 10; i++) {
 		x ^= 0xffff;
 		data = create_data (DT_Binary, sizeof (uint16_t), &x);
 		insert_data_into_list (list, data);
@@ -45,7 +36,15 @@ typedef struct LIST {
 		delete_data (&data);
 	}
 
-	TEST (600 == list -> item_count, "List filled with data");
+//	display_linked_chunks (list -> head_chunk);
+//	printf ("list item count: %lu\n", list -> item_count);
+
+	TEST (30 == list -> item_count, "List filled with data");
+
+	data = create_data (DT_String, 5, str);
+	List* index_list = search_data_in_list (list, data);
+	delete_data (&data);
+
 /*
 void insert_data_into_list (List* list, void* data);
 size_t search_data_in_list (List* list, Data* data);

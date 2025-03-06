@@ -243,7 +243,12 @@ void insert_data_into_chunk (Chunk* chunk, Data* data) {
 	copy_data (data, last_chunk -> first_data_address + last_chunk -> data_count++);
 }
 
-Data* delete_data_from_chunk (Chunk* chunk) {
+Data* remove_data_from_chunk (Chunk* chunk) {
+	if (NULL == chunk) {
+		perror ("Provided chunk does not exist to remove from!\n");
+		return NULL;
+	}
+
 	Chunk* last_chunk = get_last_chunk (chunk);
 	Chunk* first_chunk = get_first_chunk (chunk);
 

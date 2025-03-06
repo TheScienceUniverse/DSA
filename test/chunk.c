@@ -42,7 +42,7 @@ void test_chunk (void) {
 	TEST (10 == last_chunk -> data_count, "Last chunk filled with data");
 
 	for (int i = 0; i < 300; i++) {
-		data = delete_data_from_chunk (chunk);
+		data = remove_data_from_chunk (chunk);
 		// display_data (data);
 		delete_data (&data);
 	}
@@ -55,7 +55,7 @@ void test_chunk (void) {
 	TEST (10 == last_chunk -> data_count, "Last chunk filled with data");
 
 	for (int i = 0; i < 500; i++) {
-		data = delete_data_from_chunk (chunk);
+		data = remove_data_from_chunk (chunk);
 		// display_data (data);
 		delete_data (&data);
 	}

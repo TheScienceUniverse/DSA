@@ -27,7 +27,7 @@ void forget_chunk (Chunk** chunk_address);
 Chunk* extend_chunk (Chunk* chunk);		// returns last empty-chunk address
 Chunk* reduce_chunk (Chunk* chunk);		// returns last empty-chunk address
 void insert_data_into_chunk (Chunk* chunk, Data* data);
-Data* delete_data_from_chunk (Chunk* chunk);
+Data* remove_data_from_chunk (Chunk* chunk);
 void display_linked_chunks (Chunk* chunk);
 Chunk* get_first_chunk (Chunk* chunk);
 Chunk* get_last_chunk (Chunk* chunk);

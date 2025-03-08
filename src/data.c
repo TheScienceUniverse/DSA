@@ -279,3 +279,57 @@ void empty_data (Data* data) {
 	data -> size = 0;
 	data -> address = NULL;
 }
+
+Compare_Status compare_data (Data* data_1, Data* data_2) {
+	if (NULL == data_1) {
+		perror ("Data_1 does not exist to compare!");
+		exit (EXIT_FAILURE);
+	}
+
+	if (NULL == data_2) {
+		perror ("Data_2 does not exist to compare!");
+		exit (EXIT_FAILURE);
+	}
+
+	if (data_1 == data_2) {
+		return Cmp_Identical;
+	}
+
+	if (
+		data_1 -> type != data_2 -> type
+		|| data_1 -> size != data_2 -> size
+	) {
+		return Cmp_Different;
+	}
+
+	Compare_Status cmp_stat = Cmp_Equivalent;
+	BYTE* b1 = data_1 -> address;
+	BYTE* b2 = data_2 -> address;
+
+	for (size_t i = 0; i < data_1 -> size; i++) {
+		if (*b1 != *b2) {
+			cmp_stat = Cmp_Different;
+			break;
+		}
+
+		b1 = b1 + 1;
+		b2 = b2 + 1;
+	}
+
+	return cmp_stat;
+}
+
+Data* create_empty_data (void) {
+	Data* data = (Data*) malloc (sizeof (Data));
+
+	if (NULL == data) {
+		perror ("Memory allocation error for Data!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	data -> type = DT_Empty;
+	data -> size = 0;
+	data -> address = NULL;
+
+	return data;
+}

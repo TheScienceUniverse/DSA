@@ -8,7 +8,7 @@ void test_list (void) {
 
 	uint16_t x = 0x0ff0;
 	int n = 0;
-	char* str = "HelloWorld";
+	char* str = "Hello";
 	Data* data;
 
 	TEST (NULL != list, "List created");
@@ -44,6 +44,9 @@ void test_list (void) {
 	data = create_data (DT_String, 5, str);
 	List* index_list = search_data_in_list (list, data);
 	delete_data (&data);
+
+	display_list_details (index_list);
+	delete_list (&index_list);
 
 /*
 void insert_data_into_list (List* list, void* data);

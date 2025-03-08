@@ -58,6 +58,17 @@ void display_list (List* list) {
 	display_linked_chunks (chunk);
 }
 
+void display_list_details (List* list) {
+	if (list -> item_count == 0) {
+		perror ("List is Empty!");
+		return;
+	}
+
+	Chunk* chunk = list -> head_chunk;
+
+	display_linked_chunks (chunk);
+}
+
 void set_list_chunk_cap_count (size_t item_count, size_t* chunk_capacity, size_t* chunk_count) {
 	const size_t MIN_CHUNK_CAP = 10;	// minimum chunk capacity
 	const size_t MAX_CHUNK_CAP = 1000;	// maximum chunk capacity
@@ -115,20 +126,36 @@ List* search_data_in_list (List* list, Data* data) {
 		exit (EXIT_FAILURE);
 	}
 
-	List* index_list = create_list (list -> item_count / 2);
+	List* index_list = create_list (list -> item_count / 4);
 	Chunk* chunk = list -> head_chunk;
-	size_t index = 0;
+	size_t index = 0, i = 0;
+	Data* index_data = create_empty_data ();
+	Data* chunk_data;
 
-	for (size_t i = 0; i < list -> item_count; i++) {
-		// printf ("list [%lu]: ", i);
-		// display_data (chunk -> first_data_address + index++);
-		// printf ("\n");
+	index_data -> type = DT_Integer;
+	index_data -> size = sizeof (i);
+	index_data -> address = &i;
+
+	for (i = 0; i < list -> item_count; i++) {
+		chunk_data = chunk -> first_data_address + index++;
+
+		if (
+			Cmp_Identical == compare_data (data, chunk_data)
+			|| Cmp_Equivalent == compare_data (data, chunk_data)
+		) {
+			insert_data_into_list (index_list, index_data);
+		}
 
 		if (chunk -> data_count == index) {
 			index = 0;
 			chunk = chunk -> next_chunk;
 		}
 	}
+
+	index_data -> size = 0;
+	index_data -> address = NULL;
+
+	delete_data (&index_data);
 
 	return index_list;
 }
@@ -146,5 +173,6 @@ void delete_data_from_list (List* list, Data* data) {
 
 	Chunk* chunk = list -> tail_chunk;
 	Data* deleted_data = remove_data_from_chunk (chunk);
+	delete_data (&deleted_data);
 	list -> tail_chunk = get_last_chunk (chunk);
 }

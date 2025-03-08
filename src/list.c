@@ -128,16 +128,17 @@ List* search_data_in_list (List* list, Data* data) {
 
 	List* index_list = create_list (list -> item_count / 4);
 	Chunk* chunk = list -> head_chunk;
-	size_t index = 0, i = 0;
+	size_t list_data_index = 0;
+	size_t chunk_data_index = 0;
 	Data* index_data = create_empty_data ();
 	Data* chunk_data;
 
 	index_data -> type = DT_Integer;
-	index_data -> size = sizeof (i);
-	index_data -> address = &i;
+	index_data -> size = sizeof (list_data_index);
+	index_data -> address = &list_data_index;
 
-	for (i = 0; i < list -> item_count; i++) {
-		chunk_data = chunk -> first_data_address + index++;
+	for ( ; list_data_index < list -> item_count; list_data_index++) {
+		chunk_data = chunk -> first_data_address + chunk_data_index++;
 
 		if (
 			Cmp_Identical == compare_data (data, chunk_data)
@@ -146,8 +147,8 @@ List* search_data_in_list (List* list, Data* data) {
 			insert_data_into_list (index_list, index_data);
 		}
 
-		if (chunk -> data_count == index) {
-			index = 0;
+		if (chunk -> data_count == chunk_data_index) {
+			chunk_data_index = 0;
 			chunk = chunk -> next_chunk;
 		}
 	}
@@ -175,4 +176,98 @@ void delete_data_from_list (List* list, Data* data) {
 	Data* deleted_data = remove_data_from_chunk (chunk);
 	delete_data (&deleted_data);
 	list -> tail_chunk = get_last_chunk (chunk);
+}
+
+Data* get_list_data_at_index (List* list, size_t index) {
+	if (NULL == list) {
+		perror ("List does not exist to get data from!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (index >= list -> item_count) {
+		perror ("List Index out of bound!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	Data* data = NULL;
+	Chunk* chunk = list -> head_chunk;
+	size_t counter = chunk -> capacity;
+
+	while (index > counter + chunk -> capacity) {
+		chunk = chunk -> next_chunk;
+		counter += chunk -> capacity;
+	}
+
+	data = chunk -> first_data_address + (index);
+	return data;
+}
+
+size_t get_first_list_index_of_data (List* list , Data* data) {
+	if (NULL == list) {
+		perror ("List does not exist to get data index from!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (NULL == data) {
+		perror ("Data does not exist to get index from list!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	size_t list_data_index = 0;
+	size_t chunk_data_index = 0;
+	Chunk* chunk = list -> head_chunk;
+	Data* chunk_data = NULL;
+
+	for ( ; list_data_index < list -> item_count; list_data_index++) {
+		chunk_data = chunk -> first_data_address + chunk_data_index++;
+
+		if (
+			Cmp_Identical == compare_data (data, chunk_data)
+			|| Cmp_Equivalent == compare_data (data, chunk_data)
+		) {
+			break;
+		}
+
+		if (chunk -> data_count == chunk_data_index) {
+			chunk_data_index = 0;
+			chunk = chunk -> next_chunk;
+		}
+	}
+
+	return list_data_index;
+}
+
+size_t get_last_list_index_of_data (List* list , Data* data) {
+	if (NULL == list) {
+		perror ("List does not exist to get data index from!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (NULL == data) {
+		perror ("Data does not exist to get index from list!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	size_t list_data_index = list -> item_count - 1;
+	Chunk* chunk = list -> head_chunk;
+	size_t chunk_data_index = chunk -> data_count - 1;
+	Data* chunk_data = NULL;
+
+	for ( ; list_data_index != 0; list_data_index--) {
+		chunk_data = chunk -> first_data_address + chunk_data_index--;
+
+		if (
+			Cmp_Identical == compare_data (data, chunk_data)
+			|| Cmp_Equivalent == compare_data (data, chunk_data)
+		) {
+			break;
+		}
+
+		if (chunk -> data_count == chunk_data_index) {
+			chunk = chunk -> previous_chunk;
+			chunk_data_index = chunk -> data_count - 1;
+		}
+	}
+
+	return list_data_index;
 }

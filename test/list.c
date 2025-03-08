@@ -36,7 +36,7 @@ void test_list (void) {
 		delete_data (&data);
 	}
 
-//	display_linked_chunks (list -> head_chunk);
+	display_list (list);
 //	printf ("list item count: %lu\n", list -> item_count);
 
 	TEST (30 == list -> item_count, "List filled with data");
@@ -45,8 +45,15 @@ void test_list (void) {
 	List* index_list = search_data_in_list (list, data);
 	delete_data (&data);
 
-	display_list_details (index_list);
+	display_list (index_list);
 	delete_list (&index_list);
+
+	data = get_list_data_at_index (list, 14);
+	display_data (data);
+	printf ("\n");
+
+	printf ("first index: %lu\n", get_first_list_index_of_data (list, data));
+	printf ("first index: %lu\n", get_last_list_index_of_data (list, data));
 
 /*
 void insert_data_into_list (List* list, void* data);

@@ -26,5 +26,8 @@ void display_list (List* list);
 void insert_data_into_list (List* list, Data* data);
 List* search_data_in_list (List* list, Data* data);
 void delete_data_from_list (List* list, Data* data);
+Data* get_list_data_at_index (List* list, size_t index);
+size_t get_first_list_index_of_data (List* list , Data* data);
+size_t get_last_list_index_of_data (List* list , Data* data);
 
 #endif	// LIST_H

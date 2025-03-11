@@ -88,6 +88,9 @@ void display_data (Data* data) {
 		case DT_Address:
 			printf ("%p", data -> address);
 			break;
+		case DT_Character:
+			printf ("%c", *((char*) data -> address));
+			break;
 		case DT_Binary:
 			display_binary_data (data -> size, (BYTE*) data -> address);
 			break;

@@ -199,7 +199,7 @@ Data* get_list_data_at_index (List* list, size_t index) {
 	}
 
 	data = chunk -> first_data_address + (index);
-	return data;
+	return duplicate_data (data);
 }
 
 size_t get_first_list_index_of_data (List* list , Data* data) {
@@ -263,11 +263,87 @@ size_t get_last_list_index_of_data (List* list , Data* data) {
 			break;
 		}
 
-		if (chunk -> data_count == chunk_data_index) {
+		if (0 == chunk_data_index) {
 			chunk = chunk -> previous_chunk;
 			chunk_data_index = chunk -> data_count - 1;
 		}
 	}
 
 	return list_data_index;
+}
+
+void insert_into_list_at_index (List* list, Data* data, size_t index) {
+	if (NULL == list) {
+		perror ("List does not exist to insert data at index!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (NULL == data) {
+		perror ("Data does not exist to insert into list at index!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (index >= list -> item_count) {
+		perror ("Index out of bound to insert data into list at index!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	Chunk* chunk = list -> tail_chunk;
+
+	if (chunk -> capacity == chunk -> data_count) {
+		chunk = extend_chunk (chunk);
+		chunk -> previous_chunk = list -> tail_chunk;
+		list -> tail_chunk = chunk;
+	}
+
+	size_t list_data_index = list -> item_count - 1;
+	size_t chunk_data_index = chunk -> data_count;
+	Data* right_data = chunk -> first_data_address + chunk_data_index--;
+	Data* left_data = chunk -> first_data_address + chunk_data_index--;
+
+	for ( ; list_data_index >= index; list_data_index--) {
+		copy_data (left_data, right_data);
+
+		right_data = left_data;	// pointer exchange
+
+		if (0 == chunk_data_index) {
+			chunk = chunk -> previous_chunk;
+			chunk_data_index = chunk -> data_count - 1;
+		}
+
+		left_data = chunk -> first_data_address + chunk_data_index--;
+	}
+
+	copy_data (data, right_data);
+	chunk -> data_count++;
+	list -> item_count++;
+}
+
+void insert_all_into_list (List* list, List* from_list) {
+	if (NULL == list) {
+		perror ("List does not exist to insert data from new list!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (NULL == from_list) {
+		perror ("Data does not exist to insert into list at index!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	Chunk* chunk = from_list -> head_chunk;
+	size_t list_data_index = 0;
+	size_t chunk_data_index = 0;
+	Data* data = chunk -> first_data_address;
+
+	for ( ; list_data_index < from_list -> item_count; list_data_index++) {
+		if (chunk -> capacity == chunk_data_index) {
+			chunk = chunk -> next_chunk;
+			chunk_data_index = 0;
+		}
+
+		data = chunk -> first_data_address + chunk_data_index++;
+		insert_data_into_list (list, data);
+	}
+
+	printf ("\n");
 }

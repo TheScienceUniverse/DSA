@@ -10,6 +10,7 @@ void test_list (void) {
 	int n = 0;
 	char* str = "Hello";
 	Data* data;
+	int i;
 
 	TEST (NULL != list, "List created");
 	TEST (0 == list -> item_count, "List has no items");
@@ -20,7 +21,7 @@ void test_list (void) {
 	TEST (0 == list -> head_chunk -> data_count, "List default data count check");
 	TEST (list -> head_chunk == list -> tail_chunk, "List's first chunk is the last chunk");
 
-	for (int i = 0; i < 10; i++) {
+	for (i = 0; i < 10; i++) {
 		x ^= 0xffff;
 		data = create_data (DT_Binary, sizeof (uint16_t), &x);
 		insert_data_into_list (list, data);
@@ -52,8 +53,67 @@ void test_list (void) {
 	display_data (data);
 	printf ("\n");
 
-	printf ("first index: %lu\n", get_first_list_index_of_data (list, data));
-	printf ("first index: %lu\n", get_last_list_index_of_data (list, data));
+//	printf ("first index: %lu\n", get_first_list_index_of_data (list, data));
+//	printf ("first index: %lu\n", get_last_list_index_of_data (list, data));
+
+	delete_data (&data);
+
+	char* test_str = "XOXOX";
+	data = create_data (DT_String, 5, test_str);
+
+	insert_into_list_at_index (list, data, 5);
+	display_list (list);
+
+	delete_data (&data);
+
+
+	List* new_list = create_list (10);
+
+	data = create_empty_data ();
+	data -> type = DT_Integer;
+	data -> size = sizeof (int);
+	data -> address = &i;
+	
+	for (i = 0; i > -100; i -= 10) {
+		insert_data_into_list (new_list, data);
+	}
+
+	data -> address = NULL;
+	delete_data (&data);
+
+	display_list (new_list);
+
+	insert_all_into_list (list, new_list);
+
+	display_list (list);
+
+	delete_list (&new_list);
+
+
+	new_list = create_list (10);
+	char c = 'a';
+
+	data = create_empty_data ();
+	data -> type = DT_Character;
+	data -> size = sizeof (char);
+	data -> address = &c;
+	
+	for (c = 0; c < 10; c++) {
+		insert_data_into_list (new_list, data);
+	}
+
+	data -> address = NULL;
+	delete_data (&data);
+
+	display_list (new_list);
+
+	//insert_all_into_list (list, new_list);
+
+//	display_list (list);
+
+	delete_list (&new_list);
+
+
 
 /*
 void insert_data_into_list (List* list, void* data);

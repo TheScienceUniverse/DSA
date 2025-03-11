@@ -77,7 +77,7 @@ void display_data (Data* data) {
 
 	if (data -> address == NULL) {
 		// perror ("Address does not exist to display!");
-		printf ("N/A");
+		printf ("---");
 		return;
 	}
 
@@ -115,14 +115,29 @@ void display_data_properties (Data* data) {
 		exit (1);
 	}
 
+	if (data -> address == NULL) {
+		// perror ("Address does not exist to display!");
+		printf ("---");
+		return;
+	}
+
 	switch (data -> type) {
+		case DT_Undefined:
+			printf ("Data (Undefined)\n");
+			break;
+		case DT_Address:
+			printf ("Data (Address): %p\n", data -> address);
+			break;
+		case DT_Character:
+			printf ("Data (Character): %c", *((char*) data -> address));
+			break;
 		case DT_Binary:
-			printf ("Data (Binary) : ");
+			printf ("Data (Binary): ");
 			display_binary_data (data -> size, (BYTE*) data -> address);
 			printf ("\n");
 			break;
 		case DT_Integer:
-			printf ("Data (Integer) : %d\n", *((int*) data -> address));
+			printf ("Data (Integer): %d\n", *((int*) data -> address));
 			break;
 		case DT_String:
 			printf ("Data (String) [%zu]: ", data -> size);

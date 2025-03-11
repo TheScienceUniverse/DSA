@@ -253,8 +253,8 @@ void copy_data (Data* src_data, Data* dst_data) {
 		return;
 	}
 
-	if (NULL != src_data -> address) {
-		// ERASE (&(data -> address), data -> size);
+	if (NULL != dst_data -> address) {
+		ERASE (&(dst_data -> address), dst_data -> size);
 	}
 
 	dst_data -> type = src_data -> type;

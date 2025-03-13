@@ -20,7 +20,6 @@ List* create_list (size_t item_count) {
 	}
 
 	set_list_chunk_cap_count (item_count, &chunk_capacity, &chunk_count);
-	// printf ("calculated chunk capacity %lu and count %lu\n", chunk_capacity, chunk_count);
 
 	list -> head_chunk = create_chunk (0, chunk_capacity);	// default chunk
 	list -> tail_chunk = list -> head_chunk;
@@ -296,26 +295,28 @@ void insert_into_list_at_index (List* list, Data* data, size_t index) {
 		list -> tail_chunk = chunk;
 	}
 
-	size_t list_data_index = list -> item_count - 1;
+	size_t list_data_index = list -> item_count;
 	size_t chunk_data_index = chunk -> data_count;
+	Data* left_data = NULL;
 	Data* right_data = chunk -> first_data_address + chunk_data_index--;
-	Data* left_data = chunk -> first_data_address + chunk_data_index--;
 
-	for ( ; list_data_index >= index; list_data_index--) {
-		copy_data (left_data, right_data);
-
-		right_data = left_data;	// pointer exchange
-
-		if (0 == chunk_data_index) {
+	for ( ; list_data_index > index; list_data_index--) {
+		if (
+			0 == chunk_data_index
+			|| chunk -> capacity < chunk_data_index
+		) {
 			chunk = chunk -> previous_chunk;
 			chunk_data_index = chunk -> data_count - 1;
 		}
 
 		left_data = chunk -> first_data_address + chunk_data_index--;
+		copy_data (left_data, right_data);
+		right_data = left_data;	// pointer exchange
 	}
 
 	copy_data (data, right_data);
-	chunk -> data_count++;
+
+	list -> tail_chunk -> data_count++;
 	list -> item_count++;
 }
 
@@ -346,4 +347,36 @@ void insert_all_into_list (List* list, List* from_list) {
 	}
 
 	printf ("\n");
+}
+
+void insert_all_into_list_from_index (List* list, List* from_list, size_t from_index) {
+	if (NULL == list) {
+		perror ("List does not exist to insert data at index!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (NULL == from_list) {
+		perror ("New list does not exist to insert from, from index!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (from_index >= list -> item_count) {
+		perror ("Index out of bound to insert data into list at index!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	size_t list_data_index = 0;
+	size_t chunk_data_index = 0;
+	Chunk* chunk = from_list -> head_chunk;
+	Data* chunk_data = NULL;
+
+	for ( ; list_data_index < from_list -> item_count; list_data_index++) {
+		chunk_data = chunk -> first_data_address + chunk_data_index++;
+		insert_into_list_at_index (list, chunk_data, from_index++);
+
+		if (chunk -> data_count == chunk_data_index) {
+			chunk_data_index = 0;
+			chunk = chunk -> next_chunk;
+		}
+	}
 }

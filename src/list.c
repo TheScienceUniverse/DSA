@@ -380,3 +380,47 @@ void insert_all_into_list_from_index (List* list, List* from_list, size_t from_i
 		}
 	}
 }
+
+List* get_sub_list (List* list, size_t start_index, size_t end_index) {
+	if (NULL == list) {
+		perror ("List does not exist to create sub-list!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (start_index > list -> item_count) {
+		perror ("Start index out of bound to create sub-list!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (end_index > list -> item_count) {
+		perror ("End index out of bound to create sub-list!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	List* sub_list = create_list (list -> head_chunk -> capacity / 2);	// to reduce the chunk size
+	size_t list_data_index = 0;
+	size_t chunk_data_index = 0;
+	Chunk* chunk = list -> head_chunk;
+	Data* chunk_data = NULL;
+
+	// move to start position
+	for ( ; list_data_index < start_index; list_data_index++) {
+		if (chunk -> data_count == chunk_data_index++) {
+			chunk_data_index = 0;
+			chunk = chunk -> next_chunk;
+		}
+	}
+
+	// start copying data
+	for ( ; list_data_index <= end_index; list_data_index++) {
+		chunk_data = chunk -> first_data_address + chunk_data_index++;
+		insert_data_into_list (sub_list, chunk_data);
+
+		if (chunk -> data_count == chunk_data_index) {
+			chunk_data_index = 0;
+			chunk = chunk -> next_chunk;
+		}
+	}
+
+	return sub_list;
+}

@@ -98,7 +98,7 @@ void test_list (void) {
 	data -> size = sizeof (char);
 	data -> address = &c;
 	
-	for (c = 0; c < 10; c++) {
+	for ( ; c < 'k'; c++) {
 		insert_data_into_list (new_list, data);
 	}
 
@@ -107,9 +107,9 @@ void test_list (void) {
 
 	display_list (new_list);
 
-	//insert_all_into_list (list, new_list);
+	insert_all_into_list_from_index (list, new_list, 10);
 
-//	display_list (list);
+	display_list (list);
 
 	delete_list (&new_list);
 

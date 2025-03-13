@@ -31,5 +31,6 @@ size_t get_first_list_index_of_data (List* list , Data* data);
 size_t get_last_list_index_of_data (List* list , Data* data);
 void insert_into_list_at_index (List* list, Data* data, size_t index);
 void insert_all_into_list (List* original_list, List* source_list);
+void insert_all_into_list_from_index (List* list, List* from_list, size_t from_index);
 
 #endif	// LIST_H

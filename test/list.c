@@ -61,13 +61,13 @@ void test_list (void) {
 	char* test_str = "XOXOX";
 	data = create_data (DT_String, 5, test_str);
 
-	insert_into_list_at_index (list, data, 5);
+	insert_into_list_at_index (list, data, 10);
 	display_list (list);
 
 	delete_data (&data);
 
 
-	List* new_list = create_list (10);
+	List* test_list = create_list (10);
 
 	data = create_empty_data ();
 	data -> type = DT_Integer;
@@ -75,22 +75,22 @@ void test_list (void) {
 	data -> address = &i;
 	
 	for (i = 0; i > -100; i -= 10) {
-		insert_data_into_list (new_list, data);
+		insert_data_into_list (test_list, data);
 	}
 
 	data -> address = NULL;
 	delete_data (&data);
 
-	display_list (new_list);
+	display_list (test_list);
 
-	insert_all_into_list (list, new_list);
+	insert_all_into_list (list, test_list);
 
 	display_list (list);
 
-	delete_list (&new_list);
+	delete_list (&test_list);
 
 
-	new_list = create_list (10);
+	test_list = create_list (10);
 	char c = 'a';
 
 	data = create_empty_data ();
@@ -99,21 +99,24 @@ void test_list (void) {
 	data -> address = &c;
 	
 	for ( ; c < 'k'; c++) {
-		insert_data_into_list (new_list, data);
+		insert_data_into_list (test_list, data);
 	}
 
 	data -> address = NULL;
 	delete_data (&data);
 
-	display_list (new_list);
+	display_list (test_list);
 
-	insert_all_into_list_from_index (list, new_list, 10);
+	insert_all_into_list_from_index (list, test_list, 20);
 
 	display_list (list);
 
-	delete_list (&new_list);
+	delete_list (&test_list);
 
 
+	test_list = get_sub_list (list, 10, 20);
+	display_list (test_list);
+	delete_list (&test_list);
 
 /*
 void insert_data_into_list (List* list, void* data);

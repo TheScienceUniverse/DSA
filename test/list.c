@@ -104,17 +104,26 @@ void test_list (void) {
 
 	data -> address = NULL;
 	delete_data (&data);
-
 	display_list (test_list);
 
 	insert_all_into_list_from_index (list, test_list, 20);
-
 	display_list (list);
-
 	delete_list (&test_list);
 
-
 	test_list = get_sub_list (list, 10, 20);
+	display_list (test_list);
+	delete_list (&test_list);
+
+	delete_from_list_at_index (list, 10);
+	display_list (list);
+
+	data = remove_from_list_at_index (list, 25);
+	display_list (list);
+	display_data_properties (data);
+	delete_data (&data);
+
+	test_list = get_sub_list (list, 0, 30);
+	clear_list (test_list);
 	display_list (test_list);
 	delete_list (&test_list);
 

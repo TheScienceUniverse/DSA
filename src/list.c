@@ -424,3 +424,135 @@ List* get_sub_list (List* list, size_t start_index, size_t end_index) {
 
 	return sub_list;
 }
+
+void delete_from_list_at_index (List* list, size_t index) {
+	if (NULL == list) {
+		perror ("List does not exist to delete data from index!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (index > list -> item_count) {
+		perror ("Index out of bound to delete data from index!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	size_t list_data_index = 0;
+	size_t chunk_data_index = 0;
+	Chunk* chunk = list -> head_chunk;
+	Data* left_data = NULL;
+	Data* right_data = NULL;
+
+	// move to start position
+	for ( ; list_data_index < index; list_data_index++) {
+		if (chunk -> data_count == chunk_data_index++) {
+			chunk_data_index = 0;
+			chunk = chunk -> next_chunk;
+		}
+	}
+
+	left_data = chunk -> first_data_address + chunk_data_index;
+
+	// start copying data
+	for ( ; list_data_index < list -> item_count; list_data_index++) {
+
+		if (chunk -> data_count == chunk_data_index) {
+			chunk_data_index = 0;
+			chunk = chunk -> next_chunk;
+		}
+
+		right_data = chunk -> first_data_address + chunk_data_index++;
+		copy_data (right_data, left_data);
+		left_data = right_data;
+	}
+
+	chunk -> data_count--;
+	list -> item_count--;
+
+	if (
+		0 == chunk -> data_count
+		&& 0 != chunk -> id
+	) {
+		list -> tail_chunk = reduce_chunk (chunk);
+	}
+}
+
+Data* remove_from_list_at_index (List* list, size_t index) {
+	if (NULL == list) {
+		perror ("List does not exist to delete data from index!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (index > list -> item_count) {
+		perror ("Index out of bound to delete data from index!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	size_t list_data_index = 0;
+	size_t chunk_data_index = 0;
+	Chunk* chunk = list -> head_chunk;
+	Data* left_data = NULL;
+	Data* right_data = NULL;
+	Data* index_data = NULL;
+
+	// move to start position
+	for ( ; list_data_index < index; list_data_index++) {
+		if (chunk -> data_count == chunk_data_index++) {
+			chunk_data_index = 0;
+			chunk = chunk -> next_chunk;
+		}
+	}
+
+	left_data = chunk -> first_data_address + chunk_data_index;
+	index_data = duplicate_data (left_data);
+
+	// start copying data
+	for ( ; list_data_index < list -> item_count; list_data_index++) {
+
+		if (chunk -> data_count == chunk_data_index) {
+			chunk_data_index = 0;
+			chunk = chunk -> next_chunk;
+		}
+
+		right_data = chunk -> first_data_address + chunk_data_index++;
+		copy_data (right_data, left_data);
+		left_data = right_data;
+	}
+
+	empty_data (right_data);
+
+	chunk -> data_count--;
+	list -> item_count--;
+
+	if (
+		0 == chunk -> data_count
+		&& 0 != chunk -> id
+	) {
+		list -> tail_chunk = reduce_chunk (chunk);
+	}
+
+	return index_data;
+}
+
+void clear_list (List* list) {
+	if (NULL == list) {
+		perror ("List does not exist to delete data from index!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	size_t list_data_index = 0;
+	size_t chunk_data_index = 0;
+	Chunk* chunk = list -> head_chunk;
+	Data* data = NULL;
+
+	for ( ; list_data_index < list -> item_count; list_data_index++) {
+		data = chunk -> first_data_address + chunk_data_index++;
+		empty_data (data);
+
+		if (chunk -> data_count == chunk_data_index) {
+			chunk_data_index = 0;
+			chunk = chunk -> next_chunk;
+		}
+	}
+
+	list -> item_count = 0;
+}

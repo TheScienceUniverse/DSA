@@ -33,5 +33,8 @@ void insert_into_list_at_index (List* list, Data* data, size_t index);
 void insert_all_into_list (List* original_list, List* source_list);
 void insert_all_into_list_from_index (List* list, List* from_list, size_t from_index);
 List* get_sub_list (List* list, size_t start_index, size_t end_index);
+void delete_from_list_at_index (List* list, size_t index);
+Data* remove_from_list_at_index (List* list, size_t index);
+void clear_list (List* list);
 
 #endif	// LIST_H

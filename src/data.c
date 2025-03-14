@@ -129,7 +129,7 @@ void display_data_properties (Data* data) {
 			printf ("Data (Address): %p\n", data -> address);
 			break;
 		case DT_Character:
-			printf ("Data (Character): %c", *((char*) data -> address));
+			printf ("Data (Character): %c\n", *((char*) data -> address));
 			break;
 		case DT_Binary:
 			printf ("Data (Binary): ");

@@ -556,3 +556,130 @@ void clear_list (List* list) {
 
 	list -> item_count = 0;
 }
+
+void delete_first_instance_from_list (List* list, Data* data) {
+	if (NULL == list) {
+		perror ("List does not exist to delete data from index!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (NULL == data) {
+		perror ("Data does not exist to search an delete from list!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	size_t list_data_index = 0;
+	size_t chunk_data_index = 0;
+	Chunk* chunk = list -> head_chunk;
+	Data* left_data = NULL;
+	Data* right_data = NULL;
+	Compare_Status cmp_stat;
+
+	// move to first instance position
+	for ( ; list_data_index < list -> item_count; list_data_index++) {
+		left_data = chunk -> first_data_address + chunk_data_index;
+		cmp_stat = compare_data (left_data, data);
+
+		if (
+			Cmp_Identical == cmp_stat
+			|| Cmp_Equivalent == cmp_stat
+		) {
+			break;
+		}
+
+		if (chunk -> capacity == chunk_data_index++) {
+			chunk_data_index = 0;
+			chunk = chunk -> next_chunk;
+		}
+	}
+
+	// start copying data
+	for ( ; list_data_index < list -> item_count; list_data_index++) {
+
+		if (chunk -> capacity == chunk_data_index) {
+			chunk_data_index = 0;
+			chunk = chunk -> next_chunk;
+		}
+
+		right_data = chunk -> first_data_address + chunk_data_index++;
+		copy_data (right_data, left_data);
+		left_data = right_data;
+	}
+
+	empty_data (right_data);
+
+	chunk -> data_count--;
+	list -> item_count--;
+
+	if (
+		0 == chunk -> data_count
+		&& 0 != chunk -> id
+	) {
+		list -> tail_chunk = reduce_chunk (chunk);
+	}
+}
+
+void delete_last_instance_from_list (List* list, Data* data) {
+	if (NULL == list) {
+		perror ("List does not exist to delete data from index!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (NULL == data) {
+		perror ("Data does not exist to search an delete from list!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	Chunk* chunk = list -> tail_chunk;
+	size_t list_data_index = list -> item_count - 1;
+	size_t chunk_data_index = chunk -> data_count - 1;
+	Data* left_data = NULL;
+	Data* right_data = NULL;
+	Compare_Status cmp_stat;
+
+	// move to last instance position
+	for ( ; list_data_index > 0; list_data_index--) {
+		left_data = chunk -> first_data_address + chunk_data_index;
+		cmp_stat = compare_data (left_data, data);
+
+		if (
+			Cmp_Identical == cmp_stat
+			|| Cmp_Equivalent == cmp_stat
+		) {
+			break;
+		}
+
+		if (chunk -> capacity == chunk_data_index--) {
+			chunk_data_index = 0;
+			chunk = chunk -> next_chunk;
+		}
+	}
+
+	printf ("idx=%lu\n", chunk_data_index);
+
+	// start copying data
+	for ( ; list_data_index < list -> item_count; list_data_index++) {
+
+		if (chunk -> capacity == chunk_data_index) {
+			chunk_data_index = 0;
+			chunk = chunk -> next_chunk;
+		}
+
+		right_data = chunk -> first_data_address + chunk_data_index++;
+		copy_data (right_data, left_data);
+		left_data = right_data;
+	}
+
+	empty_data (right_data);
+
+	chunk -> data_count--;
+	list -> item_count--;
+
+	if (
+		0 == chunk -> data_count
+		&& 0 != chunk -> id
+	) {
+		list -> tail_chunk = reduce_chunk (chunk);
+	}
+
+}

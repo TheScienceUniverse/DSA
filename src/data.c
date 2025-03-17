@@ -70,20 +70,20 @@ Data* duplicate_data (Data* data) {
 
 void display_data (Data* data) {
 	if (data == NULL) {
-		// perror ("Data does not exist to display!");
 		printf ("(nil)");
 		return;
 	}
 
 	if (data -> address == NULL) {
-		// perror ("Address does not exist to display!");
-		printf ("---");
-		return;
+		data -> type = DT_Empty;
 	}
 
 	switch (data -> type) {
 		case DT_Undefined:
 			printf ("N/A");
+			break;
+		case DT_Empty:
+			printf ("---");
 			break;
 		case DT_Address:
 			printf ("%p", data -> address);
@@ -111,19 +111,20 @@ void display_data (Data* data) {
 
 void display_data_properties (Data* data) {
 	if (data == NULL) {
-		perror ("Data is empty");
-		exit (1);
+		perror ("Data does not exist\n");
+		return;
 	}
 
 	if (data -> address == NULL) {
-		// perror ("Address does not exist to display!");
-		printf ("---");
-		return;
+		data -> type = DT_Empty;
 	}
 
 	switch (data -> type) {
 		case DT_Undefined:
 			printf ("Data (Undefined)\n");
+			break;
+		case DT_Empty:
+			printf ("Data (Empty)\n");
 			break;
 		case DT_Address:
 			printf ("Data (Address): %p\n", data -> address);

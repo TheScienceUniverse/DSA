@@ -356,3 +356,23 @@ Data* create_empty_data (void) {
 
 	return data;
 }
+
+void swap_data (Data* data_1, Data* data_2) {
+	if (data_1 == data_2) {
+		return;
+	}
+
+	if (NULL == data_1) {
+		perror ("Data-1 does not exist to swap!");
+		exit (EXIT_FAILURE);
+	}
+
+	if (NULL == data_2) {
+		perror ("Data-2 does not exist to swap!");
+		exit (EXIT_FAILURE);
+	}
+
+	Data* temp_data = data_1;
+	data_1 = data_2;
+	data_2 = temp_data;
+}

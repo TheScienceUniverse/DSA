@@ -134,7 +134,10 @@ void test_list (void) {
 	display_list (list);
 	delete_data (&data);
 
-
+	data = create_data (DT_String, 5, str);
+	delete_all_instances_from_list (list, data);
+	display_list (list);
+	delete_data (&data);
 /*
 void insert_data_into_list (List* list, void* data);
 size_t search_data_in_list (List* list, Data* data);

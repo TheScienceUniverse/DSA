@@ -38,5 +38,6 @@ Data* remove_from_list_at_index (List* list, size_t index);
 void clear_list (List* list);
 void delete_first_instance_from_list (List* list, Data* data);
 void delete_last_instance_from_list (List* list, Data* data);
+void delete_all_instances_from_list (List* list, Data* data);
 
 #endif	// LIST_H

@@ -681,5 +681,70 @@ void delete_last_instance_from_list (List* list, Data* data) {
 	) {
 		list -> tail_chunk = reduce_chunk (chunk);
 	}
+}
 
+void delete_all_instances_from_list (List* list, Data* data) {
+	if (NULL == list) {
+		perror ("List does not exist to delete data from index!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (NULL == data) {
+		perror ("Data does not exist to search an delete from list!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	Chunk* chunk = list -> head_chunk;
+	size_t list_data_index = 0;
+	size_t chunk_data_index = 0;
+	Data* left_data = NULL;
+	Data* right_data = NULL;
+	Compare_Status compare_status;
+	size_t instance_count = 0;
+	bool copy_flag = false;
+
+	for ( ; list_data_index < list -> item_count; list_data_index++) {
+		copy_flag = true;
+
+		left_data = chunk -> first_data_address + chunk_data_index;
+		compare_status = compare_data (data, left_data);
+
+		right_data = chunk -> first_data_address + chunk_data_index++ + instance_count;
+
+		compare_status = compare_data (data, right_data);
+
+		if (
+			Cmp_Identical == compare_status
+			|| Cmp_Equivalent == compare_status
+		) {
+			// empty_data (left_data);
+			copy_flag = false;
+			++instance_count;
+			--chunk_data_index;
+		}
+
+		if (
+			right_data != left_data
+			&& instance_count > 0
+			&& copy_flag
+		) {
+			copy_data (right_data, left_data);
+			empty_data (right_data);
+		}
+	}
+
+	for ( ; list_data_index < list -> item_count; list_data_index++) {
+		left_data = chunk -> first_data_address + chunk_data_index++;
+		empty_data (left_data);
+	}
+
+	chunk -> data_count -= instance_count;
+	list -> item_count -= instance_count;
+
+	if (
+		0 == chunk -> data_count
+		&& 0 != chunk -> id
+	) {
+		list -> tail_chunk = reduce_chunk (chunk);
+	}
 }

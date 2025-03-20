@@ -262,6 +262,10 @@ void** capture_data_addresses (Data* data) {
 }
 
 void copy_data (Data* src_data, Data* dst_data) {
+	if (dst_data == src_data) {
+		return;
+	}
+
 	if (NULL == src_data) {
 		perror ("Source Data does not exist to copy from!");
 		return;

@@ -40,5 +40,6 @@ void delete_first_instance_from_list (List* list, Data* data);
 void delete_last_instance_from_list (List* list, Data* data);
 void delete_all_instances_from_list (List* list, Data* data);
 bool is_list_empty (List* list);
+bool compare_lists (List* list_1, List* list_2);
 
 #endif	// LIST_H

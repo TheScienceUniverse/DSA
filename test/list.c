@@ -6,7 +6,7 @@ void test_list (void) {
 	List* list = create_list (100);
 //	display_chunk_properties (chunk);
 
-	uint16_t x = 0x0ff0;
+	uint16_t x = 0x37bf; // 0x0ff0;	// 3, 7, 11 (b), 16 (f)
 	int n = 0;
 	char* str = "Hello";
 	Data* data;
@@ -37,33 +37,39 @@ void test_list (void) {
 		delete_data (&data);
 	}
 
-	display_list (list);
-//	printf ("list item count: %lu\n", list -> item_count);
+	// display_list (list);
+	// printf ("list item count: %lu\n", list -> item_count);
 
 	TEST (30 == list -> item_count, "List filled with data");
 
 	data = create_data (DT_String, 5, str);
 	List* index_list = search_data_in_list (list, data);
-	delete_data (&data);
-
-	display_list (index_list);
+	// display_list (index_list);
+	TEST (NULL != index_list, "Received search index-list result");
+	TEST (10 == index_list -> item_count, "Matched count of searched data");
 	delete_list (&index_list);
-
-	data = get_list_data_at_index (list, 14);
-	display_data (data);
-	printf ("\n");
-
-//	printf ("first index: %lu\n", get_first_list_index_of_data (list, data));
-//	printf ("first index: %lu\n", get_last_list_index_of_data (list, data));
-
 	delete_data (&data);
+
+
+	data = get_list_data_at_index (list, 10);
+	TEST (NULL != data, "Fetched data with given index exists");
+	TEST (40 == *((int*)(data -> address)), "Fetched data matched with value");
+	// display_data (data);
+	delete_data (&data);
+
+
+	data = create_data (DT_String, 5, str);
+	TEST (2 == get_first_list_index_of_data (list, data), "Matched first index of given data");
+	TEST (30 == get_last_list_index_of_data (list, data), "Matched last index of given data");
+	delete_data (&data);
+
 
 	char* test_str = "XOXOX";
 	data = create_data (DT_String, 5, test_str);
-
 	insert_into_list_at_index (list, data, 10);
-	display_list (list);
-
+	Data* test_data = get_list_data_at_index (list, 10);
+	TEST (Cmp_Equivalent == compare_data (data, test_data), "Matched inserted data with expected data at position");
+	// display_list (list);
 	delete_data (&data);
 
 
@@ -81,11 +87,20 @@ void test_list (void) {
 	data -> address = NULL;
 	delete_data (&data);
 
-	display_list (test_list);
+	TEST (NULL != test_list, "Created test list");
+	TEST (10 == test_list -> item_count, "Created test list with expected number of data");
+	// display_list (test_list);
+
 
 	insert_all_into_list (list, test_list);
-
-	display_list (list);
+	TEST (40 == list -> item_count + test_list -> item_count, "Test list appended into the original list");
+	data = get_list_data_at_index (list, 31);
+	TEST (0 == *((int*)(data -> address)), "Checked inserted first data from list");
+	delete_data (&data);
+	data = get_list_data_at_index (list, 40);
+	TEST (-90 == *((int*)(data -> address)), "Checked inserted last data from list");
+	delete_data (&data);
+	// display_list (list);
 
 	delete_list (&test_list);
 
@@ -104,84 +119,84 @@ void test_list (void) {
 
 	data -> address = NULL;
 	delete_data (&data);
-	display_list (test_list);
+	// display_list (test_list);
+	TEST (NULL != test_list, "Created test list");
+	TEST (10 == test_list -> item_count, "Created test list with expected number of data");
+
 
 	insert_all_into_list_from_index (list, test_list, 20);
-	display_list (list);
-	delete_list (&test_list);
-
-	test_list = get_sub_list (list, 10, 20);
-	display_list (test_list);
-	delete_list (&test_list);
-
-	delete_from_list_at_index (list, 10);
-	display_list (list);
-
-	data = remove_from_list_at_index (list, 25);
-	display_list (list);
-	display_data_properties (data);
+	// display_list (list);
+	data = get_list_data_at_index (list, 20);
+	TEST ('a' == *((char*)(data -> address)), "Checked inserted list's first data from original list");
+	delete_data (&data);
+	data = get_list_data_at_index (list, 29);
+	TEST ('j' == *((char*)(data -> address)), "Checked inserted list's last data from original list");
 	delete_data (&data);
 
-	test_list = get_sub_list (list, 0, 30);
-	clear_list (test_list);
-	display_list (test_list);
 	delete_list (&test_list);
+
+
+	test_list = get_sub_list (list, 10, 20);
+	TEST (NULL != test_list, "Created test list");
+	TEST (11 == test_list -> item_count, "Created test list with expected number of data");
+	data = get_list_data_at_index (list, 10);
+	test_data = get_list_data_at_index (test_list, 0);
+	TEST (Cmp_Equivalent == compare_data (data, test_data), "Matched first data of sub-list to copy index from equivalent original list");
+	delete_data (&test_data);
+	delete_data (&data);
+	data = get_list_data_at_index (list, 19);
+	test_data = get_list_data_at_index (test_list, 10);
+	TEST (Cmp_Equivalent == compare_data (data, test_data), "Matched last data of sub-list to copy index from equivalent original list");
+	delete_data (&test_data);
+	delete_data (&data);
+	//display_list (test_list);
+	delete_list (&test_list);
+
+
+	delete_from_list_at_index (list, 10);
+	data = get_list_data_at_index (list, 10);
+	TEST ('g' != *((char*)(data -> address)), "Deleted data in the original list");
+	delete_data (&data);
+	// display_list (list);
+
+
+	test_data = get_list_data_at_index (list, 25);
+	data = remove_from_list_at_index (list, 25);
+	TEST (Cmp_Equivalent == compare_data (data, test_data), "Matched removed data from original list");
+	// display_list (list);
+	// display_data_properties (data);
+	delete_data (&data);
+	delete_data (&test_data);
+
+
+	test_list = get_sub_list (list, 0, 30);
+	TEST (0 != test_list -> item_count, "Checked item-count in sample list before clearing list");
+	clear_list (test_list);
+	TEST (0 == test_list -> item_count, "Checked item-count in sample list after clearing list");
+	// display_list (test_list);
+	delete_list (&test_list);
+
 
 	data = create_data (DT_String, 5, str);
 	delete_first_instance_from_list (list, data);
-	display_list (list);
+	// display_list (list);
 	delete_last_instance_from_list (list, data);
-	display_list (list);
+	// display_list (list);
 	delete_data (&data);
+
 
 	data = create_data (DT_String, 5, str);
 	delete_all_instances_from_list (list, data);
-	display_list (list);
+	// display_list (list);
 	delete_data (&data);
-/*
-void insert_data_into_list (List* list, void* data);
-size_t search_data_in_list (List* list, Data* data);
-bool remove_data_from_list (List* list, Data* address);
-*/
-/*	List* last_chunk = get_last_chunk (chunk);
-
-	TEST (NULL != last_chunk, "Last chunk exists");
-	TEST (0 < last_chunk -> id, "Data inserted into chunk");
-	TEST (59 == last_chunk -> id, "Last chunk id check");
-	TEST (10 == last_chunk -> data_count, "Last chunk filled with data");
-
-	for (int i = 0; i < 300; i++) {
-		data = delete_data_from_chunk (chunk);
-		// display_data (data);
-		delete_data (&data);
-	}
-
-	last_chunk = get_last_chunk (chunk);
-
-	TEST (NULL != last_chunk, "Last chunk exists");
-	TEST (29 == last_chunk -> id, "Last chunk id check");
-	TEST (0 < last_chunk -> id, "Data deleted from chunk");
-	TEST (10 == last_chunk -> data_count, "Last chunk filled with data");
-
-	for (int i = 0; i < 500; i++) {
-		data = delete_data_from_chunk (chunk);
-		// display_data (data);
-		delete_data (&data);
-	}
-
-	// display_linked_chunks (chunk);
-	last_chunk = get_last_chunk (chunk);
-
-	TEST (NULL != last_chunk, "Last chunk exists");
-	TEST (0 == last_chunk -> id, "Last chunk id check");
-	TEST (0 == last_chunk -> id, "All chunks empty");
-	TEST (0 == last_chunk -> data_count, "Last chunk empty");
-
-	delete_chunk (&chunk);
-*/
-//	printf("%lu\n", sysconf(_SC_PAGESIZE) / sizeof(void*));
 
 
+	TEST (true == is_list_empty (list), "List non-emptiness check");
+	delete_list (&list);
+
+
+	list = create_list (0);
+	TEST (true == is_list_empty (list), "List emptiness check");
 	delete_list (&list);
 
 	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [List]\n" RESET_STYLE);

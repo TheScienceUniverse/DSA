@@ -40,7 +40,9 @@ void delete_list (List** list_address) {
 		chunk = reduce_chunk (chunk);
 	}
 
-	delete_chunk (&chunk);
+	if (NULL != chunk) {
+		delete_chunk (&chunk);
+	}
 
 	list = NULL;
 	ERASE (list_address, sizeof (List));
@@ -345,8 +347,6 @@ void insert_all_into_list (List* list, List* from_list) {
 		data = chunk -> first_data_address + chunk_data_index++;
 		insert_data_into_list (list, data);
 	}
-
-	printf ("\n");
 }
 
 void insert_all_into_list_from_index (List* list, List* from_list, size_t from_index) {
@@ -655,8 +655,6 @@ void delete_last_instance_from_list (List* list, Data* data) {
 		}
 	}
 
-	printf ("idx=%lu\n", chunk_data_index);
-
 	// start copying data
 	for ( ; list_data_index < list -> item_count; list_data_index++) {
 
@@ -747,4 +745,8 @@ void delete_all_instances_from_list (List* list, Data* data) {
 	) {
 		list -> tail_chunk = reduce_chunk (chunk);
 	}
+}
+
+bool is_list_empty (List* list) {
+	return 0 == list -> item_count;
 }

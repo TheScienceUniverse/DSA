@@ -39,5 +39,6 @@ void clear_list (List* list);
 void delete_first_instance_from_list (List* list, Data* data);
 void delete_last_instance_from_list (List* list, Data* data);
 void delete_all_instances_from_list (List* list, Data* data);
+bool is_list_empty (List* list);
 
 #endif	// LIST_H

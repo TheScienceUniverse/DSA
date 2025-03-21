@@ -798,3 +798,37 @@ bool compare_lists (List* list_1, List* list_2) {
 
 	return compare_status;
 }
+
+bool does_list_contain_data (List* list, Data* data) {
+	if (NULL == list) {
+		perror ("List does not exist to search data from!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (NULL == data) {
+		perror ("Data does not exist to search inside list\n");
+		exit (EXIT_FAILURE);
+	}
+
+	Chunk* chunk = list -> head_chunk;
+	size_t list_data_index = 0;
+	size_t chunk_data_index = 0;
+	Data* list_data = NULL;
+	bool search_status = false;
+
+	for ( ; list_data_index < list -> item_count; list_data_index++) {
+		list_data = chunk -> first_data_address + chunk_data_index++;
+
+		if (Cmp_Different == compare_data (data, list_data)) {
+			search_status = true;
+			break;
+		}
+
+		if (chunk -> capacity == chunk_data_index) {
+			chunk_data_index = 0;
+			chunk = chunk -> next_chunk;
+		}
+	}
+
+	return search_status;
+}

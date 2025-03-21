@@ -224,6 +224,15 @@ void test_list (void) {
 
 	TEST (compare_lists (list, test_list), "Checked lists are equivalent or not");
 	delete_list (&test_list);
+
+
+	n += 10;
+	data = create_data (DT_Integer, sizeof (int), &n);
+	TEST (does_list_contain_data (list, data), "Found expected data");
+	*((int*)(data -> address)) = 1000;
+	TEST (does_list_contain_data (list, data), "Not found unexpected data");
+
+	delete_data (&data);
 	delete_list (&list);
 
 

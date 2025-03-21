@@ -199,5 +199,33 @@ void test_list (void) {
 	TEST (true == is_list_empty (list), "List emptiness check");
 	delete_list (&list);
 
+
+	list = create_list (30);
+	test_list = create_list (10);
+
+	for (i = 0; i < 10; i++) {
+		x ^= 0xffff;
+		data = create_data (DT_Binary, sizeof (uint16_t), &x);
+		insert_data_into_list (list, data);
+		insert_data_into_list (test_list, data);
+		delete_data (&data);
+
+		n += 10;
+		data = create_data (DT_Integer, sizeof (int), &n);
+		insert_data_into_list (list, data);
+		insert_data_into_list (test_list, data);
+		delete_data (&data);
+
+		data = create_data (DT_String, 5, str);
+		insert_data_into_list (list, data);
+		insert_data_into_list (test_list, data);
+		delete_data (&data);
+	}
+
+	TEST (compare_lists (list, test_list), "Checked lists are equivalent or not");
+	delete_list (&test_list);
+	delete_list (&list);
+
+
 	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [List]\n" RESET_STYLE);
 }

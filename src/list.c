@@ -750,3 +750,51 @@ void delete_all_instances_from_list (List* list, Data* data) {
 bool is_list_empty (List* list) {
 	return 0 == list -> item_count;
 }
+
+bool compare_lists (List* list_1, List* list_2) {
+	if (NULL == list_1) {
+		perror ("List-1 does not exist to compare with!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (NULL == list_2) {
+		perror ("List-2 does not exist to compare with!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (list_1 -> item_count != list_2 -> item_count) {
+		return false;
+	}
+
+	size_t total_item_count = list_1 -> item_count;
+	Chunk* chunk_1 = list_1 -> head_chunk;
+	Chunk* chunk_2 = list_2 -> head_chunk;
+	size_t list_data_index = 0;
+	size_t chunk_1_data_index = 0;
+	size_t chunk_2_data_index = 0;
+	Data* data_1 = NULL;
+	Data* data_2 = NULL;
+	bool compare_status = true;
+
+	for ( ; list_data_index < total_item_count; list_data_index++) {
+		data_1 = chunk_1 -> first_data_address + chunk_1_data_index++;
+		data_2 = chunk_2 -> first_data_address + chunk_2_data_index++;
+
+		if (Cmp_Different == compare_data (data_1, data_2)) {
+			compare_status = false;
+			break;
+		}
+
+		if (chunk_1 -> capacity == chunk_1_data_index) {
+			chunk_1_data_index = 0;
+			chunk_1 = chunk_1 -> next_chunk;
+		}
+
+		if (chunk_2 -> capacity == chunk_2_data_index) {
+			chunk_2_data_index = 0;
+			chunk_2 = chunk_2 -> next_chunk;
+		}
+	}
+
+	return compare_status;
+}

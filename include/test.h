@@ -38,6 +38,9 @@ void test_bare_list (void);
 #include "./list.h"
 void test_list (void);
 
+#include "./iterator.h"
+void test_iterator (void);
+
 #include "./node.h"
 void test_node (void);
 

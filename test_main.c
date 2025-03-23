@@ -7,6 +7,7 @@ int main (void) {
 	test_chunk ();
 	test_bare_list ();
 	test_list ();
+	test_iterator ();
 /*	test_node ();
 	test_linked_list ();
 	test_stack ();

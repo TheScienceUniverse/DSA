@@ -192,14 +192,14 @@ Data* get_list_data_at_index (List* list, size_t index) {
 
 	Data* data = NULL;
 	Chunk* chunk = list -> head_chunk;
-	size_t counter = chunk -> capacity;
+	size_t counter = 0;
 
 	while (index > counter + chunk -> capacity) {
 		chunk = chunk -> next_chunk;
 		counter += chunk -> capacity;
 	}
 
-	data = chunk -> first_data_address + (index);
+	data = chunk -> first_data_address + (index - counter);
 	return duplicate_data (data);
 }
 

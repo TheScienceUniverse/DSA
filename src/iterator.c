@@ -46,17 +46,47 @@ void display_iterator_details (Iterator* iterator) {
 }
 
 void update_iterator_stride (Iterator* iterator, ssize_t stride) {
-	if ((stride & 0x0fffffff) > (iterator -> list -> item_count)) {
-		perror ("Stride index out of bound\n");
-		exit (EXIT_FAILURE);
+	iterator -> stride = stride;
+
+	if (stride > 1024) {
+		iterator -> stride = 1024;
 	}
 
-	iterator -> stride = stride;
+	if (stride < -1024) {
+		iterator -> stride = -1024;
+	}
 }
 
 void move_iterator (Iterator* iterator) {
-	// ssize_t chunk_data_index = iterator -> chunk_data_index;
+	Chunk* chunk = iterator -> chunk;
+	ssize_t list_data_index = iterator -> list_data_index;
+	ssize_t chunk_data_index = iterator -> chunk_data_index;
+
+	ssize_t start_index = list_data_index;
+	ssize_t end_index = list_data_index + iterator -> stride;
+	size_t index_difference = iterator -> list_data_index + iterator -> stride;
+
+	if (end_index > start_index) {						// moving forward
+		while (index_difference > chunk -> capacity) {
+			index_difference -= chunk -> capacity;
+			chunk = chunk -> next_chunk;
+		}
+
+		chunk_data_index = index_difference;
+	} else {											// moving backward
+		// unable to calculate fast forward due to unavailability of left chunk's capacity information
+		for (ssize_t idx = start_index; idx > end_index; idx--) {
+			--chunk_data_index;
+
+			if (chunk_data_index == 0) {
+				chunk = chunk -> previous_chunk;
+				chunk_data_index = chunk -> capacity;
+			}
+		}
+	}
+
 	iterator -> list_data_index += iterator -> stride;
-	iterator -> chunk_data_index += iterator -> stride;
-	iterator -> data = iterator -> chunk -> first_data_address + iterator -> chunk_data_index;
+	iterator -> chunk_data_index = chunk_data_index;
+	iterator -> chunk = chunk;
+	iterator -> data = chunk -> first_data_address + chunk_data_index;
 }

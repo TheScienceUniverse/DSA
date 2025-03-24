@@ -20,12 +20,12 @@ void test_iterator (void) {
 	empty_data (data);
 	delete_data (&data);
 
-	display_list (list);
+//	display_list (list);
 
 	Iterator* iterator = create_iterator (list, +1);
 	TEST (NULL != iterator, "Created iterator");
 
-	display_iterator_details (iterator);
+//	display_iterator_details (iterator);
 
 
 	TEST (0 == iterator -> chunk -> id, "Matched chunk-id from iterator");
@@ -42,17 +42,29 @@ void test_iterator (void) {
 	update_iterator_stride (iterator, +5);
 	TEST (+5 == iterator -> stride, "Checked updated stride value");
 
+
 	data = get_list_data_at_index (list, 6);
 	move_iterator (iterator);
-	TEST (Cmp_Different != compare_data (data, iterator -> data), "Matched sixth (1 + 5) data from list and iterator");
+	TEST (Cmp_Different != compare_data (data, iterator -> data), "Matched step (1 + 5) data from list and iterator");
 	delete_data (&data);
 
-	data = get_list_data_at_index (list, 11);
-	display_data (data);
-/*	move_iterator (iterator);
-	TEST (Cmp_Different != compare_data (data, iterator -> data), "Matched 5th data from list and iterator");
+
+	data = get_list_data_at_index (list, 12);	// 1 + 5 + 6 > 10
+	update_iterator_stride (iterator, 6);
+	TEST (6 == iterator -> stride, "Matched updated stride (+6) from iterator");
+	move_iterator (iterator);
+	TEST (1 == iterator -> chunk -> id, "Matched expected forward chunk id (1) from iterator");
+	TEST (Cmp_Different != compare_data (data, iterator -> data), "Matched further data (6 + 6) from list and iterator");
 	delete_data (&data);
-*/
+
+
+	data = get_list_data_at_index (list, 7);	// 12 - 5 < 10
+	update_iterator_stride (iterator, -5);
+	TEST (-5 == iterator -> stride, "Matched updated stride (-5) from iterator");
+	move_iterator (iterator);
+	TEST (0 == iterator -> chunk -> id, "Matched expected backward chunk id (0) from iterator");
+	TEST (Cmp_Different != compare_data (data, iterator -> data), "Matched backward data (12 - 5) from list and iterator");
+	delete_data (&data);
 
 
 	delete_iterator (&iterator);

@@ -236,5 +236,18 @@ void test_list (void) {
 	delete_list (&list);
 
 
+	list = create_list (2);
+	// display_list (list);
+	n = -100;
+	data = create_data (DT_Integer, sizeof (int), &n);
+	TEST (2 == list -> head_chunk -> capacity, "Checked small list chunk size");
+	insert_data_into_list (list, data);
+	*((int*)(data -> address)) = +100;
+	insert_data_into_list (list, data);
+	TEST (2 == list -> item_count, "Matched small list item count");
+	// display_list (list);
+	delete_data (&data);
+	delete_list (&list);
+
 	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [List]\n" RESET_STYLE);
 }

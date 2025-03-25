@@ -71,6 +71,12 @@ void display_list_details (List* list) {
 }
 
 void set_list_chunk_cap_count (size_t item_count, size_t* chunk_capacity, size_t* chunk_count) {
+	if (2 == item_count) {
+		*chunk_capacity = 2;
+		*chunk_count = 1;
+		return;
+	}
+
 	const size_t MIN_CHUNK_CAP = 10;	// minimum chunk capacity
 	const size_t MAX_CHUNK_CAP = 1000;	// maximum chunk capacity
 

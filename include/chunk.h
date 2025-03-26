@@ -23,6 +23,7 @@ void delete_chunk (Chunk** chunk_address);
 void display_chunk_details (Chunk* chunk);
 void display_chunk (Chunk* chunk);
 Chunk* duplicate_chunk (Chunk* chunk);
+Compare_Status compare_chunks (Chunk* chunk_1, Chunk* chunk_2);
 void forget_chunk (Chunk** chunk_address);
 Chunk* extend_chunk (Chunk* chunk);		// returns last empty-chunk address
 Chunk* reduce_chunk (Chunk* chunk);		// returns last empty-chunk address

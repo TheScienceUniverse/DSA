@@ -122,24 +122,22 @@ void display_linked_chunks (Chunk* chunk) {
 	printf ("----------\n");
 }
 
-/*
 Chunk* duplicate_chunk (Chunk* old_chunk) {
 	if (old_chunk == NULL) {
 		perror ("Chunk does not exist to Duplicate!");
 		return NULL;
 	}
 
-	Chunk* new_chunk = create_chunk (old_chunk -> item_count);
+	Chunk* new_chunk = create_chunk (old_chunk -> id, old_chunk -> capacity);
 
-	if (new_chunk != NULL) {
-		for (size_t i = 0; i < new_chunk -> item_count; i++) {
-			*(new_chunk -> item_addresses + i) = *(old_chunk -> item_addresses + i);
-		}
+	for (size_t i = 0; i < new_chunk -> data_count; i++) {
+		*(new_chunk -> first_data_address + i) = *(old_chunk -> first_data_address + i);
 	}
 
 	return new_chunk;
 }
 
+/*
 void forget_chunk (Chunk** chunk_address) {
 	if (*chunk_address == NULL) {
 		perror ("Chunk does not exist to Forget!");
@@ -153,6 +151,37 @@ void forget_chunk (Chunk** chunk_address) {
 	}
 }
 */
+
+Compare_Status compare_chunks (Chunk* chunk_1, Chunk* chunk_2) {
+	if (chunk_1 == chunk_2) {
+		return Cmp_Identical;
+	}
+
+	if (NULL == chunk_1) {
+		perror ("Chunk-1 does not exist to compare with");
+		exit (EXIT_FAILURE);
+	}
+
+	if (NULL == chunk_2) {
+		perror ("Chunk-2 does not exist to compare with");
+		exit (EXIT_FAILURE);
+	}
+
+	if (chunk_1 -> data_count != chunk_2 -> data_count) {
+		return Cmp_Different;
+	}
+
+	Compare_Status cmp_stat = Cmp_Equivalent;
+
+	for (size_t i = 0; i < chunk_1 -> data_count; i++) {
+		if (Cmp_Different == compare_data (chunk_1 -> first_data_address + i, chunk_2 -> first_data_address + i)) {
+			cmp_stat = Cmp_Different;
+			break;
+		}
+	}
+
+	return cmp_stat;
+}
 
 Chunk* get_first_chunk (Chunk* chunk) {
 	if (NULL == chunk) {

@@ -68,6 +68,12 @@ void test_chunk (void) {
 	TEST (0 == last_chunk -> id, "All chunks empty");
 	TEST (0 == last_chunk -> data_count, "Last chunk empty");
 
+
+	Chunk* test_chunk = duplicate_chunk (chunk);
+	TEST (NULL != test_chunk, "Created duplicate chunk");
+	TEST (Cmp_Equivalent == compare_chunks (chunk, test_chunk), "Compared duplicated chunk");
+	delete_chunk (&test_chunk);
+
 	delete_chunk (&chunk);
 
 	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Chunk]\n" RESET_STYLE);

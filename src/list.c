@@ -70,6 +70,44 @@ void display_list_details (List* list) {
 	display_linked_chunks (chunk);
 }
 
+List* duplicate_list (List* old_list) {
+	if (NULL == old_list) {
+		perror ("Old List does not exist to duplicate list from!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	List* new_list = create_list (0);
+	Chunk* old_chunk = old_list -> head_chunk;
+	Chunk* new_chunk = new_list -> head_chunk;
+	Chunk* tmp_chunk;
+
+	while (old_chunk != NULL) {
+		tmp_chunk = duplicate_chunk (old_chunk);
+		old_chunk = old_chunk -> next_chunk;
+		tmp_chunk -> previous_chunk = new_chunk;
+
+		if (NULL == new_chunk) {
+			new_chunk = tmp_chunk;
+			continue;
+		}
+
+		if (NULL == new_list -> head_chunk) {
+			new_list -> head_chunk = new_chunk;
+		}
+
+		new_chunk -> next_chunk = tmp_chunk;
+		new_chunk = new_chunk -> next_chunk;
+
+	}
+
+	new_list -> tail_chunk = new_chunk;
+	new_list -> head_chunk -> previous_chunk = NULL;
+	new_list -> tail_chunk -> next_chunk = NULL;
+	new_list -> item_count = old_list -> item_count;
+
+	return new_list;
+}
+
 void set_list_chunk_cap_count (size_t item_count, size_t* chunk_capacity, size_t* chunk_count) {
 	if (2 == item_count) {
 		*chunk_capacity = 2;

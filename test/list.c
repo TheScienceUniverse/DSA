@@ -246,6 +246,17 @@ void test_list (void) {
 	insert_data_into_list (list, data);
 	TEST (2 == list -> item_count, "Matched small list item count");
 	// display_list (list);
+
+	*((int*)(data -> address)) = -200;
+	insert_data_into_list (list, data);
+	*((int*)(data -> address)) = +200;
+	insert_data_into_list (list, data);
+	// display_list (list);
+	test_list = duplicate_list (list);
+	// display_list (test_list);
+	TEST (Cmp_Equivalent == compare_lists (list, test_list), "Matched duplicate list with original list");
+	delete_list (&test_list);
+
 	delete_data (&data);
 	delete_list (&list);
 

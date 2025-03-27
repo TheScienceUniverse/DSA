@@ -129,9 +129,10 @@ Chunk* duplicate_chunk (Chunk* old_chunk) {
 	}
 
 	Chunk* new_chunk = create_chunk (old_chunk -> id, old_chunk -> capacity);
+	new_chunk -> data_count = old_chunk -> data_count;
 
-	for (size_t i = 0; i < new_chunk -> data_count; i++) {
-		*(new_chunk -> first_data_address + i) = *(old_chunk -> first_data_address + i);
+	for (size_t i = 0; i < new_chunk -> capacity; i++) {
+		copy_data (old_chunk -> first_data_address + i, new_chunk -> first_data_address + i);
 	}
 
 	return new_chunk;

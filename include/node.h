@@ -4,7 +4,7 @@
 // ---------- x ----------
 
 #include "data.h"
-#include "bare_list.h"
+#include "list.h"
 
 // ---------- x ----------
 
@@ -20,7 +20,7 @@ typedef enum NODE_TYPE {
 typedef struct NODE {
 	Node_Type type;
 	String* name;
-	Bare_List* address_list;
+	List* address_list;
 	Data* data;
 } Node;
 
@@ -30,9 +30,11 @@ Node* create_node (Node_Type type);
 Node* duplicate_node (Node* node);
 void delete_node (Node** node_address);
 void set_node_name (Node* node, size_t name_length, char* name_address);
+void set_node_data (Node* node, Data* data);
 void display_node (Node* node);
 void display_special_node (Node* node);
 void display_node_details (Node* node);
 void delete_temporary_node (Node** node_address);
+Compare_Status compare_nodes (Node* node_1, Node* node_2);
 
 #endif	// NODE_H

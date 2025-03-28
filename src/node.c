@@ -37,12 +37,13 @@ Node* duplicate_node (Node* node) {
 		return NULL;
 	}
 
-	Node* new_node = create_node (node -> type);
+	Node* new_node = create_node (N_Undefined);
 
-	if (new_node != NULL) {
-		new_node -> type = node -> type;
-		new_node -> name = duplicate_string (node -> name);
-		new_node -> data = duplicate_data (node -> data);
+	new_node -> type = node -> type;
+	new_node -> name = duplicate_string (node -> name);
+	new_node -> data = duplicate_data (node -> data);
+
+	if (N_Undefined != new_node -> type) {
 		new_node -> address_list = duplicate_list (node -> address_list);
 	}
 
@@ -58,8 +59,11 @@ void delete_node (Node** node_address) {
 	Node* node = *node_address;
 
 	delete_string (&node -> name);
-	delete_list (&node -> address_list);
 	delete_data (&node -> data);
+
+	if (N_Undefined != node -> type) {
+		delete_list (&node -> address_list);
+	}
 
 	node = NULL;
 	ERASE (node_address, sizeof (Node));
@@ -154,8 +158,12 @@ void display_node_details (Node* node) {
 	printf ("\") Data : (");
 	display_data (node -> data);
 	printf (") ");
-	display_list_addresses (node -> address_list);
-	//printf ("\n");
+
+	if (NULL != node -> address_list) {
+		display_list (node -> address_list);
+	}
+
+	printf ("\n");
 }
 
 void delete_temporary_node (Node** node_address) {
@@ -165,4 +173,36 @@ void delete_temporary_node (Node** node_address) {
 	forget_list (&(node -> address_list));
 
 	ERASE (node_address, sizeof (Node));
+}
+
+Compare_Status compare_nodes (Node* node_1, Node* node_2) {
+	if (node_1 == node_2) {
+		return Cmp_Identical;
+	}
+
+	if (NULL == node_1) {
+		perror ("Node-1 does not exist to compare");
+		exit (EXIT_FAILURE);
+	}
+
+	if (NULL == node_2) {
+		perror ("Node-2 does not exist to compare");
+		exit (EXIT_FAILURE);
+	}
+
+	Compare_Status cmp_stat = Cmp_Equivalent;
+
+	if (node_1 -> type != node_2 -> type) {
+		cmp_stat = Cmp_Different;
+	}
+
+	if (!are_strings_equal (node_1 -> name, node_2 -> name)) {
+		cmp_stat = Cmp_Different;
+	}
+
+	if (Cmp_Different == compare_data (node_1 -> data, node_2 -> data)) {
+		cmp_stat = Cmp_Different;
+	}
+
+	return cmp_stat;
 }

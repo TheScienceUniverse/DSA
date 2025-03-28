@@ -48,7 +48,18 @@ void delete_list (List** list_address) {
 	ERASE (list_address, sizeof (List));
 }
 
+void forget_list (List** list_address) {
+	if (NULL != list_address) {
+		list_address = NULL;
+	}
+}
+
 void display_list (List* list) {
+	if (NULL == list) {
+		perror ("List does not exist to Display!");
+		return;
+	}
+
 	if (list -> item_count == 0) {
 		perror ("List is Empty!");
 		return;
@@ -60,6 +71,11 @@ void display_list (List* list) {
 }
 
 void display_list_details (List* list) {
+	if (NULL == list) {
+		perror ("List does not exist to Display details!");
+		return;
+	}
+
 	if (list -> item_count == 0) {
 		perror ("List is Empty!");
 		return;

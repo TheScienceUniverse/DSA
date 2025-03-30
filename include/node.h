@@ -27,6 +27,7 @@ typedef struct NODE {
 // ---------- x ----------
 
 Node* create_node (Node_Type type);
+void prepare_node_address_list (Node* node);
 Node* duplicate_node (Node* node);
 void delete_node (Node** node_address);
 void set_node_name (Node* node, size_t name_length, char* name_address);

@@ -9,8 +9,8 @@ int main (void) {
 	test_list ();
 	test_iterator ();
 	test_node ();
-/*	test_linked_list ();
-	test_stack ();
+	test_linked_list ();
+/*	test_stack ();
 	test_queue ();
 	test_tree ();
 	test_graph ();

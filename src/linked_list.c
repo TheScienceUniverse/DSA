@@ -6,8 +6,8 @@ Linked_List *create_linked_list () {
 	if (linked_list != NULL) {
 		linked_list -> name = NULL;
 		linked_list -> size = 0;
-		linked_list -> first_node = NULL;
-		linked_list -> last_node = NULL;
+		linked_list -> head_node = NULL;
+		linked_list -> tail_node = NULL;
 	}
 
 	return linked_list;
@@ -21,14 +21,13 @@ void delete_linked_list (Linked_List** linked_list_address) {
 
 	Linked_List* linked_list = *linked_list_address;
 
-	Node* node = linked_list -> first_node;
-	Node* old_node;
+	Node* node = linked_list -> head_node;
+	Node* del_node;
 
-	while (node != NULL) {
-		old_node = node;
-		node = *(node -> address_list -> item_addresses + 1);
-		forget_bare_list (&(old_node -> address_list));
-		delete_node (&old_node);
+	for (size_t i = 0; i < linked_list -> size; i++) {
+		del_node = node;
+		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
+		delete_node (&del_node);
 	}
 
 	linked_list = NULL;
@@ -41,21 +40,22 @@ void display_linked_list (Linked_List* linked_list) {
 		return;
 	}
 
-	if (linked_list -> size == 0) {
-		perror ("Linked List is Empty to display!");
+	if (NULL == linked_list -> head_node) {
+		perror ("Linked-List node does not exist to display!\n");
 		return;
 	}
 
-	Node* node = linked_list -> first_node;
+	printf ("Linked-List :=> ");
 
-	while (node != NULL) {
-		display_node (node);
+	Node* node = linked_list -> head_node;
 
-		node = *(node -> address_list -> item_addresses + 1);
-
-		if (node  != NULL) {
-			printf (" -> ");
+	for (size_t i = 0; i < linked_list -> size; i++) {
+		if (i > 0) {
+			printf ("---");
 		}
+
+		display_node (node);
+		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
 	}
 
 	printf ("\n");
@@ -63,23 +63,22 @@ void display_linked_list (Linked_List* linked_list) {
 
 void display_linked_list_details (Linked_List* linked_list) {
 	if (linked_list == NULL) {
-		perror ("Linked List does not Exist to display!");
+		perror ("Linked List does not Exist to display details!");
 		return;
 	}
 
-	printf ("<Linked List>(%zu) :=\n", linked_list -> size);
-
-	if (linked_list -> size == 0) {
-		perror ("Linked List is Empty!");
+	if (NULL == linked_list -> head_node) {
+		perror ("Linked-List node does not exist to display details!\n");
 		return;
 	}
 
-	Node* node = linked_list -> first_node;
+	printf ("Linked-List :=>\n");
 
-	while (node != NULL) {
-		printf ("\t-> ");
+	Node* node = linked_list -> head_node;
+
+	for (size_t i = 0; i < linked_list -> size; i++) {
 		display_node_details (node);
-		node = *(node -> address_list -> item_addresses + 1);
+		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
 	}
 
 	printf ("\n");
@@ -87,121 +86,132 @@ void display_linked_list_details (Linked_List* linked_list) {
 
 void attach_node_at_last (Linked_List* linked_list, Node* node) {
 	if (linked_list == NULL) {
-		perror ("Empty list is given\n");
-		exit (1);
+		perror ("Linked-list does not exist to attah node at last\n");
+		exit (EXIT_FAILURE);
 	}
 
 	if (node == NULL) {
-		perror ("Empty node is given to add in Linked List\n");
-		exit (1);
+		perror ("Node does not exist to attach at last of linked-list\n");
+		exit (EXIT_FAILURE);
 	}
 
 	Node* new_node = duplicate_node (node);
 
-	if (new_node != NULL) {
-		*(new_node -> address_list -> item_addresses + 0) = linked_list -> last_node;
+	new_node -> address_list -> head_chunk -> first_data_address -> address = linked_list -> tail_node;
+
+	if (
+		NULL == linked_list -> head_node
+		|| NULL == linked_list -> tail_node
+	) {
+		linked_list -> head_node = new_node;
+		linked_list -> tail_node = new_node;
+		//continue;
 	}
 
-	if (linked_list -> first_node == NULL) {
-		linked_list -> first_node = new_node;
-		linked_list -> last_node = new_node;
-	} else {
-		*(linked_list -> last_node -> address_list -> item_addresses + 1) = new_node;
-		linked_list -> last_node = new_node;
-	}
+	Node* temp_node = linked_list -> tail_node;
 
-	++ linked_list -> size;																			// not guranteed -- to be fixed
+	(temp_node -> address_list -> head_chunk -> first_data_address + 1) -> address = new_node;
+
+	linked_list -> tail_node = new_node;
+
+	linked_list -> size++;
 }
 
 void attach_node_at_first (Linked_List* linked_list, Node* node) {
 	if (linked_list == NULL) {
-		perror ("Empty list is given\n");
-		exit (1);
+		perror ("Linked-list does not exist to attah node at last\n");
+		exit (EXIT_FAILURE);
 	}
 
 	if (node == NULL) {
-		perror ("Empty node is given to add in Linked List\n");
-		exit (1);
+		perror ("Node does not exist to attach at last of linked-list\n");
+		exit (EXIT_FAILURE);
 	}
 
 	Node* new_node = duplicate_node (node);
 
+	(new_node -> address_list -> head_chunk -> first_data_address + 1) -> address = linked_list -> head_node;
+
 	if (
-		new_node != NULL																			// to check if new node is created
-		&& new_node -> type != N_Tree																// don't overwrite addresses for tree node
+		NULL == linked_list -> head_node
+		|| NULL == linked_list -> tail_node
 	) {
-		*(new_node -> address_list -> item_addresses + 1) = linked_list -> first_node;
+		linked_list -> head_node = new_node;
+		linked_list -> tail_node = new_node;
+		//continue;
 	}
 
-	if (linked_list -> first_node == NULL) {
-		linked_list -> first_node = new_node;
-		linked_list -> last_node = new_node;
-	} else {
-		*(linked_list -> first_node -> address_list -> item_addresses + 0) = new_node;
-		linked_list -> first_node = new_node;
-	}
+	Node* temp_node = linked_list -> head_node;
 
-	++ linked_list -> size;																			// not guranteed -- to be fixed
+	(temp_node -> address_list -> head_chunk -> first_data_address + 0) -> address = new_node;
+
+	linked_list -> head_node = new_node;
+
+	linked_list -> size++;
 }
 
-void detach_node_from_first (Linked_List* linked_list, bool node_delete_needed) {
-	Node* node;
-
+Node* detach_head_from_linked_list (Linked_List* linked_list) {
 	if (linked_list == NULL) {
 		perror ("Linked List does not Exist to detach node from!");
-		exit (1);
+		exit (EXIT_FAILURE);
 	}
 
 	if (linked_list -> size == 0) {
 		perror ("Linked List is Empty to detach node from!\n");
-		return;
+		return NULL;
 	}
 
-	if (linked_list -> first_node == linked_list -> last_node) {
-		linked_list -> size = 0;
-		linked_list -> first_node = NULL;
-		linked_list -> last_node = NULL;
-		return;
-	}
-
-	node = linked_list -> first_node;																// keep first node address at hand
-	linked_list -> first_node = *(linked_list -> first_node -> address_list -> item_addresses + 1);	// node switch / hop
-	*(linked_list -> first_node -> address_list -> item_addresses + 0) = NULL;						// forget previous node address
-	-- linked_list -> size;																			// decrease node count
-
-	if (node_delete_needed) {
-		forget_bare_list (&(node -> address_list));
-		delete_node (&node);
-	}
-}
-
-void detach_node_from_last (Linked_List* linked_list, bool node_delete_needed) {
 	Node* node;
 
+	if (linked_list -> head_node == linked_list -> tail_node) {
+		linked_list -> size = 0;
+		node = linked_list -> head_node;
+		linked_list -> head_node = NULL;
+		linked_list -> tail_node = NULL;
+		return node;
+	}
+
+	node = linked_list -> head_node;
+	linked_list -> head_node = (linked_list -> head_node -> address_list -> head_chunk -> first_data_address + 1) -> address;
+	(linked_list -> head_node -> address_list -> head_chunk -> first_data_address + 0) -> address = NULL;
+
+	-- linked_list -> size;
+
+	(node -> address_list -> head_chunk -> first_data_address + 0) -> address = NULL;
+	(node -> address_list -> head_chunk -> first_data_address + 1) -> address = NULL;
+
+	return node;
+}
+
+Node* detach_tail_from_linked_list (Linked_List* linked_list) {
 	if (linked_list == NULL) {
-		perror ("Linked List does not exist to detach node from!");
-		exit (1);
+		perror ("Linked List does not Exist to detach node from!");
+		exit (EXIT_FAILURE);
 	}
 
 	if (linked_list -> size == 0) {
-		perror ("Linked List is empty to detach node from!");
-		return;
+		perror ("Linked List is Empty to detach node from!\n");
+		return NULL;
 	}
 
-	if (linked_list -> first_node == linked_list -> last_node) {
+	Node* node;
+
+	if (linked_list -> head_node == linked_list -> tail_node) {
 		linked_list -> size = 0;
-		linked_list -> first_node = NULL;
-		linked_list -> last_node = NULL;
-		return;
+		node = linked_list -> head_node;
+		linked_list -> head_node = NULL;
+		linked_list -> tail_node = NULL;
+		return node;
 	}
 
-	node = linked_list -> last_node;																// keep last node address at hand
-	linked_list -> last_node = *(linked_list -> last_node -> address_list -> item_addresses + 0);	// node switch / hop
-	*(linked_list -> last_node -> address_list -> item_addresses + 1) = NULL;						// forget next node address
-	-- linked_list -> size;																			// decrease node count
+	node = linked_list -> tail_node;
+	linked_list -> tail_node = (linked_list -> tail_node -> address_list -> head_chunk -> first_data_address + 0) -> address;
+	(linked_list -> tail_node -> address_list -> tail_chunk -> first_data_address + 1) -> address = NULL;
 
-	if (node_delete_needed) {
-		forget_bare_list (&(node -> address_list));
-		delete_node (&node);
-	}
+	-- linked_list -> size;
+
+	(node -> address_list -> head_chunk -> first_data_address + 0) -> address = NULL;
+	(node -> address_list -> head_chunk -> first_data_address + 1) -> address = NULL;
+
+	return node;
 }

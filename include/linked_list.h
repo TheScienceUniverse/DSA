@@ -10,8 +10,8 @@
 typedef struct LINKED_LIST {
 	String* name;
 	size_t size;
-	Node* first_node;
-	Node* last_node;
+	Node* head_node;
+	Node* tail_node;
 } Linked_List;
 
 // ---------- x ----------
@@ -22,7 +22,7 @@ void display_linked_list (Linked_List* linked_list);
 void display_linked_list_details (Linked_List* linked_list);
 void attach_node_at_first (Linked_List* linked_list, Node* node);
 void attach_node_at_last (Linked_List* linked_list, Node* node);
-void detach_node_from_first (Linked_List* linked_list, bool node_delete_needed);
-void detach_node_from_last (Linked_List* linked_list, bool node_delete_needed);
+Node* detach_head_from_linked_list (Linked_List* linked_list);
+Node* detach_tail_from_linked_list (Linked_List* linked_list);
 
 #endif	// LINKED_LIST_H

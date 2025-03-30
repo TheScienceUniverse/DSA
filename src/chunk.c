@@ -24,7 +24,7 @@ Chunk* create_chunk (size_t chunk_id, size_t capacity) {
 
 	if (chunk -> first_data_address == NULL) {
 		perror ("Unable to allocate memory!\n");
-		exit (1);
+		exit (EXIT_FAILURE);
 	}
 
 	return chunk;
@@ -59,19 +59,15 @@ void delete_chunk (Chunk** chunk_address) {
 	ERASE (chunk_address, sizeof (Chunk));
 }
 
-void display_chunk_details (Chunk* chunk) {
+void display_chunk (Chunk* chunk) {
 	if (chunk == NULL) {
-		perror ("Chunk does not exist!");
+		perror ("Chunk does not exist to display!");
 		return;
 	}
 
 	Data* data;
 
-	printf ("Chunk id = %lu\n", chunk -> id);
-	printf ("Chunk capacity = %lu\n", chunk -> capacity);
-	printf ("Chunk data count = %lu\n", chunk -> data_count);
-
-	printf ("Chunk data list: [ ");
+	printf ("[ ");
 
 	for (size_t i = 0; i < chunk -> capacity; i++) {
 		data = chunk -> first_data_address + i;
@@ -83,12 +79,12 @@ void display_chunk_details (Chunk* chunk) {
 		display_data (data);
 	}
 
-	printf (" ]\n");
+	printf (" ]");
 }
 
-void display_chunk (Chunk* chunk) {
+void display_chunk_details (Chunk* chunk) {
 	if (chunk == NULL) {
-		perror ("Chunk does not exist!");
+		perror ("Chunk does not exist to display details!");
 		return;
 	}
 
@@ -109,7 +105,7 @@ void display_chunk (Chunk* chunk) {
 	printf (" ]\n");
 }
 
-void display_linked_chunks (Chunk* chunk) {
+void display_linked_chunks_guarded (Chunk* chunk) {
 	Chunk* c = chunk;
 
 	printf ("----------\n");
@@ -118,8 +114,23 @@ void display_linked_chunks (Chunk* chunk) {
 		display_chunk (c);
 		c = c -> next_chunk;
 	}
-	
+
 	printf ("----------\n");
+}
+
+void display_linked_chunks (Chunk* chunk) {
+	Chunk* c = chunk;
+	bool multiple = false;
+
+	while (c != NULL) {
+		if (multiple) {
+			printf ("---");
+		}
+
+		display_chunk (c);
+		c = c -> next_chunk;
+		multiple = true;
+	}
 }
 
 Chunk* duplicate_chunk (Chunk* old_chunk) {

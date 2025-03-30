@@ -74,7 +74,10 @@ void display_data (Data* data) {
 		return;
 	}
 
-	if (data -> address == NULL) {
+	if (
+		DT_Address != data -> type
+		&& data -> address == NULL
+	) {
 		data -> type = DT_Empty;
 	}
 
@@ -115,39 +118,44 @@ void display_data_properties (Data* data) {
 		return;
 	}
 
-	if (data -> address == NULL) {
+	if (
+		DT_Address != data -> type
+		&& data -> address == NULL
+	) {
 		data -> type = DT_Empty;
 	}
 
+	printf ("Data :=> ");
+
 	switch (data -> type) {
 		case DT_Undefined:
-			printf ("Data (Undefined)\n");
+			printf ("(Undefined)");
 			break;
 		case DT_Empty:
-			printf ("Data (Empty)\n");
+			printf ("(Empty)");
 			break;
 		case DT_Address:
-			printf ("Data (Address): %p\n", data -> address);
+			printf ("(Address): %p", data -> address);
 			break;
 		case DT_Character:
-			printf ("Data (Character): %c\n", *((char*) data -> address));
+			printf ("(Character): %c", *((char*) data -> address));
 			break;
 		case DT_Binary:
-			printf ("Data (Binary): ");
+			printf ("(Binary): ");
 			display_binary_data (data -> size, (BYTE*) data -> address);
-			printf ("\n");
 			break;
 		case DT_Integer:
-			printf ("Data (Integer): %d\n", *((int*) data -> address));
+			printf ("(Integer): %d", *((int*) data -> address));
 			break;
 		case DT_String:
-			printf ("Data (String) [%zu]: ", data -> size);
+			printf ("(String) [%zu]: ", data -> size);
 			display_raw_string (data -> size, (char*) data -> address);
-			printf ("\n");
 			break;
 		default:
 			break;
 	}
+
+	printf ("\n");
 }
 
 void display_binary_data (size_t size, BYTE* address) {
@@ -284,6 +292,12 @@ void copy_data (Data* src_data, Data* dst_data) {
 	dst_data -> size = src_data -> size;
 
 	free (dst_data -> address);
+
+	if (NULL == src_data -> address) {
+		dst_data -> address = NULL;
+		return;
+	}
+
 	dst_data -> address = malloc (src_data -> size);
 	copy_byte_stream (src_data -> size, src_data -> address, dst_data -> address);
 }

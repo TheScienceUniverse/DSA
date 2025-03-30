@@ -28,7 +28,38 @@ Node* create_node (Node_Type type) {
 		}
 	}
 
+	if (N_Undefined != node -> type) {
+		prepare_node_address_list (node);
+	}
+
 	return node;
+}
+
+void prepare_node_address_list (Node* node) {
+	if (NULL == node) {
+		perror ("Node does not exist to prepare address list!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	List* list = node -> address_list;
+
+	if (NULL == list) {
+		perror ("Node's address list does not exist to prepare!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	Chunk* chunk = list -> head_chunk;
+
+	if (NULL == chunk) {
+		perror ("Node's address-list's chunk does not exist to prepare!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	Data* default_data = create_data (DT_Address, sizeof (Node*), NULL);
+
+	for (size_t i = 0; i < chunk -> capacity; i++) {
+		copy_data (default_data, chunk -> first_data_address + i);
+	}
 }
 
 Node* duplicate_node (Node* node) {
@@ -37,13 +68,11 @@ Node* duplicate_node (Node* node) {
 		return NULL;
 	}
 
-	Node* new_node = create_node (N_Undefined);
-
-	new_node -> type = node -> type;
+	Node* new_node = create_node (node -> type);
 	new_node -> name = duplicate_string (node -> name);
 	new_node -> data = duplicate_data (node -> data);
 
-	if (N_Undefined != new_node -> type) {
+	if (NULL != node -> address_list) {
 		new_node -> address_list = duplicate_list (node -> address_list);
 	}
 
@@ -116,7 +145,13 @@ void display_special_node (Node* node) {
 	}
 
 	printf ("**(");
-	display_string (node -> name);
+
+	if (NULL != node -> name) {
+		display_string (node -> name);
+	} else {
+		printf ("anonymous");	
+	}
+
 	printf (")**\n");
 }
 
@@ -126,40 +161,47 @@ void display_node_details (Node* node) {
 		return;
 	}
 
-	printf ("Type : (");
+	printf ("Node :=> Type: (");
 
 	switch (node -> type) {
 		case N_Undefined:
-			printf ("Undefined Node");
+			printf ("Undefined");
 			break;
 		case N_LinkedList:
-			printf ("Linked-List Node");
+			printf ("Linked-List");
 			break;
 		case N_Stack:
-			printf ("Stack Node");
+			printf ("Stack");
 			break;
 		case N_Queue:
-			printf ("Queue Node");
+			printf ("Queue");
 			break;
 		case N_Tree:
-			printf ("Tree Node");
+			printf ("Tree");
 			break;
 		case N_Graph:
-			printf ("Graph Node");
+			printf ("Graph");
 			break;
 		default:
 			break;
 	}
 
-	printf (") Address : (");
+	printf (") Address: (");
 	printf ("%p", node);
-	printf (") Name : (\"");
-	display_string (node -> name);
-	printf ("\") Data : (");
+	printf (") Name: (\"");
+	
+	if (NULL != node -> name) {
+		display_string (node -> name);
+	} else {
+		printf ("anonymous");	
+	}
+
+	printf ("\") Data: (");
 	display_data (node -> data);
 	printf (") ");
 
 	if (NULL != node -> address_list) {
+		printf ("Address list: ");
 		display_list (node -> address_list);
 	}
 

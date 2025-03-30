@@ -21,7 +21,7 @@ List* create_list (size_t item_count) {
 
 	set_list_chunk_cap_count (item_count, &chunk_capacity, &chunk_count);
 
-	list -> head_chunk = create_chunk (0, chunk_capacity);	// default chunk
+	list -> head_chunk = create_chunk (0, chunk_capacity);	// first (0th) and default chunk
 	list -> tail_chunk = list -> head_chunk;
 
 	return list;
@@ -60,14 +60,7 @@ void display_list (List* list) {
 		return;
 	}
 
-	if (list -> item_count == 0) {
-		perror ("List is Empty!");
-		return;
-	}
-
-	Chunk* chunk = list -> head_chunk;
-
-	display_linked_chunks (chunk);
+	display_linked_chunks (list -> head_chunk);
 }
 
 void display_list_details (List* list) {
@@ -76,14 +69,7 @@ void display_list_details (List* list) {
 		return;
 	}
 
-	if (list -> item_count == 0) {
-		perror ("List is Empty!");
-		return;
-	}
-
-	Chunk* chunk = list -> head_chunk;
-
-	display_linked_chunks (chunk);
+	display_linked_chunks (list -> head_chunk);
 }
 
 List* duplicate_list (List* old_list) {
@@ -93,8 +79,11 @@ List* duplicate_list (List* old_list) {
 	}
 
 	List* new_list = create_list (0);
+	new_list -> head_chunk = NULL;
+	new_list -> tail_chunk = NULL;
+
 	Chunk* old_chunk = old_list -> head_chunk;
-	Chunk* new_chunk = new_list -> head_chunk;
+	Chunk* new_chunk = NULL;
 	Chunk* tmp_chunk;
 
 	while (old_chunk != NULL) {
@@ -102,18 +91,17 @@ List* duplicate_list (List* old_list) {
 		old_chunk = old_chunk -> next_chunk;
 		tmp_chunk -> previous_chunk = new_chunk;
 
+		if (NULL == new_list -> head_chunk) {
+			new_list -> head_chunk = tmp_chunk;
+		}
+
 		if (NULL == new_chunk) {
 			new_chunk = tmp_chunk;
 			continue;
 		}
 
-		if (NULL == new_list -> head_chunk) {
-			new_list -> head_chunk = new_chunk;
-		}
-
 		new_chunk -> next_chunk = tmp_chunk;
 		new_chunk = new_chunk -> next_chunk;
-
 	}
 
 	new_list -> tail_chunk = new_chunk;

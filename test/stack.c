@@ -15,10 +15,12 @@ void test_stack (void) {
 	set_node_data (node, data);
 
 	push_node_onto_stack (stack, node);
+	peek_data_from_stack (stack);
 
 	++*(node -> name -> address);
 	*((int*)(node -> data -> address)) += 10;
 	push_node_onto_stack (stack, node);
+	peek_data_from_stack (stack);
 
 	++*(node -> name -> address);
 	*((int*)(node -> data -> address)) += 10;
@@ -52,6 +54,7 @@ void test_stack (void) {
 	printf ("\n");
 	delete_node (&del_node);
 	display_stack_details (stack);
+	peek_data_from_stack (stack);
 
 	del_node = pop_node_from_stack (stack);
 	printf ("Popped Node :=> ");
@@ -59,6 +62,7 @@ void test_stack (void) {
 	printf ("\n");
 	delete_node (&del_node);
 	display_stack_details (stack);
+	peek_data_from_stack (stack);
 
 	del_node = pop_node_from_stack (stack);
 	printf ("Popped Node :=> ");
@@ -66,35 +70,6 @@ void test_stack (void) {
 	printf ("\n");
 	delete_node (&del_node);
 
-
-	/*
-
-	++*(node -> name -> address);
-	*((int*)(node -> data -> address)) += 10;
-	attach_node_at_first (linked_list, node);
-
-	++*(node -> name -> address);
-	*((int*)(node -> data -> address)) += 10;
-	attach_node_at_first (linked_list, node);
-
-	display_linked_list (linked_list);
-	display_linked_list_details (linked_list);
-
-	Node* del_node = detach_head_from_linked_list (linked_list);
-	printf ("Detached ");
-	display_node_details (del_node);
-	delete_node (&del_node);
-	display_linked_list (linked_list);
-	display_linked_list_details (linked_list);
-
-	del_node = detach_tail_from_linked_list (linked_list);
-	printf ("Detached ");
-	display_node_details (del_node);
-	delete_node (&del_node);
-	display_linked_list (linked_list);
-	display_linked_list_details (linked_list);
-
-*/
 	delete_node (&node);
 
 	delete_stack (&stack);

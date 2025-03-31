@@ -7,7 +7,6 @@ Stack *create_stack (void) {
 		stack -> name = NULL;
 		stack -> size = 0;
 		stack -> top_node = NULL;
-		// stack -> bottom_node = NULL;
 	}
 
 	return stack;
@@ -144,4 +143,20 @@ Node* pop_node_from_stack (Stack* stack) {
 	(node -> address_list -> head_chunk -> first_data_address + 1) -> address = NULL;
 
 	return node;
+}
+
+void peek_data_from_stack (Stack* stack) {
+	if (NULL == stack) {
+		perror ("Stack does not exist to peek data from!");
+		exit (EXIT_FAILURE);
+	}
+
+	if (0 == stack -> size) {
+		perror ("Stack is empty to peek data from!\n");
+		return;
+	}
+
+	printf ("Peeked ");
+	display_data_details (stack -> top_node -> data);
+	printf ("\n");
 }

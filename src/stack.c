@@ -6,8 +6,8 @@ Stack *create_stack (void) {
 	if (stack != NULL) {
 		stack -> name = NULL;
 		stack -> size = 0;
-		stack -> first_node = NULL;
-		stack -> last_node = NULL;
+		stack -> top_node = NULL;
+		// stack -> bottom_node = NULL;
 	}
 
 	return stack;
@@ -21,14 +21,13 @@ void delete_stack (Stack** stack_address) {
 
 	Stack* stack = *stack_address;
 
-	Node* node = stack -> first_node;
-	Node* old_node;
+	Node* node = stack -> top_node;
+	Node* del_node;
 
-	while (node != NULL) {
-		old_node = node;
-		node = *(node -> address_list -> item_addresses + 1);
-		forget_list (&(old_node -> address_list));
-		delete_node (&old_node);
+	for (size_t i = 0; i < stack -> size; i++) {
+		del_node = node;
+		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
+		delete_node (&del_node);
 	}
 
 	stack = NULL;
@@ -37,25 +36,26 @@ void delete_stack (Stack** stack_address) {
 
 void display_stack (Stack* stack) {
 	if (stack == NULL) {
-		perror ("Linked List does not Exist to display!");
+		perror ("Stack does not exist to display!");
 		return;
 	}
 
 	if (stack -> size == 0) {
-		perror ("Linked List is Empty to display!");
+		perror ("Stack is empty to display!");
 		return;
 	}
 
-	Node* node = stack -> first_node;
+	printf ("Stack :=>\n");
 
-	while (node != NULL) {
+	Node* node = stack -> top_node;
+
+	printf ("+--------+");
+
+	for (size_t i = 0; i < stack -> size; i++) {
+		printf ("\n|\t");
 		display_node (node);
-
-		node = *(node -> address_list -> item_addresses + 1);
-
-		if (node  != NULL) {
-			printf (" -> ");
-		}
+		printf ("\n+--------+");
+		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
 	}
 
 	printf ("\n");
@@ -63,81 +63,85 @@ void display_stack (Stack* stack) {
 
 void display_stack_details (Stack* stack) {
 	if (stack == NULL) {
-		perror ("Linked List does not Exist to display!");
+		perror ("Stack does not exist to display details!");
 		return;
 	}
-
-	printf ("<Linked List>(%zu) :=\n", stack -> size);
 
 	if (stack -> size == 0) {
-		perror ("Linked List is Empty!");
+		perror ("Stack is empty to display details!");
 		return;
 	}
 
-	Node* node = stack -> first_node;
+	printf ("Stack (%zu) :=>\n", stack -> size);
 
-	while (node != NULL) {
-		printf ("\t-> ");
+	Node* node = stack -> top_node;
+
+	for (size_t i = 0; i < stack -> size; i++) {
 		display_node_details (node);
-		node = *(node -> address_list -> item_addresses + 1);
+		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
 	}
 
 	printf ("\n");
 }
 
-void push (Stack* stack, Node* node) {
+void push_node_onto_stack (Stack* stack, Node* node) {
 	if (stack == NULL) {
-		perror ("Empty list is given\n");
-		exit (1);
+		perror ("Stack does not exist to push node onto\n");
+		exit (EXIT_FAILURE);
 	}
 
 	if (node == NULL) {
-		perror ("Empty node is given to add in Linked List\n");
-		exit (1);
+		perror ("Node does not exist to push into stack\n");
+		exit (EXIT_FAILURE);
 	}
 
 	Node* new_node = duplicate_node (node);
 
-	if (
-		new_node != NULL																			// to check if new node is created
-		&& new_node -> type != N_Tree																// don't overwrite addresses for tree node
-	) {
-		*(new_node -> address_list -> item_addresses + 1) = stack -> first_node;
+	(new_node -> address_list -> head_chunk -> first_data_address + 1) -> address = stack -> top_node;
+
+	if (NULL == stack -> top_node) {
+		stack -> top_node = new_node;
+		++ stack -> size;
+		return;
 	}
 
-	if (stack -> first_node == NULL) {
-		stack -> first_node = new_node;
-		stack -> last_node = new_node;
-	} else {
-		*(stack -> first_node -> address_list -> item_addresses + 0) = new_node;
-		stack -> first_node = new_node;
-	}
+	Node* temp_node = stack -> top_node;
 
-	++ stack -> size;																			// not guranteed -- to be fixed
+	(temp_node -> address_list -> head_chunk -> first_data_address + 0) -> address = new_node;
+
+	stack -> top_node = new_node;
+
+	++ stack -> size;
 }
 
-Node* pop (Stack* stack) {
+Node* pop_node_from_stack (Stack* stack) {
 	if (stack == NULL) {
-		perror ("Linked List does not Exist to detach node from!");
-		exit (1);
+		perror ("Stack does not exist to pop node from!");
+		exit (EXIT_FAILURE);
 	}
 
 	if (stack -> size == 0) {
-		perror ("Linked List is Empty to detach node from!\n");
+		perror ("Stack is empty to pop node from!\n");
 		return NULL;
 	}
 
-	if (stack -> first_node == stack -> last_node) {
+	Node* node = NULL;
+
+	if (1 == stack -> size) {
 		stack -> size = 0;
-		stack -> first_node = NULL;
-		stack -> last_node = NULL;
-		return NULL;
+		node = stack -> top_node;
+		stack -> top_node = NULL;
+		return node;
 	}
 
-	Node* node = stack -> first_node;																// keep first node address at hand
-	stack -> first_node = *(stack -> first_node -> address_list -> item_addresses + 1);	// node switch / hop
-	*(stack -> first_node -> address_list -> item_addresses + 0) = NULL;						// forget previous node address
-	-- stack -> size;																			// decrease node count
+	node = stack -> top_node;
+	stack -> top_node = (stack -> top_node -> address_list -> head_chunk -> first_data_address + 1) -> address;
+	(stack -> top_node -> address_list -> head_chunk -> first_data_address + 0) -> address = NULL;
+
+	-- stack -> size;
+
+	(node -> address_list -> head_chunk -> first_data_address + 0) -> address = NULL;
+	(node -> address_list -> head_chunk -> first_data_address + 1) -> address = NULL;
 
 	return node;
 }

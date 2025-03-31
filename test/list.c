@@ -164,7 +164,7 @@ void test_list (void) {
 	data = remove_from_list_at_index (list, 25);
 	TEST (Cmp_Equivalent == compare_data (data, test_data), "Matched removed data from original list");
 	// display_list (list);
-	// display_data_properties (data);
+	// display_data_details (data);
 	delete_data (&data);
 	delete_data (&test_data);
 

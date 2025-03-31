@@ -112,7 +112,7 @@ void display_data (Data* data) {
 	}
 }
 
-void display_data_properties (Data* data) {
+void display_data_details (Data* data) {
 	if (data == NULL) {
 		perror ("Data does not exist\n");
 		return;

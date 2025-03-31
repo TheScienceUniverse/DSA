@@ -10,8 +10,7 @@
 typedef struct STACK {
 	String* name;
 	size_t size;
-	Node* first_node;
-	Node* last_node;
+	Node* top_node;
 } Stack;
 
 // ---------- x ----------
@@ -20,7 +19,7 @@ Stack* create_stack (void);
 void delete_stack (Stack** stack_address);
 void display_stack (Stack* stack);
 void display_stack_details (Stack* stack);
-void push (Stack* stack, Node* node);
-Node* pop (Stack* stack);
+void push_node_onto_stack (Stack* stack, Node* node);
+Node* pop_node_from_stack (Stack* stack);
 
 #endif	// STACK_H

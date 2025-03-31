@@ -138,7 +138,6 @@ void attach_node_at_first (Linked_List* linked_list, Node* node) {
 	) {
 		linked_list -> head_node = new_node;
 		linked_list -> tail_node = new_node;
-		//continue;
 	}
 
 	Node* temp_node = linked_list -> head_node;

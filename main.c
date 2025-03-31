@@ -30,7 +30,7 @@ int main (void) {
 
 	int n = 10;
 	Data* data = create_data (DT_Integer, sizeof (n), &n);
-	display_data_properties (data);
+	display_data_details (data);
 	delete_data (&data);
 
 	List* list = create_list (0);

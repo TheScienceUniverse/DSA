@@ -10,8 +10,8 @@
 typedef struct QUEUE {
 	String* name;
 	size_t size;
-	Node* first_node;
-	Node* last_node;
+	Node* front_node;
+	Node* rear_node;
 } Queue;
 
 // ---------- x ----------
@@ -21,6 +21,7 @@ void delete_queue (Queue** queue_address);
 void display_queue (Queue* queue);
 void display_queue_details (Queue* queue);
 void enqueue (Queue* queue, Node* node);
-Node* dequeue (Queue* queue, bool node_delete_needed);
+Node* dequeue (Queue* queue);
+void peek_data_from_queue (Queue* queue);
 
 #endif // QUEUE_H

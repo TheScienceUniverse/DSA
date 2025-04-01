@@ -1,13 +1,13 @@
 #include "../include/queue.h"
 
-Queue *create_queue () {
+Queue *create_queue (void) {
 	Queue* queue = (Queue*) malloc (sizeof (Queue));
 
 	if (queue != NULL) {
 		queue -> name = NULL;
 		queue -> size = 0;
-		queue -> first_node = NULL;
-		queue -> last_node = NULL;
+		queue -> front_node = NULL;
+		queue -> rear_node = NULL;
 	}
 
 	return queue;
@@ -15,20 +15,19 @@ Queue *create_queue () {
 
 void delete_queue (Queue** queue_address) {
 	if (*queue_address == NULL) {
-		perror ("Linked List does not exist to delete!");
+		perror ("Queue does not exist to delete!");
 		return;
 	}
 
 	Queue* queue = *queue_address;
 
-	Node* node = queue -> first_node;
-	Node* old_node;
+	Node* node = queue -> front_node;
+	Node* del_node;
 
-	while (node != NULL) {
-		old_node = node;
-		node = *(node -> address_list -> item_addresses + 1);
-		forget_list (&(old_node -> address_list));
-		delete_node (&old_node);
+	for (size_t i = 0; i < queue -> size; i++) {
+		del_node = node;
+		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
+		delete_node (&del_node);
 	}
 
 	queue = NULL;
@@ -37,49 +36,49 @@ void delete_queue (Queue** queue_address) {
 
 void display_queue (Queue* queue) {
 	if (queue == NULL) {
-		perror ("Linked List does not Exist to display!");
+		perror ("Queue does not exist to display!");
 		return;
 	}
 
 	if (queue -> size == 0) {
-		perror ("Linked List is Empty to display!");
+		perror ("Queue is empty to display!");
 		return;
 	}
 
-	Node* node = queue -> first_node;
+	printf ("Queue :=> [ ");
 
-	while (node != NULL) {
-		display_node (node);
+	Node* node = queue -> front_node;
 
-		node = *(node -> address_list -> item_addresses + 1);
-
-		if (node  != NULL) {
-			printf (" -> ");
+	for (size_t i = 0; i < queue -> size; i++) {
+		if (i > 0) {
+			printf (" <- ");
 		}
+
+		display_node (node);
+		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
 	}
 
-	printf ("\n");
+	printf (" ]\n");
 }
 
 void display_queue_details (Queue* queue) {
 	if (queue == NULL) {
-		perror ("Linked List does not Exist to display!");
+		perror ("Stack does not exist to display details!");
 		return;
 	}
-
-	printf ("<Linked List>(%zu) :=\n", queue -> size);
 
 	if (queue -> size == 0) {
-		perror ("Linked List is Empty!");
+		perror ("Stack is empty to display details!");
 		return;
 	}
 
-	Node* node = queue -> first_node;
+	printf ("Queue (%zu) :=>\n", queue -> size);
 
-	while (node != NULL) {
-		printf ("\t-> ");
+	Node* node = queue -> front_node;
+
+	for (size_t i = 0; i < queue -> size; i++) {
 		display_node_details (node);
-		node = *(node -> address_list -> item_addresses + 1);
+		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
 	}
 
 	printf ("\n");
@@ -87,61 +86,83 @@ void display_queue_details (Queue* queue) {
 
 void enqueue (Queue* queue, Node* node) {
 	if (queue == NULL) {
-		perror ("Empty list is given\n");
-		exit (1);
+		perror ("Queue does not exist to attach node at last\n");
+		exit (EXIT_FAILURE);
 	}
 
 	if (node == NULL) {
-		perror ("Empty node is given to add in Linked List\n");
-		exit (1);
+		perror ("Node does not exist to attach at last of queue\n");
+		exit (EXIT_FAILURE);
 	}
 
 	Node* new_node = duplicate_node (node);
 
-	if (new_node != NULL) {
-		*(new_node -> address_list -> item_addresses + 0) = queue -> last_node;
+	new_node -> address_list -> head_chunk -> first_data_address -> address = queue -> rear_node;
+
+	if (
+		NULL == queue -> front_node
+		|| NULL == queue -> rear_node
+	) {
+		queue -> front_node = new_node;
+		queue -> rear_node = new_node;
+		queue -> size++;
+		return;
 	}
 
-	if (queue -> first_node == NULL) {
-		queue -> first_node = new_node;
-		queue -> last_node = new_node;
-	} else {
-		*(queue -> last_node -> address_list -> item_addresses + 1) = new_node;
-		queue -> last_node = new_node;
-	}
+	Node* temp_node = queue -> rear_node;
 
-	++ queue -> size;																			// not guranteed -- to be fixed
+	(temp_node -> address_list -> head_chunk -> first_data_address + 1) -> address = new_node;
+
+	queue -> rear_node = new_node;
+
+	queue -> size++;
 }
 
-Node* dequeue (Queue* queue, bool node_delete_needed) {
-	Node* node;
-
+Node* dequeue (Queue* queue) {
 	if (queue == NULL) {
-		perror ("Linked List does not Exist to detach node from!");
-		exit (1);
+		perror ("Queue does not exist to detach node from first!");
+		exit (EXIT_FAILURE);
 	}
 
 	if (queue -> size == 0) {
-		perror ("Linked List is Empty to detach node from!\n");
+		perror ("Queue is empty to detach node from first!\n");
 		return NULL;
 	}
 
-	if (queue -> first_node == queue -> last_node) {
+	Node* node;
+
+	if (1 == queue -> size) {
 		queue -> size = 0;
-		queue -> first_node = NULL;
-		queue -> last_node = NULL;
-		return NULL;
+		node = queue -> front_node;
+		queue -> front_node = NULL;
+		queue -> rear_node = NULL;
+		return node;
 	}
 
-	node = queue -> first_node;																// keep first node address at hand
-	queue -> first_node = *(queue -> first_node -> address_list -> item_addresses + 1);	// node switch / hop
-	*(queue -> first_node -> address_list -> item_addresses + 0) = NULL;						// forget previous node address
-	-- queue -> size;																			// decrease node count
+	node = queue -> front_node;
+	queue -> front_node = (queue -> front_node -> address_list -> head_chunk -> first_data_address + 1) -> address;
+	(queue -> front_node -> address_list -> head_chunk -> first_data_address + 0) -> address = NULL;
 
-	if (node_delete_needed) {
-		forget_list (&(node -> address_list));
-		delete_node (&node);
-	}
+	queue -> size--;
+
+	(node -> address_list -> head_chunk -> first_data_address + 0) -> address = NULL;
+	(node -> address_list -> head_chunk -> first_data_address + 1) -> address = NULL;
 
 	return node;
+}
+
+void peek_data_from_queue (Queue* queue) {
+	if (NULL == queue) {
+		perror ("Stack does not exist to peek data from!");
+		exit (EXIT_FAILURE);
+	}
+
+	if (0 == queue -> size) {
+		perror ("Stack is empty to peek data from!\n");
+		return;
+	}
+
+	printf ("Peeked ");
+	display_data_details (queue -> front_node -> data);
+	printf ("\n");
 }

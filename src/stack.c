@@ -14,7 +14,7 @@ Stack *create_stack (void) {
 
 void delete_stack (Stack** stack_address) {
 	if (*stack_address == NULL) {
-		perror ("Linked List does not exist to delete!");
+		perror ("Stack does not exist to delete!");
 		return;
 	}
 

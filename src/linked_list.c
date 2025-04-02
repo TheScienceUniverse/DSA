@@ -151,12 +151,13 @@ void attach_node_at_first (Linked_List* linked_list, Node* node) {
 
 Node* detach_head_from_linked_list (Linked_List* linked_list) {
 	if (linked_list == NULL) {
-		perror ("Linked List does not Exist to detach node from!");
-		exit (EXIT_FAILURE);
+		// perror ("Linked List does not Exist to detach node from!");
+		// exit (EXIT_FAILURE);
+		return NULL;
 	}
 
 	if (linked_list -> size == 0) {
-		perror ("Linked List is Empty to detach node from!\n");
+		// perror ("Linked List is Empty to detach node from!\n");
 		return NULL;
 	}
 
@@ -184,12 +185,13 @@ Node* detach_head_from_linked_list (Linked_List* linked_list) {
 
 Node* detach_tail_from_linked_list (Linked_List* linked_list) {
 	if (linked_list == NULL) {
-		perror ("Linked List does not Exist to detach node from!");
-		exit (EXIT_FAILURE);
+		// perror ("Linked List does not Exist to detach node from!");
+		// exit (EXIT_FAILURE);
+		return NULL;
 	}
 
 	if (linked_list -> size == 0) {
-		perror ("Linked List is Empty to detach node from!\n");
+		// perror ("Linked List is Empty to detach node from!\n");
 		return NULL;
 	}
 

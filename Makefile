@@ -38,7 +38,7 @@ test: $(TSTCUTABLE)
 
 $(TSTCUTABLE): $(TSTECTS)
 	@echo "-> Linking all object files and generating test binary file ..."
-	@$(CC) $(CFLAGS) -o $@ ./test_main.c $(OBJECTS) $^
+	@$(CC) $(CFLAGS) -o $@ ./test.c $(OBJECTS) $^
 	@chmod +x $(TSTCUTABLE)
 #	@echo "... Done!"
 #	@echo

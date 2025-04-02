@@ -81,7 +81,7 @@ Node* duplicate_node (Node* node) {
 
 void delete_node (Node** node_address) {
 	if (*node_address == NULL) {
-		perror ("Node doesn't exist to delete!");
+		// perror ("Node doesn't exist to delete!");
 		return;
 	}
 

@@ -115,12 +115,13 @@ void push_node_onto_stack (Stack* stack, Node* node) {
 
 Node* pop_node_from_stack (Stack* stack) {
 	if (stack == NULL) {
-		perror ("Stack does not exist to pop node from!");
-		exit (EXIT_FAILURE);
+		// perror ("Stack does not exist to pop node from!");
+		// exit (EXIT_FAILURE);
+		return NULL;
 	}
 
 	if (stack -> size == 0) {
-		perror ("Stack is empty to pop node from!\n");
+		// perror ("Stack is empty to pop node from!\n");
 		return NULL;
 	}
 
@@ -147,12 +148,13 @@ Node* pop_node_from_stack (Stack* stack) {
 
 void peek_data_from_stack (Stack* stack) {
 	if (NULL == stack) {
-		perror ("Stack does not exist to peek data from!");
-		exit (EXIT_FAILURE);
+		// perror ("Stack does not exist to peek data from!");
+		// exit (EXIT_FAILURE);
+		return;
 	}
 
 	if (0 == stack -> size) {
-		perror ("Stack is empty to peek data from!\n");
+		// perror ("Stack is empty to peek data from!\n");
 		return;
 	}
 

@@ -15,7 +15,7 @@ Queue *create_queue (void) {
 
 void delete_queue (Queue** queue_address) {
 	if (*queue_address == NULL) {
-		perror ("Queue does not exist to delete!");
+		// perror ("Queue does not exist to delete!");
 		return;
 	}
 
@@ -41,7 +41,7 @@ void display_queue (Queue* queue) {
 	}
 
 	if (queue -> size == 0) {
-		perror ("Queue is empty to display!");
+		// perror ("Queue is empty to display!");
 		return;
 	}
 
@@ -120,12 +120,13 @@ void enqueue (Queue* queue, Node* node) {
 
 Node* dequeue (Queue* queue) {
 	if (queue == NULL) {
-		perror ("Queue does not exist to detach node from first!");
-		exit (EXIT_FAILURE);
+		// perror ("Queue does not exist to detach node from first!");
+		// exit (EXIT_FAILURE);
+		return NULL;
 	}
 
 	if (queue -> size == 0) {
-		perror ("Queue is empty to detach node from first!\n");
+		// perror ("Queue is empty to detach node from first!\n");
 		return NULL;
 	}
 
@@ -153,12 +154,13 @@ Node* dequeue (Queue* queue) {
 
 void peek_data_from_queue (Queue* queue) {
 	if (NULL == queue) {
-		perror ("Stack does not exist to peek data from!");
-		exit (EXIT_FAILURE);
+		// perror ("Stack does not exist to peek data from!");
+		// exit (EXIT_FAILURE);
+		return;
 	}
 
 	if (0 == queue -> size) {
-		perror ("Stack is empty to peek data from!\n");
+		// perror ("Stack is empty to peek data from!\n");
 		return;
 	}
 

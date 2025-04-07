@@ -208,3 +208,9 @@ void** capture_string_addresses (String* string) {
 
 	return addresses;
 }
+
+void display_N_characters (char character, size_t repetitions) {
+	for (size_t i = 0; i < repetitions; i++) {
+		putchar (character);
+	}
+}

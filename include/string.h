@@ -29,4 +29,6 @@ BYTE match_strings (String string1, String string2);
 bool is_string_memory_erased (void** string_addresses);
 void** capture_string_addresses (String* string);
 
+void display_N_characters (char character, size_t repetitions);
+
 #endif	// STRING_H

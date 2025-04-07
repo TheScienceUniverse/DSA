@@ -69,7 +69,9 @@ void display_list_details (List* list) {
 		return;
 	}
 
+	printf ("List :=> Address: (%p) Size: (%lu) Elements: ", list, list -> item_count);
 	display_linked_chunks (list -> head_chunk);
+	putchar ('\n');
 }
 
 List* duplicate_list (List* old_list) {

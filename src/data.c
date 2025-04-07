@@ -13,6 +13,13 @@ Data* create_data (Data_Type data_type, size_t block_size, void* address) {
 		data -> address = NULL;
 	}
 
+	if (DT_Address == data_type) {
+		data -> type = DT_Address;
+		data -> size = 0;
+		data -> address = address;
+		return data;
+	}
+
 	if (block_size > 0) {
 		data -> type = data_type;
 		data -> size = block_size;
@@ -37,6 +44,10 @@ void delete_data (Data** data_address) {
 	}
 
 	Data* data = *data_address;
+
+	if (DT_Address == data -> type) {
+		data -> address = NULL;
+	}
 
 	if (data -> address != NULL) {
 		ERASE (&(data -> address), data -> size);
@@ -125,7 +136,7 @@ void display_data_details (Data* data) {
 		data -> type = DT_Empty;
 	}
 
-	printf ("Data :=> ");
+	printf ("Data :=> Address: (%p) Type: ", data);
 
 	switch (data -> type) {
 		case DT_Undefined:
@@ -135,7 +146,7 @@ void display_data_details (Data* data) {
 			printf ("(Empty)");
 			break;
 		case DT_Address:
-			printf ("(Address): %p", data -> address);
+			printf ("(Address) Value: (%p)", data -> address);
 			break;
 		case DT_Character:
 			printf ("(Character): %c", *((char*) data -> address));
@@ -293,8 +304,11 @@ void copy_data (Data* src_data, Data* dst_data) {
 
 	free (dst_data -> address);
 
-	if (NULL == src_data -> address) {
-		dst_data -> address = NULL;
+	if (
+		NULL == src_data -> address
+		|| DT_Address == dst_data -> type
+	) {
+		dst_data -> address = src_data -> address;
 		return;
 	}
 
@@ -389,4 +403,19 @@ void swap_data (Data* data_1, Data* data_2) {
 	Data* temp_data = data_1;
 	data_1 = data_2;
 	data_2 = temp_data;
+}
+
+Data* create_address_data (void* address) {
+	Data* data = (Data*) malloc (sizeof (Data));
+
+	if (NULL == data) {
+		perror ("Memory allocation error for Data!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	data -> type = DT_Address;
+	data -> size = sizeof (void*);
+	data -> address = address;
+
+	return data;
 }

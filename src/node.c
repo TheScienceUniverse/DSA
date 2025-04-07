@@ -18,7 +18,7 @@ Node* create_node (Node_Type type) {
 				node -> address_list = create_list (2);		// previous address, next address (default count = 2)
 				break;
 			case N_Tree:
-				node -> address_list = create_list (1);		// parent address + (Optional / zero or more) child addresses (default count = 1)
+				node -> address_list = create_list (3);		// 1 parent address, multiple (default = 2) child addresses
 				break;
 			case N_Graph:
 				node -> address_list = create_list (0);		// should store route table (data as well as address to go to other adjacent node)
@@ -247,4 +247,38 @@ Compare_Status compare_nodes (Node* node_1, Node* node_2) {
 	}
 
 	return cmp_stat;
+}
+
+void clear_node_address_list (Node* node) {
+	if (NULL == node) {
+		perror ("Node does not exist to prepare address list!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	List* list = node -> address_list;
+
+	if (NULL == list) {
+		perror ("Node's address list does not exist to prepare!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	Chunk* chunk = list -> head_chunk;
+
+	if (NULL == chunk) {
+		perror ("Node's address-list's chunk does not exist to prepare!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	size_t list_data_index = 0;
+	size_t chunk_data_index = 0;
+
+	for ( ; list_data_index < list -> item_count; list_data_index++) {
+		(chunk -> first_data_address + chunk_data_index++) -> address = NULL;
+
+		if (chunk -> capacity == chunk_data_index) {
+			chunk -> data_count = 0;
+			chunk_data_index = 0;
+			chunk = chunk -> next_chunk;
+		}
+	}
 }

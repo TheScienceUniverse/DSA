@@ -37,5 +37,6 @@ void display_special_node (Node* node);
 void display_node_details (Node* node);
 void delete_temporary_node (Node** node_address);
 Compare_Status compare_nodes (Node* node_1, Node* node_2);
+void clear_node_address_list (Node* node);
 
 #endif	// NODE_H

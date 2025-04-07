@@ -115,8 +115,8 @@ List* duplicate_list (List* old_list) {
 }
 
 void set_list_chunk_cap_count (size_t item_count, size_t* chunk_capacity, size_t* chunk_count) {
-	if (2 == item_count) {
-		*chunk_capacity = 2;
+	if (5 >= item_count) {
+		*chunk_capacity = item_count;
 		*chunk_count = 1;
 		return;
 	}

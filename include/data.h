@@ -42,5 +42,6 @@ void empty_data (Data* data);
 Compare_Status compare_data (Data* data_1, Data* data_2);
 Data* create_empty_data (void);
 void swap_data (Data* data_1, Data* data_2);
+Data* create_address_data (void* address);
 
 #endif	// DATA_H

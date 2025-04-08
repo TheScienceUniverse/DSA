@@ -11,19 +11,18 @@
 
 typedef struct TREE {
 	Node* root_node;
-	int node_count;
-	int breadth;
-	int depth;
+	size_t node_count;
+	size_t breadth;
+	size_t depth;
 } Tree;
 
 // ---------- x ----------
 
-Tree* create_tree ();
+Tree* create_tree (void);
 Tree* duplicate_tree (Tree* source_tree);
 void delete_tree (Tree** tree_address);
 void display_tree (Tree* tree);
-void set_root_node (Tree* tree, Node* root_node);
-Node* get_root_node (Tree* tree);
+void set_tree_root_node (Tree* tree, Node* root_node);
 Node* get_Nth_child_node (Node* parent_node, size_t child_number);
 Node* get_last_child_node (Node* parent_node);
 Node* get_parent_node (Node* child_node);

@@ -13,15 +13,9 @@ Tree* create_tree () {
 	return tree;
 }
 
-Tree* duplicate_tree (Tree* tree) {
-	/*Tree *new_tree = create_tree ();
-	return new_tree;*/
-	return tree;
-}
-
 void delete_tree (Tree** tree_address) {
 	if (*tree_address == NULL) {
-		perror ("Tree does not exists to delete!");
+		// perror ("Tree does not exists to delete!");
 		return;
 	}
 
@@ -31,43 +25,51 @@ void delete_tree (Tree** tree_address) {
 	}
 
 	Tree* tree = *tree_address;
-	List* list = create_list (tree -> node_count);
-	size_t i, list_index = 0;
+	ssize_t i;
+	size_t address_count;
 	Node* node;
-	Node* child_node;
 	Node* x_node;
 	Stack* stack = create_stack ();
+	Node* stack_node = create_node (N_Stack);
+	size_t visited_node_count = 1;
 
-	node = get_root_node (tree);
-	push_tree_node_to_stack (stack, node);
+	stack_node -> data = create_address_data (tree -> root_node);
+	push_node_onto_stack (stack, stack_node);
 
-	while (stack -> size > 0) {
-		x_node = pop (stack);
+	while (
+		tree -> node_count >= visited_node_count
+		&& stack -> size > 0
+	) {
+		x_node = pop_node_from_stack (stack);
 		node = x_node -> data -> address;
-		*(list -> item_addresses + list_index++) = node;
-		delete_temporary_node (&x_node);
+		x_node -> data -> address = NULL;
+		delete_node (&x_node);
+		address_count = node -> address_list -> item_count;
 
-		i = node -> address_list -> item_count;
-
-		while (i--) {
-			child_node = *(node -> address_list -> item_addresses + i);
-			push_tree_node_to_stack (stack, child_node);
+		if (1 > address_count) {
+			delete_node (&node);
+			continue;
 		}
-	}
 
-	delete_stack (&stack);
+		i = address_count;
 
-	for (i = 0; i < list -> item_count; i++) {
-		node = *(list -> item_addresses + i);
-		forget_list (&(node -> address_list));
+		while (--i) {	// storing backwards to pick up in proper order
+			Data* data = get_list_data_at_index (node -> address_list, i);
+			stack_node -> data -> address = data -> address;
+			delete_data (&data);
+			push_node_onto_stack (stack, stack_node);
+		}
+
 		delete_node (&node);
+
+		++ visited_node_count;
 	}
 
-	forget_list (&list);
-	delete_list (&list);
+	delete_node (&stack_node);
 
 	node = NULL;
-	tree = NULL;
+	delete_stack (&stack);
+
 	ERASE (tree_address, sizeof (Tree));
 }
 
@@ -82,44 +84,75 @@ void display_tree (Tree* tree) {
 		return;
 	}
 
-	size_t i, depth = 0;
+	printf ("Tree :=> node_count: (%lu) breadth: (%lu) depth: (%lu)\n", tree -> node_count, tree -> breadth, tree -> depth);
+
+	ssize_t i;
+	size_t address_count, depth = 0;
 	Node* node;
-	Node* child_node;
 	Node* x_node;
 	Stack* stack = create_stack ();
+	Node* stack_node = create_node (N_Stack);
+	size_t visited_node_count = 1;
 
-	stack -> name = create_string (10, "Node Stack");
+	stack_node -> data = create_address_data (tree -> root_node);
+	push_node_onto_stack (stack, stack_node);
 
-	node = get_root_node (tree);
-	push_tree_node_to_stack (stack, node);
-
-	while (stack -> size > 0) {
-		x_node = pop (stack);
+	while (
+		tree -> node_count >= visited_node_count
+		&& stack -> size > 0
+	) {
+		x_node = pop_node_from_stack (stack);
 		node = x_node -> data -> address;
-		depth = get_tree_node_depth (tree, node);
-		delete_temporary_node (&x_node);
+		x_node -> data -> address = NULL;
+		delete_node (&x_node);
 
-		print_node_depth_whitespace (depth);
+		depth = get_tree_node_depth (tree, node);
+
+		putchar ('\t');
+
+		if (0 != depth) {
+			for (ssize_t i = 0; i < (ssize_t) depth; i++) {
+				printf ("|\t");
+			}
+
+			printf ("\n\t");
+
+			for (ssize_t i = 0; i < (ssize_t)(depth - 1); i++) {
+				printf ("|\t");
+			}
+
+			putchar ('+');
+			display_N_characters ('-', depth - 1 + 3);
+		}
+
 		display_node (node);
 		printf ("\n");
 
-		i = node -> address_list -> item_count;
+		address_count = node -> address_list -> item_count;
 
-		while (--i) {													
-			if (i <= 0) {
-				break;
-			}
-
-			child_node = *(node -> address_list -> item_addresses + i);
-			push_tree_node_to_stack (stack, child_node);
+		if (1 > address_count) {
+			continue;
 		}
+
+		i = address_count;
+
+		while (--i) {	// storing backwards to pick up in proper order
+			Data* data = get_list_data_at_index (node -> address_list, i);
+			stack_node -> data -> address = data -> address;
+			delete_data (&data);
+			push_node_onto_stack (stack, stack_node);
+		}
+
+		++ visited_node_count;
 	}
+
+	delete_node (&stack_node);
 
 	node = NULL;
 	delete_stack (&stack);
 }
 
-void set_root_node (Tree* tree, Node* node) {
+void set_tree_root_node (Tree* tree, Node* node) {
 	if (tree == NULL) {
 		perror ("Tree does not exist to add Root!");
 		return;
@@ -136,19 +169,83 @@ void set_root_node (Tree* tree, Node* node) {
 	}
 
 	tree -> root_node = duplicate_node (node);
-	*(tree -> root_node -> address_list -> item_addresses + 0) = NULL;
+	tree -> root_node -> address_list -> head_chunk -> first_data_address -> address = NULL;
 	++ tree -> node_count;
 }
 
-Node* get_root_node (Tree* tree) {
-	if (tree == NULL) {
-		perror ("Tree does not exist to add Root!");
-		return NULL;
+void append_child_node (Tree* tree, Node* parent_node, Node* child_node) {
+	if (parent_node == NULL) {
+		perror ("Parent Node does not Exist to add child node!");
+		return;
 	}
 
-	return tree -> root_node;
+	if (child_node == NULL) {
+		perror ("Child Node does not Exist to add child node!");
+		return;
+	}
+
+	child_node = duplicate_node (child_node);
+	clear_node_address_list (child_node);	// address sanity
+
+	Data* addr_data = create_address_data (parent_node);
+	insert_data_into_list (child_node -> address_list, addr_data);
+
+	size_t address_count = parent_node -> address_list -> item_count;
+
+	if (0 == address_count) {
+		addr_data -> address = NULL;
+		insert_data_into_list (parent_node -> address_list, addr_data);
+	}
+
+	addr_data -> address = child_node;
+	insert_data_into_list (parent_node -> address_list, addr_data);
+
+	delete_data (&addr_data);
+
+	tree -> node_count++;
 }
 
+size_t get_tree_node_depth (Tree* tree, Node* node) {
+	if (tree == NULL) {
+		perror ("Tree does not exist to get depth!");
+		return EXIT_FAILURE;
+	}
+
+	if (node == NULL) {
+		perror ("Node does not exist to get depth!");
+		return EXIT_FAILURE;
+	}
+
+	if (node -> type != N_Tree) {
+		perror ("Given Node doesn't belong to a tree to get depth!");
+		return EXIT_FAILURE;
+	}
+
+	if (NULL == tree -> root_node) {
+		return -1;
+	}
+
+	if (node == tree -> root_node) {
+		return 0;
+	}
+
+	size_t depth = 0;
+	Node* x_node;
+	Node* parent_node = node -> address_list -> head_chunk -> first_data_address -> address;
+
+	while (parent_node != NULL) {
+		++ depth;
+		x_node = parent_node;
+		parent_node = x_node -> address_list -> head_chunk -> first_data_address -> address;
+	}
+
+	x_node = NULL;
+	parent_node = NULL;
+
+	return depth;
+}
+
+/*
 void display_relation_with_root (Tree* tree, Node* node) {
 	if (tree == NULL) {
 		perror ("Tree does not exist to display Root!");
@@ -179,39 +276,6 @@ void display_relation_with_root (Tree* tree, Node* node) {
 	delete_stack (&stack);
 }
 
-size_t get_tree_node_depth (Tree* tree, Node* node) {
-	if (tree == NULL) {
-		perror ("Tree does not exist to get depth!");
-		return -1;
-	}
-
-	if (node == NULL) {
-		perror ("Node does not exist to get depth!");
-		return -1;
-	}
-
-	if (node -> type != N_Tree) {
-		perror ("Given Node doesn't belong to a tree get depth!");
-		return -1;
-	}
-
-	size_t depth = 0;
-	Node* parent_node;
-
-	while ((parent_node = get_parent_node (node)) != NULL) {
-		++ depth;
-		node = parent_node;
-	}
-
-	if (node != get_root_node (tree)) {
-		depth = -1;
-	}
-
-	node = NULL;
-	parent_node = NULL;
-
-	return depth;
-}
 
 void display_child_node_list (Node* node) {
 	if (node == NULL) {
@@ -637,3 +701,4 @@ void export_tree_data_for_web_view (Tree* tree) {
 
 	fclose (fpo);
 }
+*/

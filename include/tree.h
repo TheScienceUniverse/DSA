@@ -13,7 +13,7 @@ typedef struct TREE {
 	Node* root_node;
 	size_t node_count;
 	size_t breadth;
-	size_t depth;
+	size_t height;
 } Tree;
 
 // ---------- x ----------

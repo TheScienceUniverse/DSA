@@ -7,7 +7,7 @@ Tree* create_tree () {
 		tree -> root_node = NULL;
 		tree -> node_count = 0;
 		tree -> breadth = 0;
-		tree -> depth = 0;
+		tree -> height = 0;
 	}
 
 	return tree;
@@ -84,7 +84,7 @@ void display_tree (Tree* tree) {
 		return;
 	}
 
-	printf ("Tree :=> node_count: (%lu) breadth: (%lu) depth: (%lu)\n", tree -> node_count, tree -> breadth, tree -> depth);
+	printf ("Tree :=> node_count: (%lu) breadth: (%lu) height: (%lu)\n", tree -> node_count, tree -> breadth, tree -> height);
 
 	ssize_t i;
 	size_t address_count, depth = 0;
@@ -203,6 +203,12 @@ void append_child_node (Tree* tree, Node* parent_node, Node* child_node) {
 	delete_data (&addr_data);
 
 	tree -> node_count++;
+
+	size_t depth = get_tree_node_depth (tree, child_node);
+
+	if (tree -> height < depth) {
+		tree -> height = depth;
+	}
 }
 
 size_t get_tree_node_depth (Tree* tree, Node* node) {
@@ -246,19 +252,19 @@ size_t get_tree_node_depth (Tree* tree, Node* node) {
 }
 
 /*
-void display_relation_with_root (Tree* tree, Node* node) {
+void display_path_towards_root (Tree* tree, Node* node) {
 	if (tree == NULL) {
-		perror ("Tree does not exist to display Root!");
+		perror ("Tree does not exist to display path towards Root!");
 		return;
 	}
 
 	if (node == NULL) {
-		perror ("Node does not exist to display Root!");
+		perror ("Node does not exist to display path towards Root!");
 		return;
 	}
 
 	if (node -> type != N_Tree) {
-		perror ("Given Node doesn't belong to a tree to display Root!");
+		perror ("Given Node doesn't belong to a tree to display path towards Root!");
 		return;
 	}
 
@@ -275,7 +281,6 @@ void display_relation_with_root (Tree* tree, Node* node) {
 	display_stack (stack);
 	delete_stack (&stack);
 }
-
 
 void display_child_node_list (Node* node) {
 	if (node == NULL) {

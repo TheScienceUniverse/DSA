@@ -12,7 +12,7 @@ int main (void) {
 	test_linked_list ();
 	test_stack ();
 	test_queue ();
-//	test_tree ();
+	test_tree ();
 //	test_graph ();
 
 	return EXIT_SUCCESS;

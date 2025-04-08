@@ -291,7 +291,7 @@ void display_path_towards_root (Tree* tree, Node* node) {
 
 	putchar ('\n');
 }
-/*
+
 void display_child_node_list (Node* node) {
 	if (node == NULL) {
 		perror ("Node does not exist to display Root!");
@@ -303,33 +303,27 @@ void display_child_node_list (Node* node) {
 		return;
 	}
 
-	printf ("[");
+	printf ("Children of ");
+	display_node (node);
+	printf (": [");
 
-	for (size_t i = 1; i < node -> address_list -> item_count; i++) {
-		display_node (*(node -> address_list -> item_addresses + i));
+	ssize_t address_count = node -> address_list -> item_count;
 
-		if (i < node -> address_list -> item_count - 1) {
-			printf (",");
+	for (ssize_t i = 1; i < address_count; i++) {
+		Data* data = get_list_data_at_index (node -> address_list, i);
+		Node* node = data -> address;
+		delete_data (&data);
+
+		display_node (node);
+
+		if (i < address_count - 1) {
+			printf (", ");
 		}
 	}
 
 	printf ("]\n");
 }
-
-Node* get_parent_node (Node* node) {
-	if (node == NULL) {
-		perror ("Given Node doesn't exists");
-		return NULL;
-	}
-
-	if (node -> type != N_Tree) {
-		perror ("Given Node doesn't belong to a tree");
-		return NULL;
-	}
-
-	return *(node -> address_list -> item_addresses + 0);
-}
-
+/*
 Node* get_Nth_child_node (Node* parent_node, size_t n) {
 	if (parent_node == NULL) {
 		perror ("Given Node doesn't exists");

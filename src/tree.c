@@ -251,7 +251,6 @@ size_t get_tree_node_depth (Tree* tree, Node* node) {
 	return depth;
 }
 
-/*
 void display_path_towards_root (Tree* tree, Node* node) {
 	if (tree == NULL) {
 		perror ("Tree does not exist to display path towards Root!");
@@ -268,20 +267,31 @@ void display_path_towards_root (Tree* tree, Node* node) {
 		return;
 	}
 
-	Stack* stack = create_stack ();
-	Node* stack_node;
+	printf ("Walking towards Root node ... ");
 
-	do {
-		stack_node = create_node (N_Stack);
-		set_node_name (stack_node, node -> name -> length, node -> name -> address);
-		push (stack, stack_node);
-		delete_node (&stack_node);
-	} while ((node = get_parent_node (node)) != NULL);
+	if (tree -> root_node == node) {
+		display_node (node);
+		putchar ('\n');
+		return;
+	}
 
-	display_stack (stack);
-	delete_stack (&stack);
+	ssize_t height = tree -> height;
+
+	while (
+		height--
+		&& NULL != node
+	) {
+		display_node (node);
+		node = node -> address_list -> head_chunk -> first_data_address -> address;
+
+		if (NULL != node) {
+			printf ("->");
+		}
+	}
+
+	putchar ('\n');
 }
-
+/*
 void display_child_node_list (Node* node) {
 	if (node == NULL) {
 		perror ("Node does not exist to display Root!");
@@ -359,41 +369,6 @@ Node* get_last_child_node (Node* parent_node) {
 	}
 
 	return child_node;
-}
-
-void append_child_node (Tree* tree, Node* parent_node, Node* child_node) {
-	if (parent_node == NULL) {
-		perror ("Parent Node does not Exist to add child node!");
-		return;
-	}
-
-	if (child_node == NULL) {
-		perror ("Child Node does not Exist to add child node!");
-		return;
-	}
-
-	child_node = duplicate_node (child_node);
-	*(child_node -> address_list -> item_addresses + 0) = parent_node;
-	add_to_list (parent_node -> address_list, child_node, false);
-	++(tree -> node_count);
-}
-
-void push_tree_node_to_stack (Stack* stack, Node* node) {
-	Node* stack_node = create_node (N_Stack);
-	stack_node -> name = duplicate_string (node -> name);
-	stack_node -> data = create_data (DT_Address, sizeof (void*), node);
-
-	push (stack, stack_node);
-	delete_temporary_node (&stack_node);
-}
-
-void enqueue_tree_node_to_queue (Queue* queue, Node* node) {
-	Node* queue_node = create_node (N_Queue);
-	queue_node -> name = duplicate_string (node -> name);
-	queue_node -> data = create_data (DT_Address, sizeof (void*), node);
-
-	enqueue (queue, queue_node);
-	delete_temporary_node (&queue_node);
 }
 
 Node* search_tree_by_node_name (Tree* tree, String* name) {
@@ -617,13 +592,6 @@ void delete_tree_nodes_by_name (Tree* tree, String* node_name) {
 	while ((node = search_tree_by_node_name (tree, node_name)) != NULL) {
 		delete_node_from_tree (tree, node);
 	}
-}
-
-void display_tree_node (Node* node) {
-	display_node (node);
-	printf (" => [");
-	display_data (node -> data);
-	printf ("]");
 }
 
 void export_tree_data_for_web_view (Tree* tree) {

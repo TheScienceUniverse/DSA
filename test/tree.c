@@ -69,6 +69,7 @@ void test_tree (void) {
 //	delete_data (&data);
 
 
+	display_path_towards_root (tree, anchor);
 
 
 	display_tree (tree);

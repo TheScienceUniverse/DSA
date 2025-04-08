@@ -42,5 +42,6 @@ size_t get_tree_node_depth (Tree* tree, Node* tree_node);
 void delete_tree_nodes_by_name (Tree* tree, String* node_name);
 void display_tree_node (Node* node);
 void export_tree_data_for_web_view (Tree* tree);
+void display_path_towards_root (Tree* tree, Node* node);
 
 #endif	// TREE_H

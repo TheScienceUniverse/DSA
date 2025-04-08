@@ -68,11 +68,13 @@ void test_tree (void) {
 	//display_node_details (anchor);
 //	delete_data (&data);
 
+	display_tree (tree);
 
 	display_path_towards_root (tree, anchor);
 
+	anchor = (tree -> root_node -> address_list -> head_chunk -> first_data_address + 1 ) -> address;
 
-	display_tree (tree);
+	display_child_node_list (anchor);
 
 	delete_node (&node);
 

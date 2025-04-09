@@ -75,7 +75,25 @@ void test_tree (void) {
 	anchor = (tree -> root_node -> address_list -> head_chunk -> first_data_address + 1 ) -> address;
 
 	display_child_node_list (anchor);
+	
+	delete_node (&node);
 
+	node = get_first_child_node (anchor);
+	printf ("First Node :=> ");
+	display_node (node);
+	putchar ('\n');
+	delete_node (&node);
+
+	node = get_last_child_node (anchor);
+	printf ("Last Node :=> ");
+	display_node (node);
+	putchar ('\n');
+	delete_node (&node);
+
+	node = get_Nth_child_node (anchor, 1);
+	printf ("2nd Node :=> ");
+	display_node (node);
+	putchar ('\n');
 	delete_node (&node);
 
 	node = remove_child_node (tree, anchor);
@@ -83,6 +101,8 @@ void test_tree (void) {
 	display_node (node);
 	putchar ('\n');
 	delete_node (&node);
+
+	display_child_node_list (anchor);
 
 	display_tree (tree);
 

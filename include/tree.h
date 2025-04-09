@@ -24,6 +24,7 @@ void delete_tree (Tree** tree_address);
 void display_tree (Tree* tree);
 void set_tree_root_node (Tree* tree, Node* root_node);
 Node* get_Nth_child_node (Node* parent_node, size_t child_number);
+Node* get_first_child_node (Node* parent_node);
 Node* get_last_child_node (Node* parent_node);
 Node* get_parent_node (Node* child_node);
 void append_child_node (Tree* tree, Node* parent_node, Node* child_node);

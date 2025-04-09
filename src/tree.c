@@ -343,7 +343,7 @@ void display_child_node_list (Node* node) {
 
 	printf ("]\n");
 }
-/*
+
 Node* get_Nth_child_node (Node* parent_node, size_t n) {
 	if (parent_node == NULL) {
 		perror ("Given Node doesn't exists");
@@ -355,11 +355,41 @@ Node* get_Nth_child_node (Node* parent_node, size_t n) {
 		return NULL;
 	}
 
-	Node* child_node = NULL;
+	size_t address_count = parent_node -> address_list -> item_count;
 
-	if (parent_node -> address_list -> item_count > n) {
-		child_node = *(parent_node -> address_list -> item_addresses + n);
+	if (address_count < n + 1) {	// 0 based index
+		perror ("Child index out of bound to get Nth child!");
+		return NULL;
 	}
+
+	Data* addr_data = get_list_data_at_index (parent_node -> address_list, n + 1);	// 0 based index
+	Node* child_node = duplicate_node (addr_data -> address);
+	delete_data (&addr_data);
+
+	return child_node;
+}
+
+Node* get_first_child_node (Node* parent_node) {
+	if (parent_node == NULL) {
+		perror ("Given Node doesn't exists");
+		return NULL;
+	}
+
+	if (parent_node -> type != N_Tree) {
+		perror ("Given Node doesn't belong to a tree");
+		return NULL;
+	}
+
+	size_t address_count = parent_node -> address_list -> item_count;
+
+	if (address_count < 2) {
+		perror ("Child does not exist to get first child!");
+		return NULL;
+	}
+
+	Data* addr_data = get_list_data_at_index (parent_node -> address_list, 1);
+	Node* child_node = duplicate_node (addr_data -> address);
+	delete_data (&addr_data);
 
 	return child_node;
 }
@@ -375,16 +405,20 @@ Node* get_last_child_node (Node* parent_node) {
 		return NULL;
 	}
 
-	int child_count = parent_node -> address_list -> item_count - 1;
-	Node* child_node = NULL;
+	size_t address_count = parent_node -> address_list -> item_count;
 
-	if (child_count > 0) {
-		child_node = get_Nth_child_node (parent_node, child_count);
+	if (address_count < 2) {	// 0 based index
+		perror ("Child does not exist to get last child!");
+		return NULL;
 	}
+
+	Data* addr_data = get_list_data_at_index (parent_node -> address_list, address_count - 1);	// 0 based index
+	Node* child_node = duplicate_node (addr_data -> address);
+	delete_data (&addr_data);
 
 	return child_node;
 }
-
+/*
 Node* search_tree_by_node_name (Tree* tree, String* name) {
 	if (tree == NULL) {
 		perror ("Tree does not exist to search");

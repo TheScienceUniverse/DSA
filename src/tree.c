@@ -211,6 +211,26 @@ void append_child_node (Tree* tree, Node* parent_node, Node* child_node) {
 	}
 }
 
+Node* remove_child_node (Tree* tree, Node* parent_node) {
+	if (parent_node == NULL) {
+		perror ("Parent Node does not Exist to add child node!");
+		return NULL;
+	}
+
+	if (2 > parent_node -> address_list -> item_count) {
+		perror ("Parent has no child nodes to remove!");
+		return NULL;
+	}
+
+	Data* data = remove_data_from_list (parent_node -> address_list);
+	Node* node = data -> address;
+	clear_node_address_list (node);
+
+	tree -> node_count--;
+
+	return node;
+}
+
 size_t get_tree_node_depth (Tree* tree, Node* node) {
 	if (tree == NULL) {
 		perror ("Tree does not exist to get depth!");

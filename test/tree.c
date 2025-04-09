@@ -78,7 +78,16 @@ void test_tree (void) {
 
 	delete_node (&node);
 
+	node = remove_child_node (tree, anchor);
+	printf ("Deleted node: ");
+	display_node (node);
+	putchar ('\n');
+	delete_node (&node);
+
+	display_tree (tree);
+
 	delete_tree (&tree);
+
 	TEST (NULL == tree, "Deleted tree");
 
 	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Tree]\n" RESET_STYLE);

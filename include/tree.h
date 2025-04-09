@@ -43,5 +43,6 @@ void delete_tree_nodes_by_name (Tree* tree, String* node_name);
 void display_tree_node (Node* node);
 void export_tree_data_for_web_view (Tree* tree);
 void display_path_towards_root (Tree* tree, Node* node);
+Node* remove_child_node (Tree* tree, Node* parent_node);
 
 #endif	// TREE_H

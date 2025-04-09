@@ -75,6 +75,7 @@ void test_chunk (void) {
 	delete_chunk (&test_chunk);
 
 	delete_chunk (&chunk);
+	TEST (NULL == chunk, "Deleted chunk");
 
 	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Chunk]\n" RESET_STYLE);
 }

@@ -322,7 +322,10 @@ void empty_data (Data* data) {
 		return;
 	}
 
-	if (data -> address != NULL) {
+	if (
+		DT_Address != data -> type
+		&& data -> address != NULL
+	) {
 		ERASE (&(data -> address), data -> size);
 	}
 

@@ -53,8 +53,11 @@ void delete_chunk (Chunk** chunk_address) {
 	previous_chunk = NULL;
 	next_chunk = NULL;
 
-	ERASE (&(chunk -> first_data_address), sizeof (Data) * chunk -> capacity);
-	
+	chunk -> previous_chunk = NULL;
+	chunk -> next_chunk = NULL;
+
+	ERASE (&(chunk -> first_data_address), sizeof (Data) * (chunk -> capacity));
+
 	chunk = NULL;
 	ERASE (chunk_address, sizeof (Chunk));
 }
@@ -90,7 +93,7 @@ void display_chunk_details (Chunk* chunk) {
 
 	Data* data;
 
-	printf ("Chunk_%lu (%lu / %lu): [ ", chunk -> id, chunk -> data_count, chunk -> capacity);
+	printf ("Chunk :=> Id: (%lu) Capacity: (%lu) Item count: (%lu) Previous: (%p) Next: (%p)\nElements: [ ", chunk -> id, chunk -> capacity, chunk -> data_count, chunk -> previous_chunk, chunk -> next_chunk);
 
 	for (size_t i = 0; i < chunk -> capacity; i++) {
 		data = chunk -> first_data_address + i;
@@ -259,7 +262,7 @@ Chunk* reduce_chunk (Chunk* chunk) {
 	penultimate_chunk -> next_chunk = NULL;
 	last_chunk -> previous_chunk = NULL;
 
-//	delete_chunk (&last_chunk);
+	delete_chunk (&last_chunk);
 
 	return penultimate_chunk;
 }
@@ -302,7 +305,6 @@ Data* remove_data_from_chunk (Chunk* chunk) {
 
 	Data* data = last_chunk -> first_data_address + last_chunk -> data_count - 1;
 	Data* real_data = duplicate_data (data);
-
 	empty_data (data);
 
 	-- (last_chunk -> data_count);

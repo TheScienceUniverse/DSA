@@ -229,6 +229,22 @@ void delete_data_from_list (List* list, Data* data) {
 	list -> tail_chunk = get_last_chunk (chunk);
 }
 
+Data* remove_data_from_list (List* list) {
+	if (NULL == list) {
+		perror ("List does not exist to delete data from!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	Chunk* chunk = list -> tail_chunk;
+	Data* deleted_data = remove_data_from_chunk (chunk);
+	chunk = NULL;	// data removal may "reduce" chunk
+
+	list -> tail_chunk = get_last_chunk (list -> head_chunk);
+	list -> item_count--;
+
+	return deleted_data;
+}
+
 Data* get_list_data_at_index (List* list, size_t index) {
 	if (NULL == list) {
 		perror ("List does not exist to get data from!\n");

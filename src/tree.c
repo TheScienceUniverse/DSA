@@ -256,16 +256,21 @@ size_t get_tree_node_depth (Tree* tree, Node* node) {
 	}
 
 	size_t depth = 0;
-	Node* x_node;
-	Node* parent_node = node -> address_list -> head_chunk -> first_data_address -> address;
+	Node* child_node = node;
+	Node* parent_node = child_node -> address_list -> head_chunk -> first_data_address -> address;
 
-	while (parent_node != NULL) {
+	do {
+		if (child_node == tree -> root_node) {
+			break;
+		}
+
+		child_node = parent_node;
+		parent_node = parent_node -> address_list -> head_chunk -> first_data_address -> address;
+
 		++ depth;
-		x_node = parent_node;
-		parent_node = x_node -> address_list -> head_chunk -> first_data_address -> address;
-	}
+	} while (parent_node != NULL);
 
-	x_node = NULL;
+	child_node = NULL;
 	parent_node = NULL;
 
 	return depth;
@@ -417,6 +422,28 @@ Node* get_last_child_node (Node* parent_node) {
 	delete_data (&addr_data);
 
 	return child_node;
+}
+
+void display_sub_tree (Tree* tree, Node* node) {
+	if (node == NULL) {
+		perror ("Node does not Exist to add to sub-tree to delete");
+		return;
+	}
+
+	if (node -> type != N_Tree) {
+		perror ("Node does not belong to a tree to add to sub-tree to delete");
+		return;
+	}
+
+	size_t depth = get_tree_node_depth (tree, node);
+	Tree* sub_tree = create_tree ();
+	sub_tree -> root_node = node;
+	sub_tree -> node_count = tree -> node_count;
+	sub_tree -> height = tree -> height - depth;
+	display_tree (sub_tree);
+	sub_tree -> root_node = NULL;
+	sub_tree -> node_count = 0;
+	delete_tree (&sub_tree);
 }
 /*
 Node* search_tree_by_node_name (Tree* tree, String* name) {

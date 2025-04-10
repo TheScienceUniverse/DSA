@@ -104,6 +104,8 @@ void test_tree (void) {
 
 	display_child_node_list (anchor);
 
+	display_sub_tree (tree, anchor);
+
 	display_tree (tree);
 
 	delete_tree (&tree);

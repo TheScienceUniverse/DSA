@@ -33,7 +33,7 @@ void enqueue_tree_node_to_queue (Queue* queue, Node* node);
 void display_relation_with_root (Tree* tree, Node* node);
 void display_child_node_list (Node* parent_node);
 Node* search_tree_by_node_name (Tree* tree, String* node_name);
-void display_sub_tree (Node* node);
+void display_sub_tree (Tree* tree, Node* node);
 size_t count_tree_nodes (Tree* tree);
 void delete_node_from_tree (Tree* tree, Node* node);
 Tree* create_sub_tree_from_node (Node* node);

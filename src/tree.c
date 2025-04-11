@@ -436,15 +436,73 @@ void display_sub_tree (Tree* tree, Node* node) {
 	}
 
 	size_t depth = get_tree_node_depth (tree, node);
+
 	Tree* sub_tree = create_tree ();
 	sub_tree -> root_node = node;
-	sub_tree -> node_count = tree -> node_count;
 	sub_tree -> height = tree -> height - depth;
+	sub_tree -> node_count = count_tree_nodes (sub_tree);
+
 	display_tree (sub_tree);
+
 	sub_tree -> root_node = NULL;
 	sub_tree -> node_count = 0;
+
 	delete_tree (&sub_tree);
 }
+
+size_t count_tree_nodes (Tree* tree) {
+	if (tree == NULL) {
+		perror ("Tree does not exist to count nodes");
+		exit (EXIT_FAILURE);
+	}
+
+	if (tree -> root_node == NULL) {
+		perror ("Tree does not have any node to count");
+		return 0;
+	}
+
+	ssize_t i;
+	size_t address_count;
+	Node* node;
+	Node* x_node;
+	Queue* queue = create_queue ();
+	Node* queue_node = create_node (N_Queue);
+	size_t node_count = 0;
+
+	queue_node -> data = create_address_data (tree -> root_node);
+	enqueue (queue, queue_node);
+
+	while (queue -> size > 0) {
+		x_node = dequeue (queue);
+		node = x_node -> data -> address;
+		x_node -> data -> address = NULL;
+		delete_node (&x_node);
+
+		address_count = node -> address_list -> item_count;
+
+		if (1 > address_count) {
+			continue;
+		}
+
+		i = address_count;
+
+		while (--i) {
+			Data* data = get_list_data_at_index (node -> address_list, i);
+			queue_node -> data -> address = data -> address;
+			delete_data (&data);
+			enqueue (queue, queue_node);
+		}
+
+		++ node_count;
+	}
+
+	delete_queue (&queue);
+	node = NULL;
+
+	return node_count;
+}
+
+
 /*
 Node* search_tree_by_node_name (Tree* tree, String* name) {
 	if (tree == NULL) {
@@ -508,65 +566,6 @@ Node* search_tree_by_node_name (Tree* tree, String* name) {
 	}
 
 	return node;
-}
-
-void display_sub_tree (Node* node) {
-	if (node == NULL) {
-		perror ("Node does not Exist to add to sub-tree to delete");
-		return;
-	}
-
-	if (node -> type != N_Tree) {
-		perror ("Node does not belong to a tree to add to sub-tree to delete");
-		return;
-	}
-
-	Tree* tree = create_tree ();
-	set_root_node (tree, node);
-	display_tree (tree);
-	tree -> root_node = NULL;
-	tree -> node_count = 0;
-	delete_tree (&tree);
-}
-
-size_t count_tree_nodes (Tree* tree) {
-	if (tree -> root_node == NULL) {
-		perror ("Tree does not exist to count nodes");
-		return -1;
-	}
-
-	if (tree -> root_node == NULL) {
-		perror ("Tree does not have any node to count");
-		return -1;
-	}
-	
-	size_t i, node_count = 0;
-	Node* node;
-	Node* child_node;
-	Node* x_node;
-	Stack* stack = create_stack ();
-
-	node = get_root_node (tree);
-	push_tree_node_to_stack (stack, node);
-
-	while (stack -> size > 0) {
-		x_node = pop (stack);
-		node = x_node -> data -> address;
-		delete_temporary_node (&x_node);
-
-		++node_count;
-		i = node -> address_list -> item_count;
-
-		while (i--) {
-			child_node = *(node -> address_list -> item_addresses + i);
-			push_tree_node_to_stack (stack, child_node);
-		}
-	}
-
-	delete_stack (&stack);
-	node = NULL;
-
-	return node_count;
 }
 
 Tree* create_sub_tree_from_node (Node* node) {

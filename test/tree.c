@@ -100,6 +100,10 @@ void test_tree (void) {
 	printf ("Deleted node: ");
 	display_node (node);
 	putchar ('\n');
+
+	printf ("Is node belong to tree? %s\n", (does_tree_contain_node (tree, anchor)) ? "Yes" : "No");
+	printf ("Is node belong to tree? %s\n", (does_tree_contain_node (tree, node)) ? "Yes" : "No");
+
 	delete_node (&node);
 
 	display_child_node_list (anchor);

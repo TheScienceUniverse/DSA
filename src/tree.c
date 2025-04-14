@@ -502,6 +502,68 @@ size_t count_tree_nodes (Tree* tree) {
 	return node_count;
 }
 
+bool does_tree_contain_node (Tree* tree, Node* node) {
+	if (NULL == tree) {
+		perror ("Tree does not exist to find node");
+		exit (EXIT_FAILURE);
+	}
+
+	if (NULL == node) {
+		perror ("Node does not exist to find in tree");
+		exit (EXIT_FAILURE);
+	}
+
+	if (NULL == tree -> root_node) {
+		perror ("Tree does not have any node to find given node");
+		return false;
+	}
+
+	bool decision = false;
+	ssize_t i;
+	size_t address_count;
+	Node* t_node;
+	Node* x_node;
+	Queue* queue = create_queue ();
+	Node* queue_node = create_node (N_Queue);
+	size_t node_count = 0;
+
+	queue_node -> data = create_address_data (tree -> root_node);
+	enqueue (queue, queue_node);
+
+	while (queue -> size > 0) {
+		x_node = dequeue (queue);
+		t_node = x_node -> data -> address;
+		x_node -> data -> address = NULL;
+		delete_node (&x_node);
+
+		if (node == t_node) {
+			decision = true;
+			break;
+		}
+
+		address_count = t_node -> address_list -> item_count;
+
+		if (1 > address_count) {
+			continue;
+		}
+
+		i = address_count;
+
+		while (--i) {
+			Data* data = get_list_data_at_index (t_node -> address_list, i);
+			queue_node -> data -> address = data -> address;
+			delete_data (&data);
+			enqueue (queue, queue_node);
+		}
+
+		++ node_count;
+	}
+
+	delete_queue (&queue);
+	t_node = NULL;
+
+	return decision;
+}
 
 /*
 Node* search_tree_by_node_name (Tree* tree, String* name) {

@@ -275,10 +275,13 @@ void clear_node_address_list (Node* node) {
 	for ( ; list_data_index < list -> item_count; list_data_index++) {
 		(chunk -> first_data_address + chunk_data_index++) -> address = NULL;
 
+		chunk -> data_count = 0;
+
 		if (chunk -> capacity == chunk_data_index) {
-			chunk -> data_count = 0;
 			chunk_data_index = 0;
 			chunk = chunk -> next_chunk;
 		}
 	}
+
+	list -> item_count = 0;
 }

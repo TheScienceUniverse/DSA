@@ -174,6 +174,11 @@ void set_tree_root_node (Tree* tree, Node* node) {
 }
 
 void append_child_node (Tree* tree, Node* parent_node, Node* child_node) {
+	if (NULL == tree) {
+		perror ("Tree does not Exist to add child node to parent!");
+		return;
+	}
+
 	if (parent_node == NULL) {
 		perror ("Parent Node does not Exist to add child node!");
 		return;
@@ -565,249 +570,73 @@ bool does_tree_contain_node (Tree* tree, Node* node) {
 	return decision;
 }
 
-/*
-Node* search_tree_by_node_name (Tree* tree, String* name) {
+Tree* duplicate_tree (Tree* tree) {
 	if (tree == NULL) {
-		perror ("Tree does not exist to search");
-		return NULL;
+		perror ("Tree does not exist to display");
+		exit (EXIT_FAILURE);
 	}
 
-	if (name == NULL) {
-		perror ("Search item does not exist to search into tree");
-		return NULL;
+	Tree* new_tree = create_tree ();
+
+	if (tree -> node_count == 0) {
+		return new_tree;
 	}
 
-	if (tree -> root_node == NULL) {
-		perror ("Tree does not have node to search");
-		return NULL;
-	}
+	size_t visited_node_count = 0;
+	size_t address_count;
+	Node* anchor;
 
-	Node* x_node;
-	Node* node;
-	size_t i;
-	bool found = false;
-	void** address;
+	Node* t_node;	// tree-node
+	Node* x_node;	// to be deleted node
 	Queue* queue = create_queue ();
-
-	node = get_root_node (tree);
-	enqueue_tree_node_to_queue (queue, node);
-
-	while (queue -> size > 0) {
-		x_node = dequeue (queue, true);
-		node = x_node -> data -> address;
-		delete_temporary_node (&x_node);
-
-		if (are_strings_equal (node -> name, name)) {
-			found = true;
-			break;
-		}
-
-		i = node -> address_list -> item_count;
-		address = node -> address_list -> item_addresses;
-
-		while (i--) {													
-			++address;
-			enqueue_tree_node_to_queue (queue, *(address));
-		}	
-	}
-
-	if (queue -> size > 0) {
-		x_node = queue -> first_node;
-		i = queue -> size;
-
-		while (i--) {
-			forget_data (&(x_node -> data));
-			x_node = *(x_node -> address_list -> item_addresses + 1);
-		}
-	}
-
-	delete_queue (&queue);
-
-	if (!found) {
-		node = NULL;
-	}
-
-	return node;
-}
-
-Tree* create_sub_tree_from_node (Node* node) {
-	if (node == NULL) {
-		perror ("Node does not Exist to create sub-tree");
-		return NULL;
-	}
-
-	if (node -> type != N_Tree) {
-		perror ("Node does not belong to a tree to create sub-tree");
-		return NULL;
-	}
-
-	Tree* sub_tree = create_tree ();
-
-	if (sub_tree != NULL) {
-		set_root_node (sub_tree, node);
-		sub_tree -> node_count = count_tree_nodes (sub_tree);
-	}
-
-	return sub_tree;
-}
-
-void detach_node_from_parent (Node* node) {
-	if (node == NULL) {
-		perror ("Node does not belong to a tree to detach from parent");
-		return;
-	}
-
-	Node* parent_node = get_parent_node (node);
-
-	if (parent_node != NULL) {
-		remove_address_from_list (parent_node -> address_list, node);
-		*(node -> address_list -> item_addresses + 0) = NULL;
-	}
-
-	parent_node = NULL;
-}
-
-void delete_node_from_tree (Tree* tree, Node* node)  {
-	if (tree == NULL) {
-		perror ("Tree does not Exist to delete node from");
-		return;
-	}
-
-	if (node == NULL) {
-		perror ("Node does not Exist to delete from tree");
-		return;
-	}
-
-	if (node -> type != N_Tree) {
-		perror ("Node does not belong to a tree to delete from");
-		return;
-	}
-
-	Tree* sub_tree = create_sub_tree_from_node (node);
-
-	if (sub_tree != NULL && sub_tree -> node_count > 0) {
-		detach_node_from_parent (node);
-		tree -> node_count -= sub_tree -> node_count;
-		delete_tree (&sub_tree);
-	}
-
-	sub_tree = NULL;
-}
-
-void print_node_depth_whitespace (size_t depth) {
-	size_t i;
-
-	if (depth > 0) {
-		for (i = 0; i < depth; i++) {
-			printf ("\t|");
-		}
-
-		printf ("\n");
-
-		for (i = 1; i < depth; i++) {
-			printf ("\t|");
-		}
-
-		printf ("\t+--->");
-	}
-}
-
-void delete_tree_nodes_by_name (Tree* tree, String* node_name) {
-	if (tree == NULL) {
-		perror ("Tree does not exist to delete all nodes by name!");
-		return;
-	}
-
-	if (node_name == NULL) {
-		perror ("Name is not provided to delete all nodes by name!");
-		return;
-	}
-
-	Node* node;
-
-	while ((node = search_tree_by_node_name (tree, node_name)) != NULL) {
-		delete_node_from_tree (tree, node);
-	}
-}
-
-void export_tree_data_for_web_view (Tree* tree) {
-	if (tree == NULL) {
-		perror ("Tree does not exist to export");
-		return;
-	}
-
-	FILE* fpo = fopen ("../web/tree/data.js", "wb+");
-
-	List* list = create_list (tree -> node_count);
-	size_t list_index = 0;
-	size_t i, linked_address_count, j;
-
-	Node* node;
+	Node* queue_node = create_node (N_Queue);
+	size_t node_count = 0;
 	Node* child_node;
-	Node* x_node;
-	Queue* queue = create_queue ();
 
-	node = get_root_node (tree);
-	enqueue_tree_node_to_queue (queue, node);
+	anchor = duplicate_node (tree -> root_node);
+	clear_node_address_list (anchor);
 
-	while (queue -> size > 0) {
-		x_node = dequeue (queue, false);
-		node = x_node -> data -> address;
-		*(list -> item_addresses + list_index++) = node;
-		delete_temporary_node (&x_node);
+	new_tree -> root_node = anchor;
+	new_tree -> node_count = 1;
 
-		linked_address_count = node -> address_list -> item_count;
+	queue_node -> data = create_address_data (tree -> root_node);
+	enqueue (queue, queue_node);
 
-		for (i = 1 ; i < linked_address_count; i++) {
-			child_node = *(node -> address_list -> item_addresses + i);
-			enqueue_tree_node_to_queue (queue, child_node);
+	anchor = duplicate_node (tree -> root_node);
+	clear_node_address_list (anchor);
+	new_tree -> root_node = anchor;
+
+	while (
+		queue -> size > 0
+		&& visited_node_count++ < tree -> node_count
+	) {
+		x_node = dequeue (queue);
+		t_node = x_node -> data -> address;
+		x_node -> data -> address = NULL;
+		delete_node (&x_node);
+
+		address_count = t_node -> address_list -> item_count;
+
+		if (1 > address_count) {
+			continue;
+		}
+
+		for (ssize_t i = 1; i < address_count; i++) {
+			Data* data = get_list_data_at_index (t_node -> address_list, i);
+			queue_node -> data -> address = data -> address;
+			child_node = data -> address;
+			delete_data (&data);
+			enqueue (queue, queue_node);
+
+append_child_node (new_tree, anchor, child_node);
 		}
 	}
 
+	delete_node (&queue_node);
 	delete_queue (&queue);
 
-	Node* parent_node = NULL;
+	t_node = NULL;
+	x_node = NULL;
 
-	fprintf (fpo, "const tree_node_list = [");
-
-	for (i = 0; i < list -> item_count; i++) {
-		node = *(list -> item_addresses + i);
-		parent_node = *(node -> address_list -> item_addresses + 0);
-
-		fprintf (fpo, "\n\t");
-
-		if (i > 0) {
-			fprintf (fpo, ", ");
-		}
-
-		fprintf (fpo, "[\"%s\", ", node -> name -> address);
-
-		if (parent_node == NULL) {
-			fprintf (fpo, "null");
-		} else {
-			fprintf (fpo, "\"%s\"", parent_node -> name -> address);
-		}
-
-		fprintf (fpo, ", [");
-
-		for (j = 1; j < node -> address_list -> item_count; j++) {
-			child_node = *(node -> address_list -> item_addresses + j);
-
-			if (j > 1) {
-				fprintf (fpo, ", ");
-			}
-
-			fprintf (fpo, "\"%s\"", child_node -> name -> address);
-		}
-
-		fprintf (fpo, "]]");
-	}
-
-	forget_list (&list);
-	delete_list (&list);
-
-	fprintf (fpo, "\n];");
-
-	fclose (fpo);
+	return new_tree;
 }
-*/

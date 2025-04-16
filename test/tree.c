@@ -112,6 +112,10 @@ void test_tree (void) {
 
 	display_tree (tree);
 
+	Tree* test_tree = duplicate_tree (tree);
+	display_tree (test_tree);
+	delete_tree (&test_tree);
+
 	delete_tree (&tree);
 
 	TEST (NULL == tree, "Deleted tree");

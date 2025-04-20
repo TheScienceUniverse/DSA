@@ -93,7 +93,12 @@ void display_chunk_details (Chunk* chunk) {
 
 	Data* data;
 
-	printf ("Chunk :=> Id: (%lu) Capacity: (%lu) Item count: (%lu) Previous: (%p) Next: (%p)\nElements: [ ", chunk -> id, chunk -> capacity, chunk -> data_count, chunk -> previous_chunk, chunk -> next_chunk);
+	printf ("Chunk :=> Address: (%p)", chunk);
+	printf (", Id: (%lu)", chunk -> id);
+	printf (", Capacity: (%lu)", chunk -> capacity);
+	printf (", Data count: (%lu)", chunk -> data_count);
+	printf (", Previous: (%p)", chunk -> previous_chunk);
+	printf (", Next: (%p)", chunk -> next_chunk);
 
 	for (size_t i = 0; i < chunk -> capacity; i++) {
 		data = chunk -> first_data_address + i;

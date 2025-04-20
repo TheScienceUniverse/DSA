@@ -33,5 +33,6 @@ void display_linked_chunks (Chunk* chunk);
 void display_linked_chunks_unguarded (Chunk* chunk);
 Chunk* get_first_chunk (Chunk* chunk);
 Chunk* get_last_chunk (Chunk* chunk);
+void reduce_unused_chunks (Chunk* chunk);
 
 #endif	// CHUNK_H

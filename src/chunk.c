@@ -323,3 +323,21 @@ Data* remove_data_from_chunk (Chunk* chunk) {
 
 	return real_data;
 }
+
+void reduce_unused_chunks (Chunk* chunk) {
+	Chunk* last_chunk = get_last_chunk (chunk);
+	Chunk* penultimate_chunk = last_chunk -> previous_chunk;
+
+	while (
+		0 != last_chunk -> id
+		&& NULL != penultimate_chunk
+	) {
+		if (0 != last_chunk -> data_count) {
+			break;
+		}
+
+		penultimate_chunk = last_chunk -> previous_chunk;
+		reduce_chunk (last_chunk);
+		last_chunk = penultimate_chunk;
+	}
+}

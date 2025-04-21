@@ -134,7 +134,13 @@ void display_node (Node* node) {
 	}
 
 	printf ("(");
-	display_string (node -> name);
+
+	if (NULL == node -> name) {
+		display_data (node -> data);
+	} else {
+		display_string (node -> name);
+	}
+
 	printf (")");
 }
 

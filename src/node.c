@@ -261,33 +261,6 @@ void clear_node_address_list (Node* node) {
 		exit (EXIT_FAILURE);
 	}
 
-	List* list = node -> address_list;
-
-	if (NULL == list) {
-		perror ("Node's address list does not exist to prepare!\n");
-		exit (EXIT_FAILURE);
-	}
-
-	Chunk* chunk = list -> head_chunk;
-
-	if (NULL == chunk) {
-		perror ("Node's address-list's chunk does not exist to prepare!\n");
-		exit (EXIT_FAILURE);
-	}
-
-	size_t list_data_index = 0;
-	size_t chunk_data_index = 0;
-
-	for ( ; list_data_index < list -> item_count; list_data_index++) {
-		(chunk -> first_data_address + chunk_data_index++) -> address = NULL;
-
-		chunk -> data_count = 0;
-
-		if (chunk -> capacity == chunk_data_index) {
-			chunk_data_index = 0;
-			chunk = chunk -> next_chunk;
-		}
-	}
-
-	list -> item_count = 0;
+	clear_list (node -> address_list);
+	defragment_list (node -> address_list);
 }

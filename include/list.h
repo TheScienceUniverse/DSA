@@ -43,5 +43,6 @@ void delete_all_instances_from_list (List* list, Data* data);
 bool is_list_empty (List* list);
 bool compare_lists (List* list_1, List* list_2);
 bool does_list_contain_data (List* list, Data* data);
+void defragment_list (List* list);
 
 #endif	// LIST_H

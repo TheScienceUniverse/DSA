@@ -149,17 +149,17 @@ void display_data_details (Data* data) {
 			printf ("(Address) Value: (%p)", data -> address);
 			break;
 		case DT_Character:
-			printf ("(Character): %c", *((char*) data -> address));
+			printf ("(Character) Value: %c", *((char*) data -> address));
 			break;
 		case DT_Binary:
-			printf ("(Binary): ");
+			printf ("(Binary) Value: ");
 			display_binary_data (data -> size, (BYTE*) data -> address);
 			break;
 		case DT_Integer:
-			printf ("(Integer): %d", *((int*) data -> address));
+			printf ("(Integer) Value: %d", *((int*) data -> address));
 			break;
 		case DT_String:
-			printf ("(String) [%zu]: ", data -> size);
+			printf ("(String) Length: [%zu] Value: ", data -> size);
 			display_raw_string (data -> size, (char*) data -> address);
 			break;
 		default:
@@ -327,9 +327,9 @@ void empty_data (Data* data) {
 		&& data -> address != NULL
 	) {
 		ERASE (&(data -> address), data -> size);
+		data -> type = DT_Empty;
 	}
 
-	data -> type = DT_Undefined;
 	data -> size = 0;
 	data -> address = NULL;
 }

@@ -898,3 +898,28 @@ bool does_list_contain_data (List* list, Data* data) {
 
 	return search_status;
 }
+
+void defragment_list (List* list) {
+	Chunk* chunk = list -> tail_chunk;
+	Chunk* prev_chunk = chunk -> previous_chunk;
+
+	while (
+		NULL != chunk
+		&& 0 != chunk -> id
+	) {
+		if (0 != chunk -> data_count) {
+			continue;
+		}
+
+		prev_chunk = chunk -> previous_chunk;
+
+		if (list -> item_count > chunk -> capacity) {
+			list -> item_count -= chunk -> capacity;
+		}
+
+		delete_chunk (&chunk);
+		chunk = prev_chunk;
+	}
+
+	list -> tail_chunk = get_last_chunk (list -> head_chunk);
+}

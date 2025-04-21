@@ -600,7 +600,7 @@ Data* remove_from_list_at_index (List* list, size_t index) {
 
 void clear_list (List* list) {
 	if (NULL == list) {
-		perror ("List does not exist to delete data from index!\n");
+		perror ("List does not exist to clear!\n");
 		exit (EXIT_FAILURE);
 	}
 
@@ -614,6 +614,7 @@ void clear_list (List* list) {
 		empty_data (data);
 
 		if (chunk -> data_count == chunk_data_index) {
+			chunk -> data_count = 0;
 			chunk_data_index = 0;
 			chunk = chunk -> next_chunk;
 		}

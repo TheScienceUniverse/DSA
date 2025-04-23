@@ -216,6 +216,28 @@ void append_child_node (Tree* tree, Node* parent_node, Node* child_node) {
 	}
 }
 
+void append_sibling_node (Tree* tree, Node* node, Node* sibling_node) {
+	if (NULL == tree) {
+		perror ("Tree does not Exist to add child node to parent!");
+		return;
+	}
+
+	if (node == NULL) {
+		perror ("Parent Node does not Exist to add child node!");
+		return;
+	}
+
+	if (sibling_node == NULL) {
+		perror ("Child Node does not Exist to add child node!");
+		return;
+	}
+
+	// get parent node
+	Node* parent_node = node -> address_list -> head_chunk -> first_data_address -> address;
+
+	append_child_node (tree, parent_node, sibling_node);
+}
+
 Node* remove_child_node (Tree* tree, Node* parent_node) {
 	if (parent_node == NULL) {
 		perror ("Parent Node does not Exist to add child node!");

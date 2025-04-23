@@ -13,6 +13,7 @@ void test_stack (void) {
 	int n = 10;
 	Data* data = create_data (DT_Integer, sizeof (int), &n);
 	set_node_data (node, data);
+	delete_data (&data);
 
 	push_node_onto_stack (stack, node);
 
@@ -58,6 +59,26 @@ void test_stack (void) {
 	TEST ('A' == *((char*)(del_node -> name -> address + 0)), "Compared popped node's name (A) with expected node name");
 	TEST (10 == *((int*)(del_node -> data -> address + 0)), "Compared popped node's data (10) with expected node data");
 	delete_node (&del_node);
+
+	data = create_data (DT_Integer, sizeof (int), &n);
+
+	*((int*)(data -> address)) = -10;
+	push_data_onto_stack (stack, data);
+	TEST (-10 == *((int*)(stack -> top_node -> data -> address)), "Compared pushed data (-10) with stack's top node data");
+
+	*((int*)(data -> address)) = -20;
+	push_data_onto_stack (stack, data);
+	TEST (-20 == *((int*)(stack -> top_node -> data -> address)), "Compared pushed data (-20) with stack's top node data");
+
+	delete_data (&data);
+
+	data = pop_data_from_stack (stack);
+	TEST (-20 == *((int*)(data -> address)), "Compared popped data (-20) with expected data");
+	delete_data (&data);
+
+	data = pop_data_from_stack (stack);
+	TEST (-10 == *((int*)(data -> address)), "Compared popped data (-20) with expected data");
+	delete_data (&data);
 
 	del_node = pop_node_from_stack (stack);
 	TEST (0 == stack -> size, "Compared stack's expected size emptiness");

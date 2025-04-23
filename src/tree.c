@@ -112,17 +112,17 @@ void display_tree (Tree* tree) {
 
 		if (0 != depth) {
 			for (ssize_t i = 0; i < (ssize_t) depth; i++) {
-				printf ("|\t");
+				printf ("|    ");
 			}
 
-			printf ("\n\t");
+			printf ("\n    ");
 
 			for (ssize_t i = 0; i < (ssize_t)(depth - 1); i++) {
-				printf ("|\t");
+				printf ("|    ");
 			}
 
 			putchar ('+');
-			display_N_characters ('-', depth - 1 + 3);
+			display_N_characters ('-', 3);
 		}
 
 		display_node (node);

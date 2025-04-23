@@ -51,7 +51,7 @@ void display_stack (Stack* stack) {
 	printf ("+--------+");
 
 	for (size_t i = 0; i < stack -> size; i++) {
-		printf ("\n|\t");
+		printf ("\n| ");
 		display_node (node);
 		printf ("\n+--------+");
 		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;

@@ -28,6 +28,7 @@ Node* get_first_child_node (Node* parent_node);
 Node* get_last_child_node (Node* parent_node);
 Node* get_parent_node (Node* child_node);
 void append_child_node (Tree* tree, Node* parent_node, Node* child_node);
+void append_sibling_node (Tree* tree, Node* node, Node* sibling_node);
 void push_tree_node_to_stack (Stack* stack, Node* tree_node);
 void enqueue_tree_node_to_queue (Queue* queue, Node* node);
 void display_relation_with_root (Tree* tree, Node* node);

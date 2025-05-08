@@ -15,7 +15,18 @@ Custom C Library for data-structures and algorithms
 
 Click on the links below to know details about them.
 
-- [Basic](/docs/Basic.md)
+- [Basic](/docs/basic.md)
+- [String](/docs/string.md)
+- [Data](/docs/data.md)
+- [Bare_List](/docs/bare_list.md)
+- [Chunk](/docs/chunk.md)
+- [List](/docs/list.md)
+- [Node](/docs/node.md)
+- [Linked_List](/docs/linked_list.md)
+- [Stack](/docs/stack.md)
+- [Queue](/docs/queue.md)
+- [Tree](/docs/tree.md)
+- [Graph](/docs/graph.md)
 
 
 ### Dependency Diagram =>

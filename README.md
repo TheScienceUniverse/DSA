@@ -31,7 +31,7 @@ Click on the links below to know details about them.
 
 ### Dependency Diagram =>
 
-![Image](./media/library_structure.png "Library Structure")
+![Image](./media/library_structure.svg "Library Structure")
 
 ___
 

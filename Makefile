@@ -16,10 +16,11 @@ OBJECTS := $(foreach f_name, $(OBJECT_NAMES), $(LIBDIR)/$(f_name).o)
 TSTECTS := $(foreach f_name, $(OBJECT_NAMES), $(LIBDIR)/test_$(f_name).o)
 EXECUTABLE := $(EXEDIR)/dsa
 TSTCUTABLE := $(EXEDIR)/test
+MEMCUTABLE := $(EXEDIR)/mem
 CFLAGS = -Wall -Wextra -g $(INCDIR) $(OPTIMIZATION)
-CFLAGS_EXTRA = -fPIC -shared# [1] position-indepedent-code
+CFLAGS_EXTRA = -fPIC -shared# [1] position-indepedent-code -finput-charset=UTF-8
 
-all: $(EXECUTABLE) $(TSTCUTABLE)
+all: $(EXECUTABLE) $(TSTCUTABLE) $(MEMCUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
 	@echo "-> Linking all object files and generating executable binary file ..."
@@ -49,13 +50,21 @@ $(LIBDIR)/test_%.o: $(TSTDIR)/%.c
 #	@echo "... Done!"
 #	@echo
 
+$(MEMCUTABLE): $(OBJECTS) memo.c
+	@echo "-> Linking all object files and generating memory logger binary file ..."
+	@$(CC) $(CFLAGS) -o $@ ./memo.c $(LIBDIR)/basic.o $(LIBDIR)/string.o
+	@chmod +x $(MEMCUTABLE)
+#	@echo "... Done!"
+#	@echo
 
-.PHONY: clean again check flow
+
+.PHONY: clean again check memlog flow
 
 clean:
 	@echo "-> Removing generated files ..."
 	@-rm -f $(OBJECTS) $(EXECUTABLE) $(TSTCUTABLE)
 	@-rm -f ./lib/* ./bin/*
+	@-rm -f ./memory.log
 	@echo "... Done"
 #	@echo
 
@@ -64,6 +73,9 @@ again:
 
 check:
 	./bin/test
+
+memlog:
+	./bin/mem
 
 flow:
 	@tabs 4

@@ -7,6 +7,8 @@ Chunk* create_chunk (size_t chunk_id, size_t capacity) {
 		return NULL;
 	}
 
+	log_memory (DS_Chunk, sizeof (Chunk), chunk, true);
+
 	chunk -> id = 0;
 	chunk -> capacity = 0;
 	chunk -> data_count = 0;
@@ -26,6 +28,8 @@ Chunk* create_chunk (size_t chunk_id, size_t capacity) {
 		perror ("Unable to allocate memory!\n");
 		exit (EXIT_FAILURE);
 	}
+
+	log_memory (DS_Raw, capacity * sizeof (Data), chunk -> first_data_address, true);
 
 	return chunk;
 }
@@ -56,9 +60,12 @@ void delete_chunk (Chunk** chunk_address) {
 	chunk -> previous_chunk = NULL;
 	chunk -> next_chunk = NULL;
 
+	log_memory (DS_Raw, (chunk -> capacity) * sizeof (Data), chunk -> first_data_address, false);
 	ERASE (&(chunk -> first_data_address), sizeof (Data) * (chunk -> capacity));
 
 	chunk = NULL;
+
+	log_memory (DS_Chunk, sizeof (Chunk), *chunk_address, false);
 	ERASE (chunk_address, sizeof (Chunk));
 }
 

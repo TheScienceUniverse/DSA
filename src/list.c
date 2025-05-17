@@ -10,6 +10,8 @@ List* create_list (size_t item_count) {
 		return NULL;
 	}
 
+	log_memory (DS_List, sizeof (List), list, true);
+
 	list -> item_count = 0;
 	list -> chunk_count = 0;
 	list -> head_chunk = NULL;
@@ -45,6 +47,8 @@ void delete_list (List** list_address) {
 	}
 
 	list = NULL;
+
+	log_memory (DS_List, sizeof (List), *list_address, false);
 	ERASE (list_address, sizeof (List));
 }
 

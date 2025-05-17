@@ -13,6 +13,13 @@ Iterator* create_iterator (List* list, ssize_t stride) {
 
 	Iterator* iterator = malloc (sizeof (Iterator));
 
+	if (NULL == iterator) {
+		perror ("Unable to allocate memory for iterator!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	log_memory (DS_Iterator, sizeof (Iterator), iterator, true);
+
 	iterator -> list = list;
 	iterator -> chunk = list -> head_chunk;
 	iterator -> list_data_index = 0;
@@ -32,6 +39,7 @@ void delete_iterator (Iterator** iterator_address) {
 		exit (EXIT_FAILURE);
 	}
 
+	log_memory (DS_Iterator, sizeof (Iterator), *iterator_address, false);
 	ERASE (iterator_address, sizeof (Iterator));
 }
 

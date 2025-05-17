@@ -53,6 +53,8 @@ String* create_string (size_t len, char* str) {
 	String* string = (String*) malloc (sizeof (String));
 
 	if (string != NULL) {
+		log_memory (DS_String, sizeof (String), string, true);
+
 		string -> length = 0;
 		string -> address = NULL;
 	}
@@ -62,6 +64,8 @@ String* create_string (size_t len, char* str) {
 		string -> address = (char*) malloc (len * sizeof (char));
 
 		if (string -> address != NULL) {
+			log_memory (DS_Raw, len * sizeof (char), string -> address, true);
+
 			copy_raw_char_stream (len, str, string -> address);
 		}
 	}
@@ -78,11 +82,13 @@ void delete_string (String** string_address) {
 	String* string = *string_address;
 
 	if (string -> address != NULL && string -> length > 0) {
+		log_memory (DS_Raw, (string -> length) * sizeof (char), string -> address, false);
 		ERASE (&(string -> address), string -> length);
 	}
 
 	string = NULL;
 
+	log_memory (DS_String, sizeof (String), *string_address, false);
 	ERASE (string_address, sizeof (String));
 }
 
@@ -202,6 +208,8 @@ void** capture_string_addresses (String* string) {
 	}
 
 	void** addresses = malloc (3 * sizeof (void*));
+	log_memory (DS_Raw, 3 * sizeof (void*), addresses, true);
+
 	*(addresses + 0) = &(string);	// base address
 	*(addresses + 1) = &(string -> length);
 	*(addresses + 2) = &(string -> address);

@@ -8,6 +8,8 @@ Data* create_data (Data_Type data_type, size_t block_size, void* address) {
 	Data* data = (Data*) malloc (sizeof (Data));
 
 	if (data != NULL) {
+		log_memory (DS_Data, sizeof (Data), data, true);
+
 		data -> type = DT_Undefined;
 		data -> size = 0;
 		data -> address = NULL;
@@ -26,6 +28,8 @@ Data* create_data (Data_Type data_type, size_t block_size, void* address) {
 		data -> address = malloc (block_size);
 
 		if (data -> address != NULL) {
+			log_memory (DS_Raw, block_size, data -> address, true);
+
 			if (data_type == DT_Address) {
 				data -> address = address;
 			} else {
@@ -50,10 +54,13 @@ void delete_data (Data** data_address) {
 	}
 
 	if (data -> address != NULL) {
+		log_memory (DS_Raw, data -> size, data -> address, false);
 		ERASE (&(data -> address), data -> size);
 	}
 
 	data = NULL;
+
+	log_memory (DS_Data, sizeof (Data), *data_address, false);
 	ERASE (data_address, sizeof (Data));
 }
 
@@ -178,11 +185,14 @@ void display_binary_data (size_t size, BYTE* address) {
 Data* create_range_data (int start, int end) {
 	int block_size = 2 * sizeof (int);
 	int* address = malloc (block_size);
+	log_memory (DS_Raw, block_size, address, true);
 
 	*(address + 0) = start;
 	*(address + 1) = end;
 
 	Data* data = create_data (DT_Range, block_size, address);
+
+	log_memory (DS_Raw, block_size, address, false);
 	ERASE (&address, block_size);
 
 	return data;
@@ -271,6 +281,7 @@ void** capture_data_addresses (Data* data) {
 	}
 
 	void** addresses = malloc (4 * sizeof (void*));
+	log_memory (DS_Raw, 4 * sizeof (void*), addresses, true);
 
 	*(addresses + 0) = &(data);	// base address
 	*(addresses + 1) = &(data -> type);
@@ -326,6 +337,7 @@ void empty_data (Data* data) {
 		DT_Address != data -> type
 		&& data -> address != NULL
 	) {
+		log_memory (DS_Raw, data -> size, data -> address, false);
 		ERASE (&(data -> address), data -> size);
 		data -> type = DT_Empty;
 	}
@@ -375,6 +387,7 @@ Compare_Status compare_data (Data* data_1, Data* data_2) {
 
 Data* create_empty_data (void) {
 	Data* data = (Data*) malloc (sizeof (Data));
+	log_memory (DS_Data, sizeof (Data), data, true);
 
 	if (NULL == data) {
 		perror ("Memory allocation error for Data!\n");
@@ -410,6 +423,7 @@ void swap_data (Data* data_1, Data* data_2) {
 
 Data* create_address_data (void* address) {
 	Data* data = (Data*) malloc (sizeof (Data));
+	log_memory (DS_Data, sizeof (Data), data, true);
 
 	if (NULL == data) {
 		perror ("Memory allocation error for Data!\n");

@@ -4,6 +4,8 @@ Tree* create_tree () {
 	Tree* tree = (Tree*) malloc (sizeof (Tree));
 
 	if (tree != NULL) {
+		log_memory (DS_Tree, sizeof (Tree), tree, true);
+
 		tree -> root_node = NULL;
 		tree -> node_count = 0;
 		tree -> breadth = 0;
@@ -20,6 +22,7 @@ void delete_tree (Tree** tree_address) {
 	}
 
 	if ((*tree_address) -> node_count == 0) {
+		log_memory (DS_Tree, sizeof (Tree), *tree_address, false);
 		ERASE (tree_address, sizeof (Tree));
 		return;
 	}
@@ -70,6 +73,7 @@ void delete_tree (Tree** tree_address) {
 	node = NULL;
 	delete_stack (&stack);
 
+	log_memory (DS_Tree, sizeof (Tree), *tree_address, false);
 	ERASE (tree_address, sizeof (Tree));
 }
 

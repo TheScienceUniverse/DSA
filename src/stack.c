@@ -4,6 +4,8 @@ Stack *create_stack (void) {
 	Stack* stack = (Stack*) malloc (sizeof (Stack));
 
 	if (stack != NULL) {
+		log_memory (DS_Stack, sizeof (Stack), stack, true);
+
 		stack -> name = NULL;
 		stack -> size = 0;
 		stack -> top_node = NULL;
@@ -30,6 +32,8 @@ void delete_stack (Stack** stack_address) {
 	}
 
 	stack = NULL;
+
+	log_memory (DS_Stack, sizeof (Stack), *stack_address, false);
 	ERASE (stack_address, sizeof (Stack));
 }
 

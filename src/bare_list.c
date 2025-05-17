@@ -7,6 +7,8 @@ Bare_List* create_bare_list (size_t item_count) {
 		return NULL;
 	}
 
+	log_memory (DS_Bare_List, sizeof (Bare_List), list, true);
+
 	list -> item_count = 0;
 	list -> item_addresses = NULL;
 
@@ -17,6 +19,8 @@ Bare_List* create_bare_list (size_t item_count) {
 	} else {
 		list -> item_count = item_count;
 		list -> item_addresses = (void**) malloc (list -> item_count * sizeof (void*));
+
+		log_memory (DS_Raw, item_count * sizeof (void*), list -> item_addresses, true);
 	}
 
 	return list;
@@ -63,10 +67,14 @@ void delete_bare_list (Bare_List** list_address) {
 
 	for (size_t i = 0; i < list -> item_count; i++) {
 		data = *(list -> item_addresses + i);
-		delete_data (&data);
+
+		log_memory (DS_Raw, (list -> item_count) * sizeof (void*), list -> item_addresses, false);
+		ERASE (list -> item_addresses, (list -> item_count) * sizeof (void*));
 	}
 
 	list = NULL;
+
+	log_memory (DS_Bare_List, sizeof (Bare_List), *list_address, false);
 	ERASE (list_address, sizeof (Bare_List));
 }
 

@@ -4,6 +4,8 @@ Linked_List *create_linked_list () {
 	Linked_List* linked_list = (Linked_List*) malloc (sizeof (Linked_List));
 
 	if (linked_list != NULL) {
+		log_memory (DS_Linked_List, sizeof (Linked_List), linked_list, true);
+
 		linked_list -> name = NULL;
 		linked_list -> size = 0;
 		linked_list -> head_node = NULL;
@@ -31,6 +33,8 @@ void delete_linked_list (Linked_List** linked_list_address) {
 	}
 
 	linked_list = NULL;
+
+	log_memory (DS_Linked_List, sizeof (Linked_List), *linked_list_address, false);
 	ERASE (linked_list_address, sizeof (Linked_List));
 }
 

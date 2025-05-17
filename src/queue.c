@@ -4,6 +4,8 @@ Queue *create_queue (void) {
 	Queue* queue = (Queue*) malloc (sizeof (Queue));
 
 	if (queue != NULL) {
+		log_memory (DS_Queue, sizeof (Queue), queue, true);
+
 		queue -> name = NULL;
 		queue -> size = 0;
 		queue -> front_node = NULL;
@@ -31,6 +33,8 @@ void delete_queue (Queue** queue_address) {
 	}
 
 	queue = NULL;
+
+	log_memory (DS_Queue, sizeof (Queue), *queue_address, false);
 	ERASE (queue_address, sizeof (Queue));
 }
 

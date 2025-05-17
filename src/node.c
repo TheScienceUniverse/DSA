@@ -4,6 +4,8 @@ Node* create_node (Node_Type type) {
 	Node* node = (Node*) malloc (sizeof (Node));
 
 	if (node != NULL) {
+		log_memory (DS_Node, sizeof (Node), node, true);
+
 		node -> type = type;
 		node -> name = NULL;
 		node -> data = NULL;
@@ -60,6 +62,8 @@ void prepare_node_address_list (Node* node) {
 	for (size_t i = 0; i < chunk -> capacity; i++) {
 		copy_data (default_data, chunk -> first_data_address + i);
 	}
+
+	delete_data (&default_data);
 }
 
 Node* duplicate_node (Node* node) {
@@ -95,6 +99,8 @@ void delete_node (Node** node_address) {
 	}
 
 	node = NULL;
+
+	log_memory (DS_Node, sizeof (Node), *node_address, false);
 	ERASE (node_address, sizeof (Node));
 }
 

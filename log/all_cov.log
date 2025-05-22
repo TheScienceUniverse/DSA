@@ -1,0 +1,180 @@
+Function 'test_basic'
+Lines executed:100.00% of 16
+Branches executed:100.00% of 14
+Taken at least once:50.00% of 14
+Calls executed:60.00% of 15
+
+File 'test/basic.c'
+Lines executed:100.00% of 16
+Branches executed:100.00% of 14
+Taken at least once:50.00% of 14
+Calls executed:60.00% of 15
+Creating 'basic.c.gcov'
+
+Lines executed:100.00% of 16
+
+Function 'test_string'
+Lines executed:100.00% of 15
+Branches executed:100.00% of 12
+Taken at least once:50.00% of 12
+Calls executed:64.71% of 17
+
+File 'test/string.c'
+Lines executed:100.00% of 15
+Branches executed:100.00% of 12
+Taken at least once:50.00% of 12
+Calls executed:64.71% of 17
+Creating 'string.c.gcov'
+
+Lines executed:100.00% of 15
+
+Function 'test_data'
+Lines executed:100.00% of 13
+Branches executed:100.00% of 8
+Taken at least once:50.00% of 8
+Calls executed:66.67% of 12
+
+File 'test/data.c'
+Lines executed:100.00% of 13
+Branches executed:100.00% of 8
+Taken at least once:50.00% of 8
+Calls executed:66.67% of 12
+Creating 'data.c.gcov'
+
+Lines executed:100.00% of 13
+
+Function 'test_chunk'
+Lines executed:100.00% of 52
+Branches executed:100.00% of 46
+Taken at least once:56.52% of 46
+Calls executed:68.25% of 63
+
+File 'test/chunk.c'
+Lines executed:100.00% of 52
+Branches executed:100.00% of 46
+Taken at least once:56.52% of 46
+Calls executed:68.25% of 63
+Creating 'chunk.c.gcov'
+
+Lines executed:100.00% of 52
+
+Function 'test_bare_list'
+Lines executed:100.00% of 26
+Branches executed:100.00% of 16
+Taken at least once:50.00% of 16
+Calls executed:75.00% of 32
+
+File 'test/bare_list.c'
+Lines executed:100.00% of 26
+Branches executed:100.00% of 16
+Taken at least once:50.00% of 16
+Calls executed:75.00% of 32
+Creating 'bare_list.c.gcov'
+
+Lines executed:100.00% of 26
+
+Function 'test_list'
+Lines executed:100.00% of 172
+Branches executed:100.00% of 90
+Taken at least once:54.44% of 90
+Calls executed:79.08% of 196
+
+File 'test/list.c'
+Lines executed:100.00% of 172
+Branches executed:100.00% of 90
+Taken at least once:54.44% of 90
+Calls executed:79.08% of 196
+Creating 'list.c.gcov'
+
+Lines executed:100.00% of 172
+
+Function 'test_iterator'
+Lines executed:100.00% of 46
+Branches executed:100.00% of 30
+Taken at least once:53.33% of 30
+Calls executed:75.00% of 56
+
+File 'test/iterator.c'
+Lines executed:100.00% of 46
+Branches executed:100.00% of 30
+Taken at least once:53.33% of 30
+Calls executed:75.00% of 56
+Creating 'iterator.c.gcov'
+
+Lines executed:100.00% of 46
+
+Function 'test_node'
+Lines executed:100.00% of 21
+Branches executed:100.00% of 12
+Taken at least once:50.00% of 12
+Calls executed:76.92% of 26
+
+File 'test/node.c'
+Lines executed:100.00% of 21
+Branches executed:100.00% of 12
+Taken at least once:50.00% of 12
+Calls executed:76.92% of 26
+Creating 'node.c.gcov'
+
+Lines executed:100.00% of 21
+
+Function 'test_linked_list'
+Lines executed:100.00% of 56
+Branches executed:100.00% of 60
+Taken at least once:50.00% of 60
+Calls executed:61.04% of 77
+
+File 'test/linked_list.c'
+Lines executed:100.00% of 56
+Branches executed:100.00% of 60
+Taken at least once:50.00% of 60
+Calls executed:61.04% of 77
+Creating 'linked_list.c.gcov'
+
+Lines executed:100.00% of 56
+
+Function 'test_stack'
+Lines executed:100.00% of 67
+Branches executed:100.00% of 50
+Taken at least once:50.00% of 50
+Calls executed:70.37% of 81
+
+File 'test/stack.c'
+Lines executed:100.00% of 67
+Branches executed:100.00% of 50
+Taken at least once:50.00% of 50
+Calls executed:70.37% of 81
+Creating 'stack.c.gcov'
+
+Lines executed:100.00% of 67
+
+Function 'test_queue'
+Lines executed:100.00% of 73
+Branches executed:100.00% of 82
+Taken at least once:50.00% of 82
+Calls executed:61.54% of 104
+
+File 'test/queue.c'
+Lines executed:100.00% of 73
+Branches executed:100.00% of 82
+Taken at least once:50.00% of 82
+Calls executed:61.54% of 104
+Creating 'queue.c.gcov'
+
+Lines executed:100.00% of 73
+
+Function 'test_tree'
+Lines executed:100.00% of 73
+Branches executed:100.00% of 8
+Taken at least once:50.00% of 8
+Calls executed:96.43% of 56
+
+File 'test/tree.c'
+Lines executed:100.00% of 73
+Branches executed:100.00% of 8
+Taken at least once:50.00% of 8
+Calls executed:96.43% of 56
+Creating 'tree.c.gcov'
+
+Lines executed:100.00% of 73
+

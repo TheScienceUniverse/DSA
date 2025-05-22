@@ -1,0 +1,406 @@
+        -:    0:Source:test/queue.c
+        -:    0:Graph:./cov/test_queue.gcno
+        -:    0:Data:./cov/test_queue.gcda
+        -:    0:Runs:1
+        -:    1:#include "../include/test.h"
+        -:    2:
+function test_queue called 1 returned 100% blocks executed 73%
+        1:    3:void test_queue (void) {
+        1:    4:	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Queue]\n" RESET_STYLE);
+        1:    4-block 2
+call    0 returned 1
+        -:    5:
+        1:    6:	Queue* queue = create_queue ();
+call    0 returned 1
+        -:    7:
+       1*:    8:	TEST (NULL != queue, "Created Queue exists");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:    8-block 5
+call    2 returned 1
+    %%%%%:    8-block 6
+call    3 never executed
+        -:    9:
+        1:   10:	Node* node = create_node (N_Queue);
+        1:   10-block 7
+call    0 returned 1
+        1:   11:	set_node_name (node, 1, "A");
+call    0 returned 1
+        -:   12:
+        1:   13:	int n = 10;
+        1:   14:	Data* data = create_data (DT_Integer, sizeof (int), &n);
+call    0 returned 1
+        1:   15:	set_node_data (node, data);
+call    0 returned 1
+        -:   16:
+        1:   17:	enqueue (queue, node);
+call    0 returned 1
+       1*:   18:	TEST ('A' == *((char*)(queue -> front_node -> name -> address + 0)), "Compared enqueued node's name (A) with queue's front node name");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   18-block 13
+call    2 returned 1
+    %%%%%:   18-block 14
+call    3 never executed
+       1*:   19:	TEST (10 == *((int*)(queue -> front_node -> data -> address + 0)), "Compared enqueued node's data (10) with queue's front node data");
+        1:   19-block 15
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   19-block 16
+call    2 returned 1
+    %%%%%:   19-block 17
+call    3 never executed
+       1*:   20:	TEST ('A' == *((char*)(queue -> rear_node -> name -> address + 0)), "Compared enqueued node's name (A) with queue's rear node name");
+        1:   20-block 18
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   20-block 19
+call    2 returned 1
+    %%%%%:   20-block 20
+call    3 never executed
+       1*:   21:	TEST (10 == *((int*)(queue -> rear_node -> data -> address + 0)), "Compared enqueued node's data (10) with queue's rear node data");
+        1:   21-block 21
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   21-block 22
+call    2 returned 1
+    %%%%%:   21-block 23
+call    3 never executed
+        -:   22:
+        1:   23:	++*(node -> name -> address);
+        1:   24:	*((int*)(node -> data -> address)) += 10;
+        1:   25:	enqueue (queue, node);
+        1:   25-block 24
+call    0 returned 1
+       1*:   26:	TEST ('A' == *((char*)(queue -> front_node -> name -> address + 0)), "Compared enqueued node's name (A) with queue's front node name");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   26-block 26
+call    2 returned 1
+    %%%%%:   26-block 27
+call    3 never executed
+       1*:   27:	TEST (10 == *((int*)(queue -> front_node -> data -> address + 0)), "Compared enqueued node's data (10) with queue's front node data");
+        1:   27-block 28
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   27-block 29
+call    2 returned 1
+    %%%%%:   27-block 30
+call    3 never executed
+       1*:   28:	TEST ('B' == *((char*)(queue -> rear_node -> name -> address + 0)), "Compared enqueued node's name (B) with queue's rear node name");
+        1:   28-block 31
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   28-block 32
+call    2 returned 1
+    %%%%%:   28-block 33
+call    3 never executed
+       1*:   29:	TEST (20 == *((int*)(queue -> rear_node -> data -> address + 0)), "Compared enqueued node's data (20) with queue's rear node data");
+        1:   29-block 34
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   29-block 35
+call    2 returned 1
+    %%%%%:   29-block 36
+call    3 never executed
+        -:   30:
+        1:   31:	++*(node -> name -> address);
+        1:   32:	*((int*)(node -> data -> address)) += 10;
+        1:   33:	enqueue (queue, node);
+        1:   33-block 37
+call    0 returned 1
+       1*:   34:	TEST ('A' == *((char*)(queue -> front_node -> name -> address + 0)), "Compared enqueued node's name (A) with queue's front node name");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   34-block 39
+call    2 returned 1
+    %%%%%:   34-block 40
+call    3 never executed
+       1*:   35:	TEST (10 == *((int*)(queue -> front_node -> data -> address + 0)), "Compared enqueued node's data (10) with queue's front node data");
+        1:   35-block 41
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   35-block 42
+call    2 returned 1
+    %%%%%:   35-block 43
+call    3 never executed
+       1*:   36:	TEST ('C' == *((char*)(queue -> rear_node -> name -> address + 0)), "Compared enqueued node's name (C) with queue's rear node name");
+        1:   36-block 44
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   36-block 45
+call    2 returned 1
+    %%%%%:   36-block 46
+call    3 never executed
+       1*:   37:	TEST (30 == *((int*)(queue -> rear_node -> data -> address + 0)), "Compared enqueued node's data (30) with queue's rear node data");
+        1:   37-block 47
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   37-block 48
+call    2 returned 1
+    %%%%%:   37-block 49
+call    3 never executed
+        -:   38:
+        1:   39:	Node* del_node = dequeue (queue);
+        1:   39-block 50
+call    0 returned 1
+       1*:   40:	TEST ('A' == *((char*)(del_node -> name -> address + 0)), "Compared served node's name (A) with dequeued node name");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   40-block 52
+call    2 returned 1
+    %%%%%:   40-block 53
+call    3 never executed
+       1*:   41:	TEST (10 == *((int*)(del_node -> data -> address + 0)), "Compared served node's data (10) with dequeued node data");
+        1:   41-block 54
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   41-block 55
+call    2 returned 1
+    %%%%%:   41-block 56
+call    3 never executed
+       1*:   42:	TEST ('B' == *((char*)(queue -> front_node -> name -> address + 0)), "Compared expected node's name (B) with queue's front node name");
+        1:   42-block 57
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   42-block 58
+call    2 returned 1
+    %%%%%:   42-block 59
+call    3 never executed
+       1*:   43:	TEST (20 == *((int*)(queue -> front_node -> data -> address + 0)), "Compared expected node's data (20) with queue's front node data");
+        1:   43-block 60
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   43-block 61
+call    2 returned 1
+    %%%%%:   43-block 62
+call    3 never executed
+       1*:   44:	TEST ('C' == *((char*)(queue -> rear_node -> name -> address + 0)), "Compared expected node's name (C) with queue's rear node name");
+        1:   44-block 63
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   44-block 64
+call    2 returned 1
+    %%%%%:   44-block 65
+call    3 never executed
+       1*:   45:	TEST (30 == *((int*)(queue -> rear_node -> data -> address + 0)), "Compared expected node's data (30) with queue's rear node data");
+        1:   45-block 66
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   45-block 67
+call    2 returned 1
+    %%%%%:   45-block 68
+call    3 never executed
+        1:   46:	delete_node (&del_node);
+        1:   46-block 69
+call    0 returned 1
+        -:   47:
+        1:   48:	++*(node -> name -> address);
+        1:   49:	*((int*)(node -> data -> address)) += 10;
+        1:   50:	enqueue (queue, node);
+call    0 returned 1
+       1*:   51:	TEST ('B' == *((char*)(queue -> front_node -> name -> address + 0)), "Compared expected node's name (B) with queue's front node name");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   51-block 72
+call    2 returned 1
+    %%%%%:   51-block 73
+call    3 never executed
+       1*:   52:	TEST (20 == *((int*)(queue -> front_node -> data -> address + 0)), "Compared expected node's data (20) with queue's front node data");
+        1:   52-block 74
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   52-block 75
+call    2 returned 1
+    %%%%%:   52-block 76
+call    3 never executed
+       1*:   53:	TEST ('D' == *((char*)(queue -> rear_node -> name -> address + 0)), "Compared expected node's name (D) with queue's rear node name");
+        1:   53-block 77
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   53-block 78
+call    2 returned 1
+    %%%%%:   53-block 79
+call    3 never executed
+       1*:   54:	TEST (40 == *((int*)(queue -> rear_node -> data -> address + 0)), "Compared expected node's data (40) with queue's rear node data");
+        1:   54-block 80
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   54-block 81
+call    2 returned 1
+    %%%%%:   54-block 82
+call    3 never executed
+        -:   55:
+        1:   56:	del_node = dequeue (queue);
+        1:   56-block 83
+call    0 returned 1
+       1*:   57:	TEST ('B' == *((char*)(del_node -> name -> address + 0)), "Compared served node's name (B) with dequeued node name");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   57-block 85
+call    2 returned 1
+    %%%%%:   57-block 86
+call    3 never executed
+       1*:   58:	TEST (20 == *((int*)(del_node -> data -> address + 0)), "Compared served node's data (20) with dequeued node data");
+        1:   58-block 87
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   58-block 88
+call    2 returned 1
+    %%%%%:   58-block 89
+call    3 never executed
+       1*:   59:	TEST ('C' == *((char*)(queue -> front_node -> name -> address + 0)), "Compared expected node's name (C) with queue's front node name");
+        1:   59-block 90
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   59-block 91
+call    2 returned 1
+    %%%%%:   59-block 92
+call    3 never executed
+       1*:   60:	TEST (30 == *((int*)(queue -> front_node -> data -> address + 0)), "Compared expected node's data (30) with queue's front node data");
+        1:   60-block 93
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   60-block 94
+call    2 returned 1
+    %%%%%:   60-block 95
+call    3 never executed
+       1*:   61:	TEST ('D' == *((char*)(queue -> rear_node -> name -> address + 0)), "Compared expected node's name (D) with queue's rear node name");
+        1:   61-block 96
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   61-block 97
+call    2 returned 1
+    %%%%%:   61-block 98
+call    3 never executed
+       1*:   62:	TEST (40 == *((int*)(queue -> rear_node -> data -> address + 0)), "Compared expected node's data (40) with queue's rear node data");
+        1:   62-block 99
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   62-block 100
+call    2 returned 1
+    %%%%%:   62-block 101
+call    3 never executed
+        1:   63:	delete_node (&del_node);
+        1:   63-block 102
+call    0 returned 1
+        -:   64:
+        1:   65:	del_node = dequeue (queue);
+call    0 returned 1
+       1*:   66:	TEST ('C' == *((char*)(del_node -> name -> address + 0)), "Compared served node's name (C) with dequeued node name");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   66-block 105
+call    2 returned 1
+    %%%%%:   66-block 106
+call    3 never executed
+       1*:   67:	TEST (30 == *((int*)(del_node -> data -> address + 0)), "Compared served node's data (30) with dequeued node data");
+        1:   67-block 107
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   67-block 108
+call    2 returned 1
+    %%%%%:   67-block 109
+call    3 never executed
+       1*:   68:	TEST ('D' == *((char*)(queue -> front_node -> name -> address + 0)), "Compared expected node's name (D) with queue's front node name");
+        1:   68-block 110
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   68-block 111
+call    2 returned 1
+    %%%%%:   68-block 112
+call    3 never executed
+       1*:   69:	TEST (40 == *((int*)(queue -> front_node -> data -> address + 0)), "Compared expected node's data (40) with queue's front node data");
+        1:   69-block 113
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   69-block 114
+call    2 returned 1
+    %%%%%:   69-block 115
+call    3 never executed
+       1*:   70:	TEST ('D' == *((char*)(queue -> rear_node -> name -> address + 0)), "Compared expected node's name (D) with queue's rear node name");
+        1:   70-block 116
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   70-block 117
+call    2 returned 1
+    %%%%%:   70-block 118
+call    3 never executed
+       1*:   71:	TEST (40 == *((int*)(queue -> rear_node -> data -> address + 0)), "Compared expected node's data (40) with queue's rear node data");
+        1:   71-block 119
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   71-block 120
+call    2 returned 1
+    %%%%%:   71-block 121
+call    3 never executed
+        1:   72:	delete_node (&del_node);
+        1:   72-block 122
+call    0 returned 1
+        -:   73:
+        1:   74:	del_node = dequeue (queue);
+call    0 returned 1
+       1*:   75:	TEST ('D' == *((char*)(del_node -> name -> address + 0)), "Compared served node's name (D) with dequeued node name");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   75-block 125
+call    2 returned 1
+    %%%%%:   75-block 126
+call    3 never executed
+       1*:   76:	TEST (40 == *((int*)(del_node -> data -> address + 0)), "Compared served node's data (40) with dequeued node data");
+        1:   76-block 127
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   76-block 128
+call    2 returned 1
+    %%%%%:   76-block 129
+call    3 never executed
+        1:   77:	delete_node (&del_node);
+        1:   77-block 130
+call    0 returned 1
+        -:   78:
+        1:   79:	del_node = dequeue (queue);
+call    0 returned 1
+       1*:   80:	TEST (0 == queue -> size, "Compared queue's expected size emptiness");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   80-block 133
+call    2 returned 1
+    %%%%%:   80-block 134
+call    3 never executed
+       1*:   81:	TEST (NULL == del_node, "Compared dequeued node does not exist");
+        1:   81-block 135
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   81-block 136
+call    2 returned 1
+    %%%%%:   81-block 137
+call    3 never executed
+        1:   82:	if (NULL == del_node) {delete_node (&del_node);}
+        1:   82-block 138
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   82-block 139
+call    2 returned 1
+        -:   83:
+        1:   84:	display_queue (queue);
+        1:   84-block 140
+call    0 returned 1
+        -:   85:
+        1:   86:	delete_node (&node);
+call    0 returned 1
+        -:   87:
+        1:   88:	delete_queue (&queue);
+call    0 returned 1
+       1*:   89:	TEST (NULL == queue, "Deleted queue successfully");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   89-block 144
+call    2 returned 1
+    %%%%%:   89-block 145
+call    3 never executed
+        -:   90:
+        1:   91:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Queue]\n" RESET_STYLE);
+        1:   91-block 146
+call    0 returned 1
+        1:   92:}

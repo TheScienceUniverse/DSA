@@ -9,6 +9,7 @@ SRCDIR = ./src
 LIBDIR = ./lib
 EXEDIR = ./bin
 TSTDIR = ./test
+LOGDIR = ./log
 BLDDIR = ./
 OPTIMIZATION = -O0
 OBJECT_NAMES = basic string data chunk bare_list list iterator node linked_list stack queue tree#graph
@@ -50,9 +51,9 @@ $(LIBDIR)/test_%.o: $(TSTDIR)/%.c
 #	@echo "... Done!"
 #	@echo
 
-$(MEMCUTABLE): $(OBJECTS) memo.c
+$(MEMCUTABLE): $(OBJECTS) mem.c
 	@echo "-> Linking all object files and generating memory logger binary file ..."
-	@$(CC) $(CFLAGS) -o $@ ./memo.c $(LIBDIR)/basic.o $(LIBDIR)/string.o
+	@$(CC) $(CFLAGS) -o $@ ./mem.c $(LIBDIR)/basic.o $(LIBDIR)/string.o
 	@chmod +x $(MEMCUTABLE)
 #	@echo "... Done!"
 #	@echo
@@ -63,8 +64,7 @@ $(MEMCUTABLE): $(OBJECTS) memo.c
 clean:
 	@echo "-> Removing generated files ..."
 	@-rm -f $(OBJECTS) $(EXECUTABLE) $(TSTCUTABLE)
-	@-rm -f ./lib/* ./bin/*
-	@-rm -f ./memory.log
+	@-rm -f ./lib/* ./bin/* ./log/*
 	@echo "... Done"
 #	@echo
 
@@ -72,10 +72,10 @@ again:
 	@make clean && make
 
 check:
-	./bin/test
+	./bin/test show
 
 memlog:
-	./bin/mem
+	./bin/mem show
 
 flow:
 	@tabs 4

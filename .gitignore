@@ -1,8 +1,6 @@
 # ignore all executable files
 *.txt
 *.bkp
-*.log
-rerun
 
 # ignore extra directories
 sample/

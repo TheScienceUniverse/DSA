@@ -93,7 +93,7 @@ void put_s (char const str [static 1]) {
 }
 
 void log_memory (DS_Type data_structure_type, size_t size, void* start_address, bool exists) {
-	FILE* file = fopen ("memory.log", "ab");
+	FILE* file = fopen ("./log/memory.log", "ab");
 
 	if (NULL == file) {
 		perror ("Error opening memory file!");
@@ -112,7 +112,7 @@ void log_memory (DS_Type data_structure_type, size_t size, void* start_address, 
 }
 
 void display_memory_log (void) {
-	FILE* file = fopen ("memory.log", "rb");
+	FILE* file = fopen ("./log/memory.log", "rb");
 
 	if (NULL == file) {
 		perror ("Error opening memory file!");

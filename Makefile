@@ -74,7 +74,8 @@ again:
 	@make clean && make
 
 check:
-	./bin/test
+	./bin/test | tee $(LOGDIR)/test.log
+	echo $$[$$[`cat log/test.log | grep -c "PASSED"` * 100] / `cat log/test.log | grep -c -E "PASSED|FAILED"`] > $(LOGDIR)/passmark.log
 
 memlog:
 	./bin/mem show

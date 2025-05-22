@@ -1,6 +1,11 @@
 # ignore all executable files
 *.txt
 *.bkp
+*.gcda
+*.gcno
+
+# except the following
+!*.gcov
 
 # ignore extra directories
 sample/

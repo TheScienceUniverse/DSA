@@ -1,0 +1,115 @@
+        -:    0:Source:test/string.c
+        -:    0:Graph:./cov/test_string.gcno
+        -:    0:Data:./cov/test_string.gcda
+        -:    0:Runs:1
+        -:    1:#include "../include/test.h"
+        -:    2:
+function test_string called 1 returned 100% blocks executed 75%
+        1:    3:void test_string (void) {
+        1:    4:	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [String]\n" RESET_STYLE);
+        1:    4-block 2
+call    0 returned 1
+        -:    5:
+        1:    6:	char* str = "Hello, World!\n";
+        1:    7:	size_t len = 14;
+        -:    8:
+        1:    9:	String* string = create_string (len, str);
+call    0 returned 1
+        1:   10:	String* ghost_string = string;
+        -:   11:
+        -:   12:	// printf ("%lu %lu\n", len, sizeof (string -> address));
+        -:   13:
+       1*:   14:	TEST (NULL != string, "Address non-null check");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   14-block 5
+call    2 returned 1
+    %%%%%:   14-block 6
+call    3 never executed
+       1*:   15:	TEST (len == string -> length, "Allocated block-size check");
+        1:   15-block 7
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   15-block 8
+call    2 returned 1
+    %%%%%:   15-block 9
+call    3 never executed
+       1*:   16:	TEST (string == ghost_string, "Address validation check");
+        1:   16-block 10
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   16-block 11
+call    2 returned 1
+    %%%%%:   16-block 12
+call    3 never executed
+       1*:   17:	TEST (compare_raw_strings_shh (len, str, string -> length, string -> address), "Content check");
+        1:   17-block 13
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:   17-block 15
+call    3 returned 1
+    %%%%%:   17-block 16
+call    4 never executed
+        -:   18:
+        -:   19://	void** string_addresses = capture_string_addresses (string);
+        -:   20://	TEST (!is_string_memory_erased (string_addresses), "String existance check");
+       1*:   21:	TEST (string == ghost_string, "String existance check");
+        1:   21-block 17
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   21-block 18
+call    2 returned 1
+    %%%%%:   21-block 19
+call    3 never executed
+        1:   22:	delete_string (&string);
+        1:   22-block 20
+call    0 returned 1
+       1*:   23:	TEST (string != ghost_string, "String deletion check");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   23-block 22
+call    2 returned 1
+    %%%%%:   23-block 23
+call    3 never executed
+        -:   24:
+        -:   25:	//TEST (is_string_memory_erased (string_addresses), "String deletion check");
+        -:   26://	ERASE (&string_addresses, 3 * sizeof (void*));
+        -:   27:/*
+        -:   28:	BYTE* ptr_b = (void*) string;
+        -:   29:	BYTE* ptr_adr = (void*) (string -> address);
+        -:   30:	BYTE* ptr_b_f = (void*) string;
+        -:   31:
+        -:   32:	for (size_t i = 0; i < sizeof (String); i++) {
+        -:   33:		printf("%02x ", *ptr_b);
+        -:   34:		ptr_b = ptr_b + 1;
+        -:   35:	}
+        -:   36:
+        -:   37:	printf("\n");
+        -:   38:
+        -:   39:	delete_string (&string);
+        -:   40:
+        -:   41:	for (size_t i = 0; i < sizeof (size_t); i++) {
+        -:   42:		printf("%02x ", *ptr_adr);
+        -:   43:		ptr_adr = ptr_adr + 1;
+        -:   44:	}
+        -:   45:
+        -:   46:	printf("\n");
+        -:   47:
+        -:   48:	for (size_t i = 0; i < sizeof (String); i++) {
+        -:   49:		printf ("%02x ", *ptr_b_f);
+        -:   50:		ptr_b_f = ptr_b_f + 1;
+        -:   51:	}
+        -:   52:
+        -:   53:	printf("\n");
+        -:   54:*/
+        -:   55://	TEST (NULL == string, "Address nullified check");
+        -:   56://	TEST (sizeof (int*) == sizeof (string), "De-allocated block-size check");
+        -:   57://	TEST (NULL == string, "Address nullify check");
+        -:   58://	TEST (ptr != vptr, "Address validation check");
+        -:   59://	TEST (n != *((int*) vptr), "Content check");
+        -:   60:
+        1:   61:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
+        1:   61-block 24
+call    0 returned 1
+        1:   62:}

@@ -10,6 +10,7 @@ LIBDIR = ./lib
 EXEDIR = ./bin
 TSTDIR = ./test
 LOGDIR = ./log
+COVDIR = ./cov
 BLDDIR = ./
 OPTIMIZATION = -O0
 OBJECT_NAMES = basic string data chunk bare_list list iterator node linked_list stack queue tree#graph
@@ -19,7 +20,8 @@ EXECUTABLE := $(EXEDIR)/dsa
 TSTCUTABLE := $(EXEDIR)/test
 MEMCUTABLE := $(EXEDIR)/mem
 CFLAGS = -Wall -Wextra -g $(INCDIR) $(OPTIMIZATION)
-CFLAGS_EXTRA = -fPIC -shared# [1] position-indepedent-code -finput-charset=UTF-8
+CFLAGS_EXTRA = -fPIC -shared -finput-charset=UTF-8# [1] position-indepedent-code -finput-charset=UTF-8
+CFLAGS_COVERAGE = --coverage
 
 all: $(EXECUTABLE) $(TSTCUTABLE) $(MEMCUTABLE)
 
@@ -40,14 +42,14 @@ test: $(TSTCUTABLE)
 
 $(TSTCUTABLE): $(TSTECTS)
 	@echo "-> Linking all object files and generating test binary file ..."
-	@$(CC) $(CFLAGS) -o $@ ./test.c $(OBJECTS) $^
+	@$(CC) $(CFLAGS) $(CFLAGS_COVERAGE) -o $@ ./test.c $(OBJECTS) $^
 	@chmod +x $(TSTCUTABLE)
 #	@echo "... Done!"
 #	@echo
 
 $(LIBDIR)/test_%.o: $(TSTDIR)/%.c
 	@echo " + Compiling test_"$*" ..."
-	@$(CC) $(CFLAGS) $(CFLAGS_EXTRA) -o $@ -c $^
+	@$(CC) $(CFLAGS) $(CFLAGS_EXTRA) $(CFLAGS_COVERAGE) -o $@ -c $^
 #	@echo "... Done!"
 #	@echo
 
@@ -59,12 +61,12 @@ $(MEMCUTABLE): $(OBJECTS) mem.c
 #	@echo
 
 
-.PHONY: clean again check memlog flow
+.PHONY: clean again check flow memlog ccov
 
 clean:
 	@echo "-> Removing generated files ..."
 	@-rm -f $(OBJECTS) $(EXECUTABLE) $(TSTCUTABLE)
-	@-rm -f ./lib/* ./bin/* ./log/*
+	@-rm -f ./lib/* ./bin/* ./log/* ./cov/*
 	@echo "... Done"
 #	@echo
 
@@ -72,10 +74,31 @@ again:
 	@make clean && make
 
 check:
-	./bin/test show
+	./bin/test
 
 memlog:
 	./bin/mem show
+
+ccov:
+	@find ./lib/ ! -name '*.o' -type f | xargs -r cp -t cov/
+	@find ./lib/ ! -name '*.o' -type f | xargs -r rm -f
+	@-rm -f $(LOGDIR)/all_cov.log
+	@-rm -f $(LOGDIR)/all_cov_cnt.log
+	@-rm -f $(LOGDIR)/coverage.log
+
+	for f in $(foreach f_name, $(OBJECT_NAMES), $(COVDIR)/test_$(f_name)); \
+	do \
+		gcov -abcf "$$f" >> $(LOGDIR)/all_cov.log || exit 1; \
+		echo >> $(LOGDIR)/all_cov.log; \
+	done
+
+	grep "%" $(LOGDIR)/all_cov.log \
+		| awk -F' |:' '{print $$(NF-2)}' \
+		| sed 's/.$$//' \
+		>> $(LOGDIR)/all_cov_cnt.log || exit 1; \
+
+	@awk '{sum+=($$1)} END {print int(sum/NR)}' $(LOGDIR)/all_cov_cnt.log > $(LOGDIR)/coverage.log
+	@mv *.gcov $(COVDIR)
 
 flow:
 	@tabs 4

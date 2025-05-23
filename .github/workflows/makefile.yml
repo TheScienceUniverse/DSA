@@ -15,7 +15,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Set up directories
-      run: mkdir lib bin
+      run: mkdir lib bin log cov
 
     - name: Clean build
       run: make again

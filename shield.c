@@ -57,11 +57,19 @@ w_size = fprintf (file, "\n	viewBox=\"0 0 %d %d\"", box_width, box_height);
 w_size = fprintf (file, "\n	style=\"border-radius:0px; border-radius: %dpx\"", box_height / 4);
 
 w_size = fprintf (file, "\n>\
+\n	<defs>\
+\n		<style type=\"text/css\">\
+\n			@font-face {\
+\n				font-family: \"Droid Sans Mono\";\
+\n				src: url('../font/Droid_Sans_Mono/DroidSansMono.ttf') format(\"truetype\");\
+\n			}\
+\n		</style>\
+\n	</defs>\
 \n	<title>Shield</title>\
 \n	<g\
 \n		id=\"text-fields\"\
 \n		shape-rendering=\"crispEdges\"\
-\n		font-family=\"monospace\"\
+\n		font-family=\"Droid Sans Mono, monospace\"\
 \n		font-weight=\"bold\"\
 \n		text-rendering=\"geometricPrecision\"\
 \n		dominant-baseline=\"middle\"\

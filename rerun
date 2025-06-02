@@ -2,6 +2,7 @@ make again
 make check
 make ccov
 
+rm ./aft/*
 gcc -o ./bin/bdg shield.c
 ./bin/bdg test_1 hello world
 mv test_1 ./aft/test_1.svg

@@ -1,8 +1,9 @@
-# ignore all executable files
-*.txt
+# ignore all extra files
+# *.txt
 *.bkp
 *.gcda
 *.gcno
+helper.txt
 
 # except the following
 !*.gcov

@@ -3,15 +3,15 @@
 	xmlns="http://www.w3.org/2000/svg"
 	version="1.1"
 	baseprofile="full"
-	width="102" height="20"
-	viewBox="0 0 102 20"
+	width="96" height="20"
+	viewBox="0 0 96 20"
 	style="border-radius:0px; border-radius: 5px"
 >
 	<defs>
 		<style type="text/css">
 			@font-face {
 				font-family: "Droid Sans Mono";
-				src: url('../font/Droid_Sans_Mono/DroidSansMono.ttf') format("truetype");
+				src: url('./font/Droid_Sans_Mono/DroidSansMono.ttf') format("truetype");
 			}
 		</style>
 	</defs>
@@ -27,12 +27,12 @@
 		font-size="11px"
 	>
 		<g id="Part_1">
-			<rect x="0" width="60" height="20" fill="#555555"/>
-			<text fill="white" x="30.000000" y="52.5%">property</text>
+			<rect x="0" width="42" height="20" fill="#555555"/>
+			<text fill="white" x="21.000000" y="52.5%">tests</text>
 		</g>
 		<g id="Part_2">
-			<rect x="60" width="42" height="20" fill="#90e59a"/>
-			<text fill="black" x="81.000000" y="52.5%">value</text>
+			<rect x="42" width="54" height="20" fill="#90e59a"/>
+			<text fill="black" x="69.000000" y="52.5%">passing</text>
 		</g>
 	</g>
 </svg>

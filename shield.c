@@ -61,7 +61,7 @@ w_size = fprintf (file, "\n>\
 \n		<style type=\"text/css\">\
 \n			@font-face {\
 \n				font-family: \"Droid Sans Mono\";\
-\n				src: url('../font/Droid_Sans_Mono/DroidSansMono.ttf') format(\"truetype\");\
+\n				src: url('./font/Droid_Sans_Mono/DroidSansMono.ttf') format(\"truetype\");\
 \n			}\
 \n		</style>\
 \n	</defs>\

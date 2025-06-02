@@ -1,9 +1,11 @@
 # Data Structures and Algorithms
 Custom C Library for data-structures and algorithms
 
-[![Stable Version](localhost:3000/?type=version&user=sayan&path=thescienceuniverse&repo=DSA&branch=master)](https://github.com/TheScienceUniverse/DSA)
-[![Development Version](https://thescienceuniverse.github.io/API/?get=version&branch=dev)](https://github.com/TheScienceUniverse/DSA)
+[![Version](localhost:3000/?type=version&user=sayan&path=thescienceuniverse&repo=DSA&branch=master)](https://github.com/TheScienceUniverse/DSA)
+[![Commit Activity](https://img.shields.io/github/commit-activity/m/TheScienceUniverse/DSA)](https://github.com/TheScienceUniverse/DSA/pulse)
 [![GitHub Issues](https://img.shields.io/github/issues/TheScienceUniverse/DSA.svg?style=flat-square&label=Issues&color=d77982)](https://github.com/TheScienceUniverse/DSA/issues)
+[![Tests](./aft/test_status.svg)](https://raw.githubusercontent.com/TheScienceUniverse/DSA/refs/heads/master/log/passmark.log)
+[![Coverage](./aft/code_coverage.svg)](https://raw.githubusercontent.com/TheScienceUniverse/DSA/refs/heads/master/log/coverage.log)
 [![Discord](https://img.shields.io/discord/869557815780470834?color=738adb&label=Discord&logo=discord&logoColor=white&style=flat-square)](https://discord.gg/DEYW7vZkm7)
 
 ## Overview

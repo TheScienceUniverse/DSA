@@ -1,3 +1,9 @@
 make again
 make check
 make ccov
+
+gcc -o ./bin/bdg shield.c
+./bin/bdg test_1 hello world
+mv test_1 ./aft/test_1.svg
+./bin/bdg test_2 property value
+mv test_2 ./aft/test_2.svg

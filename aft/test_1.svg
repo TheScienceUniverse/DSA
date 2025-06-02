@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
+<svg
+	xmlns="http://www.w3.org/2000/svg"
+	version="1.1"
+	baseprofile="full"
+	width="84" height="20"
+	viewBox="0 0 84 20"
+	style="border-radius:0px; border-radius: 5px"
+>
+	<title>Shield</title>
+	<g
+		id="text-fields"
+		shape-rendering="crispEdges"
+		font-family="monospace"
+		font-weight="bold"
+		text-rendering="geometricPrecision"
+		dominant-baseline="middle"
+		text-anchor="middle"
+		font-size="11px"
+	>
+		<g id="Part_1">
+			<rect x="0" width="42" height="20" fill="#555555"/>
+			<text fill="white" x="21.000000" y="52.5%">hello</text>
+		</g>
+		<g id="Part_2">
+			<rect x="42" width="42" height="20" fill="#90e59a"/>
+			<text fill="black" x="63.000000" y="52.5%">world</text>
+		</g>
+	</g>
+</svg>

@@ -1,10 +1,12 @@
 make again
+make badge
 make check
 make ccov
 
-rm -f ./aft/*
+: '
 gcc -Wall -o ./bin/bdg shield.c
 ./bin/bdg shield tests $(if [ `cut -d' ' -f1 ./log/passmark.log` -gt "79" ]; then echo "passing"; else echo "failing"; fi)
 mv shield ./aft/test_status.svg
 ./bin/bdg shield coverage `cut -d' ' -f1 ./log/coverage.log`%
 mv shield ./aft/code_coverage.svg
+'

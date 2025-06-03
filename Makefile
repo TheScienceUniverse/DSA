@@ -19,11 +19,12 @@ TSTECTS := $(foreach f_name, $(OBJECT_NAMES), $(LIBDIR)/test_$(f_name).o)
 EXECUTABLE := $(EXEDIR)/dsa
 TSTCUTABLE := $(EXEDIR)/test
 MEMCUTABLE := $(EXEDIR)/mem
+BDGCUTABLE := $(EXEDIR)/bdg
 CFLAGS = -Wall -Wextra -g $(INCDIR) $(OPTIMIZATION)
 CFLAGS_EXTRA = -fPIC -shared -finput-charset=UTF-8# [1] position-indepedent-code -finput-charset=UTF-8
 CFLAGS_COVERAGE = --coverage
 
-all: $(EXECUTABLE) $(TSTCUTABLE) $(MEMCUTABLE)
+all: $(EXECUTABLE) $(TSTCUTABLE) $(MEMCUTABLE) $(BDGCUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
 	@echo "-> Linking all object files and generating executable binary file ..."
@@ -60,22 +61,27 @@ $(MEMCUTABLE): $(OBJECTS) mem.c
 #	@echo "... Done!"
 #	@echo
 
+$(BDGCUTABLE): shield.c
+	@echo "-> Creating badge (shield) crafter program ..."
+	@$(CC) $(CFLAGS) -o $@ $^
 
 .PHONY: clean again check flow memlog ccov
 
 clean:
 	@echo "-> Removing generated files ..."
 	@-rm -f $(OBJECTS) $(EXECUTABLE) $(TSTCUTABLE)
-	@-rm -f ./lib/* ./bin/* ./log/* ./cov/*
+	@-rm -f ./lib/* ./bin/* ./log/* ./cov/* ./aft/*
 	@echo "... Done"
 #	@echo
 
 again:
-	@make clean && make
+	@make clean && make all
 
 check:
 	./bin/test | tee $(LOGDIR)/test.log
 	echo $$[$$[`cat log/test.log | grep -c "PASSED"` * 100] / `cat log/test.log | grep -c -E "PASSED|FAILED"`] > $(LOGDIR)/passmark.log
+	./bin/bdg shield tests $$(if [ `cut -d' ' -f1 ./log/passmark.log` -gt "79" ]; then echo "passing"; else echo "failing"; fi)
+	mv -f shield ./aft/test_status.svg
 
 memlog:
 	./bin/mem show
@@ -83,6 +89,7 @@ memlog:
 ccov:
 	@find ./lib/ ! -name '*.o' -type f | xargs -r cp -t cov/
 	@find ./lib/ ! -name '*.o' -type f | xargs -r rm -f
+	@mv ./bin/*.gcda ./bin/*.gcno ./cov/
 	@-rm -f $(LOGDIR)/all_cov.log
 	@-rm -f $(LOGDIR)/all_cov_cnt.log
 	@-rm -f $(LOGDIR)/coverage.log
@@ -96,13 +103,15 @@ ccov:
 	grep "%" $(LOGDIR)/all_cov.log \
 		| awk -F' |:' '{print $$(NF-2)}' \
 		| sed 's/.$$//' \
-		>> $(LOGDIR)/all_cov_cnt.log || exit 1; \
+		>> $(LOGDIR)/all_cov_cnt.log || exit 1;
 
 	@awk '{sum+=($$1)} END {print int(sum/NR)}' $(LOGDIR)/all_cov_cnt.log > $(LOGDIR)/coverage.log
 	@mv *.gcov $(COVDIR)
+	./bin/bdg shield coverage `cut -d' ' -f1 ./log/coverage.log`%
+	mv -f shield ./aft/code_coverage.svg
 
 flow:
-	@tabs 4
+	@tabs 4;
 	@echo "	basic";
 	@echo "	|";
 	@echo "	+->	string";

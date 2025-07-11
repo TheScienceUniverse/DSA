@@ -1,11 +1,13 @@
-VPATH := ./include ./src ./lib
+VPATH := ./include ./src ./obj ./lib
 vpath %.h ./include
 vpath %.c ./src
-vpath %.o ./lib
+vpath %.o ./obj
+vpath %.so ./lib
 
 CC = gcc
 INCDIR = -I.
 SRCDIR = ./src
+OBJDIR = ./obj
 LIBDIR = ./lib
 EXEDIR = ./bin
 TSTDIR = ./test
@@ -14,17 +16,18 @@ COVDIR = ./cov
 BLDDIR = ./
 OPTIMIZATION = -O0
 OBJECT_NAMES = basic string data chunk bare_list list iterator node linked_list stack queue tree#graph
-OBJECTS := $(foreach f_name, $(OBJECT_NAMES), $(LIBDIR)/$(f_name).o)
-TSTECTS := $(foreach f_name, $(OBJECT_NAMES), $(LIBDIR)/test_$(f_name).o)
+OBJECTS := $(foreach f_name, $(OBJECT_NAMES), $(OBJDIR)/$(f_name).o)
+TSTECTS := $(foreach f_name, $(OBJECT_NAMES), $(OBJDIR)/test_$(f_name).o)
 EXECUTABLE := $(EXEDIR)/dsa
 TSTCUTABLE := $(EXEDIR)/test
 MEMCUTABLE := $(EXEDIR)/mem
 BDGCUTABLE := $(EXEDIR)/bdg
+LIBRARY := $(LIBDIR)/libdsa.so
 CFLAGS = -Wall -Wextra -g $(INCDIR) $(OPTIMIZATION)
 CFLAGS_EXTRA = -fPIC -shared -finput-charset=UTF-8# [1] position-indepedent-code -finput-charset=UTF-8
 CFLAGS_COVERAGE = --coverage
 
-all: $(EXECUTABLE) $(TSTCUTABLE) $(MEMCUTABLE) $(BDGCUTABLE)
+all: $(EXECUTABLE) $(TSTCUTABLE) $(MEMCUTABLE) $(BDGCUTABLE) $(LIBRARY)
 
 $(EXECUTABLE): $(OBJECTS)
 	@echo "-> Linking all object files and generating executable binary file ..."
@@ -33,7 +36,7 @@ $(EXECUTABLE): $(OBJECTS)
 #	@echo "... Done!"
 #	@echo
 
-$(LIBDIR)/%.o: $(SRCDIR)/%.c
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@echo " + Compiling "$*" ..."
 	@$(CC) $(CFLAGS) $(CFLAGS_EXTRA) -o $@ -c $^
 #	@echo "... Done!"
@@ -48,7 +51,7 @@ $(TSTCUTABLE): $(TSTECTS)
 #	@echo "... Done!"
 #	@echo
 
-$(LIBDIR)/test_%.o: $(TSTDIR)/%.c
+$(OBJDIR)/test_%.o: $(TSTDIR)/%.c
 	@echo " + Compiling test_"$*" ..."
 	@$(CC) $(CFLAGS) $(CFLAGS_EXTRA) $(CFLAGS_COVERAGE) -o $@ -c $^
 #	@echo "... Done!"
@@ -56,7 +59,7 @@ $(LIBDIR)/test_%.o: $(TSTDIR)/%.c
 
 $(MEMCUTABLE): $(OBJECTS) mem.c
 	@echo "-> Linking all object files and generating memory logger binary file ..."
-	@$(CC) $(CFLAGS) -o $@ ./mem.c $(LIBDIR)/basic.o $(LIBDIR)/string.o
+	@$(CC) $(CFLAGS) -o $@ ./mem.c $(OBJDIR)/basic.o $(OBJDIR)/string.o
 	@chmod +x $(MEMCUTABLE)
 #	@echo "... Done!"
 #	@echo
@@ -65,12 +68,15 @@ $(BDGCUTABLE): shield.c
 	@echo "-> Creating badge (shield) crafter program ..."
 	@$(CC) $(CFLAGS) -o $@ $^
 
+$(LIBRARY): $(OBJECTS)
+	@gcc $(CFLAGS) $(CFLAGS_EXTRA) -o $@ $^
+
 .PHONY: clean again check flow memlog ccov
 
 clean:
 	@echo "-> Removing generated files ..."
-	@-rm -f $(OBJECTS) $(EXECUTABLE) $(TSTCUTABLE)
-	@-rm -f ./lib/* ./bin/* ./log/* ./cov/* ./aft/*
+	@-rm -f $(OBJECTS) $(EXECUTABLE) $(TSTCUTABLE) $(LIBRARY)
+	@-rm -f ./obj/* ./lib/* ./bin/* ./log/* ./cov/* ./aft/*
 	@echo "... Done"
 #	@echo
 
@@ -78,17 +84,17 @@ again:
 	@make clean && make all
 
 check:
-	./bin/test | tee $(LOGDIR)/test.log
+	@./bin/test | tee $(LOGDIR)/test.log
 	echo $$[$$[`cat log/test.log | grep -c "PASSED"` * 100] / `cat log/test.log | grep -c -E "PASSED|FAILED"`] > $(LOGDIR)/passmark.log
 	./bin/bdg shield tests $$(if [ `cut -d' ' -f1 ./log/passmark.log` -gt "79" ]; then echo "passing"; else echo "failing"; fi)
-	mv -f shield ./aft/test_status.svg
+	@mv -f shield ./aft/test_status.svg
 
 memlog:
 	./bin/mem show
 
 ccov:
-	@find ./lib/ ! -name '*.o' -type f | xargs -r cp -t cov/
-	@find ./lib/ ! -name '*.o' -type f | xargs -r rm -f
+	@find ./obj/ ! -name '*.o' -type f | xargs -r cp -t cov/
+	@find ./obj/ ! -name '*.o' -type f | xargs -r rm -f
 	@mv ./bin/*.gcda ./bin/*.gcno ./cov/
 	@-rm -f $(LOGDIR)/all_cov.log
 	@-rm -f $(LOGDIR)/all_cov_cnt.log

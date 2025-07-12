@@ -1,8 +1,8 @@
-        -:    0:Source:test/string.c
+        -:    0:Source:tst/string.c
         -:    0:Graph:./cov/test_string.gcno
         -:    0:Data:./cov/test_string.gcda
         -:    0:Runs:1
-        -:    1:#include "../include/test.h"
+        -:    1:#include "../inc/test.h"
         -:    2:
 function test_string called 1 returned 100% blocks executed 75%
         1:    3:void test_string (void) {

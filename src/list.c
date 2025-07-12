@@ -1,4 +1,4 @@
-#include "../include/list.h"
+#include "../inc/list.h"
 
 List* create_list (size_t item_count) {
 	List* list = (List*) malloc (sizeof (List));

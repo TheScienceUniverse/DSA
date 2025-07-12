@@ -68,11 +68,11 @@
 	[[1;32mPASSED[0m]: (Fetched data with given index exists)
 	[[1;32mPASSED[0m]: (Fetched data matched with value)
 	[[1;32mPASSED[0m]: (Matched first index of given data)
-	[[1;31mFAILED[0m]: (Matched last index of given data)							file:test/list.c line:63
+	[[1;31mFAILED[0m]: (Matched last index of given data)							file:tst/list.c line:63
 	[[1;32mPASSED[0m]: (Matched inserted data with expected data at position)
 	[[1;32mPASSED[0m]: (Created test list)
 	[[1;32mPASSED[0m]: (Created test list with expected number of data)
-	[[1;31mFAILED[0m]: (Test list appended into the original list)							file:test/list.c line:96
+	[[1;31mFAILED[0m]: (Test list appended into the original list)							file:tst/list.c line:96
 	[[1;32mPASSED[0m]: (Checked inserted first data from list)
 	[[1;32mPASSED[0m]: (Checked inserted last data from list)
 	[[1;32mPASSED[0m]: (Created test list)
@@ -82,12 +82,12 @@
 	[[1;32mPASSED[0m]: (Created test list)
 	[[1;32mPASSED[0m]: (Created test list with expected number of data)
 	[[1;32mPASSED[0m]: (Matched first data of sub-list to copy index from equivalent original list)
-	[[1;31mFAILED[0m]: (Matched last data of sub-list to copy index from equivalent original list)							file:test/list.c line:149
+	[[1;31mFAILED[0m]: (Matched last data of sub-list to copy index from equivalent original list)							file:tst/list.c line:149
 	[[1;32mPASSED[0m]: (Deleted data in the original list)
 	[[1;32mPASSED[0m]: (Matched removed data from original list)
 	[[1;32mPASSED[0m]: (Checked item-count in sample list before clearing list)
 	[[1;32mPASSED[0m]: (Checked item-count in sample list after clearing list)
-	[[1;31mFAILED[0m]: (List non-emptiness check)							file:test/list.c line:194
+	[[1;31mFAILED[0m]: (List non-emptiness check)							file:tst/list.c line:194
 	[[1;32mPASSED[0m]: (List emptiness check)
 	[[1;32mPASSED[0m]: (Checked lists are equivalent or not)
 	[[1;32mPASSED[0m]: (Found expected data)

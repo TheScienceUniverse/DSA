@@ -1,4 +1,4 @@
-#include "../include/iterator.h"
+#include "../inc/iterator.h"
 
 Iterator* create_iterator (List* list, ssize_t stride) {
 	if (NULL == list) {

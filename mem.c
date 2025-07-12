@@ -1,5 +1,5 @@
-#include "./include/basic.h"
-#include "./include/string.h"
+#include "./inc/basic.h"
+#include "./inc/string.h"
 
 int main (int argc, char* argv[]) {
 	if (argc < 2) {

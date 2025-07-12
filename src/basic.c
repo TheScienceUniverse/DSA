@@ -1,4 +1,4 @@
-#include "../include/basic.h"
+#include "../inc/basic.h"
 
 void fill_mem_zero (void* base_address, size_t num_bytes) {
 	if (base_address == NULL || num_bytes == 0) {

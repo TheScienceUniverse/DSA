@@ -1,4 +1,4 @@
-#include "./include/test.h"
+#include "./inc/test.h"
 
 int main (void) {
 	setlocale (LC_ALL, "");	// for UTF-8 support

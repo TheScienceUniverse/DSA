@@ -1,8 +1,8 @@
-        -:    0:Source:test/stack.c
+        -:    0:Source:tst/stack.c
         -:    0:Graph:./cov/test_stack.gcno
         -:    0:Data:./cov/test_stack.gcda
         -:    0:Runs:1
-        -:    1:#include "../include/test.h"
+        -:    1:#include "../inc/test.h"
         -:    2:
 function test_stack called 1 returned 100% blocks executed 78%
         1:    3:void test_stack (void) {

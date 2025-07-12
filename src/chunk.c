@@ -1,4 +1,4 @@
-#include "../include/chunk.h"
+#include "../inc/chunk.h"
 
 Chunk* create_chunk (size_t chunk_id, size_t capacity) {
 	Chunk* chunk = (Chunk*) malloc (sizeof (Chunk));

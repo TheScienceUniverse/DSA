@@ -1,8 +1,8 @@
-        -:    0:Source:test/basic.c
+        -:    0:Source:tst/basic.c
         -:    0:Graph:./cov/test_basic.gcno
         -:    0:Data:./cov/test_basic.gcda
         -:    0:Runs:1
-        -:    1:#include "../include/test.h"
+        -:    1:#include "../inc/test.h"
         -:    2:
 function test_basic called 1 returned 100% blocks executed 75%
         1:    3:void test_basic (void) {

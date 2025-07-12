@@ -1,9 +1,9 @@
-#include "./include/basic.h"
-#include "./include/string.h"
-#include "./include/data.h"
-#include "./include/list.h"
-#include "./include/node.h"
-#include "./include/linked_list.h"
+#include "./inc/basic.h"
+#include "./inc/string.h"
+#include "./inc/data.h"
+#include "./inc/list.h"
+#include "./inc/node.h"
+#include "./inc/linked_list.h"
 
 int main (void) {
 	printf("hello\n");

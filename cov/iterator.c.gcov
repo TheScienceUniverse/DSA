@@ -1,8 +1,8 @@
-        -:    0:Source:test/iterator.c
+        -:    0:Source:tst/iterator.c
         -:    0:Graph:./cov/test_iterator.gcno
         -:    0:Data:./cov/test_iterator.gcda
         -:    0:Runs:1
-        -:    1:#include "../include/test.h"
+        -:    1:#include "../inc/test.h"
         -:    2:
 function test_iterator called 1 returned 100% blocks executed 81%
         1:    3:void test_iterator (void) {

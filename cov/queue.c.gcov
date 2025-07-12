@@ -1,8 +1,8 @@
-        -:    0:Source:test/queue.c
+        -:    0:Source:tst/queue.c
         -:    0:Graph:./cov/test_queue.gcno
         -:    0:Data:./cov/test_queue.gcda
         -:    0:Runs:1
-        -:    1:#include "../include/test.h"
+        -:    1:#include "../inc/test.h"
         -:    2:
 function test_queue called 1 returned 100% blocks executed 73%
         1:    3:void test_queue (void) {

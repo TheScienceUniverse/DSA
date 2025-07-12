@@ -1,4 +1,4 @@
-#include "../include/test.h"
+#include "../inc/test.h"
 
 void test_bare_list (void) {
 	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Bare List]\n" RESET_STYLE);

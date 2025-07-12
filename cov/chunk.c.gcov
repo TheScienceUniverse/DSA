@@ -1,8 +1,8 @@
-        -:    0:Source:test/chunk.c
+        -:    0:Source:tst/chunk.c
         -:    0:Graph:./cov/test_chunk.gcno
         -:    0:Data:./cov/test_chunk.gcda
         -:    0:Runs:1
-        -:    1:#include "../include/test.h"
+        -:    1:#include "../inc/test.h"
         -:    2:
 function test_chunk called 1 returned 100% blocks executed 78%
         1:    3:void test_chunk (void) {

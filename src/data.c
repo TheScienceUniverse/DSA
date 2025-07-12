@@ -1,4 +1,4 @@
-#include "../include/data.h"
+#include "../inc/data.h"
 
 Data* create_data (Data_Type data_type, size_t block_size, void* address) {
 	if (data_type == DT_Undefined || block_size == 0) {

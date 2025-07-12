@@ -1,4 +1,4 @@
-#include "../include/test.h"
+#include "../inc/test.h"
 
 void test_iterator (void) {
 	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Iterator]\n" RESET_STYLE);

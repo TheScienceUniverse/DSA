@@ -34,13 +34,32 @@ Click on the links below to know details about them.
 ### Dependency Diagram =>
 
 ![Image](./media/library_structure.svg "Library Structure")
+___
 
+## Installation
+
+Please install git, (wget or curl) through official package managers of your operating system; then run the following in your favorite terminal.
+
+```sh
+wget -O- "https://raw.githubusercontent.com/TheScienceUniverse/DSA/refs/heads/master/install.sh" | sh
+```
+
+or
+
+```sh
+curl "https://raw.githubusercontent.com/TheScienceUniverse/DSA/refs/heads/master/install.sh" | sh
+```
+
+Please note,
+- the contents will be copied in 'DSA' directory
+- there will be 4 more extra folder created in your project directory, 'inc' (location of interfaces), 'lib' (location for libraries) and 'log' (memory usage logging).
+- you may delete the 'DSA' folder from your project if not required any longer
+- you must exclude 'DSA' folder in '.gitignore' file from version control system to reduce extra overhead.
 ___
 
 ## History
 
 - Hi, this is the inititiator of this repo. From the college days it was a trial to create a general purpose data-structure and algorithm (DSA) in C programming language.
-
 - Please try this tool on systems (computer, mobile, embded systems) after installing GCC (GNU Compiler Collections) or Clang compiler; compile and run it natively or in servers.
 
 

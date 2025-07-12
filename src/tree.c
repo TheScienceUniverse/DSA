@@ -1,4 +1,4 @@
-#include "../include/tree.h"
+#include "../inc/tree.h"
 
 Tree* create_tree () {
 	Tree* tree = (Tree*) malloc (sizeof (Tree));
@@ -616,7 +616,7 @@ Tree* duplicate_tree (Tree* tree) {
 	Node* x_node;	// to be deleted node
 	Queue* queue = create_queue ();
 	Node* queue_node = create_node (N_Queue);
-	size_t node_count = 0;
+	// size_t node_count = 0;
 	Node* child_node;
 
 	anchor = duplicate_node (tree -> root_node);
@@ -647,7 +647,7 @@ Tree* duplicate_tree (Tree* tree) {
 			continue;
 		}
 
-		for (ssize_t i = 1; i < address_count; i++) {
+		for (ssize_t i = 1; i < (ssize_t) address_count; i++) {
 			Data* data = get_list_data_at_index (t_node -> address_list, i);
 			queue_node -> data -> address = data -> address;
 			child_node = data -> address;

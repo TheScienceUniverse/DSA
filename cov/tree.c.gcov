@@ -1,8 +1,8 @@
-        -:    0:Source:test/tree.c
+        -:    0:Source:tst/tree.c
         -:    0:Graph:./cov/test_tree.gcno
         -:    0:Data:./cov/test_tree.gcda
         -:    0:Runs:1
-        -:    1:#include "../include/test.h"
+        -:    1:#include "../inc/test.h"
         -:    2:
 function test_tree called 1 returned 100% blocks executed 94%
         1:    3:void test_tree (void) {

@@ -1,6 +1,5 @@
 make clean
 make again
-make badge
 make check
 make ccov
 

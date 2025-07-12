@@ -1,4 +1,4 @@
-#include "../include/node.h"
+#include "../inc/node.h"
 
 Node* create_node (Node_Type type) {
 	Node* node = (Node*) malloc (sizeof (Node));

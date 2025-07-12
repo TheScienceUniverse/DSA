@@ -1,5 +1,5 @@
-VPATH := ./include ./src ./obj ./lib
-vpath %.h ./include
+VPATH := ./inc ./src ./obj ./lib
+vpath %.h ./inc
 vpath %.c ./src
 vpath %.o ./obj
 vpath %.so ./lib
@@ -10,7 +10,7 @@ SRCDIR = ./src
 OBJDIR = ./obj
 LIBDIR = ./lib
 EXEDIR = ./bin
-TSTDIR = ./test
+TSTDIR = ./tst
 LOGDIR = ./log
 COVDIR = ./cov
 BLDDIR = ./
@@ -19,12 +19,12 @@ OBJECT_NAMES = basic string data chunk bare_list list iterator node linked_list 
 OBJECTS := $(foreach f_name, $(OBJECT_NAMES), $(OBJDIR)/$(f_name).o)
 TSTECTS := $(foreach f_name, $(OBJECT_NAMES), $(OBJDIR)/test_$(f_name).o)
 EXECUTABLE := $(EXEDIR)/dsa
-TSTCUTABLE := $(EXEDIR)/test
+TSTCUTABLE := $(EXEDIR)/tst
 MEMCUTABLE := $(EXEDIR)/mem
 BDGCUTABLE := $(EXEDIR)/bdg
 LIBRARY := $(LIBDIR)/libdsa.so
 CFLAGS = -Wall -Wextra -g $(INCDIR) $(OPTIMIZATION)
-CFLAGS_EXTRA = -fPIC -shared -finput-charset=UTF-8# [1] position-indepedent-code -finput-charset=UTF-8
+CFLAGS_EXTRA = -fPIC -shared -finput-charset=UTF-8# [1] position-indepedent-code, [2] shared object, [3] input character encoding UTF-8
 CFLAGS_COVERAGE = --coverage
 
 all: $(EXECUTABLE) $(TSTCUTABLE) $(MEMCUTABLE) $(BDGCUTABLE) $(LIBRARY)
@@ -84,9 +84,9 @@ again:
 	@make clean && make all
 
 check:
-	@./bin/test | tee $(LOGDIR)/test.log
+	@$(TSTCUTABLE) | tee $(LOGDIR)/test.log
 	echo $$[$$[`cat log/test.log | grep -c "PASSED"` * 100] / `cat log/test.log | grep -c -E "PASSED|FAILED"`] > $(LOGDIR)/passmark.log
-	./bin/bdg shield tests $$(if [ `cut -d' ' -f1 ./log/passmark.log` -gt "79" ]; then echo "passing"; else echo "failing"; fi)
+	$(BDGCUTABLE) shield tests $$(if [ `cut -d' ' -f1 ./log/passmark.log` -gt "79" ]; then echo "passing"; else echo "failing"; fi)
 	@mv -f shield ./aft/test_status.svg
 
 memlog:

@@ -1,4 +1,4 @@
-#include "../include/string.h"
+#include "../inc/string.h"
 
 void display_raw_string (size_t length, char* address) {
 	for (size_t i = 0; i < length; i++) {

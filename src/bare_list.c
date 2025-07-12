@@ -1,4 +1,4 @@
-#include "../include/bare_list.h"
+#include "../inc/bare_list.h"
 
 Bare_List* create_bare_list (size_t item_count) {
 	Bare_List* list = (Bare_List*) malloc (sizeof (Bare_List));
@@ -63,7 +63,7 @@ void delete_bare_list (Bare_List** list_address) {
 	}
 
 	Bare_List* list = *list_address;
-	Data* data;
+	__attribute__((unused)) Data* data;
 
 	for (size_t i = 0; i < list -> item_count; i++) {
 		data = *(list -> item_addresses + i);

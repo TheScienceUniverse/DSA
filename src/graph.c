@@ -1,4 +1,4 @@
-#include "../include/graph.h"
+#include "../inc/graph.h"
 
 Graph* create_graph () {
 	Graph* graph = (Graph*) malloc (sizeof (Graph));

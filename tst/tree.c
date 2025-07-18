@@ -78,6 +78,12 @@ void test_tree (void) {
 	
 	delete_node (&node);
 
+	node = get_parent_node (anchor);
+	printf ("Parent Node :=> ");
+	display_node (node);
+	putchar ('\n');
+	delete_node (&node);
+
 	node = get_first_child_node (anchor);
 	printf ("First Node :=> ");
 	display_node (node);

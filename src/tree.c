@@ -380,6 +380,24 @@ void display_child_node_list (Node* node) {
 	printf ("]\n");
 }
 
+Node* get_parent_node (Node* child_node) {
+	if (NULL == child_node) {
+		perror ("Given Node doesn't exists");
+		return NULL;
+	}
+
+	if (child_node -> type != N_Tree) {
+		perror ("Given Node doesn't belong to a tree");
+		return NULL;
+	}
+
+	Data* addr_data = get_list_data_at_index (child_node -> address_list, 0);
+	Node* parent_node = duplicate_node (addr_data -> address);
+	delete_data (&addr_data);
+
+	return parent_node;
+}
+
 Node* get_Nth_child_node (Node* parent_node, size_t n) {
 	if (parent_node == NULL) {
 		perror ("Given Node doesn't exists");

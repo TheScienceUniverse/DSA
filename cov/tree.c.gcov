@@ -111,9 +111,9 @@ call    0 returned 1
         1:   79:	delete_node (&node);
 call    0 returned 1
         -:   80:
-        1:   81:	node = get_first_child_node (anchor);
+        1:   81:	node = get_parent_node (anchor);
 call    0 returned 1
-        1:   82:	printf ("First Node :=> ");
+        1:   82:	printf ("Parent Node :=> ");
 call    0 returned 1
         1:   83:	display_node (node);
 call    0 returned 1
@@ -122,9 +122,9 @@ call    0 returned 1
         1:   85:	delete_node (&node);
 call    0 returned 1
         -:   86:
-        1:   87:	node = get_last_child_node (anchor);
+        1:   87:	node = get_first_child_node (anchor);
 call    0 returned 1
-        1:   88:	printf ("Last Node :=> ");
+        1:   88:	printf ("First Node :=> ");
 call    0 returned 1
         1:   89:	display_node (node);
 call    0 returned 1
@@ -133,9 +133,9 @@ call    0 returned 1
         1:   91:	delete_node (&node);
 call    0 returned 1
         -:   92:
-        1:   93:	node = get_Nth_child_node (anchor, 1);
+        1:   93:	node = get_last_child_node (anchor);
 call    0 returned 1
-        1:   94:	printf ("2nd Node :=> ");
+        1:   94:	printf ("Last Node :=> ");
 call    0 returned 1
         1:   95:	display_node (node);
 call    0 returned 1
@@ -144,63 +144,74 @@ call    0 returned 1
         1:   97:	delete_node (&node);
 call    0 returned 1
         -:   98:
-        1:   99:	node = remove_child_node (tree, anchor);
+        1:   99:	node = get_Nth_child_node (anchor, 1);
 call    0 returned 1
-        1:  100:	printf ("Deleted node: ");
+        1:  100:	printf ("2nd Node :=> ");
 call    0 returned 1
         1:  101:	display_node (node);
 call    0 returned 1
         1:  102:	putchar ('\n');
 call    0 returned 1
-        -:  103:
-       1*:  104:	printf ("Is node belong to tree? %s\n", (does_tree_contain_node (tree, anchor)) ? "Yes" : "No");
+        1:  103:	delete_node (&node);
+call    0 returned 1
+        -:  104:
+        1:  105:	node = remove_child_node (tree, anchor);
+call    0 returned 1
+        1:  106:	printf ("Deleted node: ");
+call    0 returned 1
+        1:  107:	display_node (node);
+call    0 returned 1
+        1:  108:	putchar ('\n');
+call    0 returned 1
+        -:  109:
+       1*:  110:	printf ("Is node belong to tree? %s\n", (does_tree_contain_node (tree, anchor)) ? "Yes" : "No");
 call    0 returned 1
 branch  1 taken 1 (fallthrough)
 branch  2 taken 0
-        1:  104-block 46
-    %%%%%:  104-block 47
-        1:  104-block 48
+        1:  110-block 51
+    %%%%%:  110-block 52
+        1:  110-block 53
 call    3 returned 1
-       1*:  105:	printf ("Is node belong to tree? %s\n", (does_tree_contain_node (tree, node)) ? "Yes" : "No");
+       1*:  111:	printf ("Is node belong to tree? %s\n", (does_tree_contain_node (tree, node)) ? "Yes" : "No");
 call    0 returned 1
 branch  1 taken 0 (fallthrough)
 branch  2 taken 1
-    %%%%%:  105-block 51
-        1:  105-block 52
-        1:  105-block 53
+    %%%%%:  111-block 56
+        1:  111-block 57
+        1:  111-block 58
 call    3 returned 1
-        -:  106:
-        1:  107:	delete_node (&node);
-call    0 returned 1
-        -:  108:
-        1:  109:	display_child_node_list (anchor);
-call    0 returned 1
-        -:  110:
-        1:  111:	display_sub_tree (tree, anchor);
-call    0 returned 1
         -:  112:
-        1:  113:	display_tree (tree);
+        1:  113:	delete_node (&node);
 call    0 returned 1
         -:  114:
-        1:  115:	Tree* test_tree = duplicate_tree (tree);
+        1:  115:	display_child_node_list (anchor);
 call    0 returned 1
-        1:  116:	display_tree (test_tree);
-call    0 returned 1
-        1:  117:	delete_tree (&test_tree);
+        -:  116:
+        1:  117:	display_sub_tree (tree, anchor);
 call    0 returned 1
         -:  118:
-        1:  119:	delete_tree (&tree);
+        1:  119:	display_tree (tree);
 call    0 returned 1
         -:  120:
-       1*:  121:	TEST (NULL == tree, "Deleted tree");
+        1:  121:	Tree* test_tree = duplicate_tree (tree);
+call    0 returned 1
+        1:  122:	display_tree (test_tree);
+call    0 returned 1
+        1:  123:	delete_tree (&test_tree);
+call    0 returned 1
+        -:  124:
+        1:  125:	delete_tree (&tree);
+call    0 returned 1
+        -:  126:
+       1*:  127:	TEST (NULL == tree, "Deleted tree");
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
-        1:  121-block 63
+        1:  127-block 68
 call    2 returned 1
-    %%%%%:  121-block 64
+    %%%%%:  127-block 69
 call    3 never executed
-        -:  122:
-        1:  123:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Tree]\n" RESET_STYLE);
-        1:  123-block 65
+        -:  128:
+        1:  129:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Tree]\n" RESET_STYLE);
+        1:  129-block 70
 call    0 returned 1
-        1:  124:}
+        1:  130:}

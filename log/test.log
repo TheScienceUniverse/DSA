@@ -240,6 +240,7 @@ Tree :=> node_count: (8) breadth: (0) height: (2)
     |    +---(H)
 Walking towards Root node ... (C)->(A)
 Children of (B): [(D), (E), (F)]
+Parent Node :=> (A)
 First Node :=> (D)
 Last Node :=> (F)
 2nd Node :=> (E)

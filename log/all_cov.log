@@ -164,17 +164,17 @@ Creating 'queue.c.gcov'
 Lines executed:100.00% of 73
 
 Function 'test_tree'
-Lines executed:100.00% of 73
+Lines executed:100.00% of 78
 Branches executed:100.00% of 8
 Taken at least once:50.00% of 8
-Calls executed:96.43% of 56
+Calls executed:96.72% of 61
 
 File 'tst/tree.c'
-Lines executed:100.00% of 73
+Lines executed:100.00% of 78
 Branches executed:100.00% of 8
 Taken at least once:50.00% of 8
-Calls executed:96.43% of 56
+Calls executed:96.72% of 61
 Creating 'tree.c.gcov'
 
-Lines executed:100.00% of 73
+Lines executed:100.00% of 78
 

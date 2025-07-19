@@ -31,4 +31,6 @@ void** capture_string_addresses (String* string);
 
 void display_N_characters (char character, size_t repetitions);
 
+Compare_Status compare_strings (String* string1, String* string2);
+
 #endif	// STRING_H

@@ -275,3 +275,29 @@ void display_N_characters (char character, size_t repetitions) {
 		putchar (character);
 	}
 }
+
+Compare_Status compare_strings (String* string1, String* string2) {
+	if (string1 == string2) {
+		return Cmp_Identical;
+	}
+
+	if (string1 == NULL || string2 == NULL) {
+		perror ("One or Both given string does not exist");
+		return Cmp_Different;
+	}
+
+	if (string1 -> length != string2 -> length) {
+		return Cmp_Different;
+	}
+
+	Compare_Status cmp_stat = Cmp_Equivalent;
+
+	for (size_t i = 0; i < string1 -> length; i++) {
+		if (*(string1 -> address + i) != *(string2 -> address + i)) {
+			cmp_stat = Cmp_Different;
+			break;
+		}
+	}
+
+	return cmp_stat;
+}

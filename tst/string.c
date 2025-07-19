@@ -61,10 +61,21 @@ void test_string (void) {
 	String* str1 = create_string (5, "Hello");
 	String* str2 = create_string (5, "World");
 	string = concatenate_strings (2, str1, str2);
-	TEST (string -> length == str1 -> length + str2 -> length, "Concatenated string length check");
+	TEST (string -> length == str1 -> length + str2 -> length, "Checked concatenated string lengths");
 	ghost_string = create_string (10, "HelloWorld");
-	TEST (true == are_strings_equal (string, ghost_string), "String concatenation check");
+	TEST (true == are_strings_equal (string, ghost_string), "Matched concatenated strings");
 	delete_string (&ghost_string);
+	delete_string (&string);
+	delete_string (&str1);
+	delete_string (&str2);
+
+	string = create_string (3, "123");
+	ghost_string = string;
+	str1 = create_string (3, "321");
+	str2 = create_string (3, "123");
+	TEST (Cmp_Identical == compare_strings (string, ghost_string), "Matched identical strings");
+	TEST (Cmp_Different == compare_strings (string, str1), "Mis-matched different strings");
+	TEST (Cmp_Equivalent == compare_strings (string, str2), "Matched equivalent strings");
 	delete_string (&string);
 	delete_string (&str1);
 	delete_string (&str2);

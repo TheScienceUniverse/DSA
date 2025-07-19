@@ -8,7 +8,7 @@ int main (int argc, char* argv[]) {
 		return EXIT_FAILURE;
 	}
 
-	printf ("Shield :=>\n");
+	printf ("Shield :=> ");
 
 	char* name = argv [1];
 
@@ -17,21 +17,23 @@ int main (int argc, char* argv[]) {
 	char* value = argv [3];
 	int len_2 = strlen (value);
 
-	printf ("property = %s (%u)\n", property, len_1);
-	printf ("value = %s (%u)\n", value, len_2);
+	printf ("[ %s : %s ]\n", property, value);
+
+	// printf ("property = %s (%u)\n", property, len_1);
+	// printf ("value = %s (%u)\n", value, len_2);
 
 	// 1em = 12pt = 16px
 	int font_height = 10;
 	int font_width = (font_height * 3) / 5;
 
-	printf ("h = %dpx, w = %dpx\n", font_height, font_width);
+	// printf ("h = %dpx, w = %dpx\n", font_height, font_width);
 
 	int box_height = 2 * font_height;
 	int box_1_width = (len_1 + 2) * font_width;
 	int box_2_width = (len_2 + 2) * font_width;
 	int box_width = box_1_width + box_2_width;
 
-	printf ("Box_1 (%dpx/%dpx), Box_2 (%dpx/%dpx)\n", box_height, box_1_width, box_height, box_2_width);
+	// printf ("Box_1 (%dpx/%dpx), Box_2 (%dpx/%dpx)\n", box_height, box_1_width, box_height, box_2_width);
 
 	char* box_1_color = "#555555";
 	char* box_2_color = "#90e59a";

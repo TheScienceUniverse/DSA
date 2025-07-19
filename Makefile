@@ -85,14 +85,16 @@ again:
 
 check:
 	@$(TSTCUTABLE) | tee $(LOGDIR)/test.log
-	echo $$[$$[`cat log/test.log | grep -c "PASSED"` * 100] / `cat log/test.log | grep -c -E "PASSED|FAILED"`] > $(LOGDIR)/passmark.log
-	$(BDGCUTABLE) shield tests $$(if [ `cut -d' ' -f1 ./log/passmark.log` -gt "79" ]; then echo "passing"; else echo "failing"; fi)
+	@echo "-> Checking test status..."
+	@echo $$[$$[`cat log/test.log | grep -c "PASSED"` * 100] / `cat log/test.log | grep -c -E "PASSED|FAILED"`] > $(LOGDIR)/passmark.log
+	@$(BDGCUTABLE) shield tests $$(if [ `cut -d' ' -f1 ./log/passmark.log` -gt "79" ]; then echo "passing"; else echo "failing"; fi)
 	@mv -f shield ./aft/test_status.svg
 
 memlog:
 	./bin/mem show
 
 ccov:
+	@echo "-> Calculating code coverage..."
 	@find ./obj/ ! -name '*.o' -type f | xargs -r cp -t cov/
 	@find ./obj/ ! -name '*.o' -type f | xargs -r rm -f
 	@mv ./bin/*.gcda ./bin/*.gcno ./cov/
@@ -100,21 +102,21 @@ ccov:
 	@-rm -f $(LOGDIR)/all_cov_cnt.log
 	@-rm -f $(LOGDIR)/coverage.log
 
-	for f in $(foreach f_name, $(OBJECT_NAMES), $(COVDIR)/test_$(f_name)); \
+	@for f in $(foreach f_name, $(OBJECT_NAMES), $(COVDIR)/test_$(f_name)); \
 	do \
 		gcov -abcf "$$f" >> $(LOGDIR)/all_cov.log || exit 1; \
 		echo >> $(LOGDIR)/all_cov.log; \
 	done
 
-	grep "%" $(LOGDIR)/all_cov.log \
+	@grep "%" $(LOGDIR)/all_cov.log \
 		| awk -F' |:' '{print $$(NF-2)}' \
 		| sed 's/.$$//' \
 		>> $(LOGDIR)/all_cov_cnt.log || exit 1;
 
 	@awk '{sum+=($$1)} END {print int(sum/NR)}' $(LOGDIR)/all_cov_cnt.log > $(LOGDIR)/coverage.log
 	@mv *.gcov $(COVDIR)
-	./bin/bdg shield coverage `cut -d' ' -f1 ./log/coverage.log`%
-	mv -f shield ./aft/code_coverage.svg
+	@./bin/bdg shield coverage `cut -d' ' -f1 ./log/coverage.log`%
+	@mv -f shield ./aft/code_coverage.svg
 
 flow:
 	@tabs 4;

@@ -22,7 +22,7 @@ void delete_string (String** string_address);				// frees string object from mem
 String* duplicate_string (String* string);
 void display_string_properties (String* string);			// prints whole description
 void display_string (String* string);						// prints only string part
-void concatenate_strings (int input_count, ...);			// concatenates multiple string objects
+String* concatenate_strings (int input_count, ...);			// concatenates multiple string objects
 bool are_strings_equal (String* string1, String* string2);	// checks if strings are same by value or not, does not check by address
 String* append_integer_to_raw_string (char* str, int number);
 BYTE match_strings (String string1, String string2);

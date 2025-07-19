@@ -58,5 +58,16 @@ void test_string (void) {
 //	TEST (ptr != vptr, "Address validation check");
 //	TEST (n != *((int*) vptr), "Content check");
 
+	String* str1 = create_string (5, "Hello");
+	String* str2 = create_string (5, "World");
+	string = concatenate_strings (2, str1, str2);
+	TEST (string -> length == str1 -> length + str2 -> length, "Concatenated string length check");
+	ghost_string = create_string (10, "HelloWorld");
+	TEST (true == are_strings_equal (string, ghost_string), "String concatenation check");
+	delete_string (&ghost_string);
+	delete_string (&string);
+	delete_string (&str1);
+	delete_string (&str2);
+
 	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
 }

@@ -14,19 +14,19 @@ Creating 'basic.c.gcov'
 Lines executed:100.00% of 16
 
 Function 'test_string'
-Lines executed:100.00% of 15
-Branches executed:100.00% of 12
-Taken at least once:50.00% of 12
-Calls executed:64.71% of 17
+Lines executed:100.00% of 25
+Branches executed:100.00% of 16
+Taken at least once:50.00% of 16
+Calls executed:73.33% of 30
 
 File 'tst/string.c'
-Lines executed:100.00% of 15
-Branches executed:100.00% of 12
-Taken at least once:50.00% of 12
-Calls executed:64.71% of 17
+Lines executed:100.00% of 25
+Branches executed:100.00% of 16
+Taken at least once:50.00% of 16
+Calls executed:73.33% of 30
 Creating 'string.c.gcov'
 
-Lines executed:100.00% of 15
+Lines executed:100.00% of 25
 
 Function 'test_data'
 Lines executed:100.00% of 13

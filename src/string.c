@@ -131,11 +131,64 @@ String* duplicate_string (String* old_string) {
 	return new_string;
 }
 
-void concatenate_strings (int count, ...) {
-	printf ("%d\n", count);
-	String *string = create_string(0, "");
-	display_string(string);
-	delete_string (&string);
+String* concatenate_strings (int count, ...) {
+	if (
+		count < 2
+		|| count > 10
+	) {
+		perror ("Number of strings out of accepted bound [2-10]!");
+		return NULL;
+	}
+
+	size_t combined_length = 0;
+
+	va_list args;
+	va_start (args, count);	// initialize list
+
+	String* string;
+
+	for (int i = 0; i < count; i++) {
+		string = va_arg (args, String*);
+
+		if (NULL == string) {
+			continue;
+		}
+
+		combined_length += string -> length;
+	}
+
+    va_end (args);	// clears list
+
+	String *big_str = create_string (0, "");
+	
+	big_str -> address = (char*) malloc (sizeof (char) * combined_length);
+
+	if (NULL == big_str -> address) {
+		delete_string (&big_str);
+		perror ("Unable to allocate sufficient memory of combined length!");
+		return NULL;
+	}
+
+	big_str -> length = combined_length;
+
+	char* c_ptr = big_str -> address;	// character pointer
+
+	va_start (args, count);	// initialize list
+
+	for (int i = 0; i < count; i++) {
+		string = va_arg (args, String*);
+
+		if (NULL == string) {
+			continue;
+		}
+
+		copy_byte_stream (string -> length, (BYTE*)(string -> address), (BYTE*)(c_ptr));
+		c_ptr += string -> length;
+	}
+
+    va_end (args);	// clears list
+
+	return big_str;
 }
 
 bool are_strings_equal (String* string1, String* string2)  {

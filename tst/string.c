@@ -3,18 +3,18 @@
 void test_string (void) {
 	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [String]\n" RESET_STYLE);
 
-	char* str = "Hello, World!\n";
-	size_t len = 14;
+	char* text = "Hello, World!\n";
+	size_t length = 14;
 
-	String* string = create_string (len, str);
+	String* string = create_string (length, text);
 	String* ghost_string = string;
 
-	// printf ("%lu %lu\n", len, sizeof (string -> address));
+	// printf ("%lu %lu\n", length, sizeof (string -> text));
 
 	TEST (NULL != string, "Address non-null check");
-	TEST (len == string -> length, "Allocated block-size check");
+	TEST (length == string -> length, "Allocated block-size check");
 	TEST (string == ghost_string, "Address validation check");
-	TEST (compare_raw_strings_shh (len, str, string -> length, string -> address), "Content check");
+	TEST (compare_raw_strings_shh (length, text, string -> length, string -> text), "Content check");
 
 //	void** string_addresses = capture_string_addresses (string);
 //	TEST (!is_string_memory_erased (string_addresses), "String existance check");
@@ -63,7 +63,7 @@ void test_string (void) {
 	string = concatenate_strings (2, str1, str2);
 	TEST (string -> length == str1 -> length + str2 -> length, "Checked concatenated string lengths");
 	ghost_string = create_string (10, "HelloWorld");
-	TEST (true == are_strings_equal (string, ghost_string), "Matched concatenated strings");
+	TEST (Cmp_Different != compare_strings (string, ghost_string), "Matched concatenated strings");
 	delete_string (&ghost_string);
 	delete_string (&string);
 	delete_string (&str1);

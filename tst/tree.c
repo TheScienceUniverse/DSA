@@ -21,11 +21,11 @@ void test_tree (void) {
 	set_tree_root_node (tree, node);
 	anchor = tree -> root_node;
 
-	++*(node -> name -> address);
+	++*(node -> name -> text);
 	*((int*)(node -> data -> address)) += 10;
 	append_child_node (tree, anchor, node);
 
-	++*(node -> name -> address);
+	++*(node -> name -> text);
 	*((int*)(node -> data -> address)) += 10;
 	append_child_node (tree, anchor, node);
 
@@ -33,15 +33,15 @@ void test_tree (void) {
 	anchor = (anchor -> address_list -> head_chunk -> first_data_address + 1) -> address;
 //	display_node_details (anchor);
 
-	++*(node -> name -> address);
+	++*(node -> name -> text);
 	*((int*)(node -> data -> address)) += 10;
 	append_child_node (tree, anchor, node);
 
-	++*(node -> name -> address);
+	++*(node -> name -> text);
 	*((int*)(node -> data -> address)) += 10;
 	append_child_node (tree, anchor, node);
 
-	++*(node -> name -> address);
+	++*(node -> name -> text);
 	*((int*)(node -> data -> address)) += 10;
 	append_child_node (tree, anchor, node);
 
@@ -51,11 +51,11 @@ void test_tree (void) {
 	data = get_list_data_at_index (tree -> root_node -> address_list, 2);
 	anchor = data -> address;
 
-	++*(node -> name -> address);
+	++*(node -> name -> text);
 	*((int*)(node -> data -> address)) += 10;
 	append_child_node (tree, anchor, node);
 
-	++*(node -> name -> address);
+	++*(node -> name -> text);
 	*((int*)(node -> data -> address)) += 10;
 	append_child_node (tree, anchor, node);
 

@@ -15,50 +15,50 @@ void test_linked_list (void) {
 	set_node_data (node, data);
 
 	attach_node_at_first (linked_list, node);
-	TEST ('A' == *((char*)(linked_list -> head_node -> name -> address + 0)), "Compared inserted node's name (A) with linked-list's head node name");
+	TEST ('A' == *((char*)(linked_list -> head_node -> name -> text + 0)), "Compared inserted node's name (A) with linked-list's head node name");
 	TEST (10 == *((int*)(linked_list -> head_node -> data -> address + 0)), "Compared inserted node's data (10) with linked-list's head node data");
-	TEST ('A' == *((char*)(linked_list -> head_node -> name -> address + 0)), "Compared inserted node's name (A) with linked-list's tail node name");
+	TEST ('A' == *((char*)(linked_list -> head_node -> name -> text + 0)), "Compared inserted node's name (A) with linked-list's tail node name");
 	TEST (10 == *((int*)(linked_list -> head_node -> data -> address + 0)), "Compared inserted node's data (10) with linked-list's tail node data");
 // A
-	++*(node -> name -> address);
+	++*(node -> name -> text);
 	*((int*)(node -> data -> address)) += 10;
 	attach_node_at_last (linked_list, node);
-	TEST ('A' == *((char*)(linked_list -> head_node -> name -> address + 0)), "Compared inserted node's name (A) with linked-list's head node name");
+	TEST ('A' == *((char*)(linked_list -> head_node -> name -> text + 0)), "Compared inserted node's name (A) with linked-list's head node name");
 	TEST (10 == *((int*)(linked_list -> head_node -> data -> address + 0)), "Compared inserted node's data (10) with linked-list's head node data");
-	TEST ('B' == *((char*)(linked_list -> tail_node -> name -> address + 0)), "Compared inserted node's name (B) with linked-list's tail node name");
+	TEST ('B' == *((char*)(linked_list -> tail_node -> name -> text + 0)), "Compared inserted node's name (B) with linked-list's tail node name");
 	TEST (20 == *((int*)(linked_list -> tail_node -> data -> address + 0)), "Compared inserted node's data (20) with linked-list's tail node data");
 // A - B
-	++*(node -> name -> address);
+	++*(node -> name -> text);
 	*((int*)(node -> data -> address)) += 10;
 	attach_node_at_first (linked_list, node);
-	TEST ('C' == *((char*)(linked_list -> head_node -> name -> address + 0)), "Compared inserted node's name (C) with linked-list's head node name");
+	TEST ('C' == *((char*)(linked_list -> head_node -> name -> text + 0)), "Compared inserted node's name (C) with linked-list's head node name");
 	TEST (30 == *((int*)(linked_list -> head_node -> data -> address + 0)), "Compared inserted node's data (30) with linked-list's head node data");
-	TEST ('B' == *((char*)(linked_list -> tail_node -> name -> address + 0)), "Compared inserted node's name (B) with linked-list's tail node name");
+	TEST ('B' == *((char*)(linked_list -> tail_node -> name -> text + 0)), "Compared inserted node's name (B) with linked-list's tail node name");
 	TEST (20 == *((int*)(linked_list -> tail_node -> data -> address + 0)), "Compared inserted node's data (20) with linked-list's tail node data");
 // C - A - B
-	++*(node -> name -> address);
+	++*(node -> name -> text);
 	*((int*)(node -> data -> address)) += 10;
 	attach_node_at_last (linked_list, node);
-	TEST ('C' == *((char*)(linked_list -> head_node -> name -> address + 0)), "Compared inserted node's name (C) with linked-list's head node name");
+	TEST ('C' == *((char*)(linked_list -> head_node -> name -> text + 0)), "Compared inserted node's name (C) with linked-list's head node name");
 	TEST (30 == *((int*)(linked_list -> head_node -> data -> address + 0)), "Compared inserted node's data (30) with linked-list's head node data");
-	TEST ('D' == *((char*)(linked_list -> tail_node -> name -> address + 0)), "Compared inserted node's name (D) with linked-list's tail node name");
+	TEST ('D' == *((char*)(linked_list -> tail_node -> name -> text + 0)), "Compared inserted node's name (D) with linked-list's tail node name");
 	TEST (40 == *((int*)(linked_list -> tail_node -> data -> address + 0)), "Compared inserted node's data (40) with linked-list's tail node data");
 // C - A - B - D
 	Node* del_node = detach_head_from_linked_list (linked_list);
-	TEST ('C' == *((char*)(del_node -> name -> address + 0)), "Compared deleted node's name (C) with expected node name");
+	TEST ('C' == *((char*)(del_node -> name -> text + 0)), "Compared deleted node's name (C) with expected node name");
 	TEST (30 == *((int*)(del_node -> data -> address + 0)), "Compared deleted node's data (30) with expected node data");
-	TEST ('A' == *((char*)(linked_list -> head_node -> name -> address + 0)), "Compared inserted node's name (A) with linked-list's head node name");
+	TEST ('A' == *((char*)(linked_list -> head_node -> name -> text + 0)), "Compared inserted node's name (A) with linked-list's head node name");
 	TEST (10 == *((int*)(linked_list -> head_node -> data -> address + 0)), "Compared inserted node's data (10) with linked-list's head node data");
-	TEST ('D' == *((char*)(linked_list -> tail_node -> name -> address + 0)), "Compared inserted node's name (D) with linked-list's tail node name");
+	TEST ('D' == *((char*)(linked_list -> tail_node -> name -> text + 0)), "Compared inserted node's name (D) with linked-list's tail node name");
 	TEST (40 == *((int*)(linked_list -> tail_node -> data -> address + 0)), "Compared inserted node's data (40) with linked-list's tail node data");
 	delete_node (&del_node);
 // A - B - D
 	del_node = detach_tail_from_linked_list (linked_list);
-	TEST ('D' == *((char*)(del_node -> name -> address + 0)), "Compared deleted node's name (D) with expected node name");
+	TEST ('D' == *((char*)(del_node -> name -> text + 0)), "Compared deleted node's name (D) with expected node name");
 	TEST (40 == *((int*)(del_node -> data -> address + 0)), "Compared deleted node's data (40) with expected node data");
-	TEST ('A' == *((char*)(linked_list -> head_node -> name -> address + 0)), "Compared inserted node's name (A) with linked-list's head node name");
+	TEST ('A' == *((char*)(linked_list -> head_node -> name -> text + 0)), "Compared inserted node's name (A) with linked-list's head node name");
 	TEST (10 == *((int*)(linked_list -> head_node -> data -> address + 0)), "Compared inserted node's data (10) with linked-list's head node data");
-	TEST ('B' == *((char*)(linked_list -> tail_node -> name -> address + 0)), "Compared inserted node's name (B) with linked-list's tail node name");
+	TEST ('B' == *((char*)(linked_list -> tail_node -> name -> text + 0)), "Compared inserted node's name (B) with linked-list's tail node name");
 	TEST (20 == *((int*)(linked_list -> tail_node -> data -> address + 0)), "Compared inserted node's data (20) with linked-list's tail node data");
 	delete_node (&del_node);
 // A - B

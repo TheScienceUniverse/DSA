@@ -35,7 +35,7 @@ call    0 returned 1
         -:   16:
         1:   17:	enqueue (queue, node);
 call    0 returned 1
-       1*:   18:	TEST ('A' == *((char*)(queue -> front_node -> name -> address + 0)), "Compared enqueued node's name (A) with queue's front node name");
+       1*:   18:	TEST ('A' == *((char*)(queue -> front_node -> name -> text + 0)), "Compared enqueued node's name (A) with queue's front node name");
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
         1:   18-block 13
@@ -50,7 +50,7 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   19-block 17
 call    3 never executed
-       1*:   20:	TEST ('A' == *((char*)(queue -> rear_node -> name -> address + 0)), "Compared enqueued node's name (A) with queue's rear node name");
+       1*:   20:	TEST ('A' == *((char*)(queue -> rear_node -> name -> text + 0)), "Compared enqueued node's name (A) with queue's rear node name");
         1:   20-block 18
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
@@ -67,12 +67,12 @@ call    2 returned 1
     %%%%%:   21-block 23
 call    3 never executed
         -:   22:
-        1:   23:	++*(node -> name -> address);
+        1:   23:	++*(node -> name -> text);
         1:   24:	*((int*)(node -> data -> address)) += 10;
         1:   25:	enqueue (queue, node);
         1:   25-block 24
 call    0 returned 1
-       1*:   26:	TEST ('A' == *((char*)(queue -> front_node -> name -> address + 0)), "Compared enqueued node's name (A) with queue's front node name");
+       1*:   26:	TEST ('A' == *((char*)(queue -> front_node -> name -> text + 0)), "Compared enqueued node's name (A) with queue's front node name");
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
         1:   26-block 26
@@ -87,7 +87,7 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   27-block 30
 call    3 never executed
-       1*:   28:	TEST ('B' == *((char*)(queue -> rear_node -> name -> address + 0)), "Compared enqueued node's name (B) with queue's rear node name");
+       1*:   28:	TEST ('B' == *((char*)(queue -> rear_node -> name -> text + 0)), "Compared enqueued node's name (B) with queue's rear node name");
         1:   28-block 31
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
@@ -104,12 +104,12 @@ call    2 returned 1
     %%%%%:   29-block 36
 call    3 never executed
         -:   30:
-        1:   31:	++*(node -> name -> address);
+        1:   31:	++*(node -> name -> text);
         1:   32:	*((int*)(node -> data -> address)) += 10;
         1:   33:	enqueue (queue, node);
         1:   33-block 37
 call    0 returned 1
-       1*:   34:	TEST ('A' == *((char*)(queue -> front_node -> name -> address + 0)), "Compared enqueued node's name (A) with queue's front node name");
+       1*:   34:	TEST ('A' == *((char*)(queue -> front_node -> name -> text + 0)), "Compared enqueued node's name (A) with queue's front node name");
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
         1:   34-block 39
@@ -124,7 +124,7 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   35-block 43
 call    3 never executed
-       1*:   36:	TEST ('C' == *((char*)(queue -> rear_node -> name -> address + 0)), "Compared enqueued node's name (C) with queue's rear node name");
+       1*:   36:	TEST ('C' == *((char*)(queue -> rear_node -> name -> text + 0)), "Compared enqueued node's name (C) with queue's rear node name");
         1:   36-block 44
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
@@ -144,7 +144,7 @@ call    3 never executed
         1:   39:	Node* del_node = dequeue (queue);
         1:   39-block 50
 call    0 returned 1
-       1*:   40:	TEST ('A' == *((char*)(del_node -> name -> address + 0)), "Compared served node's name (A) with dequeued node name");
+       1*:   40:	TEST ('A' == *((char*)(del_node -> name -> text + 0)), "Compared served node's name (A) with dequeued node name");
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
         1:   40-block 52
@@ -159,7 +159,7 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   41-block 56
 call    3 never executed
-       1*:   42:	TEST ('B' == *((char*)(queue -> front_node -> name -> address + 0)), "Compared expected node's name (B) with queue's front node name");
+       1*:   42:	TEST ('B' == *((char*)(queue -> front_node -> name -> text + 0)), "Compared expected node's name (B) with queue's front node name");
         1:   42-block 57
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
@@ -175,7 +175,7 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   43-block 62
 call    3 never executed
-       1*:   44:	TEST ('C' == *((char*)(queue -> rear_node -> name -> address + 0)), "Compared expected node's name (C) with queue's rear node name");
+       1*:   44:	TEST ('C' == *((char*)(queue -> rear_node -> name -> text + 0)), "Compared expected node's name (C) with queue's rear node name");
         1:   44-block 63
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
@@ -195,11 +195,11 @@ call    3 never executed
         1:   46-block 69
 call    0 returned 1
         -:   47:
-        1:   48:	++*(node -> name -> address);
+        1:   48:	++*(node -> name -> text);
         1:   49:	*((int*)(node -> data -> address)) += 10;
         1:   50:	enqueue (queue, node);
 call    0 returned 1
-       1*:   51:	TEST ('B' == *((char*)(queue -> front_node -> name -> address + 0)), "Compared expected node's name (B) with queue's front node name");
+       1*:   51:	TEST ('B' == *((char*)(queue -> front_node -> name -> text + 0)), "Compared expected node's name (B) with queue's front node name");
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
         1:   51-block 72
@@ -214,7 +214,7 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   52-block 76
 call    3 never executed
-       1*:   53:	TEST ('D' == *((char*)(queue -> rear_node -> name -> address + 0)), "Compared expected node's name (D) with queue's rear node name");
+       1*:   53:	TEST ('D' == *((char*)(queue -> rear_node -> name -> text + 0)), "Compared expected node's name (D) with queue's rear node name");
         1:   53-block 77
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
@@ -234,7 +234,7 @@ call    3 never executed
         1:   56:	del_node = dequeue (queue);
         1:   56-block 83
 call    0 returned 1
-       1*:   57:	TEST ('B' == *((char*)(del_node -> name -> address + 0)), "Compared served node's name (B) with dequeued node name");
+       1*:   57:	TEST ('B' == *((char*)(del_node -> name -> text + 0)), "Compared served node's name (B) with dequeued node name");
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
         1:   57-block 85
@@ -249,7 +249,7 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   58-block 89
 call    3 never executed
-       1*:   59:	TEST ('C' == *((char*)(queue -> front_node -> name -> address + 0)), "Compared expected node's name (C) with queue's front node name");
+       1*:   59:	TEST ('C' == *((char*)(queue -> front_node -> name -> text + 0)), "Compared expected node's name (C) with queue's front node name");
         1:   59-block 90
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
@@ -265,7 +265,7 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   60-block 95
 call    3 never executed
-       1*:   61:	TEST ('D' == *((char*)(queue -> rear_node -> name -> address + 0)), "Compared expected node's name (D) with queue's rear node name");
+       1*:   61:	TEST ('D' == *((char*)(queue -> rear_node -> name -> text + 0)), "Compared expected node's name (D) with queue's rear node name");
         1:   61-block 96
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
@@ -287,7 +287,7 @@ call    0 returned 1
         -:   64:
         1:   65:	del_node = dequeue (queue);
 call    0 returned 1
-       1*:   66:	TEST ('C' == *((char*)(del_node -> name -> address + 0)), "Compared served node's name (C) with dequeued node name");
+       1*:   66:	TEST ('C' == *((char*)(del_node -> name -> text + 0)), "Compared served node's name (C) with dequeued node name");
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
         1:   66-block 105
@@ -302,7 +302,7 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   67-block 109
 call    3 never executed
-       1*:   68:	TEST ('D' == *((char*)(queue -> front_node -> name -> address + 0)), "Compared expected node's name (D) with queue's front node name");
+       1*:   68:	TEST ('D' == *((char*)(queue -> front_node -> name -> text + 0)), "Compared expected node's name (D) with queue's front node name");
         1:   68-block 110
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
@@ -318,7 +318,7 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   69-block 115
 call    3 never executed
-       1*:   70:	TEST ('D' == *((char*)(queue -> rear_node -> name -> address + 0)), "Compared expected node's name (D) with queue's rear node name");
+       1*:   70:	TEST ('D' == *((char*)(queue -> rear_node -> name -> text + 0)), "Compared expected node's name (D) with queue's rear node name");
         1:   70-block 116
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
@@ -340,7 +340,7 @@ call    0 returned 1
         -:   73:
         1:   74:	del_node = dequeue (queue);
 call    0 returned 1
-       1*:   75:	TEST ('D' == *((char*)(del_node -> name -> address + 0)), "Compared served node's name (D) with dequeued node name");
+       1*:   75:	TEST ('D' == *((char*)(del_node -> name -> text + 0)), "Compared served node's name (D) with dequeued node name");
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
         1:   75-block 125

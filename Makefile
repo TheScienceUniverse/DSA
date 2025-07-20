@@ -86,7 +86,7 @@ again:
 check:
 	@$(TSTCUTABLE) | tee $(LOGDIR)/test.log
 	@echo "-> Checking test status..."
-	@echo $$[$$[`cat log/test.log | grep -c "PASSED"` * 100] / `cat log/test.log | grep -c -E "PASSED|FAILED"`] > $(LOGDIR)/passmark.log
+	@echo $$[$$[`cat log/test.log | grep -c "PASSED"` * 100] / $$[`cat log/test.log | grep -c -E "PASSED|FAILED"`]] > $(LOGDIR)/passmark.log
 	@$(BDGCUTABLE) shield tests $$(if [ `cut -d' ' -f1 ./log/passmark.log` -gt "79" ]; then echo "passing"; else echo "failing"; fi)
 	@mv -f shield ./aft/test_status.svg
 

@@ -42,12 +42,12 @@ call    0 returned 1
 call    0 returned 1
         1:   22:	anchor = tree -> root_node;
         -:   23:
-        1:   24:	++*(node -> name -> address);
+        1:   24:	++*(node -> name -> text);
         1:   25:	*((int*)(node -> data -> address)) += 10;
         1:   26:	append_child_node (tree, anchor, node);
 call    0 returned 1
         -:   27:
-        1:   28:	++*(node -> name -> address);
+        1:   28:	++*(node -> name -> text);
         1:   29:	*((int*)(node -> data -> address)) += 10;
         1:   30:	append_child_node (tree, anchor, node);
 call    0 returned 1
@@ -56,17 +56,17 @@ call    0 returned 1
         1:   33:	anchor = (anchor -> address_list -> head_chunk -> first_data_address + 1) -> address;
         -:   34://	display_node_details (anchor);
         -:   35:
-        1:   36:	++*(node -> name -> address);
+        1:   36:	++*(node -> name -> text);
         1:   37:	*((int*)(node -> data -> address)) += 10;
         1:   38:	append_child_node (tree, anchor, node);
 call    0 returned 1
         -:   39:
-        1:   40:	++*(node -> name -> address);
+        1:   40:	++*(node -> name -> text);
         1:   41:	*((int*)(node -> data -> address)) += 10;
         1:   42:	append_child_node (tree, anchor, node);
 call    0 returned 1
         -:   43:
-        1:   44:	++*(node -> name -> address);
+        1:   44:	++*(node -> name -> text);
         1:   45:	*((int*)(node -> data -> address)) += 10;
         1:   46:	append_child_node (tree, anchor, node);
 call    0 returned 1
@@ -78,12 +78,12 @@ call    0 returned 1
 call    0 returned 1
         1:   52:	anchor = data -> address;
         -:   53:
-        1:   54:	++*(node -> name -> address);
+        1:   54:	++*(node -> name -> text);
         1:   55:	*((int*)(node -> data -> address)) += 10;
         1:   56:	append_child_node (tree, anchor, node);
 call    0 returned 1
         -:   57:
-        1:   58:	++*(node -> name -> address);
+        1:   58:	++*(node -> name -> text);
         1:   59:	*((int*)(node -> data -> address)) += 10;
         1:   60:	append_child_node (tree, anchor, node);
 call    0 returned 1

@@ -10,7 +10,7 @@ void test_node (void) {
 	char* name_str = "ABC";
 	String* name = create_string (3, name_str);
 	set_node_name (node, 3, name_str);
-	TEST (are_strings_equal (name, node -> name), "Matched node-name with set name");
+	TEST (Cmp_Different != compare_strings (name, node -> name), "Matched node-name with set name");
 	delete_string (&name);
 
 	uint16_t x = 0x0ff0;

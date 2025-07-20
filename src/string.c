@@ -1,23 +1,25 @@
 #include "../inc/string.h"
 
-void display_raw_string (size_t length, char* address) {
+void display_raw_string (size_t length, char* text) {
+	char* ptr = text;
+
 	for (size_t i = 0; i < length; i++) {
-		printf ("%c", *(address + i));
+		printf ("%c", *ptr++);
 	}
 }
 
-bool compare_raw_strings_shh (size_t length1, char* string1, size_t length2, char* string2) {
+bool compare_raw_strings_shh (size_t length1, char* text1, size_t length2, char* text2) {
 	if (length1 != length2) {
 		return false;
 	}
 
-	if (string1 == string2) {
+	if (text1 == text2) {
 		return true;
 	}
 
 	bool result = true;
-	char* c1 = string1;
-	char* c2 = string2;
+	char* c1 = text1;
+	char* c2 = text2;
 
 	for (size_t i = 0; i < length1; ++i) {
 		if (*c1 != *c2) {
@@ -33,9 +35,9 @@ bool compare_raw_strings_shh (size_t length1, char* string1, size_t length2, cha
 }
 
 char* char_array_to_pointer (size_t length, char* str) {
-	char* string = (char*) malloc (length);
-	string = memcpy (string, str, length);
-	return string;
+	char* text = (char*) malloc (sizeof (char) * length);
+	text = memcpy (text, str, length);
+	return text;
 }
 
 void copy_raw_char_stream (size_t len, void* src_addr, void* dst_addr) {
@@ -49,24 +51,24 @@ void copy_raw_char_stream (size_t len, void* src_addr, void* dst_addr) {
 	}
 }
 
-String* create_string (size_t len, char* str) {
+String* create_string (size_t length, char* text) {
 	String* string = (String*) malloc (sizeof (String));
 
 	if (string != NULL) {
 		log_memory (DS_String, sizeof (String), string, true);
 
 		string -> length = 0;
-		string -> address = NULL;
+		string -> text = NULL;
 	}
 
-	if (len > 0 && str != NULL) {
-		string -> length = len;
-		string -> address = (char*) malloc (len * sizeof (char));
+	if (length > 0 && text != NULL) {
+		string -> length = length;
+		string -> text = (char*) malloc (length * sizeof (char));
 
-		if (string -> address != NULL) {
-			log_memory (DS_Raw, len * sizeof (char), string -> address, true);
+		if (string -> text != NULL) {
+			log_memory (DS_Raw, length * sizeof (char), string -> text, true);
 
-			copy_raw_char_stream (len, str, string -> address);
+			copy_raw_char_stream (length, text, string -> text);
 		}
 	}
 
@@ -81,9 +83,9 @@ void delete_string (String** string_address) {
 
 	String* string = *string_address;
 
-	if (string -> address != NULL && string -> length > 0) {
-		log_memory (DS_Raw, (string -> length) * sizeof (char), string -> address, false);
-		ERASE (&(string -> address), string -> length);
+	if (string -> text != NULL && string -> length > 0) {
+		log_memory (DS_Raw, (string -> length) * sizeof (char), string -> text, false);
+		ERASE (&(string -> text), string -> length);
 	}
 
 	string = NULL;
@@ -92,19 +94,25 @@ void delete_string (String** string_address) {
 	ERASE (string_address, sizeof (String));
 }
 
-void display_string_properties (String* string) {
-	printf ("String [%zu]: ", string -> length);
-	display_string (string);
-	printf ("\n");
-}
-
 void display_string (String* string) {
 	if (string == NULL) {
 		// perror ("String does not exist to display!");
 		return;
 	}
 
-	display_raw_string (string -> length, string -> address);
+	display_raw_string (string -> length, string -> text);
+}
+
+void display_string_details (String* string) {
+	if (NULL == string) {
+		perror ("String does not exist to display details!");
+		return;
+	}
+
+	printf ("String :=> Address: (%p) Length: (%lu) Text: [", string, string -> length);
+	display_raw_string (string -> length, string -> text);
+	printf ("]");
+	putchar ('\n');
 }
 
 String* duplicate_string (String* old_string) {
@@ -116,15 +124,15 @@ String* duplicate_string (String* old_string) {
 
 	if (new_string != NULL) {
 		new_string -> length = 0;
-		new_string -> address = NULL;
+		new_string -> text = NULL;
 	}
 
-	if (old_string -> length > 0 && old_string -> address != NULL) {
+	if (old_string -> length > 0 && old_string -> text != NULL) {
 		new_string -> length = old_string -> length;
-		new_string -> address = malloc (old_string -> length);
+		new_string -> text = malloc (old_string -> length);
 
-		if (new_string -> address != NULL) {
-			new_string -> address = memcpy (new_string -> address, old_string -> address, new_string -> length);
+		if (new_string -> text != NULL) {
+			new_string -> text = memcpy (new_string -> text, old_string -> text, new_string -> length);
 		}
 	}
 
@@ -161,9 +169,9 @@ String* concatenate_strings (int count, ...) {
 
 	String *big_str = create_string (0, "");
 	
-	big_str -> address = (char*) malloc (sizeof (char) * combined_length);
+	big_str -> text = (char*) malloc (sizeof (char) * combined_length);
 
-	if (NULL == big_str -> address) {
+	if (NULL == big_str -> text) {
 		delete_string (&big_str);
 		perror ("Unable to allocate sufficient memory of combined length!");
 		return NULL;
@@ -171,7 +179,7 @@ String* concatenate_strings (int count, ...) {
 
 	big_str -> length = combined_length;
 
-	char* c_ptr = big_str -> address;	// character pointer
+	char* ptr = big_str -> text;
 
 	va_start (args, count);	// initialize list
 
@@ -182,8 +190,8 @@ String* concatenate_strings (int count, ...) {
 			continue;
 		}
 
-		copy_byte_stream (string -> length, (BYTE*)(string -> address), (BYTE*)(c_ptr));
-		c_ptr += string -> length;
+		copy_byte_stream (string -> length, (BYTE*)(string -> text), (BYTE*) ptr);
+		ptr += string -> length;
 	}
 
     va_end (args);	// clears list
@@ -191,45 +199,22 @@ String* concatenate_strings (int count, ...) {
 	return big_str;
 }
 
-bool are_strings_equal (String* string1, String* string2)  {
-	if (string1 == NULL || string2 == NULL) {
-		perror ("One or Both given string does not exist");
-		return false;
-	}
-
-	bool result = true;
-	size_t i;
-
-	if (string1 -> length != string2 -> length) {
-		result = false;
-	} else {
-		for (i = 0; i < string1 -> length; i++) {
-			if (*(string1 -> address + i) != *(string2 -> address + i)) {
-				result = false;
-				break;
-			}
-		}
-	}
-
-	return result;
-}
-
-String* append_integer_to_raw_string (char* str, int number) {
+String* append_integer_to_raw_string (char* text, int number) {
 	String* string = create_string (0, NULL);
-	int str_length = (str == NULL) ? 0 : strlen (str);
+	int text_length = (text == NULL) ? 0 : strlen (text);
 
 	char* number_str_buffer = NULL;
 	ssize_t number_str_length = snprintf (NULL, 0, "%d", number);
 	number_str_buffer = malloc (number_str_length + 1);
 	snprintf (number_str_buffer, number_str_length + 1, "%d", number);
 
-	string -> length = str_length + number_str_length;
-	string -> address = malloc (string -> length);
+	string -> length = text_length + number_str_length;
+	string -> text = malloc (string -> length);
 
-	char* ptr = string -> address;
+	char* ptr = string -> text;
 
-	ptr = memcpy (ptr, str, str_length);
-	ptr += str_length;
+	ptr = memcpy (ptr, text, text_length);
+	ptr += text_length;
 	ptr = memcpy (ptr, number_str_buffer, number_str_length);
 
 	free (number_str_buffer);
@@ -265,7 +250,7 @@ void** capture_string_addresses (String* string) {
 
 	*(addresses + 0) = &(string);	// base address
 	*(addresses + 1) = &(string -> length);
-	*(addresses + 2) = &(string -> address);
+	*(addresses + 2) = &(string -> text);
 
 	return addresses;
 }
@@ -291,9 +276,11 @@ Compare_Status compare_strings (String* string1, String* string2) {
 	}
 
 	Compare_Status cmp_stat = Cmp_Equivalent;
+	char* ptr1 = string1 -> text;
+	char* ptr2 = string2 -> text;
 
 	for (size_t i = 0; i < string1 -> length; i++) {
-		if (*(string1 -> address + i) != *(string2 -> address + i)) {
+		if (*ptr1++ != *ptr2++) {
 			cmp_stat = Cmp_Different;
 			break;
 		}

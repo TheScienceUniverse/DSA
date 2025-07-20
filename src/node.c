@@ -250,7 +250,7 @@ Compare_Status compare_nodes (Node* node_1, Node* node_2) {
 		cmp_stat = Cmp_Different;
 	}
 
-	if (!are_strings_equal (node_1 -> name, node_2 -> name)) {
+	if (Cmp_Different == compare_strings (node_1 -> name, node_2 -> name)) {
 		cmp_stat = Cmp_Different;
 	}
 

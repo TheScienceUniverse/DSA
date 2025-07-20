@@ -10,14 +10,14 @@ function test_string called 1 returned 100% blocks executed 81%
         1:    4-block 2
 call    0 returned 1
         -:    5:
-        1:    6:	char* str = "Hello, World!\n";
-        1:    7:	size_t len = 14;
+        1:    6:	char* text = "Hello, World!\n";
+        1:    7:	size_t length = 14;
         -:    8:
-        1:    9:	String* string = create_string (len, str);
+        1:    9:	String* string = create_string (length, text);
 call    0 returned 1
         1:   10:	String* ghost_string = string;
         -:   11:
-        -:   12:	// printf ("%lu %lu\n", len, sizeof (string -> address));
+        -:   12:	// printf ("%lu %lu\n", length, sizeof (string -> text));
         -:   13:
        1*:   14:	TEST (NULL != string, "Address non-null check");
 branch  0 taken 1 (fallthrough)
@@ -26,7 +26,7 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   14-block 6
 call    3 never executed
-       1*:   15:	TEST (len == string -> length, "Allocated block-size check");
+       1*:   15:	TEST (length == string -> length, "Allocated block-size check");
         1:   15-block 7
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
@@ -42,7 +42,7 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   16-block 12
 call    3 never executed
-       1*:   17:	TEST (compare_raw_strings_shh (len, str, string -> length, string -> address), "Content check");
+       1*:   17:	TEST (compare_raw_strings_shh (length, text, string -> length, string -> text), "Content check");
         1:   17-block 13
 call    0 returned 1
 branch  1 taken 1 (fallthrough)
@@ -126,7 +126,7 @@ call    3 never executed
         1:   65:	ghost_string = create_string (10, "HelloWorld");
         1:   65-block 30
 call    0 returned 1
-       1*:   66:	TEST (true == are_strings_equal (string, ghost_string), "Matched concatenated strings");
+       1*:   66:	TEST (Cmp_Different != compare_strings (string, ghost_string), "Matched concatenated strings");
 call    0 returned 1
 branch  1 taken 1 (fallthrough)
 branch  2 taken 0

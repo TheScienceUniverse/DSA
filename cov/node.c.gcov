@@ -27,7 +27,7 @@ call    3 never executed
 call    0 returned 1
         1:   12:	set_node_name (node, 3, name_str);
 call    0 returned 1
-       1*:   13:	TEST (are_strings_equal (name, node -> name), "Matched node-name with set name");
+       1*:   13:	TEST (Cmp_Different != compare_strings (name, node -> name), "Matched node-name with set name");
 call    0 returned 1
 branch  1 taken 1 (fallthrough)
 branch  2 taken 0

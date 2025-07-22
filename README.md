@@ -17,18 +17,18 @@ Custom C Library for data-structures and algorithms
 
 Click on the links below to know details about them.
 
-- [Basic](/docs/basic.md)
-- [String](/docs/string.md)
-- [Data](/docs/data.md)
-- [Bare_List](/docs/bare_list.md)
-- [Chunk](/docs/chunk.md)
-- [List](/docs/list.md)
-- [Node](/docs/node.md)
-- [Linked_List](/docs/linked_list.md)
-- [Stack](/docs/stack.md)
-- [Queue](/docs/queue.md)
-- [Tree](/docs/tree.md)
-- [Graph](/docs/graph.md)
+- [Basic](/doc/basic.md)
+- [String](/doc/string.md)
+- [Data](/doc/data.md)
+- [Bare_List](/doc/bare_list.md)
+- [Chunk](/doc/chunk.md)
+- [List](/doc/list.md)
+- [Node](/doc/node.md)
+- [Linked_List](/doc/linked_list.md)
+- [Stack](/doc/stack.md)
+- [Queue](/doc/queue.md)
+- [Tree](/doc/tree.md)
+- [Graph](/doc/graph.md)
 
 
 ### Dependency Diagram =>
@@ -57,17 +57,46 @@ Please note,
 - you must exclude 'DSA' folder in '.gitignore' file from version control system to reduce extra overhead.
 ___
 
+## Usage
+
+Please note that you need to use the shared object library as per C compilation, linking and execution standards.
+
+Please observe following example and notice the following,
+
+- 'inc' (include) folder from DSA project having all interfaces (header files) should be present to resolve symbols during compile time, notice you have already kept it in place during installation, just neither delete it nor edit it without understanding the full codebase
+- compiler and linker is `gcc`
+- outputting all warnings with `-Wall`
+- providing local library location (`$(pwd)/lib`) to linker with option `-L`
+- calling the dynamic shared object library with standard, `-ldsa` expands to `libdsa.so` (dynamic shared object) or `libdsa.a` (static archive) whichever is available in the linker informed location
+- generating executable file with option `-o exec`
+- giving input files including `main.c` and other pre-compiled object files (having '.o' extension) required to build full program like just-in-time compilation
+
+```sh
+gcc -Wall -L$(pwd)/lib -ldsa -o exec [other-object-files...] main.c
+```
+
+Also please note that we could have copied the libray into standard locations like '/lib/', '/usr/lib/' or '/usr/share/lib/'; but for security conflicts we do not want to install it there.
+
+That is why we chose a workaround (environment variable LD_LIBRARY_PATH) that have highest precedence while looking for libraries, even before standard library locations.
+
+Notice that during execution the LD_LIBRARY_PATH need to set with the library location _i.e._ `./lib/` without hampering old values of this environment variable. There is no export command, not even doller ($) while setting the value.
+
+```sh
+LD_LIBRARY_PATH=./lib/:$LD_LIBRARY_PATH ./exec
+```
+___
+
 ## History
 
 - Hi, this is the inititiator of this repo. From the college days it was a trial to create a general purpose data-structure and algorithm (DSA) in C programming language.
 - Please try this tool on systems (computer, mobile, embded systems) after installing GCC (GNU Compiler Collections) or Clang compiler; compile and run it natively or in servers.
 
 
-## [🤝 Contributing](./CONTRIBUTING.md)
+## [🤝 Contributing](./.github/CONTRIBUTING.md)
 
-## [📜 Code of Conduct](./CODE_OF_CONDUCT.md)
+## [📜 Code of Conduct](./.github/CODE_OF_CONDUCT.md)
 
-## [🔒 Security](./SECURITY.md)
+## [🔒 Security](./.github/SECURITY.md)
 ___
 
 ## Credits

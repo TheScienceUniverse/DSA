@@ -1,4 +1,4 @@
-rm -rf DSA
+rm -rf ./DSA/
 git clone https://github.com/TheScienceUniverse/DSA.git
 cd DSA
 

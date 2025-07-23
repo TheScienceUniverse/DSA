@@ -80,5 +80,10 @@ void test_string (void) {
 	delete_string (&str1);
 	delete_string (&str2);
 
+	string = create_string (3, "12345");
+	TEST ('3' == get_char_at (string, 2), "Matched get char at given index in a string");
+	delete_string (&string);
+
+
 	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
 }

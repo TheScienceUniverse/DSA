@@ -28,5 +28,6 @@ String* append_integer_to_raw_string (char* str, int number);
 bool is_string_memory_erased (void** string_addresses);
 void** capture_string_addresses (String* string);
 Compare_Status compare_strings (String* string1, String* string2);
+char get_char_at (String* string, size_t index);	// 0 based index
 
 #endif	// STRING_H

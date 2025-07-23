@@ -185,6 +185,21 @@ call    0 returned 1
         1:   81:	delete_string (&str2);
 call    0 returned 1
         -:   82:
-        1:   83:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
+        1:   83:	string = create_string (3, "12345");
 call    0 returned 1
-        1:   84:}
+       1*:   84:	TEST ('3' == get_char_at (string, 2), "Matched get char at given index in a string");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:   84-block 60
+call    3 returned 1
+    %%%%%:   84-block 61
+call    4 never executed
+        1:   85:	delete_string (&string);
+        1:   85-block 62
+call    0 returned 1
+        -:   86:
+        -:   87:
+        1:   88:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
+call    0 returned 1
+        1:   89:}

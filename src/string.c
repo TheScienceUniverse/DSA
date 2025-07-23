@@ -288,3 +288,23 @@ Compare_Status compare_strings (String* string1, String* string2) {
 
 	return cmp_stat;
 }
+
+char get_char_at (String* string, size_t index) {
+	if (NULL == string) {
+		perror ("Given string does not exist to get char at index!");
+		return 0;
+	}
+
+	if (string -> length < index) {
+		perror ("Given index out of bound to get char at index!");
+		return 0;
+	}
+
+	char* ptr = string -> text;
+
+	for (size_t i = 0; i < index; i++) {
+		ptr++;
+	}
+
+	return *ptr;
+}

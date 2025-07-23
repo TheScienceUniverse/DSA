@@ -19,6 +19,7 @@
 	[[1;32mPASSED[0m]: (Matched identical strings)
 	[[1;32mPASSED[0m]: (Mis-matched different strings)
 	[[1;32mPASSED[0m]: (Matched equivalent strings)
+	[[1;32mPASSED[0m]: (Matched get char at given index in a string)
 [1;33m...Unit test ends![1;35m [String]
 [0m[1;33mUnit test starts...[1;35m [Data]
 [0m	[[1;32mPASSED[0m]: (Address non-null check)

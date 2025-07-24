@@ -59,4 +59,6 @@ void test_tree (void);
 #include "./graph.h"
 void test_graph (void);
 
+void test_route (char* option);
+
 #endif // TEST_H

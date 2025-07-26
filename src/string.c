@@ -476,17 +476,17 @@ String* get_lower_case_string (String* string) {
 
 String* swap_string_case (String* string) {
 	if (NULL == string) {
-		perror ("Given string does not exist to get lower-case string!");
+		perror ("Given string does not exist to swap string's case!");
 		return NULL;
 	}
 
 	if (NULL == string -> text) {
-		perror ("Given string's text does not exist to get lower-case string!");
+		perror ("Given string's text does not exist to swap string's case!");
 		return NULL;
 	}
 
 	if (0 == string -> length) {
-		perror ("Given string is empty to get lower-case string!");
+		perror ("Given string is empty to swap string's case!");
 		return NULL;
 	}
 
@@ -504,4 +504,27 @@ String* swap_string_case (String* string) {
 	}
 
 	return swp_str;
+}
+
+String* capitalize_string (String* string) {
+	if (NULL == string) {
+		perror ("Given string does not exist to capitalize string!");
+		return NULL;
+	}
+
+	if (NULL == string -> text) {
+		perror ("Given string's text does not exist to capitalize string!");
+		return NULL;
+	}
+
+	if (0 == string -> length) {
+		perror ("Given string is empty to capitalize string!");
+		return NULL;
+	}
+
+	String* cap_str = get_lower_case_string (string);
+
+	*((char*)(cap_str -> text) + 0) = toupper (*((char*)(cap_str -> text) + 0));
+
+	return cap_str;
 }

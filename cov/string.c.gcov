@@ -403,6 +403,24 @@ call    0 returned 1
         1:  141:	delete_string (&string);
 call    0 returned 1
         -:  142:
-        1:  143:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
+        1:  143:	string = create_string (5, "heLLo");
 call    0 returned 1
-        1:  144:}
+        1:  144:	str = capitalize_string (string);
+call    0 returned 1
+       1*:  145:	TEST (true == compare_raw_strings_shh (5, "Hello", 5, str -> text), "Matched capitalize string (\"heLLo\") = \"Hello\"");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  145-block 159
+call    3 returned 1
+    %%%%%:  145-block 160
+call    4 never executed
+        1:  146:	delete_string (&str);
+        1:  146-block 161
+call    0 returned 1
+        1:  147:	delete_string (&string);
+call    0 returned 1
+        -:  148:
+        1:  149:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
+call    0 returned 1
+        1:  150:}

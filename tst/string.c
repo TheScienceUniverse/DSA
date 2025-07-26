@@ -140,5 +140,11 @@ void test_string (void) {
 	delete_string (&str);
 	delete_string (&string);
 
+	string = create_string (5, "heLLo");
+	str = capitalize_string (string);
+	TEST (true == compare_raw_strings_shh (5, "Hello", 5, str -> text), "Matched capitalize string (\"heLLo\") = \"Hello\"");
+	delete_string (&str);
+	delete_string (&string);
+
 	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
 }

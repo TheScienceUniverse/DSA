@@ -4,7 +4,7 @@
         -:    0:Runs:1
         -:    1:#include "../inc/test.h"
         -:    2:
-function test_string called 1 returned 100% blocks executed 83%
+function test_string called 1 returned 100% blocks executed 84%
         1:    3:void test_string (void) {
         1:    4:	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [String]\n" RESET_STYLE);
         1:    4-block 2
@@ -421,6 +421,24 @@ call    0 returned 1
         1:  147:	delete_string (&string);
 call    0 returned 1
         -:  148:
-        1:  149:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
+        1:  149:	string = create_string (12, "heLLo, wOrLd");
 call    0 returned 1
-        1:  150:}
+        1:  150:	str = get_title_case_string (string);
+call    0 returned 1
+       1*:  151:	TEST (true == compare_raw_strings_shh (12, "Hello, World!", 12, str -> text), "Matched title case string (\"heLLo, wOrLd\") = \"Hello, World\"");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  151-block 167
+call    3 returned 1
+    %%%%%:  151-block 168
+call    4 never executed
+        1:  152:	delete_string (&str);
+        1:  152-block 169
+call    0 returned 1
+        1:  153:	delete_string (&string);
+call    0 returned 1
+        -:  154:
+        1:  155:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
+call    0 returned 1
+        1:  156:}

@@ -146,5 +146,11 @@ void test_string (void) {
 	delete_string (&str);
 	delete_string (&string);
 
+	string = create_string (12, "heLLo, wOrLd");
+	str = get_title_case_string (string);
+	TEST (true == compare_raw_strings_shh (12, "Hello, World!", 12, str -> text), "Matched title case string (\"heLLo, wOrLd\") = \"Hello, World\"");
+	delete_string (&str);
+	delete_string (&string);
+
 	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
 }

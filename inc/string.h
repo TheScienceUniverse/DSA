@@ -35,5 +35,6 @@ String* get_upper_case_string (String* string);
 String* get_lower_case_string (String* string);
 String* swap_string_case (String* string);
 String* capitalize_string (String* string);
+String* get_title_case_string (String* string);
 
 #endif	// STRING_H

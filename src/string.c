@@ -528,3 +528,43 @@ String* capitalize_string (String* string) {
 
 	return cap_str;
 }
+
+String* get_title_case_string (String* string) {
+	if (NULL == string) {
+		perror ("Given string does not exist to get title-case string!");
+		return NULL;
+	}
+
+	if (NULL == string -> text) {
+		perror ("Given string's text does not exist to get title-case string!");
+		return NULL;
+	}
+
+	if (0 == string -> length) {
+		perror ("Given string is empty to get title-case string!");
+		return NULL;
+	}
+
+	String* ttl_str = duplicate_string (string);
+	char* ptr = ttl_str -> text;
+	bool first_letter = true;
+
+	for (size_t i = 0; i < string -> length; i++) {
+		if (*ptr == ' ') {
+			first_letter = true;
+			ptr++;
+			continue;
+		}
+
+		if (first_letter) {
+			first_letter = false;
+			*ptr = toupper (*ptr);
+		} else {
+			*ptr = tolower (*ptr);
+		}
+
+		ptr++;
+	}
+
+	return ttl_str;
+}

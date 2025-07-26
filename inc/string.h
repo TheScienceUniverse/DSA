@@ -33,5 +33,6 @@ String* get_sub_string (String* string, ssize_t start_index, ssize_t end_index);
 String* get_sub_str (String* string, ssize_t start_index, ssize_t length);
 String* get_upper_case_string (String* string);
 String* get_lower_case_string (String* string);
+String* swap_string_case (String* string);
 
 #endif	// STRING_H

@@ -472,5 +472,36 @@ String* get_lower_case_string (String* string) {
 	}
 
 	return lwr_str;
-	return NULL;
+}
+
+String* swap_string_case (String* string) {
+	if (NULL == string) {
+		perror ("Given string does not exist to get lower-case string!");
+		return NULL;
+	}
+
+	if (NULL == string -> text) {
+		perror ("Given string's text does not exist to get lower-case string!");
+		return NULL;
+	}
+
+	if (0 == string -> length) {
+		perror ("Given string is empty to get lower-case string!");
+		return NULL;
+	}
+
+	String* swp_str = duplicate_string (string);
+	char* ptr = swp_str -> text;
+
+	for (size_t i = 0; i < string -> length; i++) {
+		if (isupper (*ptr)) {
+			*ptr = tolower (*ptr);
+		} else if (islower (*ptr)) {
+			*ptr = toupper (*ptr);
+		}
+
+		ptr++;
+	}
+
+	return swp_str;
 }

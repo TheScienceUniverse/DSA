@@ -385,6 +385,24 @@ call    0 returned 1
         1:  135:	delete_string (&string);
 call    0 returned 1
         -:  136:
-        1:  137:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
+        1:  137:	string = create_string (5, "HE1lo");
 call    0 returned 1
-        1:  138:}
+        1:  138:	str = swap_string_case (string);
+call    0 returned 1
+       1*:  139:	TEST (true == compare_raw_strings_shh (5, "he1LO", 5, str -> text), "Matched swap-case (\"HE1lo\") = \"he1LO\"");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  139-block 151
+call    3 returned 1
+    %%%%%:  139-block 152
+call    4 never executed
+        1:  140:	delete_string (&str);
+        1:  140-block 153
+call    0 returned 1
+        1:  141:	delete_string (&string);
+call    0 returned 1
+        -:  142:
+        1:  143:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
+call    0 returned 1
+        1:  144:}

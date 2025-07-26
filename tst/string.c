@@ -134,5 +134,11 @@ void test_string (void) {
 	delete_string (&str);
 	delete_string (&string);
 
+	string = create_string (5, "HE1lo");
+	str = swap_string_case (string);
+	TEST (true == compare_raw_strings_shh (5, "he1LO", 5, str -> text), "Matched swap-case (\"HE1lo\") = \"he1LO\"");
+	delete_string (&str);
+	delete_string (&string);
+
 	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
 }

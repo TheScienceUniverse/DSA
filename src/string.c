@@ -419,3 +419,58 @@ String* get_sub_str (String* string, ssize_t start_index, ssize_t length) {
 
 	return sub_str;
 }
+
+String* get_upper_case_string (String* string) {
+	if (NULL == string) {
+		perror ("Given string does not exist to get upper-case string!");
+		return NULL;
+	}
+
+	if (NULL == string -> text) {
+		perror ("Given string's text does not exist to get upper-case string!");
+		return NULL;
+	}
+
+	if (0 == string -> length) {
+		perror ("Given string is empty to get upper-case string!");
+		return NULL;
+	}
+
+	String* upr_str = duplicate_string (string);
+	char* ptr = upr_str -> text;
+
+	for (size_t i = 0; i < string -> length; i++) {
+		*ptr = toupper (*ptr);
+		ptr++;
+	}
+
+	return upr_str;
+}
+
+String* get_lower_case_string (String* string) {
+	if (NULL == string) {
+		perror ("Given string does not exist to get lower-case string!");
+		return NULL;
+	}
+
+	if (NULL == string -> text) {
+		perror ("Given string's text does not exist to get lower-case string!");
+		return NULL;
+	}
+
+	if (0 == string -> length) {
+		perror ("Given string is empty to get lower-case string!");
+		return NULL;
+	}
+
+	String* lwr_str = duplicate_string (string);
+	char* ptr = lwr_str -> text;
+
+	for (size_t i = 0; i < string -> length; i++) {
+		*ptr = tolower (*ptr);
+		ptr++;
+	}
+
+	return lwr_str;
+	return NULL;
+}

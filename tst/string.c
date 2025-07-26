@@ -124,5 +124,15 @@ void test_string (void) {
 	TEST (true == compare_raw_strings_shh (2, "10", 2, str -> text), "Matched sub-str (\"01234\", -4, -100) = \"10\"");
 	delete_string (&str);
 	delete_string (&string);
+
+	string = create_string (4, "Fun_1");
+	str = get_upper_case_string (string);
+	TEST (true == compare_raw_strings_shh (4, "FUN_1", 4, str -> text), "Matched upper-case (\"Fun_1\") = \"FUN_1\"");
+	delete_string (&str);
+	str = get_lower_case_string (string);
+	TEST (true == compare_raw_strings_shh (4, "fun_1", 4, str -> text), "Matched lower-case (\"Fun_1\") = \"fun_1\"");
+	delete_string (&str);
+	delete_string (&string);
+
 	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
 }

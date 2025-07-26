@@ -31,6 +31,8 @@
 	[[1;32mPASSED[0m]: (Matched sub-str ("01234", -2, -3) = "3210")
 	[[1;32mPASSED[0m]: (Matched sub-str ("01234", 2, 100) = "234")
 	[[1;32mPASSED[0m]: (Matched sub-str ("01234", -4, -100) = "10")
+	[[1;32mPASSED[0m]: (Matched upper-case ("Fun_1") = "FUN_1")
+	[[1;32mPASSED[0m]: (Matched lower-case ("Fun_1") = "fun_1")
 [1;33m...Unit test ends![1;35m [String]
 [0m[1;33mUnit test starts...[1;35m [Data]
 [0m	[[1;32mPASSED[0m]: (Address non-null check)

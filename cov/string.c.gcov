@@ -353,6 +353,38 @@ call    4 never executed
 call    0 returned 1
         1:  126:	delete_string (&string);
 call    0 returned 1
-        1:  127:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
+        -:  127:
+        1:  128:	string = create_string (4, "Fun_1");
 call    0 returned 1
-        1:  128:}
+        1:  129:	str = get_upper_case_string (string);
+call    0 returned 1
+       1*:  130:	TEST (true == compare_raw_strings_shh (4, "FUN_1", 4, str -> text), "Matched upper-case (\"Fun_1\") = \"FUN_1\"");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  130-block 137
+call    3 returned 1
+    %%%%%:  130-block 138
+call    4 never executed
+        1:  131:	delete_string (&str);
+        1:  131-block 139
+call    0 returned 1
+        1:  132:	str = get_lower_case_string (string);
+call    0 returned 1
+       1*:  133:	TEST (true == compare_raw_strings_shh (4, "fun_1", 4, str -> text), "Matched lower-case (\"Fun_1\") = \"fun_1\"");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  133-block 143
+call    3 returned 1
+    %%%%%:  133-block 144
+call    4 never executed
+        1:  134:	delete_string (&str);
+        1:  134-block 145
+call    0 returned 1
+        1:  135:	delete_string (&string);
+call    0 returned 1
+        -:  136:
+        1:  137:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
+call    0 returned 1
+        1:  138:}

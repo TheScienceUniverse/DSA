@@ -308,3 +308,114 @@ char get_char_at (String* string, size_t index) {
 
 	return *ptr;
 }
+
+String* get_sub_string (String* string, ssize_t start_index, ssize_t end_index) {
+	/*
+	 * Rules:
+	 * let str [5] = "01234"	// according to index
+	 * substring (1, 3) = "123"	// +ve length => forward direction
+	 * substring (4, 1) = "4321"	// -ve length => reverse direction
+	 * substring (-10, 10) = "01234"	// max forward limit is string length
+	 * substring (10, -10) = "43210"	// -ve start index => lenght - start index
+	 * substring (-10, -100) = "0"	// max backward limit is 0
+	 * anything else will return NULL
+	*/
+
+	if (NULL == string) {
+		perror ("Given string does not exist to get sub-str!");
+		return NULL;
+	}
+
+	int increment = +1;
+
+	if (start_index > end_index) {
+	//	end_index = start_index ^ end_index ^ (start_index = end_index);
+		increment = -1;
+	}
+
+	if (start_index < 0) {
+		start_index = 0;
+	} else if (start_index >= (ssize_t) string -> length) {
+		start_index = string -> length - 1;
+	}
+
+	if (end_index < 0) {
+		end_index = 0;
+	} else if (end_index >= (ssize_t) string -> length) {
+		end_index = string -> length - 1;
+	}
+
+	size_t length = labs (end_index - start_index) + 1;
+
+	char* src_ptr = string -> text + start_index;
+
+	String* sub_string = create_string (length, NULL);
+	sub_string -> text = malloc (length * sizeof (char));
+	sub_string -> length = length;
+
+	char* dst_ptr = sub_string -> text;
+
+	for (size_t i = 0; i < length; i++) {
+		*dst_ptr++ = *src_ptr;
+		src_ptr += increment;
+	}
+
+	return sub_string;
+}
+
+String* get_sub_str (String* string, ssize_t start_index, ssize_t length) {
+	/*
+	 * Rules:
+	 * let str [5] = "01234"	// according to index
+	 * substr (0, +3) = "012"	// +ve length => forward direction
+	 * substr (3, -3) = "321"	// -ve length => reverse direction
+	 * substr (0, 10) = "01234"	// max forward limit is string length
+	 * substr (-2, -3) = "321"	// -ve start index => lenght - start index
+	 * substr (-3, -10) = "210"	// max backward limit is 0
+	 * anything else will return NULL
+	*/
+
+	if (NULL == string) {
+		perror ("Given string does not exist to get sub-str!");
+		return NULL;
+	}
+
+	if (labs (start_index) >= string -> length) {
+		perror ("Given start index is out of bound to get sub-str!");
+		return NULL;
+	}
+
+	if (0 == length) {
+		perror ("Given length is invalid to get sub-str!");
+		return NULL;
+	}
+
+	if (start_index < 0) {
+		start_index += string -> length;
+	}
+
+	// setting up the direction
+	int increment = +1;	// forward
+
+	if (length > (ssize_t) string -> length - start_index) {
+		length = string -> length - start_index;
+	} else if (length < 0) {
+		length = start_index + 1;
+		increment = -1;	// reverse
+	}
+
+	char* src_ptr = string -> text + start_index;
+
+	String* sub_str = create_string (length, NULL);
+	sub_str -> text = malloc (length * sizeof (char));
+	sub_str -> length = length;
+
+	char* dst_ptr = sub_str -> text;
+
+	for (size_t i = 0; i < (size_t) length; i++) {
+		*dst_ptr++ = *src_ptr;
+		src_ptr += increment;
+	}
+
+	return sub_str;
+}

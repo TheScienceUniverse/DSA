@@ -4,7 +4,7 @@
         -:    0:Runs:1
         -:    1:#include "../inc/test.h"
         -:    2:
-function test_string called 1 returned 100% blocks executed 81%
+function test_string called 1 returned 100% blocks executed 83%
         1:    3:void test_string (void) {
         1:    4:	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [String]\n" RESET_STYLE);
         1:    4-block 2
@@ -185,7 +185,7 @@ call    0 returned 1
         1:   81:	delete_string (&str2);
 call    0 returned 1
         -:   82:
-        1:   83:	string = create_string (3, "12345");
+        1:   83:	string = create_string (5, "12345");
 call    0 returned 1
        1*:   84:	TEST ('3' == get_char_at (string, 2), "Matched get char at given index in a string");
 call    0 returned 1
@@ -199,7 +199,160 @@ call    4 never executed
         1:   85-block 62
 call    0 returned 1
         -:   86:
-        -:   87:
-        1:   88:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
+        1:   87:	String* str = NULL;
+        -:   88:
+        1:   89:	string = create_string (5, "abcde");
 call    0 returned 1
-        1:   89:}
+        1:   90:	str = get_sub_string (string, 1, 3);
+call    0 returned 1
+       1*:   91:	TEST (true == compare_raw_strings_shh (3, "bcd", 3, str -> text), "Matched sub-string (\"abcde\", 1, 3) = \"bcd\"");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:   91-block 67
+call    3 returned 1
+    %%%%%:   91-block 68
+call    4 never executed
+        1:   92:	delete_string (&str);
+        1:   92-block 69
+call    0 returned 1
+        1:   93:	str = get_sub_string (string, 4, 1);
+call    0 returned 1
+       1*:   94:	TEST (true == compare_raw_strings_shh (4, "edcb", 4, str -> text), "Matched sub-string (\"abcde\", 4, 1) = \"edcb\"");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:   94-block 73
+call    3 returned 1
+    %%%%%:   94-block 74
+call    4 never executed
+        1:   95:	delete_string (&str);
+        1:   95-block 75
+call    0 returned 1
+        1:   96:	str = get_sub_string (string, -10, 10);
+call    0 returned 1
+       1*:   97:	TEST (true == compare_raw_strings_shh (5, "abcde", 5, str -> text), "Matched sub-string (\"abcde\", -10, 10) = \"abcde\"");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:   97-block 79
+call    3 returned 1
+    %%%%%:   97-block 80
+call    4 never executed
+        1:   98:	delete_string (&str);
+        1:   98-block 81
+call    0 returned 1
+        1:   99:	str = get_sub_string (string, 10, -10);
+call    0 returned 1
+       1*:  100:	TEST (true == compare_raw_strings_shh (5, "edcba", 5, str -> text), "Matched sub-string (\"abcde\", 10, -10) = \"edcba\"");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  100-block 85
+call    3 returned 1
+    %%%%%:  100-block 86
+call    4 never executed
+        1:  101:	delete_string (&str);
+        1:  101-block 87
+call    0 returned 1
+        1:  102:	str = get_sub_string (string, -10, -100);
+call    0 returned 1
+       1*:  103:	TEST (true == compare_raw_strings_shh (1, "a", 1, str -> text), "Matched sub-string (\"abcde\", -10, -100) = \"a\"");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  103-block 91
+call    3 returned 1
+    %%%%%:  103-block 92
+call    4 never executed
+        1:  104:	delete_string (&str);
+        1:  104-block 93
+call    0 returned 1
+        1:  105:	delete_string (&string);
+call    0 returned 1
+        -:  106:
+        1:  107:	string = create_string (5, "01234");
+call    0 returned 1
+        1:  108:	str = get_sub_str (string, 1, 3);
+call    0 returned 1
+       1*:  109:	TEST (true == compare_raw_strings_shh (3, "123", 3, str -> text), "Matched sub-str (\"01234\", 1, 3) = \"123\"");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  109-block 99
+call    3 returned 1
+    %%%%%:  109-block 100
+call    4 never executed
+        1:  110:	delete_string (&str);
+        1:  110-block 101
+call    0 returned 1
+        1:  111:	str = get_sub_str (string, -1, 3);
+call    0 returned 1
+       1*:  112:	TEST (true == compare_raw_strings_shh (1, "4", 1, str -> text), "Matched sub-str (\"01234\", -1, 3) = \"4\"");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  112-block 105
+call    3 returned 1
+    %%%%%:  112-block 106
+call    4 never executed
+        1:  113:	delete_string (&str);
+        1:  113-block 107
+call    0 returned 1
+        1:  114:	str = get_sub_str (string, 2, -3);
+call    0 returned 1
+       1*:  115:	TEST (true == compare_raw_strings_shh (3, "210", 3, str -> text), "Matched sub-str (\"01234\", 2, -3) = \"210\"");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  115-block 111
+call    3 returned 1
+    %%%%%:  115-block 112
+call    4 never executed
+        1:  116:	delete_string (&str);
+        1:  116-block 113
+call    0 returned 1
+        1:  117:	str = get_sub_str (string, -2, -3);
+call    0 returned 1
+       1*:  118:	TEST (true == compare_raw_strings_shh (4, "3210", 4, str -> text), "Matched sub-str (\"01234\", -2, -3) = \"3210\"");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  118-block 117
+call    3 returned 1
+    %%%%%:  118-block 118
+call    4 never executed
+        1:  119:	delete_string (&str);
+        1:  119-block 119
+call    0 returned 1
+        1:  120:	str = get_sub_str (string, 2, 100);
+call    0 returned 1
+       1*:  121:	TEST (true == compare_raw_strings_shh (3, "234", 3, str -> text), "Matched sub-str (\"01234\", 2, 100) = \"234\"");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  121-block 123
+call    3 returned 1
+    %%%%%:  121-block 124
+call    4 never executed
+        1:  122:	delete_string (&str);
+        1:  122-block 125
+call    0 returned 1
+        1:  123:	str = get_sub_str (string, -4, -100);
+call    0 returned 1
+       1*:  124:	TEST (true == compare_raw_strings_shh (2, "10", 2, str -> text), "Matched sub-str (\"01234\", -4, -100) = \"10\"");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  124-block 129
+call    3 returned 1
+    %%%%%:  124-block 130
+call    4 never executed
+        1:  125:	delete_string (&str);
+        1:  125-block 131
+call    0 returned 1
+        1:  126:	delete_string (&string);
+call    0 returned 1
+        1:  127:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
+call    0 returned 1
+        1:  128:}

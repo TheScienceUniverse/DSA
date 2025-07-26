@@ -80,10 +80,49 @@ void test_string (void) {
 	delete_string (&str1);
 	delete_string (&str2);
 
-	string = create_string (3, "12345");
+	string = create_string (5, "12345");
 	TEST ('3' == get_char_at (string, 2), "Matched get char at given index in a string");
 	delete_string (&string);
 
+	String* str = NULL;
 
+	string = create_string (5, "abcde");
+	str = get_sub_string (string, 1, 3);
+	TEST (true == compare_raw_strings_shh (3, "bcd", 3, str -> text), "Matched sub-string (\"abcde\", 1, 3) = \"bcd\"");
+	delete_string (&str);
+	str = get_sub_string (string, 4, 1);
+	TEST (true == compare_raw_strings_shh (4, "edcb", 4, str -> text), "Matched sub-string (\"abcde\", 4, 1) = \"edcb\"");
+	delete_string (&str);
+	str = get_sub_string (string, -10, 10);
+	TEST (true == compare_raw_strings_shh (5, "abcde", 5, str -> text), "Matched sub-string (\"abcde\", -10, 10) = \"abcde\"");
+	delete_string (&str);
+	str = get_sub_string (string, 10, -10);
+	TEST (true == compare_raw_strings_shh (5, "edcba", 5, str -> text), "Matched sub-string (\"abcde\", 10, -10) = \"edcba\"");
+	delete_string (&str);
+	str = get_sub_string (string, -10, -100);
+	TEST (true == compare_raw_strings_shh (1, "a", 1, str -> text), "Matched sub-string (\"abcde\", -10, -100) = \"a\"");
+	delete_string (&str);
+	delete_string (&string);
+
+	string = create_string (5, "01234");
+	str = get_sub_str (string, 1, 3);
+	TEST (true == compare_raw_strings_shh (3, "123", 3, str -> text), "Matched sub-str (\"01234\", 1, 3) = \"123\"");
+	delete_string (&str);
+	str = get_sub_str (string, -1, 3);
+	TEST (true == compare_raw_strings_shh (1, "4", 1, str -> text), "Matched sub-str (\"01234\", -1, 3) = \"4\"");
+	delete_string (&str);
+	str = get_sub_str (string, 2, -3);
+	TEST (true == compare_raw_strings_shh (3, "210", 3, str -> text), "Matched sub-str (\"01234\", 2, -3) = \"210\"");
+	delete_string (&str);
+	str = get_sub_str (string, -2, -3);
+	TEST (true == compare_raw_strings_shh (4, "3210", 4, str -> text), "Matched sub-str (\"01234\", -2, -3) = \"3210\"");
+	delete_string (&str);
+	str = get_sub_str (string, 2, 100);
+	TEST (true == compare_raw_strings_shh (3, "234", 3, str -> text), "Matched sub-str (\"01234\", 2, 100) = \"234\"");
+	delete_string (&str);
+	str = get_sub_str (string, -4, -100);
+	TEST (true == compare_raw_strings_shh (2, "10", 2, str -> text), "Matched sub-str (\"01234\", -4, -100) = \"10\"");
+	delete_string (&str);
+	delete_string (&string);
 	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
 }

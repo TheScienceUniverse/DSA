@@ -60,4 +60,6 @@ void display_memory_log (void);
 	*pointer_address = NULL;					\
 }
 
+#define ENDL(void) { putchar ('\n'); }
+
 #endif	// BASIC_H

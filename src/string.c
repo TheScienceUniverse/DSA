@@ -568,3 +568,331 @@ String* get_title_case_string (String* string) {
 
 	return ttl_str;
 }
+
+String* get_pascal_case_string (String* string) {
+	if (NULL == string) {
+		perror ("Given string does not exist to get pascal-case string!");
+		return NULL;
+	}
+
+	if (NULL == string -> text) {
+		perror ("Given string's text does not exist to get pascal-case string!");
+		return NULL;
+	}
+
+	if (0 == string -> length) {
+		perror ("Given string is empty to get pascal-case string!");
+		return NULL;
+	}
+
+	size_t valid_char_count = 0;
+	size_t i;
+	char* src_ptr = string -> text;
+
+	for (i = 0; i < string -> length; i++) {
+		if (isalnum (*src_ptr++)) {
+			++valid_char_count;
+		}
+	}
+
+	src_ptr = string -> text;
+
+	String* pcl_str = create_string (0, NULL);
+	pcl_str -> text = malloc (valid_char_count * sizeof (char));
+	pcl_str -> length = valid_char_count;
+
+	char* dst_ptr = pcl_str -> text;
+	bool first_letter = true;
+
+	for (i = 0; i < string -> length; i++) {
+		if (!isalnum (*src_ptr)) {
+			first_letter = true;
+			src_ptr++;
+			continue;
+		}
+
+		if (first_letter) {
+			first_letter = false;
+			*dst_ptr++ = toupper (*src_ptr++);
+		} else {
+			*dst_ptr++ = tolower (*src_ptr++);
+		}
+	}
+
+	return pcl_str;
+}
+
+String* get_camel_case_string (String* string) {
+	if (NULL == string) {
+		perror ("Given string does not exist to get camel-case string!");
+		return NULL;
+	}
+
+	if (NULL == string -> text) {
+		perror ("Given string's text does not exist to get camel-case string!");
+		return NULL;
+	}
+
+	if (0 == string -> length) {
+		perror ("Given string is empty to get camel-case string!");
+		return NULL;
+	}
+
+	String* cml_str = get_pascal_case_string (string);
+
+	if (NULL != cml_str) {
+		*((char*)(cml_str -> text) + 0) = tolower (*((char*)(cml_str -> text) + 0));
+	}
+
+	return cml_str;
+}
+
+String* get_snake_case_string (String* string) {
+	if (NULL == string) {
+		perror ("Given string does not exist to get snake-case string!");
+		return NULL;
+	}
+
+	if (NULL == string -> text) {
+		perror ("Given string's text does not exist to get snake-case string!");
+		return NULL;
+	}
+
+	if (0 == string -> length) {
+		perror ("Given string is empty to get snake-case string!");
+		return NULL;
+	}
+
+/*
+ * Rules:
+ * (A)(1)(A) => (a)_(1)_(a)
+ * (A)(@)(A) => (a)_(a)
+ * (A)(@)(1)(A) => (a)_(1)_(a)
+ * (A)(_)(1) => (a)_(1)
+*/
+
+	char* src_ptr = string -> text;
+	size_t length = 0;
+	size_t i;
+	char prev_char = 0;
+	char curr_char;
+
+	for (i = 0; i < string -> length; i++) {
+		prev_char = curr_char;
+		curr_char = *src_ptr++;
+
+		if (isalpha (prev_char) && isalpha (curr_char)) {
+			++length;
+		}
+
+		if (isdigit (prev_char) && isdigit (curr_char)) {
+			++length;
+		}
+
+		if (!isalnum (prev_char) && !isalnum (curr_char)) {
+			// do nothing
+		}
+
+		if (isalpha (prev_char) && isdigit (curr_char)) {
+			length += 2;
+		}
+
+		if (isdigit (prev_char) && isalpha (curr_char)) {
+			length += 2;
+		}
+
+		if (!isalnum (prev_char) && isalpha (curr_char)) {
+			++length;
+		}
+
+		if (isalpha (prev_char) && !isalnum (curr_char)) {
+			++length;
+		}
+
+		if (!isalnum (prev_char) && isdigit (curr_char)) {
+			++length;
+		}
+
+		if (isdigit (prev_char) && !isalnum (curr_char)) {
+			++length;
+		}
+	}
+
+	src_ptr = string -> text;
+
+	String* snk_str = create_string (0, NULL);
+	snk_str -> text = malloc (length * sizeof (char));
+	snk_str -> length = length;
+
+	char* dst_ptr = snk_str -> text;
+
+	for (i = 0; i < string -> length; i++) {
+		prev_char = curr_char;
+		curr_char = *src_ptr++;
+
+		if (isalpha (prev_char) && isalpha (curr_char)) {
+			*dst_ptr++ = tolower (curr_char);
+		}
+
+		if (isdigit (prev_char) && isdigit (curr_char)) {
+			*dst_ptr++ = curr_char;
+		}
+
+		if (!isalnum (prev_char) && !isalnum (curr_char)) {
+			// do nothing
+		}
+
+		if (isalpha (prev_char) && isdigit (curr_char)) {
+			*dst_ptr++ = '_';
+			*dst_ptr++ = curr_char;
+		}
+
+		if (isdigit (prev_char) && isalpha (curr_char)) {
+			*dst_ptr++ = '_';
+			*dst_ptr++ = tolower (curr_char);
+		}
+
+		if (!isalnum (prev_char) && isalpha (curr_char)) {
+			*dst_ptr++ = tolower (curr_char);
+		}
+
+		if (isalpha (prev_char) && !isalnum (curr_char)) {
+			*dst_ptr++ = '_';
+		}
+
+		if (!isalnum (prev_char) && isdigit (curr_char)) {
+			*dst_ptr++ = curr_char;
+		}
+
+		if (isdigit (prev_char) && !isalnum (curr_char)) {
+			*dst_ptr++ = '_';
+		}
+	}
+
+	return snk_str;
+}
+
+String* get_kebab_case_string (String* string) {
+	if (NULL == string) {
+		perror ("Given string does not exist to get kebab-case string!");
+		return NULL;
+	}
+
+	if (NULL == string -> text) {
+		perror ("Given string's text does not exist to get kebab-case string!");
+		return NULL;
+	}
+
+	if (0 == string -> length) {
+		perror ("Given string is empty to get kebab-case string!");
+		return NULL;
+	}
+
+/*
+ * Rules:
+ * (A)(1)(A) => (a)-(1)-(a)
+ * (A)(@)(A) => (a)-(a)
+ * (A)(@)(1)(A) => (a)-(1)-(a)
+ * (A)(_)(1) => (a)-(1)
+*/
+
+	char* src_ptr = string -> text;
+	size_t length = 0;
+	size_t i;
+	char prev_char = 0;
+	char curr_char;
+
+	for (i = 0; i < string -> length; i++) {
+		prev_char = curr_char;
+		curr_char = *src_ptr++;
+
+		if (isalpha (prev_char) && isalpha (curr_char)) {
+			++length;
+		}
+
+		if (isdigit (prev_char) && isdigit (curr_char)) {
+			++length;
+		}
+
+		if (!isalnum (prev_char) && !isalnum (curr_char)) {
+			// do nothing
+		}
+
+		if (isalpha (prev_char) && isdigit (curr_char)) {
+			length += 2;
+		}
+
+		if (isdigit (prev_char) && isalpha (curr_char)) {
+			length += 2;
+		}
+
+		if (!isalnum (prev_char) && isalpha (curr_char)) {
+			++length;
+		}
+
+		if (isalpha (prev_char) && !isalnum (curr_char)) {
+			++length;
+		}
+
+		if (!isalnum (prev_char) && isdigit (curr_char)) {
+			++length;
+		}
+
+		if (isdigit (prev_char) && !isalnum (curr_char)) {
+			++length;
+		}
+	}
+
+	src_ptr = string -> text;
+
+	String* kbb_str = create_string (0, NULL);
+	kbb_str -> text = malloc (length * sizeof (char));
+	kbb_str -> length = length;
+
+	char* dst_ptr = kbb_str -> text;
+
+	for (i = 0; i < string -> length; i++) {
+		prev_char = curr_char;
+		curr_char = *src_ptr++;
+
+		if (isalpha (prev_char) && isalpha (curr_char)) {
+			*dst_ptr++ = tolower (curr_char);
+		}
+
+		if (isdigit (prev_char) && isdigit (curr_char)) {
+			*dst_ptr++ = curr_char;
+		}
+
+		if (!isalnum (prev_char) && !isalnum (curr_char)) {
+			// do nothing
+		}
+
+		if (isalpha (prev_char) && isdigit (curr_char)) {
+			*dst_ptr++ = '-';
+			*dst_ptr++ = curr_char;
+		}
+
+		if (isdigit (prev_char) && isalpha (curr_char)) {
+			*dst_ptr++ = '-';
+			*dst_ptr++ = tolower (curr_char);
+		}
+
+		if (!isalnum (prev_char) && isalpha (curr_char)) {
+			*dst_ptr++ = tolower (curr_char);
+		}
+
+		if (isalpha (prev_char) && !isalnum (curr_char)) {
+			*dst_ptr++ = '-';
+		}
+
+		if (!isalnum (prev_char) && isdigit (curr_char)) {
+			*dst_ptr++ = curr_char;
+		}
+
+		if (isdigit (prev_char) && !isalnum (curr_char)) {
+			*dst_ptr++ = '-';
+		}
+	}
+
+	return kbb_str;
+}

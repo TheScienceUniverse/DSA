@@ -36,6 +36,10 @@
 	[[1;32mPASSED[0m]: (Matched swap-case ("HE1lo") = "he1LO")
 	[[1;32mPASSED[0m]: (Matched capitalize string ("heLLo") = "Hello")
 	[[1;32mPASSED[0m]: (Matched title case string ("heLLo, wOrLd") = "Hello, World")
+	[[1;32mPASSED[0m]: (Matched pascal case string ("clAsS#1_nAmE") = "Class1Name")
+	[[1;32mPASSED[0m]: (Matched camel case string ("vaRiAbLe#1_nAmE") = "variable1Name")
+	[[1;32mPASSED[0m]: (Matched snake case string ("DO_fuNC@$01 nAmE") = "do_func_01_name")
+	[[1;32mPASSED[0m]: (Matched kebab case string ("DO-fuNC@$01 nAmE") = "do-func-01-name")
 [1;33m...Unit test ends![1;35m [String]
 [0m[1;33mUnit test starts...[1;35m [Data]
 [0m	[[1;32mPASSED[0m]: (Address non-null check)

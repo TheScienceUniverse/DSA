@@ -439,6 +439,78 @@ call    0 returned 1
         1:  153:	delete_string (&string);
 call    0 returned 1
         -:  154:
-        1:  155:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
+        1:  155:	string = create_string (12, "clAsS@1_nAmE");
 call    0 returned 1
-        1:  156:}
+        1:  156:	str = get_pascal_case_string (string);
+call    0 returned 1
+       1*:  157:	TEST (true == compare_raw_strings_shh (10, "Class1Name", 10, str -> text), "Matched pascal case string (\"clAsS#1_nAmE\") = \"Class1Name\"");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  157-block 175
+call    3 returned 1
+    %%%%%:  157-block 176
+call    4 never executed
+        1:  158:	delete_string (&str);
+        1:  158-block 177
+call    0 returned 1
+        1:  159:	delete_string (&string);
+call    0 returned 1
+        -:  160:
+        1:  161:	string = create_string (15, "vaRiAbLe#1_nAmE");
+call    0 returned 1
+        1:  162:	str = get_camel_case_string (string);
+call    0 returned 1
+       1*:  163:	TEST (true == compare_raw_strings_shh (13, "variable1Name", 13, str -> text), "Matched camel case string (\"vaRiAbLe#1_nAmE\") = \"variable1Name\"");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  163-block 183
+call    3 returned 1
+    %%%%%:  163-block 184
+call    4 never executed
+        1:  164:	delete_string (&str);
+        1:  164-block 185
+call    0 returned 1
+        1:  165:	delete_string (&string);
+call    0 returned 1
+        -:  166:
+        1:  167:	string = create_string (16, "DO_fuNC@$01 nAmE");
+call    0 returned 1
+        1:  168:	str = get_snake_case_string (string);
+call    0 returned 1
+       1*:  169:	TEST (true == compare_raw_strings_shh (15, "do_func_01_name", 15, str -> text), "Matched snake case string (\"DO_fuNC@$01 nAmE\") = \"do_func_01_name\"");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  169-block 191
+call    3 returned 1
+    %%%%%:  169-block 192
+call    4 never executed
+        1:  170:	delete_string (&str);
+        1:  170-block 193
+call    0 returned 1
+        1:  171:	delete_string (&string);
+call    0 returned 1
+        -:  172:
+        1:  173:	string = create_string (16, "DO-fuNC@$01 nAmE");
+call    0 returned 1
+        1:  174:	str = get_kebab_case_string (string);
+call    0 returned 1
+       1*:  175:	TEST (true == compare_raw_strings_shh (15, "do-func-01-name", 15, str -> text), "Matched kebab case string (\"DO-fuNC@$01 nAmE\") = \"do-func-01-name\"");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  175-block 199
+call    3 returned 1
+    %%%%%:  175-block 200
+call    4 never executed
+        1:  176:	delete_string (&str);
+        1:  176-block 201
+call    0 returned 1
+        1:  177:	delete_string (&string);
+call    0 returned 1
+        -:  178:
+        1:  179:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
+call    0 returned 1
+        1:  180:}

@@ -152,5 +152,29 @@ void test_string (void) {
 	delete_string (&str);
 	delete_string (&string);
 
+	string = create_string (12, "clAsS@1_nAmE");
+	str = get_pascal_case_string (string);
+	TEST (true == compare_raw_strings_shh (10, "Class1Name", 10, str -> text), "Matched pascal case string (\"clAsS#1_nAmE\") = \"Class1Name\"");
+	delete_string (&str);
+	delete_string (&string);
+
+	string = create_string (15, "vaRiAbLe#1_nAmE");
+	str = get_camel_case_string (string);
+	TEST (true == compare_raw_strings_shh (13, "variable1Name", 13, str -> text), "Matched camel case string (\"vaRiAbLe#1_nAmE\") = \"variable1Name\"");
+	delete_string (&str);
+	delete_string (&string);
+
+	string = create_string (16, "DO_fuNC@$01 nAmE");
+	str = get_snake_case_string (string);
+	TEST (true == compare_raw_strings_shh (15, "do_func_01_name", 15, str -> text), "Matched snake case string (\"DO_fuNC@$01 nAmE\") = \"do_func_01_name\"");
+	delete_string (&str);
+	delete_string (&string);
+
+	string = create_string (16, "DO-fuNC@$01 nAmE");
+	str = get_kebab_case_string (string);
+	TEST (true == compare_raw_strings_shh (15, "do-func-01-name", 15, str -> text), "Matched kebab case string (\"DO-fuNC@$01 nAmE\") = \"do-func-01-name\"");
+	delete_string (&str);
+	delete_string (&string);
+
 	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
 }

@@ -684,3 +684,46 @@ append_child_node (new_tree, anchor, child_node);
 
 	return new_tree;
 }
+
+Node* get_last_child_node_address (Node* parent_node) {
+	if (parent_node == NULL) {
+		perror ("Given Node doesn't exists");
+		return NULL;
+	}
+
+	if (parent_node -> type != N_Tree) {
+		perror ("Given Node doesn't belong to a tree");
+		return NULL;
+	}
+
+	size_t address_count = parent_node -> address_list -> item_count;
+
+	if (address_count < 2) {	// 0 based index
+		perror ("Child does not exist to get last child!");
+		return NULL;
+	}
+
+	Data* addr_data = get_list_data_at_index (parent_node -> address_list, address_count - 1);	// 0 based index
+	Node* child_node = addr_data -> address;
+	delete_data (&addr_data);
+
+	return child_node;
+}
+
+Node* get_parent_node_address (Node* child_node) {
+	if (NULL == child_node) {
+		perror ("Given Node doesn't exists");
+		return NULL;
+	}
+
+	if (child_node -> type != N_Tree) {
+		perror ("Given Node doesn't belong to a tree");
+		return NULL;
+	}
+
+	Data* addr_data = get_list_data_at_index (child_node -> address_list, 0);
+	Node* parent_node = addr_data -> address;
+	delete_data (&addr_data);
+
+	return parent_node;
+}

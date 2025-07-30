@@ -47,5 +47,7 @@ void export_tree_data_for_web_view (Tree* tree);
 void display_path_towards_root (Tree* tree, Node* node);
 Node* remove_child_node (Tree* tree, Node* parent_node);
 bool does_tree_contain_node (Tree* tree, Node* node);
+Node* get_last_child_node_address (Node* parent_node); // returns actual address; handle with care
+Node* get_parent_node_address (Node* child_node); // returns actual address; handle with care
 
 #endif	// TREE_H

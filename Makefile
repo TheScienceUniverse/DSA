@@ -84,6 +84,7 @@ again:
 	@make clean && make all
 
 check:
+	@tabs 4
 	@$(TSTCUTABLE) | tee $(LOGDIR)/test.log
 	@echo "-> Checking test status..."
 	@echo $$[$$[$$(cat log/test.log | grep -c "PASSED") * 100] / $$(cat log/test.log | grep -c -E "PASSED|FAILED")] > $(LOGDIR)/passmark.log

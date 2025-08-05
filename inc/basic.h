@@ -44,6 +44,7 @@ void fill_mem_zero (void* base_address, size_t num_bytes);
 bool check_mem_zero (void* base_address, size_t num_bytes);
 void copy_byte_stream (size_t length, BYTE* src_addr, BYTE* dst_addr);
 void display_byte_stream (size_t num_bytes, BYTE* base_address);
+void display_bit_stream (size_t num_bytes, BYTE* base_address);
 size_t get_number_of_digits (size_t number, size_t base);
 size_t exponentiate (size_t base, size_t power);
 void put_s (char const str [static 1]);	// own puts function without newline

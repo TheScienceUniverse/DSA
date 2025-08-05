@@ -56,11 +56,33 @@ void display_byte_stream (size_t num_bytes, BYTE* base_address) {
 
 	BYTE* ptr = base_address;
 
-	while (num_bytes--) {
+	for (size_t i = 0; i < num_bytes; i++) {
 		printf ("%02x", *ptr++);
 	}
+}
 
-	printf ("\n");
+void display_bit_stream (size_t num_bytes, BYTE* base_address) {
+	if (base_address == NULL || num_bytes == 0) {
+		return;
+	}
+
+	BYTE X [8] = {0};
+	BYTE* ptr = base_address;
+	size_t i;
+	BYTE x, j;
+
+	for (i = 0; i < num_bytes; i++) {
+		x = *ptr++;
+
+		for (j = 0; j < 8; j++) {
+			X [7 - j] = x & 0x01;
+			x >>= 1;
+		}
+
+		for (j = 0; j < 8; j++) {
+			putchar (X [j] + '0');
+		}
+	}
 }
 
 size_t get_number_of_digits (size_t number, size_t base) {

@@ -176,5 +176,10 @@ void test_string (void) {
 	delete_string (&str);
 	delete_string (&string);
 
+	string = create_string (5, "Radar");
+	TEST (1 == get_char_first_index (string, 'a'), "Matched first index of character in given String");
+	TEST (3 == get_char_last_index (string, 'a'), "Matched last index of character in given String");
+	delete_string (&string);
+
 	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
 }

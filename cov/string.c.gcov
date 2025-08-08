@@ -511,6 +511,29 @@ call    0 returned 1
         1:  177:	delete_string (&string);
 call    0 returned 1
         -:  178:
-        1:  179:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
+        1:  179:	string = create_string (5, "Radar");
 call    0 returned 1
-        1:  180:}
+       1*:  180:	TEST (1 == get_char_first_index (string, 'a'), "Matched first index of character in given String");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  180-block 206
+call    3 returned 1
+    %%%%%:  180-block 207
+call    4 never executed
+       1*:  181:	TEST (3 == get_char_last_index (string, 'a'), "Matched last index of character in given String");
+        1:  181-block 208
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  181-block 210
+call    3 returned 1
+    %%%%%:  181-block 211
+call    4 never executed
+        1:  182:	delete_string (&string);
+        1:  182-block 212
+call    0 returned 1
+        -:  183:
+        1:  184:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
+call    0 returned 1
+        1:  185:}

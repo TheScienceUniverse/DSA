@@ -29,6 +29,8 @@ bool is_string_memory_erased (void** string_addresses);
 void** capture_string_addresses (String* string);
 Compare_Status compare_strings (String* string1, String* string2);
 char get_char_at (String* string, size_t index);	// 0 based index
+ssize_t get_char_first_index (String* string, char character);
+ssize_t get_char_last_index (String* string, char character);
 String* get_sub_string (String* string, ssize_t start_index, ssize_t end_index);	// inclusive end_index
 String* get_sub_str (String* string, ssize_t start_index, ssize_t length);
 String* get_upper_case_string (String* string);

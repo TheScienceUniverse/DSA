@@ -309,6 +309,50 @@ char get_char_at (String* string, size_t index) {
 	return *ptr;
 }
 
+ssize_t get_char_first_index (String* string, char character) {
+	if (NULL == string) {
+		perror ("Given string does not exist to get character's first index!");
+		return -1;
+	}
+
+	char* ptr = string -> text;
+	ssize_t idx = 0;
+
+	for (idx = 0; idx < (ssize_t)(string -> length); idx++) {
+		if (character == *ptr++) {
+			break;
+		}
+	}
+
+	if (idx >= (ssize_t)(string -> length)) {
+		idx = -1;
+	}
+
+	return idx;
+}
+
+ssize_t get_char_last_index (String* string, char character) {
+	if (NULL == string) {
+		perror ("Given string does not exist to get character's last index!");
+		return -1;
+	}
+
+	char* ptr = string -> text + string -> length - 1;
+	ssize_t idx = 0;
+
+	for (idx = (ssize_t)(string -> length) - 1; idx >= 0; idx--) {
+		if (character == *ptr--) {
+			break;
+		}
+	}
+
+	if (idx >= (ssize_t)(string -> length)) {
+		idx = -1;
+	}
+
+	return idx;
+}
+
 String* get_sub_string (String* string, ssize_t start_index, ssize_t end_index) {
 	/*
 	 * Rules:

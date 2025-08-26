@@ -16,7 +16,7 @@
 
 // ---------- x ----------
 
-#define BYTE unsigned char
+#define BYTE uint8_t
 
 typedef enum COMPARE_STATUS {
 	Cmp_Identical
@@ -27,6 +27,7 @@ typedef enum COMPARE_STATUS {
 typedef enum DATA_STRUCTURE_TYPE {
 	DS_Raw
 	, DS_String
+	, DS_Stream
 	, DS_Data
 	, DS_Bare_List
 	, DS_Chunk

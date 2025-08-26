@@ -179,6 +179,9 @@ void display_memory_log (void) {
 			case DS_Raw:
 				puts ("Raw");
 				break;
+			case DS_Stream:
+				puts ("Stream");
+				break;
 			case DS_String:
 				puts ("String");
 				break;

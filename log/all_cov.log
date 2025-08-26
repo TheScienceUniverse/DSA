@@ -13,6 +13,21 @@ Creating 'basic.c.gcov'
 
 Lines executed:100.00% of 16
 
+Function 'test_stream'
+Lines executed:0.00% of 15
+Branches executed:0.00% of 12
+Taken at least once:0.00% of 12
+Calls executed:0.00% of 17
+
+File 'tst/stream.c'
+Lines executed:0.00% of 15
+Branches executed:0.00% of 12
+Taken at least once:0.00% of 12
+Calls executed:0.00% of 17
+Creating 'stream.c.gcov'
+
+Lines executed:0.00% of 15
+
 Function 'test_string'
 Lines executed:100.00% of 123
 Branches executed:100.00% of 68

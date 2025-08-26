@@ -26,8 +26,8 @@ typedef enum COMPARE_STATUS {
 
 typedef enum DATA_STRUCTURE_TYPE {
 	DS_Raw
-	, DS_String
 	, DS_Stream
+	, DS_String
 	, DS_Data
 	, DS_Bare_List
 	, DS_Chunk

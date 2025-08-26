@@ -24,6 +24,8 @@ int main (int argc, char* argv[]) {
 void test_route (char* option) {
 	if (compare_raw_strings_shh (5, "basic", 5, option)) {
 		test_basic ();
+	} else if (compare_raw_strings_shh (6, "stream", 6, option)) {
+		test_stream ();
 	} else if (compare_raw_strings_shh (6, "string", 6, option)) {
 		test_string ();
 	} else if (compare_raw_strings_shh (4, "data", 4, option)) {

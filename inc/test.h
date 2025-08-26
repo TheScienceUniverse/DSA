@@ -23,6 +23,9 @@
 #include "./basic.h"
 void test_basic (void);
 
+#include "./stream.h"
+void test_stream (void);
+
 #include "./string.h"
 void test_string (void);
 

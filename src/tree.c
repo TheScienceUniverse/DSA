@@ -112,7 +112,7 @@ void display_tree (Tree* tree) {
 
 		depth = get_tree_node_depth (tree, node);
 
-		putchar ('\t');
+		printf ("    ");
 
 		if (0 != depth) {
 			for (ssize_t i = 0; i < (ssize_t) depth; i++) {

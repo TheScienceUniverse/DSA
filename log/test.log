@@ -251,20 +251,20 @@
 [0m[1;33mUnit test starts...[1;35m [Tree]
 [0m	[[1;32mPASSED[0m]: (Created tree)
 Tree :=> node_count: (8) breadth: (0) height: (2)
-	(A)
-	|    
+    (A)
+    |    
     +---(B)
-	|    |    
+    |    |    
     |    +---(D)
-	|    |    
+    |    |    
     |    +---(E)
-	|    |    
+    |    |    
     |    +---(F)
-	|    
+    |    
     +---(C)
-	|    |    
+    |    |    
     |    +---(G)
-	|    |    
+    |    |    
     |    +---(H)
 Walking towards Root node ... (C)->(A)
 Children of (B): [(D), (E), (F)]
@@ -277,38 +277,38 @@ Is node belong to tree? Yes
 Is node belong to tree? No
 Children of (B): [(D), (E)]
 Tree :=> node_count: (3) breadth: (0) height: (1)
-	(B)
-	|    
+    (B)
+    |    
     +---(D)
-	|    
+    |    
     +---(E)
 Tree :=> node_count: (7) breadth: (0) height: (2)
-	(A)
-	|    
+    (A)
+    |    
     +---(B)
-	|    |    
+    |    |    
     |    +---(D)
-	|    |    
+    |    |    
     |    +---(E)
-	|    
+    |    
     +---(C)
-	|    |    
+    |    |    
     |    +---(G)
-	|    |    
+    |    |    
     |    +---(H)
 Tree :=> node_count: (7) breadth: (0) height: (1)
-	(A)
-	|    
+    (A)
+    |    
     +---(B)
-	|    
+    |    
     +---(C)
-	|    
+    |    
     +---(D)
-	|    
+    |    
     +---(E)
-	|    
+    |    
     +---(G)
-	|    
+    |    
     +---(H)
 	[[1;32mPASSED[0m]: (Deleted tree)
 [1;33m...Unit test ends![1;35m [Tree]

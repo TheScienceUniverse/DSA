@@ -1,3 +1,6 @@
+prj_dir=$(pwd)
+cd ../
+
 if [ ! -d "./DSA/.git/" ]
 then
 	cd ./DSA/
@@ -28,5 +31,5 @@ echo "Cleaning up...";
 #rm -f Makefile rerun
 #rm -f *.c *.sh
 
-cd ../
+cd $(prj_dir)
 echo "...Installation Done!"

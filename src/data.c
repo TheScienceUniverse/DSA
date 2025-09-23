@@ -436,3 +436,70 @@ Data* create_address_data (void* address) {
 
 	return data;
 }
+
+Data* create_key_value_data (String* key, Data* value) {
+	int block_size = sizeof (String) + sizeof (Data);
+	void* address = malloc (block_size);
+	log_memory (DS_Raw, block_size, address, true);
+
+	String* temp_string = address;
+	Data* temp_data = (Data*)((String*) address + 1);
+
+	temp_string -> length = key -> length;
+	temp_string -> text = malloc (key -> length * sizeof (char));
+	copy_raw_char_stream (key -> length, key -> text, temp_string -> text);
+
+	copy_data (value, temp_data);
+
+	Data* data = create_data (DT_Key_Value, block_size, address);
+
+	log_memory (DS_Raw, block_size, address, false);
+	ERASE (&address, block_size);
+
+	return data;
+}
+
+void delete_key_value_data (Data** key_value_data_address) {
+	if (NULL == *key_value_data_address) {
+		perror ("Key-Value pair data does not exist to delete");
+		return;
+	}
+
+	Data* key_value_data = *key_value_data_address;
+
+	if (DT_Key_Value != key_value_data -> type) {
+		perror ("Data is not identified as Key-Value pair data to delete");
+		return;
+	}
+
+	void* address = key_value_data -> address;
+
+	String* key = address;
+	Data* value = (Data*)((String*) address + 1);
+
+	log_memory (DS_String, key -> length, key -> text, false);
+	ERASE (&(key -> text), key -> length);
+	log_memory (DS_Data, value -> size, value -> address, false);
+	ERASE (&(value -> address), value -> size);
+
+	delete_data (key_value_data_address);
+	key_value_data = NULL;
+}
+
+void display_key_value_data (Data* key_value_data) {
+	if (NULL == key_value_data) {
+		perror ("Key-Value pair data does not exist to display");
+		return;
+	}
+
+	if (DT_Key_Value != key_value_data -> type) {
+		perror ("Data is not identified as Key-Value pair data to display");
+		return;
+	}
+
+	printf ("[Key: \"");
+	display_string ((String*)(key_value_data -> address + 0));
+	printf ("\", Value: \"");
+	display_data ((Data*)((String*)(key_value_data -> address) + 1));
+	printf ("\"]\n");
+}

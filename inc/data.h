@@ -17,6 +17,7 @@ typedef enum DATA_TYPE {
 	, DT_Address
 	, DT_Range
 	, DT_Route
+	, DT_Key_Value
 } Data_Type;
 
 typedef struct DATA {
@@ -43,5 +44,8 @@ Compare_Status compare_data (Data* data_1, Data* data_2);
 Data* create_empty_data (void);
 void swap_data (Data* data_1, Data* data_2);
 Data* create_address_data (void* address);
+Data* create_key_value_data (String* key, Data* value);
+void delete_key_value_data (Data** key_value_data_address);
+void display_key_value_data (Data* key_value_data);
 
 #endif	// DATA_H

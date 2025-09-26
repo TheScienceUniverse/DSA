@@ -29,55 +29,6 @@ List* create_list (size_t item_count) {
 	return list;
 }
 
-void delete_list (List** list_address) {
-	if (*list_address == NULL) {
-		perror ("List does not exist to Delete!");
-		return;
-	}
-
-	List* list = *list_address;
-	Chunk* chunk = list -> tail_chunk;
-
-	for (size_t i = 0; i < list -> chunk_count; i++) {
-		chunk = reduce_chunk (chunk);
-	}
-
-	if (NULL != chunk) {
-		delete_chunk (&chunk);
-	}
-
-	list = NULL;
-
-	log_memory (DS_List, sizeof (List), *list_address, false);
-	ERASE (list_address, sizeof (List));
-}
-
-void forget_list (List** list_address) {
-	if (NULL != list_address) {
-		list_address = NULL;
-	}
-}
-
-void display_list (List* list) {
-	if (NULL == list) {
-		perror ("List does not exist to Display!");
-		return;
-	}
-
-	display_linked_chunks (list -> head_chunk);
-}
-
-void display_list_details (List* list) {
-	if (NULL == list) {
-		perror ("List does not exist to Display details!");
-		return;
-	}
-
-	printf ("List :=> Address: (%p) Size: (%lu) Elements: ", list, list -> item_count);
-	display_linked_chunks (list -> head_chunk);
-	putchar ('\n');
-}
-
 List* duplicate_list (List* old_list) {
 	if (NULL == old_list) {
 		perror ("Old List does not exist to duplicate list from!\n");
@@ -118,6 +69,55 @@ List* duplicate_list (List* old_list) {
 	return new_list;
 }
 
+void display_list (List* list) {
+	if (NULL == list) {
+		perror ("List does not exist to Display!");
+		return;
+	}
+
+	display_linked_chunks (list -> head_chunk);
+}
+
+void display_list_details (List* list) {
+	if (NULL == list) {
+		perror ("List does not exist to Display details!");
+		return;
+	}
+
+	printf ("List :=> Address: (%p) Size: (%lu) Elements: ", list, list -> item_count);
+	display_linked_chunks (list -> head_chunk);
+	putchar ('\n');
+}
+
+void delete_list (List** list_address) {
+	if (*list_address == NULL) {
+		perror ("List does not exist to Delete!");
+		return;
+	}
+
+	List* list = *list_address;
+	Chunk* chunk = list -> tail_chunk;
+
+	for (size_t i = 0; i < list -> chunk_count; i++) {
+		chunk = reduce_chunk (chunk);
+	}
+
+	if (NULL != chunk) {
+		delete_chunk (&chunk);
+	}
+
+	list = NULL;
+
+	log_memory (DS_List, sizeof (List), *list_address, false);
+	ERASE (list_address, sizeof (List));
+}
+
+void forget_list (List** list_address) {
+	if (NULL != list_address) {
+		list_address = NULL;
+	}
+}
+
 void set_list_chunk_cap_count (size_t item_count, size_t* chunk_capacity, size_t* chunk_count) {
 	if (5 >= item_count) {
 		*chunk_capacity = item_count;
@@ -153,6 +153,92 @@ void set_list_chunk_cap_count (size_t item_count, size_t* chunk_capacity, size_t
 	}
 }
 
+bool is_list_empty (List* list) {
+	return 0 == list -> item_count;
+}
+
+bool compare_lists (List* list_1, List* list_2) {
+	if (NULL == list_1) {
+		perror ("List-1 does not exist to compare with!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (NULL == list_2) {
+		perror ("List-2 does not exist to compare with!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (list_1 -> item_count != list_2 -> item_count) {
+		return false;
+	}
+
+	size_t total_item_count = list_1 -> item_count;
+	Chunk* chunk_1 = list_1 -> head_chunk;
+	Chunk* chunk_2 = list_2 -> head_chunk;
+	size_t list_data_index = 0;
+	size_t chunk_1_data_index = 0;
+	size_t chunk_2_data_index = 0;
+	Data* data_1 = NULL;
+	Data* data_2 = NULL;
+	bool compare_status = true;
+
+	for ( ; list_data_index < total_item_count; list_data_index++) {
+		data_1 = chunk_1 -> first_data_address + chunk_1_data_index++;
+		data_2 = chunk_2 -> first_data_address + chunk_2_data_index++;
+
+		if (Cmp_Different == compare_data (data_1, data_2)) {
+			compare_status = false;
+			break;
+		}
+
+		if (chunk_1 -> capacity == chunk_1_data_index) {
+			chunk_1_data_index = 0;
+			chunk_1 = chunk_1 -> next_chunk;
+		}
+
+		if (chunk_2 -> capacity == chunk_2_data_index) {
+			chunk_2_data_index = 0;
+			chunk_2 = chunk_2 -> next_chunk;
+		}
+	}
+
+	return compare_status;
+}
+
+bool does_list_contain_data (List* list, Data* data) {
+	if (NULL == list) {
+		perror ("List does not exist to search data from!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (NULL == data) {
+		perror ("Data does not exist to search inside list\n");
+		exit (EXIT_FAILURE);
+	}
+
+	Chunk* chunk = list -> head_chunk;
+	size_t list_data_index = 0;
+	size_t chunk_data_index = 0;
+	Data* list_data = NULL;
+	bool search_status = false;
+
+	for ( ; list_data_index < list -> item_count; list_data_index++) {
+		list_data = chunk -> first_data_address + chunk_data_index++;
+
+		if (Cmp_Different == compare_data (data, list_data)) {
+			search_status = true;
+			break;
+		}
+
+		if (chunk -> capacity == chunk_data_index) {
+			chunk_data_index = 0;
+			chunk = chunk -> next_chunk;
+		}
+	}
+
+	return search_status;
+}
+
 void insert_data_into_list (List* list, Data* data) {
 	if (NULL == list) {
 		perror ("List does not exist to insert data into!\n");
@@ -166,7 +252,7 @@ void insert_data_into_list (List* list, Data* data) {
 
 	Chunk* chunk = list -> tail_chunk;
 	insert_data_into_chunk (chunk, data);
-	list -> tail_chunk = get_last_chunk (chunk);
+	list -> tail_chunk = get_last_chunk_reference (chunk);
 	list -> item_count++;
 }
 
@@ -230,7 +316,7 @@ void delete_data_from_list (List* list, Data* data) {
 	Chunk* chunk = list -> tail_chunk;
 	Data* deleted_data = remove_data_from_chunk (chunk);
 	delete_data (&deleted_data);
-	list -> tail_chunk = get_last_chunk (chunk);
+	list -> tail_chunk = get_last_chunk_reference (chunk);
 }
 
 Data* remove_data_from_list (List* list) {
@@ -243,7 +329,7 @@ Data* remove_data_from_list (List* list) {
 	Data* deleted_data = remove_data_from_chunk (chunk);
 	chunk = NULL;	// data removal may "reduce" chunk
 
-	list -> tail_chunk = get_last_chunk (list -> head_chunk);
+	list -> tail_chunk = get_last_chunk_reference (list -> head_chunk);
 	list -> item_count--;
 
 	return deleted_data;
@@ -817,92 +903,6 @@ void delete_all_instances_from_list (List* list, Data* data) {
 	}
 }
 
-bool is_list_empty (List* list) {
-	return 0 == list -> item_count;
-}
-
-bool compare_lists (List* list_1, List* list_2) {
-	if (NULL == list_1) {
-		perror ("List-1 does not exist to compare with!\n");
-		exit (EXIT_FAILURE);
-	}
-
-	if (NULL == list_2) {
-		perror ("List-2 does not exist to compare with!\n");
-		exit (EXIT_FAILURE);
-	}
-
-	if (list_1 -> item_count != list_2 -> item_count) {
-		return false;
-	}
-
-	size_t total_item_count = list_1 -> item_count;
-	Chunk* chunk_1 = list_1 -> head_chunk;
-	Chunk* chunk_2 = list_2 -> head_chunk;
-	size_t list_data_index = 0;
-	size_t chunk_1_data_index = 0;
-	size_t chunk_2_data_index = 0;
-	Data* data_1 = NULL;
-	Data* data_2 = NULL;
-	bool compare_status = true;
-
-	for ( ; list_data_index < total_item_count; list_data_index++) {
-		data_1 = chunk_1 -> first_data_address + chunk_1_data_index++;
-		data_2 = chunk_2 -> first_data_address + chunk_2_data_index++;
-
-		if (Cmp_Different == compare_data (data_1, data_2)) {
-			compare_status = false;
-			break;
-		}
-
-		if (chunk_1 -> capacity == chunk_1_data_index) {
-			chunk_1_data_index = 0;
-			chunk_1 = chunk_1 -> next_chunk;
-		}
-
-		if (chunk_2 -> capacity == chunk_2_data_index) {
-			chunk_2_data_index = 0;
-			chunk_2 = chunk_2 -> next_chunk;
-		}
-	}
-
-	return compare_status;
-}
-
-bool does_list_contain_data (List* list, Data* data) {
-	if (NULL == list) {
-		perror ("List does not exist to search data from!\n");
-		exit (EXIT_FAILURE);
-	}
-
-	if (NULL == data) {
-		perror ("Data does not exist to search inside list\n");
-		exit (EXIT_FAILURE);
-	}
-
-	Chunk* chunk = list -> head_chunk;
-	size_t list_data_index = 0;
-	size_t chunk_data_index = 0;
-	Data* list_data = NULL;
-	bool search_status = false;
-
-	for ( ; list_data_index < list -> item_count; list_data_index++) {
-		list_data = chunk -> first_data_address + chunk_data_index++;
-
-		if (Cmp_Different == compare_data (data, list_data)) {
-			search_status = true;
-			break;
-		}
-
-		if (chunk -> capacity == chunk_data_index) {
-			chunk_data_index = 0;
-			chunk = chunk -> next_chunk;
-		}
-	}
-
-	return search_status;
-}
-
 void defragment_list (List* list) {
 	Chunk* chunk = list -> tail_chunk;
 	Chunk* prev_chunk = chunk -> previous_chunk;
@@ -925,5 +925,5 @@ void defragment_list (List* list) {
 		chunk = prev_chunk;
 	}
 
-	list -> tail_chunk = get_last_chunk (list -> head_chunk);
+	list -> tail_chunk = get_last_chunk_reference (list -> head_chunk);
 }

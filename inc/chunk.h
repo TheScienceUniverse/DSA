@@ -19,20 +19,23 @@ typedef struct CHUNK {
 // ---------- x ----------
 
 Chunk* create_chunk (size_t chunk_id, size_t item_count);
-void delete_chunk (Chunk** chunk_address);
-void display_chunk_details (Chunk* chunk);
-void display_chunk (Chunk* chunk);
 Chunk* duplicate_chunk (Chunk* chunk);
-Compare_Status compare_chunks (Chunk* chunk_1, Chunk* chunk_2);
+void display_chunk (Chunk* chunk);
+void display_chunk_details (Chunk* chunk);
+void display_linked_chunks (Chunk* chunk);
+void display_linked_chunks_guarded (Chunk* chunk);
+void delete_chunk (Chunk** chunk_address);
 void forget_chunk (Chunk** chunk_address);
-Chunk* extend_chunk (Chunk* chunk);		// returns last empty-chunk address
-Chunk* reduce_chunk (Chunk* chunk);		// returns last empty-chunk address
+// checks related
+Compare_Status compare_chunks (Chunk* chunk_1, Chunk* chunk_2);
+// manipulation related
+Chunk* extend_chunk (Chunk* chunk);	// returns last empty-chunk address
+Chunk* reduce_chunk (Chunk* chunk);	// returns last empty-chunk address
+// data proceccing related
 void insert_data_into_chunk (Chunk* chunk, Data* data);
 Data* remove_data_from_chunk (Chunk* chunk);
-void display_linked_chunks (Chunk* chunk);
-void display_linked_chunks_unguarded (Chunk* chunk);
-Chunk* get_first_chunk (Chunk* chunk);
-Chunk* get_last_chunk (Chunk* chunk);
+Chunk* get_first_chunk_reference (Chunk* chunk);
+Chunk* get_last_chunk_reference (Chunk* chunk);
 void reduce_unused_chunks (Chunk* chunk);
 
 #endif	// CHUNK_H

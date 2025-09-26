@@ -40,14 +40,9 @@ char* char_array_to_pointer (size_t length, char* str) {
 	return text;
 }
 
-void copy_raw_char_stream (size_t len, void* src_addr, void* dst_addr) {
-	BYTE *b_src = src_addr;
-	BYTE *b_dst = dst_addr;
-
-	while (len--) {
-		*b_dst = *b_src;
-		++b_dst;
-		++b_src;
+void display_N_characters (char character, size_t repetitions) {
+	for (size_t i = 0; i < repetitions; i++) {
+		putchar (character);
 	}
 }
 
@@ -68,51 +63,11 @@ String* create_string (size_t length, char* text) {
 		if (string -> text != NULL) {
 			log_memory (DS_Raw, length * sizeof (char), string -> text, true);
 
-			copy_raw_char_stream (length, text, string -> text);
+			copy_raw_bytes (length, (BYTE*) text, (BYTE*)(string -> text));
 		}
 	}
 
 	return string;
-}
-
-void delete_string (String** string_address) {
-	if (*string_address == NULL) {
-		// perror ("String is empty to delete!");
-		return;
-	}
-
-	String* string = *string_address;
-
-	if (string -> text != NULL && string -> length > 0) {
-		log_memory (DS_Raw, (string -> length) * sizeof (char), string -> text, false);
-		ERASE (&(string -> text), string -> length);
-	}
-
-	string = NULL;
-
-	log_memory (DS_String, sizeof (String), *string_address, false);
-	ERASE (string_address, sizeof (String));
-}
-
-void display_string (String* string) {
-	if (string == NULL) {
-		// perror ("String does not exist to display!");
-		return;
-	}
-
-	display_raw_string (string -> length, string -> text);
-}
-
-void display_string_details (String* string) {
-	if (NULL == string) {
-		perror ("String does not exist to display details!");
-		return;
-	}
-
-	printf ("String :=> Address: (%p) Length: (%lu) Text: [", string, string -> length);
-	display_raw_string (string -> length, string -> text);
-	printf ("]");
-	putchar ('\n');
 }
 
 String* duplicate_string (String* old_string) {
@@ -137,6 +92,46 @@ String* duplicate_string (String* old_string) {
 	}
 
 	return new_string;
+}
+
+void display_string (String* string) {
+	if (string == NULL) {
+		// perror ("String does not exist to display!");
+		return;
+	}
+
+	display_raw_string (string -> length, string -> text);
+}
+
+void display_string_details (String* string) {
+	if (NULL == string) {
+		perror ("String does not exist to display details!");
+		return;
+	}
+
+	printf ("String :=> Address: (%p) Length: (%lu) Text: [", string, string -> length);
+	display_raw_string (string -> length, string -> text);
+	printf ("]");
+	putchar ('\n');
+}
+
+void delete_string (String** string_address) {
+	if (*string_address == NULL) {
+		// perror ("String is empty to delete!");
+		return;
+	}
+
+	String* string = *string_address;
+
+	if (string -> text != NULL && string -> length > 0) {
+		log_memory (DS_Raw, (string -> length) * sizeof (char), string -> text, false);
+		ERASE (&(string -> text), string -> length);
+	}
+
+	string = NULL;
+
+	log_memory (DS_String, sizeof (String), *string_address, false);
+	ERASE (string_address, sizeof (String));
 }
 
 String* concatenate_strings (int count, ...) {
@@ -190,7 +185,7 @@ String* concatenate_strings (int count, ...) {
 			continue;
 		}
 
-		copy_byte_stream (string -> length, (BYTE*)(string -> text), (BYTE*) ptr);
+		copy_raw_bytes (string -> length, (BYTE*)(string -> text), (BYTE*) ptr);
 		ptr += string -> length;
 	}
 
@@ -253,12 +248,6 @@ void** capture_string_addresses (String* string) {
 	*(addresses + 2) = &(string -> text);
 
 	return addresses;
-}
-
-void display_N_characters (char character, size_t repetitions) {
-	for (size_t i = 0; i < repetitions; i++) {
-		putchar (character);
-	}
 }
 
 Compare_Status compare_strings (String* string1, String* string2) {

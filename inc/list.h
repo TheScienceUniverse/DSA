@@ -17,12 +17,18 @@ typedef struct LIST {
 // ---------- x ----------
 
 List* create_list (size_t expected_capacity);
-void delete_list (List** list_address);
 List* duplicate_list (List* list);
-void forget_list (List** list_address);
-void set_list_chunk_cap_count (size_t expected_item_count, size_t* chunk_capacity, size_t* chunk_count);
-void display_list_details (List* list);
 void display_list (List* list);
+void display_list_details (List* list);
+void delete_list (List** list_address);
+void forget_list (List** list_address);
+// list configuration related
+void set_list_chunk_cap_count (size_t expected_item_count, size_t* chunk_capacity, size_t* chunk_count);
+// checks related
+bool is_list_empty (List* list);
+bool compare_lists (List* list_1, List* list_2);
+bool does_list_contain_data (List* list, Data* data);
+// data processing related
 void insert_data_into_list (List* list, Data* data);
 List* search_data_in_list (List* list, Data* data);
 void delete_data_from_list (List* list, Data* data);
@@ -40,9 +46,6 @@ void clear_list (List* list);
 void delete_first_instance_from_list (List* list, Data* data);
 void delete_last_instance_from_list (List* list, Data* data);
 void delete_all_instances_from_list (List* list, Data* data);
-bool is_list_empty (List* list);
-bool compare_lists (List* list_1, List* list_2);
-bool does_list_contain_data (List* list, Data* data);
 void defragment_list (List* list);
 
 #endif	// LIST_H

@@ -41,43 +41,6 @@ Data* create_data (Data_Type data_type, size_t block_size, void* address) {
 	return data;
 }
 
-void delete_data (Data** data_address) {
-	if (*data_address == NULL) {
-		// perror ("Data does not exist to delete!");
-		return;
-	}
-
-	Data* data = *data_address;
-
-	if (DT_Address == data -> type) {
-		data -> address = NULL;
-	}
-
-	if (data -> address != NULL) {
-		log_memory (DS_Raw, data -> size, data -> address, false);
-		ERASE (&(data -> address), data -> size);
-	}
-
-	data = NULL;
-
-	log_memory (DS_Data, sizeof (Data), *data_address, false);
-	ERASE (data_address, sizeof (Data));
-}
-
-void forget_data (Data** data_address) {
-	if (*data_address == NULL) {
-		// perror ("Data does not exist to forget!");
-		return;
-	}
-
-	Data* data = *data_address;
-
-	if (data -> address != NULL) {
-		data -> address = NULL;
-		data -> type = DT_Undefined;
-	}
-}
-
 Data* duplicate_data (Data* data) {
 	if (data == NULL) {
 		return NULL;
@@ -125,7 +88,7 @@ void display_data (Data* data) {
 			display_range_data (data);
 			break;
 		default:
-			display_byte_stream (data -> size, data -> address);
+			display_raw_bytes (data -> size, data -> address);
 			break;
 	}
 }
@@ -182,113 +145,41 @@ void display_binary_data (size_t size, BYTE* address) {
 	}
 }
 
-Data* create_range_data (int start, int end) {
-	int block_size = 2 * sizeof (int);
-	int* address = malloc (block_size);
-	log_memory (DS_Raw, block_size, address, true);
-
-	*(address + 0) = start;
-	*(address + 1) = end;
-
-	Data* data = create_data (DT_Range, block_size, address);
-
-	log_memory (DS_Raw, block_size, address, false);
-	ERASE (&address, block_size);
-
-	return data;
-}
-
-void display_range_data (Data* data) {
-	if (data == NULL) {
-		perror ("Range data does not exist to display");
+void delete_data (Data** data_address) {
+	if (*data_address == NULL) {
+		// perror ("Data does not exist to delete!");
 		return;
 	}
 
-	if (data -> type != DT_Range) {
-		perror ("Data is not identified as Range data to display");
+	Data* data = *data_address;
+
+	if (DT_Address == data -> type) {
+		data -> address = NULL;
+	}
+
+	if (data -> address != NULL) {
+		log_memory (DS_Raw, data -> size, data -> address, false);
+		ERASE (&(data -> address), data -> size);
+	}
+
+	data = NULL;
+
+	log_memory (DS_Data, sizeof (Data), *data_address, false);
+	ERASE (data_address, sizeof (Data));
+}
+
+void forget_data (Data** data_address) {
+	if (*data_address == NULL) {
+		// perror ("Data does not exist to forget!");
 		return;
 	}
 
-	printf ("[%d, %d]\n", *((int*)(data -> address) + 0), *((int*)(data -> address) + 1));
-}
+	Data* data = *data_address;
 
-bool are_data_equal (Data* data1, Data* data2) {
-	if (data1 == data2) {
-		return true;
+	if (data -> address != NULL) {
+		data -> address = NULL;
+		data -> type = DT_Undefined;
 	}
-
-	if (data1 == NULL) {
-		// printf ("Data-1 is NULL\n");
-		return false;
-	}
-
-	if (data2 == NULL) {
-		// printf ("Data-2 is NULL\n");
-		return false;
-	}
-
-	bool result = false;
-	BYTE* ptr1;
-	BYTE* ptr2;
-	size_t i;
-
-	if (data1 -> type == data2 -> type
-		&& data1 -> size == data2 -> size
-	) {
-		ptr1 = data1 -> address;
-		ptr2 = data2 -> address;
-
-		for (i = 0; i < data1 -> size; i++) {
-			if (*ptr1 != *ptr2) {
-				result = false;
-				break;
-			}
-
-			++ptr1;
-			++ptr2;
-		}
-
-		if (i == data1 -> size) {
-			result = true;
-		}
-	}
-
-	return result;
-}
-
-bool is_data_memory_erased (void** data_addresses) {
-	if (NULL == data_addresses) {
-		return false;
-	}
-
-	bool status = true;
-
-	if (
-		!check_mem_zero (*(data_addresses + 0), sizeof (void*))
-		&& !check_mem_zero (*(data_addresses + 1), sizeof (void*))
-		&& !check_mem_zero (*(data_addresses + 2), sizeof (void*))
-		&& !check_mem_zero (*(data_addresses + 3), sizeof (void*))
-	) {
-		status = false;
-	}
-
-	return status;
-}
-
-void** capture_data_addresses (Data* data) {
-	if (NULL == data) {
-		return NULL;
-	}
-
-	void** addresses = malloc (4 * sizeof (void*));
-	log_memory (DS_Raw, 4 * sizeof (void*), addresses, true);
-
-	*(addresses + 0) = &(data);	// base address
-	*(addresses + 1) = &(data -> type);
-	*(addresses + 1) = &(data -> size);
-	*(addresses + 2) = &(data -> address);
-
-	return addresses;
 }
 
 void copy_data (Data* src_data, Data* dst_data) {
@@ -324,26 +215,27 @@ void copy_data (Data* src_data, Data* dst_data) {
 	}
 
 	dst_data -> address = malloc (src_data -> size);
-	copy_byte_stream (src_data -> size, src_data -> address, dst_data -> address);
+	copy_raw_bytes (src_data -> size, (BYTE*)(src_data -> address), (BYTE*)(dst_data -> address));
 }
 
-void empty_data (Data* data) {
-	if (NULL == data) {
-		// perror ("Data does not exist to delete!");
+void swap_data (Data* data_1, Data* data_2) {
+	if (data_1 == data_2) {
 		return;
 	}
 
-	if (
-		DT_Address != data -> type
-		&& data -> address != NULL
-	) {
-		log_memory (DS_Raw, data -> size, data -> address, false);
-		ERASE (&(data -> address), data -> size);
-		data -> type = DT_Empty;
+	if (NULL == data_1) {
+		perror ("Data-1 does not exist to swap!");
+		exit (EXIT_FAILURE);
 	}
 
-	data -> size = 0;
-	data -> address = NULL;
+	if (NULL == data_2) {
+		perror ("Data-2 does not exist to swap!");
+		exit (EXIT_FAILURE);
+	}
+
+	Data* temp_data = data_1;
+	data_1 = data_2;
+	data_2 = temp_data;
 }
 
 Compare_Status compare_data (Data* data_1, Data* data_2) {
@@ -385,6 +277,60 @@ Compare_Status compare_data (Data* data_1, Data* data_2) {
 	return cmp_stat;
 }
 
+bool is_data_memory_erased (void** data_addresses) {
+	if (NULL == data_addresses) {
+		return false;
+	}
+
+	bool status = true;
+
+	if (
+		!check_mem_zero (*(data_addresses + 0), sizeof (void*))
+		&& !check_mem_zero (*(data_addresses + 1), sizeof (void*))
+		&& !check_mem_zero (*(data_addresses + 2), sizeof (void*))
+		&& !check_mem_zero (*(data_addresses + 3), sizeof (void*))
+	) {
+		status = false;
+	}
+
+	return status;
+}
+
+void** capture_data_addresses (Data* data) {
+	if (NULL == data) {
+		return NULL;
+	}
+
+	void** addresses = malloc (4 * sizeof (void*));
+	log_memory (DS_Raw, 4 * sizeof (void*), addresses, true);
+
+	*(addresses + 0) = &(data);	// base address
+	*(addresses + 1) = &(data -> type);
+	*(addresses + 1) = &(data -> size);
+	*(addresses + 2) = &(data -> address);
+
+	return addresses;
+}
+
+void empty_data (Data* data) {
+	if (NULL == data) {
+		// perror ("Data does not exist to delete!");
+		return;
+	}
+
+	if (
+		DT_Address != data -> type
+		&& data -> address != NULL
+	) {
+		log_memory (DS_Raw, data -> size, data -> address, false);
+		ERASE (&(data -> address), data -> size);
+		data -> type = DT_Empty;
+	}
+
+	data -> size = 0;
+	data -> address = NULL;
+}
+
 Data* create_empty_data (void) {
 	Data* data = (Data*) malloc (sizeof (Data));
 	log_memory (DS_Data, sizeof (Data), data, true);
@@ -401,24 +347,34 @@ Data* create_empty_data (void) {
 	return data;
 }
 
-void swap_data (Data* data_1, Data* data_2) {
-	if (data_1 == data_2) {
+Data* create_range_data (int start, int end) {
+	int block_size = 2 * sizeof (int);
+	int* address = malloc (block_size);
+	log_memory (DS_Raw, block_size, address, true);
+
+	*(address + 0) = start;
+	*(address + 1) = end;
+
+	Data* data = create_data (DT_Range, block_size, address);
+
+	log_memory (DS_Raw, block_size, address, false);
+	ERASE (&address, block_size);
+
+	return data;
+}
+
+void display_range_data (Data* data) {
+	if (data == NULL) {
+		perror ("Range data does not exist to display");
 		return;
 	}
 
-	if (NULL == data_1) {
-		perror ("Data-1 does not exist to swap!");
-		exit (EXIT_FAILURE);
+	if (data -> type != DT_Range) {
+		perror ("Data is not identified as Range data to display");
+		return;
 	}
 
-	if (NULL == data_2) {
-		perror ("Data-2 does not exist to swap!");
-		exit (EXIT_FAILURE);
-	}
-
-	Data* temp_data = data_1;
-	data_1 = data_2;
-	data_2 = temp_data;
+	printf ("[%d, %d]\n", *((int*)(data -> address) + 0), *((int*)(data -> address) + 1));
 }
 
 Data* create_address_data (void* address) {
@@ -447,7 +403,7 @@ Data* create_key_value_data (String* key, Data* value) {
 
 	temp_string -> length = key -> length;
 	temp_string -> text = malloc (key -> length * sizeof (char));
-	copy_raw_char_stream (key -> length, key -> text, temp_string -> text);
+	copy_raw_bytes (key -> length, (BYTE*)(key -> text), (BYTE*)(temp_string -> text));
 
 	copy_data (value, temp_data);
 

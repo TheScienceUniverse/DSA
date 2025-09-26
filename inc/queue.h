@@ -17,9 +17,9 @@ typedef struct QUEUE {
 // ---------- x ----------
 
 Queue* create_queue (void);
-void delete_queue (Queue** queue_address);
 void display_queue (Queue* queue);
 void display_queue_details (Queue* queue);
+void delete_queue (Queue** queue_address);
 void enqueue (Queue* queue, Node* node);
 Node* dequeue (Queue* queue);
 void peek_data_from_queue (Queue* queue);

@@ -33,16 +33,6 @@ Iterator* create_iterator (List* list, ssize_t stride) {
 	return iterator;
 }
 
-void delete_iterator (Iterator** iterator_address) {
-	if (NULL == *iterator_address) {
-		perror ("Iterator does not exist to delete!\n");
-		exit (EXIT_FAILURE);
-	}
-
-	log_memory (DS_Iterator, sizeof (Iterator), *iterator_address, false);
-	ERASE (iterator_address, sizeof (Iterator));
-}
-
 void display_iterator_details (Iterator* iterator) {
 	printf ("Iterator:");
 	printf (" List [%lu]", iterator -> list_data_index);
@@ -51,6 +41,16 @@ void display_iterator_details (Iterator* iterator) {
 	printf (" Data: ");
 	display_data (iterator -> data);
 	printf ("\n");
+}
+
+void delete_iterator (Iterator** iterator_address) {
+	if (NULL == *iterator_address) {
+		perror ("Iterator does not exist to delete!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	log_memory (DS_Iterator, sizeof (Iterator), *iterator_address, false);
+	ERASE (iterator_address, sizeof (Iterator));
 }
 
 void update_iterator_stride (Iterator* iterator, ssize_t stride) {

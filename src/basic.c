@@ -30,7 +30,7 @@ bool check_mem_zero (void* base_address, size_t num_bytes) {
 	return status;
 }
 
-void copy_byte_stream (size_t length, BYTE* src_addr, BYTE* dst_addr) {
+void copy_raw_bytes (size_t length, BYTE* src_addr, BYTE* dst_addr) {
 	if (
 		0 == length
 		|| NULL == src_addr
@@ -49,7 +49,7 @@ void copy_byte_stream (size_t length, BYTE* src_addr, BYTE* dst_addr) {
 	}
 }
 
-void display_byte_stream (size_t num_bytes, BYTE* base_address) {
+void display_raw_bytes (size_t num_bytes, BYTE* base_address) {
 	if (base_address == NULL || num_bytes == 0) {
 		return;
 	}
@@ -61,7 +61,7 @@ void display_byte_stream (size_t num_bytes, BYTE* base_address) {
 	}
 }
 
-void display_bit_stream (size_t num_bytes, BYTE* base_address) {
+void display_raw_bits (size_t num_bytes, BYTE* base_address) {
 	if (base_address == NULL || num_bytes == 0) {
 		return;
 	}

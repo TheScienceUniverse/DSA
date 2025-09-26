@@ -14,29 +14,6 @@ Stack *create_stack (void) {
 	return stack;
 }
 
-void delete_stack (Stack** stack_address) {
-	if (*stack_address == NULL) {
-		perror ("Stack does not exist to delete!");
-		return;
-	}
-
-	Stack* stack = *stack_address;
-
-	Node* node = stack -> top_node;
-	Node* del_node;
-
-	for (size_t i = 0; i < stack -> size; i++) {
-		del_node = node;
-		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
-		delete_node (&del_node);
-	}
-
-	stack = NULL;
-
-	log_memory (DS_Stack, sizeof (Stack), *stack_address, false);
-	ERASE (stack_address, sizeof (Stack));
-}
-
 void display_stack (Stack* stack) {
 	if (stack == NULL) {
 		perror ("Stack does not exist to display!");
@@ -85,6 +62,29 @@ void display_stack_details (Stack* stack) {
 	}
 
 	printf ("\n");
+}
+
+void delete_stack (Stack** stack_address) {
+	if (*stack_address == NULL) {
+		perror ("Stack does not exist to delete!");
+		return;
+	}
+
+	Stack* stack = *stack_address;
+
+	Node* node = stack -> top_node;
+	Node* del_node;
+
+	for (size_t i = 0; i < stack -> size; i++) {
+		del_node = node;
+		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
+		delete_node (&del_node);
+	}
+
+	stack = NULL;
+
+	log_memory (DS_Stack, sizeof (Stack), *stack_address, false);
+	ERASE (stack_address, sizeof (Stack));
 }
 
 void push_node_onto_stack (Stack* stack, Node* node) {

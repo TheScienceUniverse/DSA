@@ -19,34 +19,37 @@ typedef struct TREE {
 // ---------- x ----------
 
 Tree* create_tree (void);
-Tree* duplicate_tree (Tree* source_tree);
-void delete_tree (Tree** tree_address);
-void display_tree (Tree* tree);
 void set_tree_root_node (Tree* tree, Node* root_node);
+Tree* duplicate_tree (Tree* source_tree);
+void display_tree (Tree* tree);
+void delete_tree (Tree** tree_address);
+// utilities
+void push_tree_node_to_stack (Stack* stack, Node* tree_node);
+void enqueue_tree_node_to_queue (Queue* queue, Node* node);
+Node* search_tree_by_node_name (Tree* tree, String* node_name);
+size_t count_tree_nodes (Tree* tree);
+void print_node_depth_whitespace (size_t node_depth);
+size_t get_tree_node_depth (Tree* tree, Node* tree_node);
+void display_tree_node (Node* node);
+void export_tree_data_for_web_view (Tree* tree);
+bool does_tree_contain_node (Tree* tree, Node* node);
+// parent-children queries related
 Node* get_Nth_child_node (Node* parent_node, size_t child_number);
 Node* get_first_child_node (Node* parent_node);
 Node* get_last_child_node (Node* parent_node);
 Node* get_parent_node (Node* child_node);
+void display_relation_with_root (Tree* tree, Node* node);
+// parent-children update related
 void append_child_node (Tree* tree, Node* parent_node, Node* child_node);
 void append_sibling_node (Tree* tree, Node* node, Node* sibling_node);
-void push_tree_node_to_stack (Stack* stack, Node* tree_node);
-void enqueue_tree_node_to_queue (Queue* queue, Node* node);
-void display_relation_with_root (Tree* tree, Node* node);
 void display_child_node_list (Node* parent_node);
-Node* search_tree_by_node_name (Tree* tree, String* node_name);
 void display_sub_tree (Tree* tree, Node* node);
-size_t count_tree_nodes (Tree* tree);
 void delete_node_from_tree (Tree* tree, Node* node);
 Tree* create_sub_tree_from_node (Node* node);
 void detach_node_from_parent (Node* child_node);
-void print_node_depth_whitespace (size_t node_depth);
-size_t get_tree_node_depth (Tree* tree, Node* tree_node);
 void delete_tree_nodes_by_name (Tree* tree, String* node_name);
-void display_tree_node (Node* node);
-void export_tree_data_for_web_view (Tree* tree);
 void display_path_towards_root (Tree* tree, Node* node);
 Node* remove_child_node (Tree* tree, Node* parent_node);
-bool does_tree_contain_node (Tree* tree, Node* node);
 Node* get_last_child_node_address (Node* parent_node); // returns actual address; handle with care
 Node* get_parent_node_address (Node* child_node); // returns actual address; handle with care
 

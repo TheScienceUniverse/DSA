@@ -15,66 +15,25 @@ Tree* create_tree () {
 	return tree;
 }
 
-void delete_tree (Tree** tree_address) {
-	if (*tree_address == NULL) {
-		// perror ("Tree does not exists to delete!");
+void set_tree_root_node (Tree* tree, Node* node) {
+	if (tree == NULL) {
+		perror ("Tree does not exist to add Root!");
 		return;
 	}
 
-	if ((*tree_address) -> node_count == 0) {
-		log_memory (DS_Tree, sizeof (Tree), *tree_address, false);
-		ERASE (tree_address, sizeof (Tree));
+	if (node == NULL) {
+		perror ("Node does not exist to add Root!");
 		return;
 	}
 
-	Tree* tree = *tree_address;
-	ssize_t i;
-	size_t address_count;
-	Node* node;
-	Node* x_node;
-	Stack* stack = create_stack ();
-	Node* stack_node = create_node (N_Stack);
-	size_t visited_node_count = 1;
-
-	stack_node -> data = create_address_data (tree -> root_node);
-	push_node_onto_stack (stack, stack_node);
-
-	while (
-		tree -> node_count >= visited_node_count
-		&& stack -> size > 0
-	) {
-		x_node = pop_node_from_stack (stack);
-		node = x_node -> data -> address;
-		x_node -> data -> address = NULL;
-		delete_node (&x_node);
-		address_count = node -> address_list -> item_count;
-
-		if (1 > address_count) {
-			delete_node (&node);
-			continue;
-		}
-
-		i = address_count;
-
-		while (--i) {	// storing backwards to pick up in proper order
-			Data* data = get_list_data_at_index (node -> address_list, i);
-			stack_node -> data -> address = data -> address;
-			delete_data (&data);
-			push_node_onto_stack (stack, stack_node);
-		}
-
-		delete_node (&node);
-
-		++ visited_node_count;
+	if (tree -> root_node != NULL) {
+		perror ("Tree already have root node!");
+		return;
 	}
 
-	delete_node (&stack_node);
-
-	node = NULL;
-	delete_stack (&stack);
-
-	log_memory (DS_Tree, sizeof (Tree), *tree_address, false);
-	ERASE (tree_address, sizeof (Tree));
+	tree -> root_node = duplicate_node (node);
+	tree -> root_node -> address_list -> head_chunk -> first_data_address -> address = NULL;
+	++ tree -> node_count;
 }
 
 void display_tree (Tree* tree) {
@@ -156,26 +115,77 @@ void display_tree (Tree* tree) {
 	delete_stack (&stack);
 }
 
-void set_tree_root_node (Tree* tree, Node* node) {
-	if (tree == NULL) {
-		perror ("Tree does not exist to add Root!");
+void delete_tree (Tree** tree_address) {
+	if (*tree_address == NULL) {
+		// perror ("Tree does not exists to delete!");
 		return;
 	}
 
-	if (node == NULL) {
-		perror ("Node does not exist to add Root!");
+	if ((*tree_address) -> node_count == 0) {
+		log_memory (DS_Tree, sizeof (Tree), *tree_address, false);
+		ERASE (tree_address, sizeof (Tree));
 		return;
 	}
 
-	if (tree -> root_node != NULL) {
-		perror ("Tree already have root node!");
-		return;
+	Tree* tree = *tree_address;
+	ssize_t i;
+	size_t address_count;
+	Node* node;
+	Node* x_node;
+	Stack* stack = create_stack ();
+	Node* stack_node = create_node (N_Stack);
+	size_t visited_node_count = 1;
+
+	stack_node -> data = create_address_data (tree -> root_node);
+	push_node_onto_stack (stack, stack_node);
+
+	while (
+		tree -> node_count >= visited_node_count
+		&& stack -> size > 0
+	) {
+		x_node = pop_node_from_stack (stack);
+		node = x_node -> data -> address;
+		x_node -> data -> address = NULL;
+		delete_node (&x_node);
+		address_count = node -> address_list -> item_count;
+
+		if (1 > address_count) {
+			delete_node (&node);
+			continue;
+		}
+
+		i = address_count;
+
+		while (--i) {	// storing backwards to pick up in proper order
+			Data* data = get_list_data_at_index (node -> address_list, i);
+			stack_node -> data -> address = data -> address;
+			delete_data (&data);
+			push_node_onto_stack (stack, stack_node);
+		}
+
+		delete_node (&node);
+
+		++ visited_node_count;
 	}
 
-	tree -> root_node = duplicate_node (node);
-	tree -> root_node -> address_list -> head_chunk -> first_data_address -> address = NULL;
-	++ tree -> node_count;
+	delete_node (&stack_node);
+
+	node = NULL;
+	delete_stack (&stack);
+
+	log_memory (DS_Tree, sizeof (Tree), *tree_address, false);
+	ERASE (tree_address, sizeof (Tree));
 }
+
+
+
+
+
+
+
+
+
+
 
 void append_child_node (Tree* tree, Node* parent_node, Node* child_node) {
 	if (NULL == tree) {

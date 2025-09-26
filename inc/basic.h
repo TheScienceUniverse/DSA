@@ -41,14 +41,21 @@ typedef enum DATA_STRUCTURE_TYPE {
 	, DS_Graph
 } DS_Type;
 
+// raw bytes related
 void fill_mem_zero (void* base_address, size_t num_bytes);
 bool check_mem_zero (void* base_address, size_t num_bytes);
-void copy_byte_stream (size_t length, BYTE* src_addr, BYTE* dst_addr);
-void display_byte_stream (size_t num_bytes, BYTE* base_address);
-void display_bit_stream (size_t num_bytes, BYTE* base_address);
+void copy_raw_bytes (size_t length, BYTE* src_addr, BYTE* dst_addr);
+void display_raw_bytes (size_t num_bytes, BYTE* base_address);
+void display_raw_bits (size_t num_bytes, BYTE* base_address);
+
+// numbers related
 size_t get_number_of_digits (size_t number, size_t base);
 size_t exponentiate (size_t base, size_t power);
+
+// custom display
 void put_s (char const str [static 1]);	// own puts function without newline
+
+// memory allocate and release logging for garbage collector program
 void log_memory (DS_Type data_structure_type, size_t size, void* start_address, bool exists);
 void display_memory_log (void);
 
@@ -62,6 +69,7 @@ void display_memory_log (void);
 	*pointer_address = NULL;					\
 }
 
+// shortcut for printing spaces like C++
 #define ENDL(void) { putchar ('\n'); }
 
 #endif	// BASIC_H

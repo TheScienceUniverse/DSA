@@ -90,7 +90,7 @@ call    2 returned 1
     %%%%%:   35-block 30
 call    3 never executed
         -:   36:
-        1:   37:	Chunk* last_chunk = get_last_chunk (chunk);
+        1:   37:	Chunk* last_chunk = get_last_chunk_reference (chunk);
         1:   37-block 31
 call    0 returned 1
         -:   38:
@@ -139,7 +139,7 @@ call    0 returned 300
 call    0 returned 300
         -:   48:	}
         -:   49:
-        1:   50:	last_chunk = get_last_chunk (chunk);
+        1:   50:	last_chunk = get_last_chunk_reference (chunk);
         1:   50-block 49
 call    0 returned 1
         -:   51:
@@ -189,7 +189,7 @@ call    0 returned 500
         -:   61:	}
         -:   62:
         -:   63:	// display_linked_chunks (chunk);
-        1:   64:	last_chunk = get_last_chunk (chunk);
+        1:   64:	last_chunk = get_last_chunk_reference (chunk);
         1:   64-block 67
 call    0 returned 1
         -:   65:

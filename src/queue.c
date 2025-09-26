@@ -15,29 +15,6 @@ Queue *create_queue (void) {
 	return queue;
 }
 
-void delete_queue (Queue** queue_address) {
-	if (*queue_address == NULL) {
-		// perror ("Queue does not exist to delete!");
-		return;
-	}
-
-	Queue* queue = *queue_address;
-
-	Node* node = queue -> front_node;
-	Node* del_node;
-
-	for (size_t i = 0; i < queue -> size; i++) {
-		del_node = node;
-		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
-		delete_node (&del_node);
-	}
-
-	queue = NULL;
-
-	log_memory (DS_Queue, sizeof (Queue), *queue_address, false);
-	ERASE (queue_address, sizeof (Queue));
-}
-
 void display_queue (Queue* queue) {
 	if (queue == NULL) {
 		perror ("Queue does not exist to display!");
@@ -86,6 +63,29 @@ void display_queue_details (Queue* queue) {
 	}
 
 	printf ("\n");
+}
+
+void delete_queue (Queue** queue_address) {
+	if (*queue_address == NULL) {
+		// perror ("Queue does not exist to delete!");
+		return;
+	}
+
+	Queue* queue = *queue_address;
+
+	Node* node = queue -> front_node;
+	Node* del_node;
+
+	for (size_t i = 0; i < queue -> size; i++) {
+		del_node = node;
+		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
+		delete_node (&del_node);
+	}
+
+	queue = NULL;
+
+	log_memory (DS_Queue, sizeof (Queue), *queue_address, false);
+	ERASE (queue_address, sizeof (Queue));
 }
 
 void enqueue (Queue* queue, Node* node) {

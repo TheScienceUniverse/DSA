@@ -34,7 +34,7 @@ void test_chunk (void) {
 
 	TEST (10 == chunk -> data_count, "Chunk filled with data");
 
-	Chunk* last_chunk = get_last_chunk (chunk);
+	Chunk* last_chunk = get_last_chunk_reference (chunk);
 
 	TEST (NULL != last_chunk, "Last chunk exists");
 	TEST (0 < last_chunk -> id, "Data inserted into chunk");
@@ -47,7 +47,7 @@ void test_chunk (void) {
 		delete_data (&data);
 	}
 
-	last_chunk = get_last_chunk (chunk);
+	last_chunk = get_last_chunk_reference (chunk);
 
 	TEST (NULL != last_chunk, "Last chunk exists");
 	TEST (29 == last_chunk -> id, "Last chunk id check");
@@ -61,7 +61,7 @@ void test_chunk (void) {
 	}
 
 	// display_linked_chunks (chunk);
-	last_chunk = get_last_chunk (chunk);
+	last_chunk = get_last_chunk_reference (chunk);
 
 	TEST (NULL != last_chunk, "Last chunk exists");
 	TEST (0 == last_chunk -> id, "Last chunk id check");

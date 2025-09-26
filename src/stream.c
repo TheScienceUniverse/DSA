@@ -168,7 +168,7 @@ Stream* concatenate_streams (int count, ...) {
 			continue;
 		}
 
-		copy_byte_stream (stream -> length, (BYTE*)(stream -> base_addr), (BYTE*) ptr);
+		copy_raw_bytes (stream -> length, (BYTE*)(stream -> base_addr), (BYTE*) ptr);
 		ptr += stream -> length;
 	}
 

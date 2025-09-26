@@ -37,6 +37,21 @@ Node* create_node (Node_Type type) {
 	return node;
 }
 
+void set_node_name (Node* node, size_t length, char* name) {
+	if (node == NULL) {
+		perror ("Error! => Node doesn't exist.\n");
+		return;
+	}
+
+	if (node -> type == N_Graph) {
+		perror ("Can't set graph node name manually!\n");
+		return;
+	}
+
+	String* string = create_string (length, name);
+	node -> name = string;
+}
+
 void prepare_node_address_list (Node* node) {
 	if (NULL == node) {
 		perror ("Node does not exist to prepare address list!\n");
@@ -66,6 +81,20 @@ void prepare_node_address_list (Node* node) {
 	delete_data (&default_data);
 }
 
+void set_node_data (Node* node, Data* data) {
+	if (node == NULL) {
+		perror ("Error! => Node doesn't exist to set data\n");
+		return;
+	}
+
+	if (data == NULL) {
+		perror ("Error! => Data doesn't exist to set to node\n");
+		return;
+	}
+
+	node -> data = duplicate_data (data);
+}
+
 Node* duplicate_node (Node* node) {
 	if (node == NULL) {
 		perror ("Node does not exist to Duplicate!\n");
@@ -81,56 +110,6 @@ Node* duplicate_node (Node* node) {
 	}
 
 	return new_node;
-}
-
-void delete_node (Node** node_address) {
-	if (*node_address == NULL) {
-		// perror ("Node doesn't exist to delete!");
-		return;
-	}
-
-	Node* node = *node_address;
-
-	delete_string (&node -> name);
-	delete_data (&node -> data);
-
-	if (N_Undefined != node -> type) {
-		delete_list (&node -> address_list);
-	}
-
-	node = NULL;
-
-	log_memory (DS_Node, sizeof (Node), *node_address, false);
-	ERASE (node_address, sizeof (Node));
-}
-
-void set_node_name (Node* node, size_t length, char* name) {
-	if (node == NULL) {
-		perror ("Error! => Node doesn't exist.\n");
-		return;
-	}
-
-	if (node -> type == N_Graph) {
-		perror ("Can't set graph node name manually!\n");
-		return;
-	}
-
-	String* string = create_string (length, name);
-	node -> name = string;
-}
-
-void set_node_data (Node* node, Data* data) {
-	if (node == NULL) {
-		perror ("Error! => Node doesn't exist to set data\n");
-		return;
-	}
-
-	if (data == NULL) {
-		perror ("Error! => Data doesn't exist to set to node\n");
-		return;
-	}
-
-	node -> data = duplicate_data (data);
 }
 
 void display_node (Node* node) {
@@ -218,6 +197,27 @@ void display_node_details (Node* node) {
 	}
 
 	printf ("\n");
+}
+
+void delete_node (Node** node_address) {
+	if (*node_address == NULL) {
+		// perror ("Node doesn't exist to delete!");
+		return;
+	}
+
+	Node* node = *node_address;
+
+	delete_string (&node -> name);
+	delete_data (&node -> data);
+
+	if (N_Undefined != node -> type) {
+		delete_list (&node -> address_list);
+	}
+
+	node = NULL;
+
+	log_memory (DS_Node, sizeof (Node), *node_address, false);
+	ERASE (node_address, sizeof (Node));
 }
 
 void delete_temporary_node (Node** node_address) {

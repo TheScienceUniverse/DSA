@@ -16,9 +16,9 @@ typedef struct STACK {
 // ---------- x ----------
 
 Stack* create_stack (void);
-void delete_stack (Stack** stack_address);
 void display_stack (Stack* stack);
 void display_stack_details (Stack* stack);
+void delete_stack (Stack** stack_address);
 void push_node_onto_stack (Stack* stack, Node* node);
 Node* pop_node_from_stack (Stack* stack);
 void peek_data_from_stack (Stack* stack);

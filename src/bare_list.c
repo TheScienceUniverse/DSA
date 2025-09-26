@@ -43,6 +43,57 @@ Bare_List* duplicate_bare_list (Bare_List* old_list) {
 	return new_list;
 }
 
+void display_bare_list (Bare_List* list) {
+	if (list -> item_count == 0) {
+		perror ("Bare_List is Empty!");
+		return;
+	}
+
+	Data* data;
+
+	printf ("Bare_List (%lu) : [", list -> item_count);
+
+	for (size_t i = 0; i < list -> item_count; i++) {
+		data = *(list -> item_addresses + i);
+
+		if (i != 0) {
+			printf (", ");
+		}
+
+		display_data (data);
+	}
+
+	printf ("]\n");
+}
+
+void display_bare_list_addresses (Bare_List* list) {
+	if (list == NULL) {
+		//perror ("Bare_List does not exist to display!");
+		return;
+	}
+
+	if (list -> item_count == 0) {
+		//perror ("Bare_List is Empty to display!");
+		return;
+	}
+
+	void* address;
+
+	printf ("Bare_List (%lu) : [", list -> item_count);
+
+	for (size_t i = 0; i < list -> item_count; i++) {
+		address = *(list -> item_addresses + i);
+
+		if (i != 0) {
+			printf (", ");
+		}
+
+		printf ("%p", address);
+	}
+
+	printf ("]");
+}
+
 void forget_bare_list (Bare_List** list_address) {
 	if (*list_address == NULL) {
 		perror ("Bare_List does not exist to Forget!");
@@ -93,57 +144,6 @@ void add_to_bare_list (Bare_List* list, void* data, bool data_copy_needed) {
 	}
 
 	++ list -> item_count;
-}
-
-void display_bare_list (Bare_List* list) {
-	if (list -> item_count == 0) {
-		perror ("Bare_List is Empty!");
-		return;
-	}
-
-	Data* data;
-
-	printf ("Bare_List (%lu) : [", list -> item_count);
-
-	for (size_t i = 0; i < list -> item_count; i++) {
-		data = *(list -> item_addresses + i);
-
-		if (i != 0) {
-			printf (", ");
-		}
-
-		display_data (data);
-	}
-
-	printf ("]\n");
-}
-
-void display_bare_list_addresses (Bare_List* list) {
-	if (list == NULL) {
-		//perror ("Bare_List does not exist to display!");
-		return;
-	}
-
-	if (list -> item_count == 0) {
-		//perror ("Bare_List is Empty to display!");
-		return;
-	}
-
-	void* address;
-
-	printf ("Bare_List (%lu) : [", list -> item_count);
-
-	for (size_t i = 0; i < list -> item_count; i++) {
-		address = *(list -> item_addresses + i);
-
-		if (i != 0) {
-			printf (", ");
-		}
-
-		printf ("%p", address);
-	}
-
-	printf ("]");
 }
 
 bool remove_address_from_bare_list (Bare_List* list, void* address) {	// this does not hard delete memory data, just forgets or removes the address from list

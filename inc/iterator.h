@@ -19,8 +19,8 @@ typedef struct ITERATOR {
 // ---------- x ----------
 
 Iterator* create_iterator (List* list, ssize_t stride);
-void delete_iterator (Iterator** iterator_address);
 void display_iterator_details (Iterator* iterator);
+void delete_iterator (Iterator** iterator_address);
 void update_iterator_stride (Iterator* iterator, ssize_t stride);
 void move_iterator (Iterator* iterator);
 

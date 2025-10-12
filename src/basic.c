@@ -114,7 +114,12 @@ void put_s (char const str [static 1]) {
 	}
 }
 
-void log_memory (DS_Type data_structure_type, size_t size, void* start_address, bool exists) {
+void log_memory (DS_Type data_structure_type, size_t size, void* address, bool exists) {
+//	printf ("logging: ");
+//	display_raw_bytes (sizeof (void*), (BYTE*) &address);
+//	printf (" (%p)\n", address);
+
+
 	FILE* file = fopen ("./log/memory.log", "ab");
 
 	if (NULL == file) {
@@ -124,8 +129,8 @@ void log_memory (DS_Type data_structure_type, size_t size, void* start_address, 
 
 	size_t written_size __attribute__((__unused__));
 
-	written_size = fprintf (file, "\n");
-	written_size = fwrite (&start_address, sizeof (void*), 1, file);
+	written_size = fputc ('\n', file);
+	written_size = fwrite (&address, sizeof (void*), 1, file);
 	written_size = fwrite (&size, sizeof (size_t), 1, file);
 	written_size = fwrite (&data_structure_type, sizeof (DS_Type), 1, file);
 	written_size = fwrite (&exists, sizeof (bool), 1, file);
@@ -142,7 +147,7 @@ void display_memory_log (void) {
 	}
 
 	size_t read_size __attribute__((__unused__));
-	void* start_address = NULL;
+	void* address = NULL;
 	DS_Type data_structure_type;
 	size_t size;
 	char c;
@@ -152,7 +157,7 @@ void display_memory_log (void) {
 	printf (" ----- + -------------- + ---- + --------------\n");
 
 	while ((c = fgetc (file)) != EOF) {
-		read_size = fread (&start_address, sizeof (void*), 1, file);
+		read_size = fread (&address, sizeof (void*), 1, file);
 		read_size = fread (&size, sizeof (size_t), 1, file);
 		read_size = fread (&data_structure_type, sizeof (DS_Type), 1, file);
 		read_size = fread (&exists, sizeof (bool), 1, file);
@@ -165,7 +170,7 @@ void display_memory_log (void) {
 			printf (NORMAL_GREEN "   ✓  " RESET_STYLE);
 		}
 
-		printf (" | %p", start_address);	// "%018p"
+		printf (" | %p", address);	// "%018p"
 
 		printf (" | %c%03lu |", (exists) ? '-' : '+', size);
 
@@ -175,55 +180,63 @@ void display_memory_log (void) {
 			put_s (" Deleted ");
 		}
 
-		switch (data_structure_type) {
-			case DS_Raw:
-				puts ("Raw");
-				break;
-			case DS_Stream:
-				puts ("Stream");
-				break;
-			case DS_String:
-				puts ("String");
-				break;
-			case DS_Data:
-				puts ("Data");
-				break;
-			case DS_Bare_List:
-				puts ("Bare_List");
-				break;
-			case DS_Chunk:
-				puts ("Chunk");
-				break;
-			case DS_List:
-				puts ("List");
-				break;
-			case DS_Node:
-				puts ("Node");
-				break;
-			case DS_Linked_List:
-				puts ("Linked_List");
-				break;
-			case DS_Stack:
-				puts ("Stack");
-				break;
-			case DS_Queue:
-				puts ("Queue");
-				break;
-			case DS_Tree:
-				puts ("Tree");
-				break;
-			case DS_Graph:
-				puts ("Graph");
-				break;
-			default:
-				puts ("N/A");
-				break;
-		}
+		display_data_structure_type (data_structure_type);
 
+		ENDL();
 		// putchar (c);
 	}
 
 	printf (" ----- + -------------- + ---- + --------------\n");
 
 	fclose (file);
+}
+
+void display_data_structure_type (DS_Type data_structure_type) {
+	switch (data_structure_type) {
+		case DS_Raw:
+			put_s ("Raw");
+			break;
+		case DS_Stream:
+			put_s ("Stream");
+			break;
+		case DS_String:
+			put_s ("String");
+			break;
+		case DS_Data:
+			put_s ("Data");
+			break;
+		case DS_Bare_List:
+			put_s ("Bare_List");
+			break;
+		case DS_Chunk:
+			put_s ("Chunk");
+			break;
+		case DS_List:
+			put_s ("List");
+			break;
+		case DS_Iterator:
+			put_s ("Iterator");
+			break;
+		case DS_Node:
+			put_s ("Node");
+			break;
+		case DS_Linked_List:
+			put_s ("Linked_List");
+			break;
+		case DS_Stack:
+			put_s ("Stack");
+			break;
+		case DS_Queue:
+			put_s ("Queue");
+			break;
+		case DS_Tree:
+			put_s ("Tree");
+			break;
+		case DS_Graph:
+			put_s ("Graph");
+			break;
+		default:
+			put_s ("~_~");
+			break;
+	}
 }

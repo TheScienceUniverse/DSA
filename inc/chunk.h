@@ -37,5 +37,6 @@ Data* remove_data_from_chunk (Chunk* chunk);
 Chunk* get_first_chunk_reference (Chunk* chunk);
 Chunk* get_last_chunk_reference (Chunk* chunk);
 void reduce_unused_chunks (Chunk* chunk);
+void clear_chunk_residue_data (Chunk* chunk);
 
 #endif	// CHUNK_H

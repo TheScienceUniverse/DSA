@@ -341,3 +341,17 @@ void reduce_unused_chunks (Chunk* chunk) {
 		last_chunk = penultimate_chunk;
 	}
 }
+
+void clear_chunk_residue_data (Chunk* chunk) {
+	if (NULL == chunk) {
+		perror ("Provided chunk does not exist to clear data from index!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	size_t i = chunk -> data_count - 1;
+	Data* data = chunk -> first_data_address + i;
+
+	for ( ; i < chunk -> data_count; i++) {
+		empty_data (data);
+	}
+}

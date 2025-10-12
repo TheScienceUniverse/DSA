@@ -39,6 +39,7 @@ typedef enum DATA_STRUCTURE_TYPE {
 	, DS_Queue
 	, DS_Tree
 	, DS_Graph
+	, DS_Type_Count	// automatically assign, as these are not custom-assigned
 } DS_Type;
 
 // raw bytes related
@@ -54,6 +55,7 @@ size_t exponentiate (size_t base, size_t power);
 
 // custom display
 void put_s (char const str [static 1]);	// own puts function without newline
+void display_data_structure_type (DS_Type data_structure_type);
 
 // memory allocate and release logging for garbage collector program
 void log_memory (DS_Type data_structure_type, size_t size, void* start_address, bool exists);

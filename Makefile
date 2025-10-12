@@ -59,7 +59,7 @@ $(OBJDIR)/test_%.o: $(TSTDIR)/%.c
 
 $(MEMCUTABLE): $(OBJECTS) mem.c
 	@echo "-> Linking all object files and generating memory logger binary file ..."
-	@$(CC) $(CFLAGS) -o $@ ./mem.c $(OBJDIR)/basic.o $(OBJDIR)/string.o
+	@$(CC) $(CFLAGS) -o $@ ./mem.c $(OBJDIR)/basic.o $(OBJDIR)/string.o $(OBJDIR)/chunk.o $(OBJDIR)/list.o $(OBJDIR)/iterator.o $(OBJDIR)/data.o
 	@chmod +x $(MEMCUTABLE)
 #	@echo "... Done!"
 #	@echo
@@ -71,7 +71,7 @@ $(BDGCUTABLE): shield.c
 $(LIBRARY): $(OBJECTS)
 	@gcc $(CFLAGS) $(CFLAGS_EXTRA) -o $@ $^
 
-.PHONY: clean again check flow memlog ccov
+.PHONY: clean again check flow memlog memclear ccov
 
 clean:
 	@echo "-> Removing generated files ..."
@@ -93,6 +93,9 @@ check:
 
 memlog:
 	./bin/mem show
+
+memclear:
+	./bin/mem clear
 
 ccov:
 	@echo "-> Calculating code coverage..."

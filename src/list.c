@@ -399,29 +399,34 @@ size_t get_last_list_index_of_data (List* list , Data* data) {
 		exit (EXIT_FAILURE);
 	}
 
+	if (0 == list -> item_count) {
+//		perror ("List is empty to get index from list!\n");
+		return -1;
+	}
+
 	if (NULL == data) {
 		perror ("Data does not exist to get index from list!\n");
 		exit (EXIT_FAILURE);
 	}
 
 	size_t list_data_index = list -> item_count - 1;
-	Chunk* chunk = list -> head_chunk;
+	Chunk* chunk = list -> tail_chunk;
 	size_t chunk_data_index = chunk -> data_count - 1;
 	Data* chunk_data = NULL;
 
-	for ( ; list_data_index != 0; list_data_index--) {
+	for ( ; list_data_index != (size_t)(-1) && list_data_index < list -> item_count; list_data_index--) {
 		chunk_data = chunk -> first_data_address + chunk_data_index--;
 
-		if (
-			Cmp_Identical == compare_data (data, chunk_data)
-			|| Cmp_Equivalent == compare_data (data, chunk_data)
-		) {
+		if (Cmp_Different != compare_data (data, chunk_data)) {
 			break;
 		}
 
-		if (0 == chunk_data_index) {
+		if ((size_t)(-1) == chunk_data_index) {	// -1 = 0xffffffff
 			chunk = chunk -> previous_chunk;
-			chunk_data_index = chunk -> data_count - 1;
+
+			if (NULL != chunk) {
+				chunk_data_index = chunk -> data_count - 1;
+			}
 		}
 	}
 
@@ -586,6 +591,11 @@ void delete_from_list_at_index (List* list, size_t index) {
 		exit (EXIT_FAILURE);
 	}
 
+	if (0 == list -> item_count) {
+		// perror ("List is empty to delete data from index!\n");
+		return;
+	}
+
 	if (index > list -> item_count) {
 		perror ("Index out of bound to delete data from index!\n");
 		exit (EXIT_FAILURE);
@@ -599,18 +609,20 @@ void delete_from_list_at_index (List* list, size_t index) {
 
 	// move to start position
 	for ( ; list_data_index < index; list_data_index++) {
-		if (chunk -> data_count == chunk_data_index++) {
+		if (chunk -> capacity - 1 == chunk_data_index++) {
 			chunk_data_index = 0;
 			chunk = chunk -> next_chunk;
 		}
 	}
 
 	left_data = chunk -> first_data_address + chunk_data_index;
-
+//printf ("list-index: %ld chunk-index: %ld\n");
+//printf ("Left data: ");
+//display_data (left_data);
+//ENDL();
 	// start copying data
 	for ( ; list_data_index < list -> item_count; list_data_index++) {
-
-		if (chunk -> data_count == chunk_data_index) {
+		if (chunk -> capacity == chunk_data_index) {
 			chunk_data_index = 0;
 			chunk = chunk -> next_chunk;
 		}
@@ -620,13 +632,12 @@ void delete_from_list_at_index (List* list, size_t index) {
 		left_data = right_data;
 	}
 
+	empty_data (right_data);
+
 	chunk -> data_count--;
 	list -> item_count--;
 
-	if (
-		0 == chunk -> data_count
-		&& 0 != chunk -> id
-	) {
+	if (0 == chunk -> data_count) {
 		list -> tail_chunk = reduce_chunk (chunk);
 	}
 }
@@ -715,12 +726,17 @@ void clear_list (List* list) {
 
 void delete_first_instance_from_list (List* list, Data* data) {
 	if (NULL == list) {
-		perror ("List does not exist to delete data from index!\n");
+		perror ("List does not exist to delete data's first instance from!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (0 == list -> item_count) {
+		perror ("List is empty to delete data's first instance from!\n");
 		exit (EXIT_FAILURE);
 	}
 
 	if (NULL == data) {
-		perror ("Data does not exist to search an delete from list!\n");
+		perror ("Data does not exist to search and delete first instance from list!\n");
 		exit (EXIT_FAILURE);
 	}
 
@@ -777,63 +793,24 @@ void delete_first_instance_from_list (List* list, Data* data) {
 
 void delete_last_instance_from_list (List* list, Data* data) {
 	if (NULL == list) {
-		perror ("List does not exist to delete data from index!\n");
+		perror ("List does not exist to delete data's last instance from!\n");
 		exit (EXIT_FAILURE);
+	}
+
+	if (0 == list -> item_count) {
+		// perror ("List is empty to delete data's last instance from!\n");
+		return;
 	}
 
 	if (NULL == data) {
-		perror ("Data does not exist to search an delete from list!\n");
+		perror ("Data does not exist to search and delete last instance from list!\n");
 		exit (EXIT_FAILURE);
 	}
 
-	Chunk* chunk = list -> tail_chunk;
-	size_t list_data_index = list -> item_count - 1;
-	size_t chunk_data_index = chunk -> data_count - 1;
-	Data* left_data = NULL;
-	Data* right_data = NULL;
-	Compare_Status cmp_stat;
+	size_t index = get_last_list_index_of_data (list, data);
 
-	// move to last instance position
-	for ( ; list_data_index > 0; list_data_index--) {
-		left_data = chunk -> first_data_address + chunk_data_index;
-		cmp_stat = compare_data (left_data, data);
-
-		if (
-			Cmp_Identical == cmp_stat
-			|| Cmp_Equivalent == cmp_stat
-		) {
-			break;
-		}
-
-		if (chunk -> capacity == chunk_data_index--) {
-			chunk_data_index = 0;
-			chunk = chunk -> next_chunk;
-		}
-	}
-
-	// start copying data
-	for ( ; list_data_index < list -> item_count; list_data_index++) {
-
-		if (chunk -> capacity == chunk_data_index) {
-			chunk_data_index = 0;
-			chunk = chunk -> next_chunk;
-		}
-
-		right_data = chunk -> first_data_address + chunk_data_index++;
-		copy_data (right_data, left_data);
-		left_data = right_data;
-	}
-
-	empty_data (right_data);
-
-	chunk -> data_count--;
-	list -> item_count--;
-
-	if (
-		0 == chunk -> data_count
-		&& 0 != chunk -> id
-	) {
-		list -> tail_chunk = reduce_chunk (chunk);
+	if ((size_t)(-1) != index) {
+		delete_from_list_at_index (list, index);
 	}
 }
 

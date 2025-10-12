@@ -2,6 +2,8 @@ make clean
 make again
 make check
 make ccov
+#make memlog
+make memclear
 
 : '
 gcc -Wall -o ./bin/bdg shield.c

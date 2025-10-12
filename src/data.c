@@ -64,10 +64,10 @@ void display_data (Data* data) {
 
 	switch (data -> type) {
 		case DT_Undefined:
-			printf ("N/A");
+			printf ("~_~");
 			break;
 		case DT_Empty:
-			printf ("---");
+			printf ("...");
 			break;
 		case DT_Address:
 			printf ("%p", data -> address);
@@ -122,7 +122,7 @@ void display_data_details (Data* data) {
 			printf ("(Character) Value: %c", *((char*) data -> address));
 			break;
 		case DT_Binary:
-			printf ("(Binary) Value: ");
+			printf ("(Binary) Size: %zu Value: ", data -> size);
 			display_binary_data (data -> size, (BYTE*) data -> address);
 			break;
 		case DT_Integer:

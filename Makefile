@@ -59,7 +59,7 @@ $(OBJDIR)/test_%.o: $(TSTDIR)/%.c
 
 $(MEMCUTABLE): $(OBJECTS) mem.c
 	@echo "-> Linking all object files and generating memory logger binary file ..."
-	@$(CC) $(CFLAGS) -o $@ ./mem.c $(OBJDIR)/basic.o $(OBJDIR)/string.o $(OBJDIR)/chunk.o $(OBJDIR)/list.o $(OBJDIR)/iterator.o $(OBJDIR)/data.o
+	@$(CC) $(CFLAGS) -o $@ ./mem.c $(OBJECTS)
 	@chmod +x $(MEMCUTABLE)
 #	@echo "... Done!"
 #	@echo
@@ -92,10 +92,12 @@ check:
 	@mv -f shield ./aft/test_status.svg
 
 memlog:
-	./bin/mem show
+	@echo "-> Displaying memory log file in readable format..."
+	@./bin/mem show
 
 memclear:
-	./bin/mem clear
+	@echo "-> Check counts of leftout memory for each data-structures..."
+	@./bin/mem clear
 
 ccov:
 	@echo "-> Calculating code coverage..."

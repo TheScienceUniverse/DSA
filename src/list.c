@@ -89,6 +89,60 @@ void display_list_details (List* list) {
 	putchar ('\n');
 }
 
+void display_list_subset (List* list, size_t start_index, size_t end_index) {
+	Chunk* chunk = list -> head_chunk;
+	size_t list_data_index = 0;
+	size_t chunk_data_index = 0;
+	Data* chunk_data;
+	bool first_item = true;
+
+	// move to start position
+	while (
+		list_data_index < start_index
+	) {
+		++chunk_data_index;
+		++list_data_index;
+
+		if (
+			NULL != chunk
+			&& chunk -> capacity == chunk_data_index
+		) {
+			chunk = chunk -> next_chunk;
+			chunk_data_index = 0;
+		}
+	}
+
+	// print metadata
+	printf ("List [%zu] (%zu - %zu) => ", list -> item_count, start_index, end_index);
+
+	// start printing data
+	while (list_data_index <= end_index) {
+		chunk_data = chunk -> first_data_address + chunk_data_index;
+
+		if (!first_item) {
+			putchar (',');
+		} else {
+			first_item = false;
+		}
+
+		printf (" (%zu) ", list_data_index);
+		display_data (chunk_data);
+
+		++chunk_data_index;
+		++list_data_index;
+
+		if (
+			NULL != chunk
+			&& chunk -> capacity == chunk_data_index
+		) {
+			chunk = chunk -> next_chunk;
+			chunk_data_index = 0;
+		}
+	}
+
+	ENDL();
+}
+
 void delete_list (List** list_address) {
 	if (*list_address == NULL) {
 		perror ("List does not exist to Delete!");

@@ -174,21 +174,21 @@ call    3 never executed
         1:   64-block 60
 call    0 returned 1
        1*:   65:	TEST (0 == iterator -> chunk -> id, "Matched expected backward chunk id (0) from iterator");
-branch  0 taken 1 (fallthrough)
-branch  1 taken 0
-        1:   65-block 62
-call    2 returned 1
-    %%%%%:   65-block 63
-call    3 never executed
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+    %%%%%:   65-block 62
+call    2 never executed
+        1:   65-block 63
+call    3 returned 1
        1*:   66:	TEST (Cmp_Different != compare_data (data, iterator -> data), "Matched backward data (12 - 5) from list and iterator");
         1:   66-block 64
 call    0 returned 1
-branch  1 taken 1 (fallthrough)
-branch  2 taken 0
-        1:   66-block 66
-call    3 returned 1
-    %%%%%:   66-block 67
-call    4 never executed
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:   66-block 66
+call    3 never executed
+        1:   66-block 67
+call    4 returned 1
         1:   67:	delete_data (&data);
         1:   67-block 68
 call    0 returned 1

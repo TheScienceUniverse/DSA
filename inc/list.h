@@ -20,6 +20,7 @@ List* create_list (size_t expected_capacity);
 List* duplicate_list (List* list);
 void display_list (List* list);
 void display_list_details (List* list);
+void display_list_subset (List* list, size_t start_index, size_t end_index);
 void delete_list (List** list_address);
 void forget_list (List** list_address);
 // list configuration related

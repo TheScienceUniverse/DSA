@@ -226,6 +226,7 @@ void delete_temporary_node (Node** node_address) {
 	forget_data (&(node -> data));
 	forget_list (&(node -> address_list));
 
+	log_memory (DS_Node, sizeof (Node), node, false);
 	ERASE (node_address, sizeof (Node));
 }
 

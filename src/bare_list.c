@@ -10,20 +10,40 @@ Bare_List* create_bare_list (size_t item_count) {
 	log_memory (DS_Bare_List, sizeof (Bare_List), list, true);
 
 	list -> item_count = 0;
+	list -> capacity = 0;
 	list -> item_addresses = NULL;
 
-	if (item_count < 10) {
-		while (item_count--) {
-			add_to_bare_list (list, NULL, false);
-		}
-	} else {
-		list -> item_count = item_count;
-		list -> item_addresses = (void**) malloc (list -> item_count * sizeof (void*));
+	size_t capacity = calculate_bare_list_capacity (item_count);
+	list -> capacity = capacity;
 
-		log_memory (DS_Raw, item_count * sizeof (void*), list -> item_addresses, true);
-	}
+	list -> item_addresses = (void**) malloc (capacity * sizeof (void*));
+	log_memory (DS_Raw, capacity * sizeof (void*), list -> item_addresses, true);
 
 	return list;
+}
+
+size_t calculate_bare_list_capacity (size_t item_count) {
+	const size_t MIN_CHUNK_CAP = 10;	// minimum chunk capacity
+	const size_t MAX_CHUNK_CAP = 1000;	// maximum chunk capacity
+
+	size_t digit_count = get_number_of_digits (item_count, 10);
+	size_t capacity = exponentiate (10, digit_count);
+
+	if (item_count > capacity) {
+		capacity *= 10;
+	}
+
+	if (((capacity - item_count) / digit_count) < 50) {
+		capacity >>= 1;	// capacity /= 2
+	}
+
+	if (MIN_CHUNK_CAP > capacity) {
+		capacity = MIN_CHUNK_CAP;
+	} else if (MAX_CHUNK_CAP < capacity) {
+		capacity = MAX_CHUNK_CAP;
+	}
+
+	return capacity;
 }
 
 Bare_List* duplicate_bare_list (Bare_List* old_list) {
@@ -52,6 +72,29 @@ void display_bare_list (Bare_List* list) {
 	Data* data;
 
 	printf ("Bare_List (%lu) : [", list -> item_count);
+
+	for (size_t i = 0; i < list -> item_count; i++) {
+		data = *(list -> item_addresses + i);
+
+		if (i != 0) {
+			printf (", ");
+		}
+
+		display_data (data);
+	}
+
+	printf ("]\n");
+}
+
+void display_bare_list_details (Bare_List* list) {
+	if (list -> item_count == 0) {
+		perror ("Bare_List is Empty!");
+		return;
+	}
+
+	Data* data;
+
+	printf ("Bare_List :=> Item-Count: %zu, Capacity: %zu, Conetent: [", list -> item_count, list -> capacity);
 
 	for (size_t i = 0; i < list -> item_count; i++) {
 		data = *(list -> item_addresses + i);
@@ -118,10 +161,11 @@ void delete_bare_list (Bare_List** list_address) {
 
 	for (size_t i = 0; i < list -> item_count; i++) {
 		data = *(list -> item_addresses + i);
-
-		log_memory (DS_Raw, (list -> item_count) * sizeof (void*), list -> item_addresses, false);
-		ERASE (list -> item_addresses, (list -> item_count) * sizeof (void*));
+		delete_data (&data);
 	}
+
+	log_memory (DS_Raw, (list -> capacity) * sizeof (void*), list -> item_addresses, false);
+	ERASE (&(list -> item_addresses), (list -> capacity) * sizeof (void*));
 
 	list = NULL;
 
@@ -129,7 +173,7 @@ void delete_bare_list (Bare_List** list_address) {
 	ERASE (list_address, sizeof (Bare_List));
 }
 
-void add_to_bare_list (Bare_List* list, void* data, bool data_copy_needed) {
+void add_to_bare_list (Bare_List* list, Data* data, bool data_copy_needed) {
 	if (list == NULL) {
 		perror ("Bare_List does not exist to add data!");
 		return;

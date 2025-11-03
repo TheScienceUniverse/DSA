@@ -87,6 +87,7 @@ void display_chunk_details (Chunk* chunk) {
 	printf (", Data count: (%lu)", chunk -> data_count);
 	printf (", Previous: (%p)", chunk -> previous_chunk);
 	printf (", Next: (%p)", chunk -> next_chunk);
+	printf (", Content: [ ");
 
 	for (size_t i = 0; i < chunk -> capacity; i++) {
 		data = chunk -> first_data_address + i;
@@ -353,5 +354,43 @@ void clear_chunk_residue_data (Chunk* chunk) {
 
 	for ( ; i < chunk -> data_count; i++) {
 		empty_data (data);
+	}
+}
+
+size_t count_linked_chunks (Chunk* chunk) {
+	if (NULL == chunk) {
+		return 0;
+	}
+
+	size_t count = 0;
+
+	chunk = get_first_chunk_reference (chunk);
+
+	while (NULL != chunk) {
+		chunk = chunk -> next_chunk;
+		++count;
+	}
+
+	return count;
+}
+
+void delete_linked_chunks (Chunk** chunk_address) {
+	if (NULL == *chunk_address) {
+		perror ("Given address does not have any chunk to delete linked chunks!");
+		return;
+	}
+
+	Chunk* chunk = get_first_chunk_reference (*chunk_address);
+	size_t chunk_count = count_linked_chunks (chunk);
+	Chunk* next_chunk;
+
+	while (
+		0 != chunk_count--
+	) {
+		next_chunk = chunk -> next_chunk;
+		chunk -> previous_chunk = NULL;
+		chunk -> next_chunk = NULL;
+		delete_chunk (&chunk);
+		chunk = next_chunk;
 	}
 }

@@ -89,19 +89,19 @@ Creating 'bare_list.c.gcov'
 Lines executed:100.00% of 26
 
 Function 'test_list'
-Lines executed:100.00% of 172
+Lines executed:100.00% of 173
 Branches executed:100.00% of 90
 Taken at least once:54.44% of 90
-Calls executed:79.08% of 196
+Calls executed:79.19% of 197
 
 File 'tst/list.c'
-Lines executed:100.00% of 172
+Lines executed:100.00% of 173
 Branches executed:100.00% of 90
 Taken at least once:54.44% of 90
-Calls executed:79.08% of 196
+Calls executed:79.19% of 197
 Creating 'list.c.gcov'
 
-Lines executed:100.00% of 172
+Lines executed:100.00% of 173
 
 Function 'test_iterator'
 Lines executed:100.00% of 46
@@ -119,34 +119,34 @@ Creating 'iterator.c.gcov'
 Lines executed:100.00% of 46
 
 Function 'test_node'
-Lines executed:100.00% of 21
+Lines executed:100.00% of 22
 Branches executed:100.00% of 12
 Taken at least once:50.00% of 12
-Calls executed:76.92% of 26
+Calls executed:77.78% of 27
 
 File 'tst/node.c'
-Lines executed:100.00% of 21
+Lines executed:100.00% of 22
 Branches executed:100.00% of 12
 Taken at least once:50.00% of 12
-Calls executed:76.92% of 26
+Calls executed:77.78% of 27
 Creating 'node.c.gcov'
 
-Lines executed:100.00% of 21
+Lines executed:100.00% of 22
 
 Function 'test_linked_list'
-Lines executed:100.00% of 56
+Lines executed:100.00% of 57
 Branches executed:100.00% of 60
 Taken at least once:50.00% of 60
-Calls executed:61.04% of 77
+Calls executed:61.54% of 78
 
 File 'tst/linked_list.c'
-Lines executed:100.00% of 56
+Lines executed:100.00% of 57
 Branches executed:100.00% of 60
 Taken at least once:50.00% of 60
-Calls executed:61.04% of 77
+Calls executed:61.54% of 78
 Creating 'linked_list.c.gcov'
 
-Lines executed:100.00% of 56
+Lines executed:100.00% of 57
 
 Function 'test_stack'
 Lines executed:100.00% of 67
@@ -164,32 +164,32 @@ Creating 'stack.c.gcov'
 Lines executed:100.00% of 67
 
 Function 'test_queue'
-Lines executed:100.00% of 73
+Lines executed:100.00% of 74
 Branches executed:100.00% of 82
 Taken at least once:50.00% of 82
-Calls executed:61.54% of 104
+Calls executed:61.90% of 105
 
 File 'tst/queue.c'
-Lines executed:100.00% of 73
+Lines executed:100.00% of 74
 Branches executed:100.00% of 82
 Taken at least once:50.00% of 82
-Calls executed:61.54% of 104
+Calls executed:61.90% of 105
 Creating 'queue.c.gcov'
 
-Lines executed:100.00% of 73
+Lines executed:100.00% of 74
 
 Function 'test_tree'
-Lines executed:100.00% of 78
+Lines executed:100.00% of 80
 Branches executed:100.00% of 8
 Taken at least once:50.00% of 8
-Calls executed:96.72% of 61
+Calls executed:96.83% of 63
 
 File 'tst/tree.c'
-Lines executed:100.00% of 78
+Lines executed:100.00% of 80
 Branches executed:100.00% of 8
 Taken at least once:50.00% of 8
-Calls executed:96.72% of 61
+Calls executed:96.83% of 63
 Creating 'tree.c.gcov'
 
-Lines executed:100.00% of 78
+Lines executed:100.00% of 80
 

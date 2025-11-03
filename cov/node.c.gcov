@@ -61,7 +61,7 @@ call    0 returned 1
         1:   24:	Node* test_node = duplicate_node (node);
 call    0 returned 1
         -:   25:
-       1*:   26:	TEST (NULL != node, "Created duplicate node exists");
+       1*:   26:	TEST (NULL != test_node, "Created duplicate node exists");
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
         1:   26-block 23
@@ -81,19 +81,21 @@ call    3 returned 1
     %%%%%:   30-block 28
 call    4 never executed
         -:   31:
-        1:   32:	delete_node (&node);
+        1:   32:	delete_node (&test_node);
         1:   32-block 29
 call    0 returned 1
-        -:   33:
-       1*:   34:	TEST (NULL == node, "Deleted node successfully");
+        1:   33:	delete_node (&node);
+call    0 returned 1
+        -:   34:
+       1*:   35:	TEST (NULL == node, "Deleted node successfully");
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
-        1:   34-block 31
+        1:   35-block 32
 call    2 returned 1
-    %%%%%:   34-block 32
+    %%%%%:   35-block 33
 call    3 never executed
-        -:   35:
-        1:   36:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Node]\n" RESET_STYLE);
-        1:   36-block 33
+        -:   36:
+        1:   37:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Node]\n" RESET_STYLE);
+        1:   37-block 34
 call    0 returned 1
-        1:   37:}
+        1:   38:}

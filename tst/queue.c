@@ -13,6 +13,7 @@ void test_queue (void) {
 	int n = 10;
 	Data* data = create_data (DT_Integer, sizeof (int), &n);
 	set_node_data (node, data);
+	delete_data (&data);
 
 	enqueue (queue, node);
 	TEST ('A' == *((char*)(queue -> front_node -> name -> text + 0)), "Compared enqueued node's name (A) with queue's front node name");

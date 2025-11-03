@@ -70,6 +70,7 @@ void test_list (void) {
 	Data* test_data = get_list_data_at_index (list, 10);
 	TEST (Cmp_Equivalent == compare_data (data, test_data), "Matched inserted data with expected data at position");
 	// display_list (list);
+	delete_data (&test_data);
 	delete_data (&data);
 
 
@@ -122,10 +123,11 @@ void test_list (void) {
 	// display_list (test_list);
 	TEST (NULL != test_list, "Created test list");
 	TEST (10 == test_list -> item_count, "Created test list with expected number of data");
+//	display_list_details (test_list);
 
-
+//	display_list_details (list);
 	insert_all_into_list_from_index (list, test_list, 20);
-	// display_list (list);
+//	display_list_details (list);
 	data = get_list_data_at_index (list, 20);
 	TEST ('a' == *((char*)(data -> address)), "Checked inserted list's first data from original list");
 	delete_data (&data);

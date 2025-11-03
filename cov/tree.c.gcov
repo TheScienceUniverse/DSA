@@ -34,49 +34,50 @@ call    0 returned 1
 call    0 returned 1
         1:   17:	set_node_data (node, data);
 call    0 returned 1
-        -:   18:
-        1:   19:	delete_data (&data);
+        1:   18:	delete_data (&data);
 call    0 returned 1
-        -:   20:
-        1:   21:	set_tree_root_node (tree, node);
+        -:   19:
+        1:   20:	set_tree_root_node (tree, node);
 call    0 returned 1
-        1:   22:	anchor = tree -> root_node;
-        -:   23:
-        1:   24:	++*(node -> name -> text);
-        1:   25:	*((int*)(node -> data -> address)) += 10;
-        1:   26:	append_child_node (tree, anchor, node);
+        1:   21:	anchor = tree -> root_node;
+        -:   22:
+        1:   23:	++*(node -> name -> text);
+        1:   24:	*((int*)(node -> data -> address)) += 10;
+        1:   25:	append_child_node (tree, anchor, node);
 call    0 returned 1
-        -:   27:
-        1:   28:	++*(node -> name -> text);
-        1:   29:	*((int*)(node -> data -> address)) += 10;
-        1:   30:	append_child_node (tree, anchor, node);
+        -:   26:
+        1:   27:	++*(node -> name -> text);
+        1:   28:	*((int*)(node -> data -> address)) += 10;
+        1:   29:	append_child_node (tree, anchor, node);
 call    0 returned 1
-        -:   31:
-        -:   32://	display_node_details (anchor);
-        1:   33:	anchor = (anchor -> address_list -> head_chunk -> first_data_address + 1) -> address;
-        -:   34://	display_node_details (anchor);
-        -:   35:
-        1:   36:	++*(node -> name -> text);
-        1:   37:	*((int*)(node -> data -> address)) += 10;
-        1:   38:	append_child_node (tree, anchor, node);
+        -:   30:
+        -:   31://	display_node_details (anchor);
+        1:   32:	anchor = (anchor -> address_list -> head_chunk -> first_data_address + 1) -> address;
+        -:   33://	display_node_details (anchor);
+        -:   34:
+        1:   35:	++*(node -> name -> text);
+        1:   36:	*((int*)(node -> data -> address)) += 10;
+        1:   37:	append_child_node (tree, anchor, node);
 call    0 returned 1
-        -:   39:
-        1:   40:	++*(node -> name -> text);
-        1:   41:	*((int*)(node -> data -> address)) += 10;
-        1:   42:	append_child_node (tree, anchor, node);
+        -:   38:
+        1:   39:	++*(node -> name -> text);
+        1:   40:	*((int*)(node -> data -> address)) += 10;
+        1:   41:	append_child_node (tree, anchor, node);
 call    0 returned 1
-        -:   43:
-        1:   44:	++*(node -> name -> text);
-        1:   45:	*((int*)(node -> data -> address)) += 10;
-        1:   46:	append_child_node (tree, anchor, node);
+        -:   42:
+        1:   43:	++*(node -> name -> text);
+        1:   44:	*((int*)(node -> data -> address)) += 10;
+        1:   45:	append_child_node (tree, anchor, node);
 call    0 returned 1
-        -:   47:
-        -:   48://	display_list (anchor -> address_list);
+        -:   46:
+        -:   47://	display_list (anchor -> address_list);
+        -:   48:
         -:   49:
-        -:   50:
-        1:   51:	data = get_list_data_at_index (tree -> root_node -> address_list, 2);
+        1:   50:	data = get_list_data_at_index (tree -> root_node -> address_list, 2);
 call    0 returned 1
-        1:   52:	anchor = data -> address;
+        1:   51:	anchor = data -> address;
+        1:   52:	delete_data (&data);
+call    0 returned 1
         -:   53:
         1:   54:	++*(node -> name -> text);
         1:   55:	*((int*)(node -> data -> address)) += 10;
@@ -168,17 +169,17 @@ call    0 returned 1
 call    0 returned 1
 branch  1 taken 1 (fallthrough)
 branch  2 taken 0
-        1:  110-block 51
-    %%%%%:  110-block 52
-        1:  110-block 53
+        1:  110-block 52
+    %%%%%:  110-block 53
+        1:  110-block 54
 call    3 returned 1
        1*:  111:	printf ("Is node belong to tree? %s\n", (does_tree_contain_node (tree, node)) ? "Yes" : "No");
 call    0 returned 1
 branch  1 taken 0 (fallthrough)
 branch  2 taken 1
-    %%%%%:  111-block 56
-        1:  111-block 57
+    %%%%%:  111-block 57
         1:  111-block 58
+        1:  111-block 59
 call    3 returned 1
         -:  112:
         1:  113:	delete_node (&node);
@@ -200,18 +201,20 @@ call    0 returned 1
         1:  123:	delete_tree (&test_tree);
 call    0 returned 1
         -:  124:
-        1:  125:	delete_tree (&tree);
+        1:  125:	delete_node (&node);
 call    0 returned 1
-        -:  126:
-       1*:  127:	TEST (NULL == tree, "Deleted tree");
+        1:  126:	delete_tree (&tree);
+call    0 returned 1
+        -:  127:
+       1*:  128:	TEST (NULL == tree, "Deleted tree");
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
-        1:  127-block 68
+        1:  128-block 70
 call    2 returned 1
-    %%%%%:  127-block 69
+    %%%%%:  128-block 71
 call    3 never executed
-        -:  128:
-        1:  129:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Tree]\n" RESET_STYLE);
-        1:  129-block 70
+        -:  129:
+        1:  130:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Tree]\n" RESET_STYLE);
+        1:  130-block 72
 call    0 returned 1
-        1:  130:}
+        1:  131:}

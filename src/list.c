@@ -25,6 +25,7 @@ List* create_list (size_t item_count) {
 
 	list -> head_chunk = create_chunk (0, chunk_capacity);	// first (0th) and default chunk
 	list -> tail_chunk = list -> head_chunk;
+	list -> chunk_count = 1;
 
 	return list;
 }
@@ -150,15 +151,13 @@ void delete_list (List** list_address) {
 	}
 
 	List* list = *list_address;
-	Chunk* chunk = list -> tail_chunk;
 
-	for (size_t i = 0; i < list -> chunk_count; i++) {
-		chunk = reduce_chunk (chunk);
-	}
+	delete_linked_chunks (&(list -> head_chunk));
 
-	if (NULL != chunk) {
-		delete_chunk (&chunk);
-	}
+	list -> item_count = 0;
+	list -> chunk_count = 0;
+	list -> head_chunk = NULL;
+	list -> tail_chunk = NULL;
 
 	list = NULL;
 

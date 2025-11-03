@@ -23,12 +23,13 @@ void test_node (void) {
 
 	Node* test_node = duplicate_node (node);
 
-	TEST (NULL != node, "Created duplicate node exists");
+	TEST (NULL != test_node, "Created duplicate node exists");
 
 	// display_node_details (test_node);
 
 	TEST (Cmp_Equivalent == compare_nodes (node, test_node), "Compared duplicated node with original");
 
+	delete_node (&test_node);
 	delete_node (&node);
 
 	TEST (NULL == node, "Deleted node successfully");

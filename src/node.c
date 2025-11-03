@@ -106,6 +106,7 @@ Node* duplicate_node (Node* node) {
 	new_node -> data = duplicate_data (node -> data);
 
 	if (NULL != node -> address_list) {
+		delete_list (&(new_node -> address_list));
 		new_node -> address_list = duplicate_list (node -> address_list);
 	}
 

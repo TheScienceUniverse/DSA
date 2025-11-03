@@ -266,6 +266,7 @@ Node* remove_child_node (Tree* tree, Node* parent_node) {
 	Data* data = remove_data_from_list (parent_node -> address_list);
 	Node* node = data -> address;
 	clear_node_address_list (node);
+	delete_data (&data);
 
 	tree -> node_count--;
 
@@ -556,6 +557,7 @@ size_t count_tree_nodes (Tree* tree) {
 	}
 
 	delete_queue (&queue);
+	delete_node (&queue_node);
 	node = NULL;
 
 	return node_count;
@@ -619,6 +621,7 @@ bool does_tree_contain_node (Tree* tree, Node* node) {
 	}
 
 	delete_queue (&queue);
+	delete_node (&queue_node);
 	t_node = NULL;
 
 	return decision;
@@ -655,10 +658,6 @@ Tree* duplicate_tree (Tree* tree) {
 
 	queue_node -> data = create_address_data (tree -> root_node);
 	enqueue (queue, queue_node);
-
-	anchor = duplicate_node (tree -> root_node);
-	clear_node_address_list (anchor);
-	new_tree -> root_node = anchor;
 
 	while (
 		queue -> size > 0

@@ -1,4 +1,5 @@
 #include "./inc/test.h"
+#include "./inc/mgc.h"
 
 int main (int argc, char* argv[]) {
 	setlocale (LC_ALL, "");	// for UTF-8 support
@@ -17,6 +18,8 @@ int main (int argc, char* argv[]) {
 	}
 
 	//	display_memory_log ();
+	collect_garbage_memory ();
+//	collect_garbage_memory ();
 
 	return EXIT_SUCCESS;
 }

@@ -15,7 +15,6 @@ void test_tree (void) {
 	int n = 10;
 	Data* data = create_data (DT_Integer, sizeof (int), &n);
 	set_node_data (node, data);
-
 	delete_data (&data);
 
 	set_tree_root_node (tree, node);
@@ -50,6 +49,7 @@ void test_tree (void) {
 
 	data = get_list_data_at_index (tree -> root_node -> address_list, 2);
 	anchor = data -> address;
+	delete_data (&data);
 
 	++*(node -> name -> text);
 	*((int*)(node -> data -> address)) += 10;
@@ -122,6 +122,7 @@ void test_tree (void) {
 	display_tree (test_tree);
 	delete_tree (&test_tree);
 
+	delete_node (&node);
 	delete_tree (&tree);
 
 	TEST (NULL == tree, "Deleted tree");

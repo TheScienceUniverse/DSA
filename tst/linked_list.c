@@ -13,6 +13,7 @@ void test_linked_list (void) {
 	int n = 10;
 	Data* data = create_data (DT_Integer, sizeof (int), &n);
 	set_node_data (node, data);
+	delete_data (&data);
 
 	attach_node_at_first (linked_list, node);
 	TEST ('A' == *((char*)(linked_list -> head_node -> name -> text + 0)), "Compared inserted node's name (A) with linked-list's head node name");

@@ -18,6 +18,7 @@ OPTIMIZATION = -O0
 OBJECT_NAMES = basic stream string data chunk bare_list list iterator node linked_list stack queue tree#graph
 OBJECTS := $(foreach f_name, $(OBJECT_NAMES), $(OBJDIR)/$(f_name).o)
 TSTECTS := $(foreach f_name, $(OBJECT_NAMES), $(OBJDIR)/test_$(f_name).o)
+MGCECTS := $(OBJDIR)/mgc.o
 EXECUTABLE := $(EXEDIR)/dsa
 TSTCUTABLE := $(EXEDIR)/tst
 MEMCUTABLE := $(EXEDIR)/mem
@@ -29,9 +30,9 @@ CFLAGS_COVERAGE = --coverage
 
 all: $(EXECUTABLE) $(TSTCUTABLE) $(MEMCUTABLE) $(BDGCUTABLE) $(LIBRARY)
 
-$(EXECUTABLE): $(OBJECTS)
+$(EXECUTABLE): ./main.c $(OBJECTS) $(MGCECTS)
 	@echo "-> Linking all object files and generating executable binary file ..."
-	@$(CC) $(CFLAGS) -o $@ $^ ./main.c
+	@$(CC) $(CFLAGS) -o $@ $^
 	@chmod +x $(EXECUTABLE)
 #	@echo "... Done!"
 #	@echo
@@ -42,11 +43,15 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 #	@echo "... Done!"
 #	@echo
 
+$(MGCECTS): $(SRCDIR)/mgc.c
+	@echo " + Compiling "$*" ..."
+	@$(CC) $(CFLAGS) $(CFLAGS_EXTRA) -o $@ -c $^
+
 test: $(TSTCUTABLE)
 
-$(TSTCUTABLE): $(TSTECTS)
+$(TSTCUTABLE): ./test.c $(OBJECTS) $(TSTECTS) $(MGCECTS)
 	@echo "-> Linking all object files and generating test binary file ..."
-	@$(CC) $(CFLAGS) $(CFLAGS_COVERAGE) -o $@ ./test.c $(OBJECTS) $^
+	@$(CC) $(CFLAGS) $(CFLAGS_COVERAGE) -o $@ $^
 	@chmod +x $(TSTCUTABLE)
 #	@echo "... Done!"
 #	@echo
@@ -57,9 +62,9 @@ $(OBJDIR)/test_%.o: $(TSTDIR)/%.c
 #	@echo "... Done!"
 #	@echo
 
-$(MEMCUTABLE): $(OBJECTS) mem.c
+$(MEMCUTABLE): ./mem.c $(OBJECTS) $(MGCECTS)
 	@echo "-> Linking all object files and generating memory logger binary file ..."
-	@$(CC) $(CFLAGS) -o $@ ./mem.c $(OBJECTS)
+	@$(CC) $(CFLAGS) -o $@ $^
 	@chmod +x $(MEMCUTABLE)
 #	@echo "... Done!"
 #	@echo
@@ -68,20 +73,22 @@ $(BDGCUTABLE): shield.c
 	@echo "-> Creating badge (shield) crafter program ..."
 	@$(CC) $(CFLAGS) -o $@ $^
 
-$(LIBRARY): $(OBJECTS)
+$(LIBRARY): $(OBJECTS) $(MGCECTS)
 	@gcc $(CFLAGS) $(CFLAGS_EXTRA) -o $@ $^
+
 
 .PHONY: clean again check flow memlog memclear ccov
 
 clean:
 	@echo "-> Removing generated files ..."
-	@-rm -f $(OBJECTS) $(EXECUTABLE) $(TSTCUTABLE) $(LIBRARY)
+	@-rm -f $(OBJECTS) $(MGCECTS) $(EXECUTABLE) $(TSTCUTABLE) $(LIBRARY)
 	@-rm -f ./obj/* ./lib/* ./bin/* ./log/* ./cov/* ./aft/*
 	@echo "... Done"
 #	@echo
 
 again:
 	@make clean && make all
+	@touch ./log/memory.log
 
 check:
 	@tabs 4
@@ -95,9 +102,9 @@ memlog:
 	@echo "-> Displaying memory log file in readable format..."
 	@./bin/mem show
 
-memclear:
+memcheck:
 	@echo "-> Check counts of leftout memory for each data-structures..."
-	@./bin/mem clear
+	@./bin/mem check
 
 ccov:
 	@echo "-> Calculating code coverage..."

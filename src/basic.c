@@ -86,6 +86,10 @@ void display_raw_bits (size_t num_bytes, BYTE* base_address) {
 }
 
 size_t get_number_of_digits (size_t number, size_t base) {
+	if (0 == number) {
+		return 1;
+	}
+
 	size_t count = 0;
 
 	while (number != 0) {

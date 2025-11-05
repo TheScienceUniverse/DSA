@@ -1,11 +1,23 @@
 #include "./inc/mgc.h"
 
-void collect_garbage_memory (void) {
+void manage_memory (void) {
+	List* list = collect_garbage_memory ();
+	display_garbage_memory (list);
+	delete_garbage_memory (list);
+	delete_list (&list);
+
+	list = collect_garbage_memory ();
+	display_garbage_memory (list);
+	// delete_garbage_memory (list);
+	delete_list (&list);
+}
+
+List* collect_garbage_memory (void) {
 	FILE* file = fopen ("./log/memory.log", "rb");
 
 	if (NULL == file) {
 		perror ("Error opening memory file!");
-		return;
+		return NULL;
 	}
 
 	fseek (file, 0, SEEK_END);
@@ -103,12 +115,12 @@ void collect_garbage_memory (void) {
 //	display_list_subset (list, 0, 19);
 
 
-	display_garbage_memory (list);
+//	display_garbage_memory (list);
 
-	void* ds_entry;
+//	void* ds_entry;
 	__attribute__((unused)) size_t ds_size;
 	__attribute__((unused)) DS_Type ds_type;
-
+/*
 	Iterator* iterator = create_iterator (list, 1);
 
 	for (size_t i = 0; i < list -> item_count; i++) {
@@ -133,8 +145,12 @@ void collect_garbage_memory (void) {
 	}
 
 	delete_iterator (&iterator);
-	delete_list (&list);
-//	ENDL();
+*/
+
+//	delete_garbage_memory (list);
+//	display_garbage_memory (list);
+
+	return list;
 }
 
 void display_garbage_memory (List* list) {
@@ -152,6 +168,30 @@ void display_garbage_memory (List* list) {
 		ds_type = *((DS_Type*)(ds_entry + sizeof (void*) + sizeof (size_t)));
 
 		display_log_entry (*ds_address_ptr, ds_size, ds_type);
+
+		move_iterator (iterator);
+	}
+
+	delete_iterator (&iterator);
+//	ENDL();
+}
+
+void delete_garbage_memory (List* list) {
+	void* ds_entry;
+	void** ds_address_ptr;
+	size_t ds_size;
+	DS_Type ds_type;
+
+	Iterator* iterator = create_iterator (list, 1);
+
+	for (size_t i = 0; i < list -> item_count; i++) {
+		ds_entry = iterator -> data -> address;
+		ds_address_ptr = ds_entry;
+		ds_size = *((size_t*)(ds_entry + sizeof (void*)));
+		ds_type = *((DS_Type*)(ds_entry + sizeof (void*) + sizeof (size_t)));
+
+//		display_log_entry (*ds_address_ptr, ds_size, ds_type);
+		delete_log_entry (*ds_address_ptr, ds_size, ds_type);
 
 		move_iterator (iterator);
 	}
@@ -178,15 +218,12 @@ void display_log_entry (void* address, size_t size, DS_Type ds_type) {
 			display_raw_bytes (size, address);
 			break;
 		case DS_Stream:
-//			display_raw_bytes (size, address);
 			display_stream ((Stream*) address);
 			break;
 		case DS_String:
-//			display_raw_bytes (size, address);
 			display_string ((String*) address);
 			break;
 		case DS_Data:
-//			display_raw_bytes (size, address);
 			display_data ((Data*) address);
 			break;
 		case DS_Bare_List:
@@ -226,30 +263,7 @@ void display_log_entry (void* address, size_t size, DS_Type ds_type) {
 	ENDL();
 }
 
-void delete_garbage_memory (List* list) {
-	void* ds_entry;
-	void** ds_address_ptr;
-	size_t ds_size;
-	DS_Type ds_type;
-
-	Iterator* iterator = create_iterator (list, 1);
-
-	for (size_t i = 0; i < list -> item_count; i++) {
-		ds_entry = iterator -> data -> address;
-		ds_address_ptr = ds_entry;
-		ds_size = *((size_t*)(ds_entry + sizeof (void*)));
-		ds_type = *((DS_Type*)(ds_entry + sizeof (void*) + sizeof (size_t)));
-
-		display_log_entry (*ds_address_ptr, ds_size, ds_type);
-
-		move_iterator (iterator);
-	}
-
-	delete_iterator (&iterator);
-//	ENDL();
-}
-
-void delete_log_entry (void* address, size_t size, DS_Type ds_type) {
+void delete_log_entry (void* address, size_t __attribute__((unused)) size, DS_Type ds_type) {
 	if (NULL == address) {
 		perror ("Entry data NULL to display!");
 		return;
@@ -262,8 +276,8 @@ void delete_log_entry (void* address, size_t size, DS_Type ds_type) {
 
 	switch (ds_type) {
 		case DS_Raw:
-			ERASE (&address, sizeof (void*));
-			log_memory (DS_Raw, size, address, false);
+//			ERASE (&address, sizeof (void*));
+//			log_memory (DS_Raw, size, address, false);
 			break;
 		case DS_Stream:
 			delete_stream ((Stream**) &address);

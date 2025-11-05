@@ -18,9 +18,12 @@
 #include "./inc/tree.h"
 #include "./inc/graph.h"
 
-void collect_garbage_memory (void);
+void manage_memory (void);
+List* collect_garbage_memory (void);
 void display_garbage_memory (List* list);
+void delete_garbage_memory (List* list);
 void display_log_entry (void* address, size_t size, DS_Type ds_type);
+void delete_log_entry (void* address, size_t size, DS_Type ds_type);
 void delete_data_structure (DS_Type ds_type, BYTE* address, size_t size);
 
 #endif	// MGC_H

@@ -17,9 +17,11 @@ int main (int argc, char* argv[]) {
 		test_route (option);
 	}
 
+	Data* data = create_data (DT_String, strlen (option), option);
+	display_data (data);
+
 	//	display_memory_log ();
-	collect_garbage_memory ();
-//	collect_garbage_memory ();
+	manage_memory ();
 
 	return EXIT_SUCCESS;
 }

@@ -318,9 +318,9 @@ Tree :=> node_count: (7) breadth: (0) height: (1)
 [1;33m...Unit test ends![1;35m [Tree]
 [0mallLeftout address count: 2
 (Raw: 1), (Stream: 0), (String: 0), (Data: 1), (Bare_List: 0), (Chunk: 0), (List: 0), (Iterator: 0), (Node: 0), (Linked_List: 0), (Stack: 0), (Queue: 0), (Tree: 0), (Graph: 0), 
-0x55793505d840	24	Data
+0x56496e6b8840	24	Data
 all
-0x55793505d860	3	Raw
+0x56496e6b8860	3	Raw
 616c6c
 Leftout address count: 0
 (Raw: 0), (Stream: 0), (String: 0), (Data: 0), (Bare_List: 0), (Chunk: 0), (List: 0), (Iterator: 0), (Node: 0), (Linked_List: 0), (Stack: 0), (Queue: 0), (Tree: 0), (Graph: 0), 

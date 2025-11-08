@@ -3,20 +3,20 @@
 #ifndef MGC_H
 #define MGC_H
 
-#include "./inc/basic.h"
-#include "./inc/stream.h"
-#include "./inc/string.h"
-#include "./inc/data.h"
-#include "./inc/chunk.h"
-#include "./inc/bare_list.h"
-#include "./inc/list.h"
-#include "./inc/iterator.h"
-#include "./inc/node.h"
-#include "./inc/linked_list.h"
-#include "./inc/stack.h"
-#include "./inc/queue.h"
-#include "./inc/tree.h"
-#include "./inc/graph.h"
+#include "basic.h"
+#include "stream.h"
+#include "string.h"
+#include "data.h"
+#include "chunk.h"
+#include "bare_list.h"
+#include "list.h"
+#include "iterator.h"
+#include "node.h"
+#include "linked_list.h"
+#include "stack.h"
+#include "queue.h"
+#include "tree.h"
+#include "graph.h"
 
 void manage_memory (void);
 List* collect_garbage_memory (void);

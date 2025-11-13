@@ -1,6 +1,6 @@
 #include "../inc/iterator.h"
 
-Iterator* create_iterator (List* list, ssize_t stride) {
+Iterator* create_Iterator (List* list, ssize_t stride) {
 	if (NULL == list) {
 		perror ("List does not exist to get iterator!\n");
 		exit (EXIT_FAILURE);
@@ -39,7 +39,7 @@ Iterator* create_iterator (List* list, ssize_t stride) {
 	return iterator;
 }
 
-void display_iterator_details (Iterator* iterator) {
+void display_Iterator_details (Iterator* iterator) {
 	if (NULL == iterator) {
 		perror ("Iterator does not exist to display details!");
 		exit (EXIT_FAILURE);
@@ -50,11 +50,11 @@ void display_iterator_details (Iterator* iterator) {
 	printf (" Chunk_%lu [%lu]", iterator -> chunk -> id, iterator -> chunk_data_index);
 	printf (" Stride: %c%li", (0 > iterator -> stride) ? '-' : '+', (iterator -> stride & 0x0fffffff));
 	printf (" Data: ");
-	display_data (iterator -> data);
+	display_Data (iterator -> data);
 	printf ("\n");
 }
 
-void delete_iterator (Iterator** iterator_address) {
+void delete_Iterator (Iterator** iterator_address) {
 	if (NULL == *iterator_address) {
 		perror ("Iterator does not exist to delete!\n");
 		exit (EXIT_FAILURE);
@@ -64,7 +64,7 @@ void delete_iterator (Iterator** iterator_address) {
 	ERASE (iterator_address, sizeof (Iterator));
 }
 
-void update_iterator_stride (Iterator* iterator, ssize_t stride) {
+void update_Iterator_stride (Iterator* iterator, ssize_t stride) {
 	iterator -> stride = stride;
 
 	if (stride > 1024) {
@@ -76,7 +76,7 @@ void update_iterator_stride (Iterator* iterator, ssize_t stride) {
 	}
 }
 
-void move_iterator (Iterator* iterator) {
+void move_Iterator (Iterator* iterator) {
 	if (	// something wrong
 		NULL == iterator
 		|| NULL == iterator -> list

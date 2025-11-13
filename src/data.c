@@ -1,6 +1,6 @@
 #include "../inc/data.h"
 
-Data* create_data (Data_Type data_type, size_t block_size, void* address) {
+Data* create_Data (Data_Type data_type, size_t block_size, void* address) {
 	if (data_type == DT_Undefined || block_size == 0) {
 		return NULL;
 	}
@@ -41,15 +41,15 @@ Data* create_data (Data_Type data_type, size_t block_size, void* address) {
 	return data;
 }
 
-Data* duplicate_data (Data* data) {
+Data* duplicate_Data (Data* data) {
 	if (data == NULL) {
 		return NULL;
 	}
 
-	return create_data (data -> type, data -> size, data -> address);
+	return create_Data (data -> type, data -> size, data -> address);
 }
 
-void display_data (Data* data) {
+void display_Data (Data* data) {
 	if (data == NULL) {
 		printf ("(nil)");
 		return;
@@ -85,7 +85,7 @@ void display_data (Data* data) {
 			display_raw_string (data -> size, data -> address);
 			break;
 		case DT_Range:
-			display_range_data (data);
+			display_range_Data (data);
 			break;
 		default:
 			display_raw_bytes (data -> size, data -> address);
@@ -93,7 +93,7 @@ void display_data (Data* data) {
 	}
 }
 
-void display_data_details (Data* data) {
+void display_Data_details (Data* data) {
 	if (data == NULL) {
 		perror ("Data does not exist\n");
 		return;
@@ -145,7 +145,7 @@ void display_binary_data (size_t size, BYTE* address) {
 	}
 }
 
-void delete_data (Data** data_address) {
+void delete_Data (Data** data_address) {
 	if (*data_address == NULL) {
 		// perror ("Data does not exist to delete!");
 		return;
@@ -168,7 +168,7 @@ void delete_data (Data** data_address) {
 	ERASE (data_address, sizeof (Data));
 }
 
-void forget_data (Data** data_address) {
+void forget_Data (Data** data_address) {
 	if (*data_address == NULL) {
 		// perror ("Data does not exist to forget!");
 		return;
@@ -182,7 +182,7 @@ void forget_data (Data** data_address) {
 	}
 }
 
-void copy_data (Data* src_data, Data* dst_data) {
+void copy_Data (Data* src_data, Data* dst_data) {
 	if (dst_data == src_data) {
 		return;
 	}
@@ -218,7 +218,7 @@ void copy_data (Data* src_data, Data* dst_data) {
 	copy_raw_bytes (src_data -> size, (BYTE*)(src_data -> address), (BYTE*)(dst_data -> address));
 }
 
-void swap_data (Data* data_1, Data* data_2) {
+void swap_Data (Data* data_1, Data* data_2) {
 	if (data_1 == data_2) {
 		return;
 	}
@@ -238,7 +238,7 @@ void swap_data (Data* data_1, Data* data_2) {
 	data_2 = temp_data;
 }
 
-Compare_Status compare_data (Data* data_1, Data* data_2) {
+Compare_Status compare_Data (Data* data_1, Data* data_2) {
 	if (NULL == data_1) {
 		perror ("Data_1 does not exist to compare!");
 		exit (EXIT_FAILURE);
@@ -277,7 +277,7 @@ Compare_Status compare_data (Data* data_1, Data* data_2) {
 	return cmp_stat;
 }
 
-bool is_data_memory_erased (void** data_addresses) {
+bool is_Data_memory_erased (void** data_addresses) {
 	if (NULL == data_addresses) {
 		return false;
 	}
@@ -296,7 +296,7 @@ bool is_data_memory_erased (void** data_addresses) {
 	return status;
 }
 
-void** capture_data_addresses (Data* data) {
+void** capture_Data_addresses (Data* data) {
 	if (NULL == data) {
 		return NULL;
 	}
@@ -312,7 +312,7 @@ void** capture_data_addresses (Data* data) {
 	return addresses;
 }
 
-void empty_data (Data* data) {
+void empty_Data (Data* data) {
 	if (NULL == data) {
 		// perror ("Data does not exist to delete!");
 		return;
@@ -331,7 +331,7 @@ void empty_data (Data* data) {
 	data -> address = NULL;
 }
 
-Data* create_empty_data (void) {
+Data* create_empty_Data (void) {
 	Data* data = (Data*) malloc (sizeof (Data));
 	log_memory (DS_Data, sizeof (Data), data, true);
 
@@ -347,7 +347,7 @@ Data* create_empty_data (void) {
 	return data;
 }
 
-Data* create_range_data (int start, int end) {
+Data* create_range_Data (int start, int end) {
 	int block_size = 2 * sizeof (int);
 	int* address = malloc (block_size);
 	log_memory (DS_Raw, block_size, address, true);
@@ -355,7 +355,7 @@ Data* create_range_data (int start, int end) {
 	*(address + 0) = start;
 	*(address + 1) = end;
 
-	Data* data = create_data (DT_Range, block_size, address);
+	Data* data = create_Data (DT_Range, block_size, address);
 
 	log_memory (DS_Raw, block_size, address, false);
 	ERASE (&address, block_size);
@@ -363,7 +363,7 @@ Data* create_range_data (int start, int end) {
 	return data;
 }
 
-void display_range_data (Data* data) {
+void display_range_Data (Data* data) {
 	if (data == NULL) {
 		perror ("Range data does not exist to display");
 		return;
@@ -377,7 +377,7 @@ void display_range_data (Data* data) {
 	printf ("[%d, %d]\n", *((int*)(data -> address) + 0), *((int*)(data -> address) + 1));
 }
 
-Data* create_address_data (void* address) {
+Data* create_address_Data (void* address) {
 	Data* data = (Data*) malloc (sizeof (Data));
 	log_memory (DS_Data, sizeof (Data), data, true);
 
@@ -393,7 +393,7 @@ Data* create_address_data (void* address) {
 	return data;
 }
 
-Data* create_key_value_data (String* key, Data* value) {
+Data* create_key_value_Data (String* key, Data* value) {
 	int block_size = sizeof (String) + sizeof (Data);
 	void* address = malloc (block_size);
 	log_memory (DS_Raw, block_size, address, true);
@@ -405,9 +405,9 @@ Data* create_key_value_data (String* key, Data* value) {
 	temp_string -> text = malloc (key -> length * sizeof (char));
 	copy_raw_bytes (key -> length, (BYTE*)(key -> text), (BYTE*)(temp_string -> text));
 
-	copy_data (value, temp_data);
+	copy_Data (value, temp_data);
 
-	Data* data = create_data (DT_Key_Value, block_size, address);
+	Data* data = create_Data (DT_Key_Value, block_size, address);
 
 	log_memory (DS_Raw, block_size, address, false);
 	ERASE (&address, block_size);
@@ -415,7 +415,7 @@ Data* create_key_value_data (String* key, Data* value) {
 	return data;
 }
 
-void delete_key_value_data (Data** key_value_data_address) {
+void delete_key_value_Data (Data** key_value_data_address) {
 	if (NULL == *key_value_data_address) {
 		perror ("Key-Value pair data does not exist to delete");
 		return;
@@ -438,11 +438,11 @@ void delete_key_value_data (Data** key_value_data_address) {
 	log_memory (DS_Data, value -> size, value -> address, false);
 	ERASE (&(value -> address), value -> size);
 
-	delete_data (key_value_data_address);
+	delete_Data (key_value_data_address);
 	key_value_data = NULL;
 }
 
-void display_key_value_data (Data* key_value_data) {
+void display_key_value_Data (Data* key_value_data) {
 	if (NULL == key_value_data) {
 		perror ("Key-Value pair data does not exist to display");
 		return;
@@ -454,8 +454,8 @@ void display_key_value_data (Data* key_value_data) {
 	}
 
 	printf ("[Key: \"");
-	display_string ((String*)(key_value_data -> address + 0));
+	display_String ((String*)(key_value_data -> address + 0));
 	printf ("\", Value: \"");
-	display_data ((Data*)((String*)(key_value_data -> address) + 1));
+	display_Data ((Data*)((String*)(key_value_data -> address) + 1));
 	printf ("\"]\n");
 }

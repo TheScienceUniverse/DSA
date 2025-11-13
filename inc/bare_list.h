@@ -15,16 +15,16 @@ typedef struct BARE_LIST {
 
 // ---------- x ----------
 
-Bare_List* create_bare_list (size_t item_count);
-Bare_List* duplicate_bare_list (Bare_List* list);
-void display_bare_list (Bare_List* list);
-void display_bare_list_details (Bare_List* list);
-void display_bare_list_addresses (Bare_List* list);
-void forget_bare_list (Bare_List** list_address);
-void delete_bare_list (Bare_List** list_address);
-void add_to_bare_list (Bare_List* list, Data* data, bool data_copy_needed);
-size_t search_in_address_bare_list (Bare_List* list, void* address);
-bool remove_address_from_bare_list (Bare_List* list, void* address);
-size_t calculate_bare_list_capacity (size_t item_count);
+Bare_List* create_Bare_List (size_t item_count);
+Bare_List* duplicate_Bare_List (Bare_List* list);
+void display_Bare_List (Bare_List* list);
+void display_Bare_List_details (Bare_List* list);
+void display_Bare_List_addresses (Bare_List* list);
+void forget_Bare_List (Bare_List** list_address);
+void delete_Bare_List (Bare_List** list_address);
+void add_to_Bare_List (Bare_List* list, Data* data, bool data_copy_needed);
+size_t search_in_address_Bare_List (Bare_List* list, void* address);
+bool remove_address_from_Bare_List (Bare_List* list, void* address);
+size_t calculate_Bare_List_capacity (size_t item_count);
 
 #endif	// BARE_LIST_H

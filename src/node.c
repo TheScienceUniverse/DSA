@@ -1,6 +1,6 @@
 #include "../inc/node.h"
 
-Node* create_node (Node_Type type) {
+Node* create_Node (Node_Type type) {
 	Node* node = (Node*) malloc (sizeof (Node));
 
 	if (node != NULL) {
@@ -17,13 +17,13 @@ Node* create_node (Node_Type type) {
 			case N_LinkedList:
 			case N_Stack:
 			case N_Queue:
-				node -> address_list = create_list (2);		// previous address, next address (default count = 2)
+				node -> address_list = create_List (2);		// previous address, next address (default count = 2)
 				break;
 			case N_Tree:
-				node -> address_list = create_list (3);		// 1 parent address, multiple (default = 2) child addresses
+				node -> address_list = create_List (3);		// 1 parent address, multiple (default = 2) child addresses
 				break;
 			case N_Graph:
-				node -> address_list = create_list (0);		// should store route table (data as well as address to go to other adjacent node)
+				node -> address_list = create_List (0);		// should store route table (data as well as address to go to other adjacent node)
 				break;
 			default:
 				break;
@@ -31,13 +31,13 @@ Node* create_node (Node_Type type) {
 	}
 
 	if (N_Undefined != node -> type) {
-		prepare_node_address_list (node);
+		prepare_Node_address_list (node);
 	}
 
 	return node;
 }
 
-void set_node_name (Node* node, size_t length, char* name) {
+void set_Node_name (Node* node, size_t length, char* name) {
 	if (node == NULL) {
 		perror ("Error! => Node doesn't exist.\n");
 		return;
@@ -48,11 +48,11 @@ void set_node_name (Node* node, size_t length, char* name) {
 		return;
 	}
 
-	String* string = create_string (length, name);
+	String* string = create_String (length, name);
 	node -> name = string;
 }
 
-void prepare_node_address_list (Node* node) {
+void prepare_Node_address_list (Node* node) {
 	if (NULL == node) {
 		perror ("Node does not exist to prepare address list!\n");
 		exit (EXIT_FAILURE);
@@ -72,16 +72,16 @@ void prepare_node_address_list (Node* node) {
 		exit (EXIT_FAILURE);
 	}
 
-	Data* default_data = create_data (DT_Address, sizeof (Node*), NULL);
+	Data* default_data = create_Data (DT_Address, sizeof (Node*), NULL);
 
 	for (size_t i = 0; i < chunk -> capacity; i++) {
-		copy_data (default_data, chunk -> first_data_address + i);
+		copy_Data (default_data, chunk -> first_data_address + i);
 	}
 
-	delete_data (&default_data);
+	delete_Data (&default_data);
 }
 
-void set_node_data (Node* node, Data* data) {
+void set_Node_Data (Node* node, Data* data) {
 	if (node == NULL) {
 		perror ("Error! => Node doesn't exist to set data\n");
 		return;
@@ -92,28 +92,28 @@ void set_node_data (Node* node, Data* data) {
 		return;
 	}
 
-	node -> data = duplicate_data (data);
+	node -> data = duplicate_Data (data);
 }
 
-Node* duplicate_node (Node* node) {
+Node* duplicate_Node (Node* node) {
 	if (node == NULL) {
 		perror ("Node does not exist to Duplicate!\n");
 		return NULL;
 	}
 
-	Node* new_node = create_node (node -> type);
-	new_node -> name = duplicate_string (node -> name);
-	new_node -> data = duplicate_data (node -> data);
+	Node* new_node = create_Node (node -> type);
+	new_node -> name = duplicate_String (node -> name);
+	new_node -> data = duplicate_Data (node -> data);
 
 	if (NULL != node -> address_list) {
-		delete_list (&(new_node -> address_list));
-		new_node -> address_list = duplicate_list (node -> address_list);
+		delete_List (&(new_node -> address_list));
+		new_node -> address_list = duplicate_List (node -> address_list);
 	}
 
 	return new_node;
 }
 
-void display_node (Node* node) {
+void display_Node (Node* node) {
 	if (node == NULL) {
 		perror ("Node doesn't exist to display");
 		return;
@@ -122,15 +122,15 @@ void display_node (Node* node) {
 	printf ("(");
 
 	if (NULL == node -> name) {
-		display_data (node -> data);
+		display_Data (node -> data);
 	} else {
-		display_string (node -> name);
+		display_String (node -> name);
 	}
 
 	printf (")");
 }
 
-void display_special_node (Node* node) {
+void display_special_Node (Node* node) {
 	if (node == NULL) {
 		perror ("Node doesn't exist to display");
 		return;
@@ -139,7 +139,7 @@ void display_special_node (Node* node) {
 	printf ("**(");
 
 	if (NULL != node -> name) {
-		display_string (node -> name);
+		display_String (node -> name);
 	} else {
 		printf ("anonymous");	
 	}
@@ -147,7 +147,7 @@ void display_special_node (Node* node) {
 	printf (")**\n");
 }
 
-void display_node_details (Node* node) {
+void display_Node_details (Node* node) {
 	if (node == NULL) {
 		perror ("Node doesn't exist to display details");
 		return;
@@ -183,24 +183,24 @@ void display_node_details (Node* node) {
 	printf (") Name: (\"");
 	
 	if (NULL != node -> name) {
-		display_string (node -> name);
+		display_String (node -> name);
 	} else {
 		printf ("anonymous");	
 	}
 
 	printf ("\") Data: (");
-	display_data (node -> data);
+	display_Data (node -> data);
 	printf (") ");
 
 	if (NULL != node -> address_list) {
 		printf ("Address list: ");
-		display_list (node -> address_list);
+		display_List (node -> address_list);
 	}
 
 	printf ("\n");
 }
 
-void delete_node (Node** node_address) {
+void delete_Node (Node** node_address) {
 	if (*node_address == NULL) {
 		// perror ("Node doesn't exist to delete!");
 		return;
@@ -208,11 +208,11 @@ void delete_node (Node** node_address) {
 
 	Node* node = *node_address;
 
-	delete_string (&node -> name);
-	delete_data (&node -> data);
+	delete_String (&node -> name);
+	delete_Data (&node -> data);
 
 	if (N_Undefined != node -> type) {
-		delete_list (&node -> address_list);
+		delete_List (&node -> address_list);
 	}
 
 	node = NULL;
@@ -221,17 +221,17 @@ void delete_node (Node** node_address) {
 	ERASE (node_address, sizeof (Node));
 }
 
-void delete_temporary_node (Node** node_address) {
+void delete_temporary_Node (Node** node_address) {
 	Node* node = *node_address;
 
-	forget_data (&(node -> data));
-	forget_list (&(node -> address_list));
+	forget_Data (&(node -> data));
+	forget_List (&(node -> address_list));
 
 	log_memory (DS_Node, sizeof (Node), node, false);
 	ERASE (node_address, sizeof (Node));
 }
 
-Compare_Status compare_nodes (Node* node_1, Node* node_2) {
+Compare_Status compare_Nodes (Node* node_1, Node* node_2) {
 	if (node_1 == node_2) {
 		return Cmp_Identical;
 	}
@@ -252,23 +252,23 @@ Compare_Status compare_nodes (Node* node_1, Node* node_2) {
 		cmp_stat = Cmp_Different;
 	}
 
-	if (Cmp_Different == compare_strings (node_1 -> name, node_2 -> name)) {
+	if (Cmp_Different == compare_Strings (node_1 -> name, node_2 -> name)) {
 		cmp_stat = Cmp_Different;
 	}
 
-	if (Cmp_Different == compare_data (node_1 -> data, node_2 -> data)) {
+	if (Cmp_Different == compare_Data (node_1 -> data, node_2 -> data)) {
 		cmp_stat = Cmp_Different;
 	}
 
 	return cmp_stat;
 }
 
-void clear_node_address_list (Node* node) {
+void clear_Node_address_list (Node* node) {
 	if (NULL == node) {
 		perror ("Node does not exist to prepare address list!\n");
 		exit (EXIT_FAILURE);
 	}
 
-	clear_list (node -> address_list);
-	defragment_list (node -> address_list);
+	clear_List (node -> address_list);
+	defragment_List (node -> address_list);
 }

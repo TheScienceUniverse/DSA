@@ -16,12 +16,12 @@ typedef struct QUEUE {
 
 // ---------- x ----------
 
-Queue* create_queue (void);
-void display_queue (Queue* queue);
-void display_queue_details (Queue* queue);
-void delete_queue (Queue** queue_address);
-void enqueue (Queue* queue, Node* node);
-Node* dequeue (Queue* queue);
-void peek_data_from_queue (Queue* queue);
+Queue* create_Queue (void);
+void display_Queue (Queue* queue);
+void display_Queue_details (Queue* queue);
+void delete_Queue (Queue** queue_address);
+void enQueue (Queue* queue, Node* node);
+Node* deQueue (Queue* queue);
+void peek_Data_from_Queue (Queue* queue);
 
 #endif // QUEUE_H

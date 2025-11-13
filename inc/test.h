@@ -24,43 +24,43 @@
 void test_basic (void);
 
 #include "./stream.h"
-void test_stream (void);
+void test_Stream (void);
 
 #include "./string.h"
-void test_string (void);
+void test_String (void);
 
 #include "./data.h"
-void test_data (void);
+void test_Data (void);
 
 #include "./chunk.h"
-void test_chunk (void);
+void test_Chunk (void);
 
 #include "./bare_list.h"
-void test_bare_list (void);
+void test_Bare_List (void);
 
 #include "./list.h"
-void test_list (void);
+void test_List (void);
 
 #include "./iterator.h"
-void test_iterator (void);
+void test_Iterator (void);
 
 #include "./node.h"
-void test_node (void);
+void test_Node (void);
 
 #include "./linked_list.h"
-void test_linked_list (void);
+void test_Linked_List (void);
 
 #include "./stack.h"
-void test_stack (void);
+void test_Stack (void);
 
 #include "./queue.h"
-void test_queue (void);
+void test_Queue (void);
 
 #include "./tree.h"
-void test_tree (void);
+void test_Tree (void);
 
 #include "./graph.h"
-void test_graph (void);
+void test_Graph (void);
 
 void test_route (char* option);
 

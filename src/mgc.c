@@ -4,12 +4,12 @@ void manage_memory (void) {
 	List* list = collect_garbage_memory ();
 	display_garbage_memory (list);
 	delete_garbage_memory (list);
-	delete_list (&list);
+	delete_List (&list);
 
 	list = collect_garbage_memory ();
 	display_garbage_memory (list);
 	// delete_garbage_memory (list);
-	delete_list (&list);
+	delete_List (&list);
 }
 
 List* collect_garbage_memory (void) {
@@ -39,7 +39,7 @@ List* collect_garbage_memory (void) {
 	size_t entry_length = sizeof (void*) + sizeof (size_t) + sizeof (DS_Type);
 	BYTE entry [entry_length] = {};
 	bool allocate_flag;
-	List* list = create_list (10);
+	List* list = create_List (10);
 
 	int DTC [DS_Type_Count] = {};	// DataStructure Type Counts array-map
 	__attribute__((unused)) void** ds_address_ptr = (void**) entry;
@@ -47,7 +47,7 @@ List* collect_garbage_memory (void) {
 //	size_t* ds_size_ptr = (size_t*)(entry + sizeof (void*));
 	DS_Type* ds_type_ptr = (DS_Type*)(entry + sizeof (void*) + sizeof (size_t));
 
-	Data* data = create_empty_data ();
+	Data* data = create_empty_Data ();
 	data -> type = DT_Binary;
 	data -> size = entry_length;
 	data -> address = entry;
@@ -65,20 +65,20 @@ List* collect_garbage_memory (void) {
 //		ENDL();
 
 		if (allocate_flag) {
-			insert_data_into_list (list, data);
+			insert_Data_into_List (list, data);
 
 			if (*ds_type_ptr < DS_Type_Count) {
 				++ DTC [*ds_type_ptr];
 			}
 		} else {
-			index = get_last_list_index_of_data (list, data);
+			index = get_last_List_index_of_Data (list, data);
 //			printf ("Found index: %zd\n", index);
 
 			if ((size_t)(-1) == index) {
 //				display_raw_bytes (entry_length, entry);
 //				display_log_entry (data);
 			} else {
-				delete_from_list_at_index (list, index);
+				delete_from_List_at_index (list, index);
 //				delete_last_instance_from_list (list, data);
 
 				if (*ds_type_ptr < DS_Type_Count) {
@@ -110,7 +110,7 @@ List* collect_garbage_memory (void) {
 	data -> type = DT_Undefined;
 	data -> size = 0;
 	data -> address = NULL;
-	delete_data (&data);
+	delete_Data (&data);
 
 //	display_list_subset (list, 0, 19);
 
@@ -159,7 +159,7 @@ void display_garbage_memory (List* list) {
 	size_t ds_size;
 	DS_Type ds_type;
 
-	Iterator* iterator = create_iterator (list, 1);
+	Iterator* iterator = create_Iterator (list, 1);
 
 	for (size_t i = 0; i < list -> item_count; i++) {
 		ds_entry = iterator -> data -> address;
@@ -169,10 +169,10 @@ void display_garbage_memory (List* list) {
 
 		display_log_entry (*ds_address_ptr, ds_size, ds_type);
 
-		move_iterator (iterator);
+		move_Iterator (iterator);
 	}
 
-	delete_iterator (&iterator);
+	delete_Iterator (&iterator);
 //	ENDL();
 }
 
@@ -182,7 +182,7 @@ void delete_garbage_memory (List* list) {
 	size_t ds_size;
 	DS_Type ds_type;
 
-	Iterator* iterator = create_iterator (list, 1);
+	Iterator* iterator = create_Iterator (list, 1);
 
 	for (size_t i = 0; i < list -> item_count; i++) {
 		ds_entry = iterator -> data -> address;
@@ -193,10 +193,10 @@ void delete_garbage_memory (List* list) {
 //		display_log_entry (*ds_address_ptr, ds_size, ds_type);
 		delete_log_entry (*ds_address_ptr, ds_size, ds_type);
 
-		move_iterator (iterator);
+		move_Iterator (iterator);
 	}
 
-	delete_iterator (&iterator);
+	delete_Iterator (&iterator);
 //	ENDL();
 }
 
@@ -218,43 +218,43 @@ void display_log_entry (void* address, size_t size, DS_Type ds_type) {
 			display_raw_bytes (size, address);
 			break;
 		case DS_Stream:
-			display_stream ((Stream*) address);
+			display_Stream ((Stream*) address);
 			break;
 		case DS_String:
-			display_string ((String*) address);
+			display_String ((String*) address);
 			break;
 		case DS_Data:
-			display_data ((Data*) address);
+			display_Data ((Data*) address);
 			break;
 		case DS_Bare_List:
-			display_bare_list ((Bare_List*) address);
+			display_Bare_List ((Bare_List*) address);
 			break;
 		case DS_Chunk:
-			display_chunk ((Chunk*) address);
+			display_Chunk ((Chunk*) address);
 			break;
 		case DS_List:
-			display_list ((List*) address);
+			display_List ((List*) address);
 			break;
 		case DS_Iterator:
-			display_iterator_details ((Iterator*) address);
+			display_Iterator_details ((Iterator*) address);
 			break;
 		case DS_Node:
-			display_node ((Node*) address);
+			display_Node ((Node*) address);
 			break;
 		case DS_Linked_List:
-			display_linked_list ((Linked_List*) address);
+			display_Linked_List ((Linked_List*) address);
 			break;
 		case DS_Stack:
-			display_stack ((Stack*) address);
+			display_Stack ((Stack*) address);
 			break;
 		case DS_Queue:
-			display_queue ((Queue*) address);
+			display_Queue ((Queue*) address);
 			break;
 		case DS_Tree:
-			display_tree ((Tree*) address);
+			display_Tree ((Tree*) address);
 			break;
 		case DS_Graph:
-//			display_graph ((Graph*) address);
+//			display_Graph ((Graph*) address);
 			break;
 		default:
 			break;
@@ -280,43 +280,43 @@ void delete_log_entry (void* address, size_t __attribute__((unused)) size, DS_Ty
 //			log_memory (DS_Raw, size, address, false);
 			break;
 		case DS_Stream:
-			delete_stream ((Stream**) &address);
+			delete_Stream ((Stream**) &address);
 			break;
 		case DS_String:
-			delete_string ((String**) &address);
+			delete_String ((String**) &address);
 			break;
 		case DS_Data:
-			delete_data ((Data**) &address);
+			delete_Data ((Data**) &address);
 			break;
 		case DS_Bare_List:
-			delete_bare_list ((Bare_List**) &address);
+			delete_Bare_List ((Bare_List**) &address);
 			break;
 		case DS_Chunk:
-			delete_chunk ((Chunk**) &address);
+			delete_Chunk ((Chunk**) &address);
 			break;
 		case DS_List:
-			delete_list ((List**) &address);
+			delete_List ((List**) &address);
 			break;
 		case DS_Iterator:
-			delete_iterator ((Iterator**) &address);
+			delete_Iterator ((Iterator**) &address);
 			break;
 		case DS_Node:
-			delete_node ((Node**) &address);
+			delete_Node ((Node**) &address);
 			break;
 		case DS_Linked_List:
-			delete_linked_list ((Linked_List**) &address);
+			delete_Linked_List ((Linked_List**) &address);
 			break;
 		case DS_Stack:
-			delete_stack ((Stack**) &address);
+			delete_Stack ((Stack**) &address);
 			break;
 		case DS_Queue:
-			delete_queue ((Queue**) &address);
+			delete_Queue ((Queue**) &address);
 			break;
 		case DS_Tree:
-			delete_tree ((Tree**) &address);
+			delete_Tree ((Tree**) &address);
 			break;
 		case DS_Graph:
-//			delete_graph ((Graph**) &address);
+//			delete_Graph ((Graph**) &address);
 			break;
 		default:
 			break;

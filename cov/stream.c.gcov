@@ -4,8 +4,8 @@
         -:    0:Runs:1
         -:    1:#include "../inc/test.h"
         -:    2:
-function test_stream called 0 returned 0% blocks executed 0%
-    #####:    3:void test_stream (void) {
+function test_Stream called 0 returned 0% blocks executed 0%
+    #####:    3:void test_Stream (void) {
     #####:    4:	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Stream]\n" RESET_STYLE);
     %%%%%:    4-block 2
 call    0 never executed
@@ -13,7 +13,7 @@ call    0 never executed
     #####:    6:	char* text = "Hello, World!\n";
     #####:    7:	size_t length = 14;
         -:    8:
-    #####:    9:	Stream* stream = create_stream (length, (BYTE*) text);
+    #####:    9:	Stream* stream = create_Stream (length, (BYTE*) text);
 call    0 never executed
     #####:   10:	Stream* ghost_stream = stream;
         -:   11:
@@ -64,7 +64,7 @@ branch  1 never executed
 call    2 never executed
     %%%%%:   23-block 19
 call    3 never executed
-    #####:   24:	delete_stream (&stream);
+    #####:   24:	delete_Stream (&stream);
     %%%%%:   24-block 20
 call    0 never executed
     #####:   25:	TEST (stream != ghost_stream, "Checked Stream deletion");

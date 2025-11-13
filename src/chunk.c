@@ -1,6 +1,6 @@
 #include "../inc/chunk.h"
 
-Chunk* create_chunk (size_t chunk_id, size_t capacity) {
+Chunk* create_Chunk (size_t chunk_id, size_t capacity) {
 	Chunk* chunk = (Chunk*) malloc (sizeof (Chunk));
 
 	if (chunk == NULL) {
@@ -34,23 +34,23 @@ Chunk* create_chunk (size_t chunk_id, size_t capacity) {
 	return chunk;
 }
 
-Chunk* duplicate_chunk (Chunk* old_chunk) {
+Chunk* duplicate_Chunk (Chunk* old_chunk) {
 	if (old_chunk == NULL) {
 		perror ("Chunk does not exist to Duplicate!");
 		return NULL;
 	}
 
-	Chunk* new_chunk = create_chunk (old_chunk -> id, old_chunk -> capacity);
+	Chunk* new_chunk = create_Chunk (old_chunk -> id, old_chunk -> capacity);
 	new_chunk -> data_count = old_chunk -> data_count;
 
 	for (size_t i = 0; i < new_chunk -> capacity; i++) {
-		copy_data (old_chunk -> first_data_address + i, new_chunk -> first_data_address + i);
+		copy_Data (old_chunk -> first_data_address + i, new_chunk -> first_data_address + i);
 	}
 
 	return new_chunk;
 }
 
-void display_chunk (Chunk* chunk) {
+void display_Chunk (Chunk* chunk) {
 	if (chunk == NULL) {
 		perror ("Chunk does not exist to display!");
 		return;
@@ -67,13 +67,13 @@ void display_chunk (Chunk* chunk) {
 			printf (" | ");
 		}
 
-		display_data (data);
+		display_Data (data);
 	}
 
 	printf (" ]");
 }
 
-void display_chunk_details (Chunk* chunk) {
+void display_Chunk_details (Chunk* chunk) {
 	if (chunk == NULL) {
 		perror ("Chunk does not exist to display details!");
 		return;
@@ -96,13 +96,13 @@ void display_chunk_details (Chunk* chunk) {
 			printf (" | ");
 		}
 
-		display_data (data);
+		display_Data (data);
 	}
 
 	printf (" ]\n");
 }
 
-void display_linked_chunks (Chunk* chunk) {
+void display_linked_Chunks (Chunk* chunk) {
 	Chunk* c = chunk;
 	bool multiple = false;
 
@@ -111,19 +111,19 @@ void display_linked_chunks (Chunk* chunk) {
 			printf ("---");
 		}
 
-		display_chunk (c);
+		display_Chunk (c);
 		c = c -> next_chunk;
 		multiple = true;
 	}
 }
 
-void display_linked_chunks_guarded (Chunk* chunk) {
+void display_linked_Chunks_guarded (Chunk* chunk) {
 	printf ("----------\n");
-	display_linked_chunks (chunk);
+	display_linked_Chunks (chunk);
 	printf ("----------\n");
 }
 
-void delete_chunk (Chunk** chunk_address) {
+void delete_Chunk (Chunk** chunk_address) {
 	if (*chunk_address == NULL) {
 		perror ("Chunk does not exist to Delete!");
 		return;
@@ -159,7 +159,7 @@ void delete_chunk (Chunk** chunk_address) {
 }
 
 /*
-void forget_chunk (Chunk** chunk_address) {
+void forget_Chunk (Chunk** chunk_address) {
 	if (*chunk_address == NULL) {
 		perror ("Chunk does not exist to Forget!");
 		return;
@@ -173,7 +173,7 @@ void forget_chunk (Chunk** chunk_address) {
 }
 */
 
-Compare_Status compare_chunks (Chunk* chunk_1, Chunk* chunk_2) {
+Compare_Status compare_Chunks (Chunk* chunk_1, Chunk* chunk_2) {
 	if (chunk_1 == chunk_2) {
 		return Cmp_Identical;
 	}
@@ -195,7 +195,7 @@ Compare_Status compare_chunks (Chunk* chunk_1, Chunk* chunk_2) {
 	Compare_Status cmp_stat = Cmp_Equivalent;
 
 	for (size_t i = 0; i < chunk_1 -> data_count; i++) {
-		if (Cmp_Different == compare_data (chunk_1 -> first_data_address + i, chunk_2 -> first_data_address + i)) {
+		if (Cmp_Different == compare_Data (chunk_1 -> first_data_address + i, chunk_2 -> first_data_address + i)) {
 			cmp_stat = Cmp_Different;
 			break;
 		}
@@ -204,38 +204,38 @@ Compare_Status compare_chunks (Chunk* chunk_1, Chunk* chunk_2) {
 	return cmp_stat;
 }
 
-Chunk* extend_chunk (Chunk* chunk) {
-	Chunk* last_chunk = get_last_chunk_reference (chunk);
+Chunk* extend_Chunk (Chunk* chunk) {
+	Chunk* last_chunk = get_last_Chunk_reference (chunk);
 
-	Chunk* new_chunk = create_chunk (last_chunk -> id + 1, last_chunk -> capacity);
+	Chunk* new_chunk = create_Chunk (last_chunk -> id + 1, last_chunk -> capacity);
 	last_chunk -> next_chunk = new_chunk;
 	new_chunk -> previous_chunk = last_chunk;
 
 	return new_chunk;
 }
 
-Chunk* reduce_chunk (Chunk* chunk) {
+Chunk* reduce_Chunk (Chunk* chunk) {
 	if (NULL == chunk) {
 		perror ("Chunk does not exist!\n");
 		return NULL;
 	}
 
-	if (0 == chunk -> id && chunk == get_first_chunk_reference (chunk)) {
+	if (0 == chunk -> id && chunk == get_first_Chunk_reference (chunk)) {
 		return chunk;
 	}
 
-	Chunk* last_chunk = get_last_chunk_reference (chunk);
+	Chunk* last_chunk = get_last_Chunk_reference (chunk);
 	Chunk* penultimate_chunk = last_chunk -> previous_chunk;	// [Latin] "paene" (almost), "ultima" (last)
 
 	penultimate_chunk -> next_chunk = NULL;
 	last_chunk -> previous_chunk = NULL;
 
-	delete_chunk (&last_chunk);
+	delete_Chunk (&last_chunk);
 
 	return penultimate_chunk;
 }
 
-void insert_data_into_chunk (Chunk* chunk, Data* data) {
+void insert_Data_into_Chunk (Chunk* chunk, Data* data) {
 	if (chunk == NULL) {
 		perror ("Provided chunk does not exist to insert into!\n");
 		return;
@@ -246,23 +246,23 @@ void insert_data_into_chunk (Chunk* chunk, Data* data) {
 		return;
 	}
 
-	Chunk* last_chunk = get_last_chunk_reference (chunk);
+	Chunk* last_chunk = get_last_Chunk_reference (chunk);
 
 	if (last_chunk -> capacity == last_chunk -> data_count) {
-		last_chunk = extend_chunk (last_chunk);
+		last_chunk = extend_Chunk (last_chunk);
 	}
 
-	copy_data (data, last_chunk -> first_data_address + last_chunk -> data_count++);
+	copy_Data (data, last_chunk -> first_data_address + last_chunk -> data_count++);
 }
 
-Data* remove_data_from_chunk (Chunk* chunk) {
+Data* remove_Data_from_Chunk (Chunk* chunk) {
 	if (NULL == chunk) {
 		perror ("Provided chunk does not exist to remove from!\n");
 		return NULL;
 	}
 
-	Chunk* last_chunk = get_last_chunk_reference (chunk);
-	Chunk* first_chunk = get_first_chunk_reference (chunk);
+	Chunk* last_chunk = get_last_Chunk_reference (chunk);
+	Chunk* first_chunk = get_first_Chunk_reference (chunk);
 
 	if (
 		last_chunk == first_chunk
@@ -272,8 +272,8 @@ Data* remove_data_from_chunk (Chunk* chunk) {
 	}
 
 	Data* data = last_chunk -> first_data_address + last_chunk -> data_count - 1;
-	Data* real_data = duplicate_data (data);
-	empty_data (data);
+	Data* real_data = duplicate_Data (data);
+	empty_Data (data);
 
 	-- (last_chunk -> data_count);
 
@@ -281,13 +281,13 @@ Data* remove_data_from_chunk (Chunk* chunk) {
 		last_chunk -> id != 0
 		&& last_chunk -> data_count == 0
 	) {
-		last_chunk = reduce_chunk (last_chunk);
+		last_chunk = reduce_Chunk (last_chunk);
 	}
 
 	return real_data;
 }
 
-Chunk* get_first_chunk_reference (Chunk* chunk) {
+Chunk* get_first_Chunk_reference (Chunk* chunk) {
 	if (NULL == chunk) {
 		perror ("Provided chunk does not exist!\n");
 		return NULL;
@@ -306,7 +306,7 @@ Chunk* get_first_chunk_reference (Chunk* chunk) {
 	return first_chunk;
 }
 
-Chunk* get_last_chunk_reference (Chunk* chunk) {
+Chunk* get_last_Chunk_reference (Chunk* chunk) {
 	if (NULL == chunk) {
 		perror ("Provided chunk does not exist!\n");
 		return NULL;
@@ -325,8 +325,8 @@ Chunk* get_last_chunk_reference (Chunk* chunk) {
 	return last_chunk;
 }
 
-void reduce_unused_chunks (Chunk* chunk) {
-	Chunk* last_chunk = get_last_chunk_reference (chunk);
+void reduce_unused_Chunks (Chunk* chunk) {
+	Chunk* last_chunk = get_last_Chunk_reference (chunk);
 	Chunk* penultimate_chunk = last_chunk -> previous_chunk;
 
 	while (
@@ -338,12 +338,12 @@ void reduce_unused_chunks (Chunk* chunk) {
 		}
 
 		penultimate_chunk = last_chunk -> previous_chunk;
-		reduce_chunk (last_chunk);
+		reduce_Chunk (last_chunk);
 		last_chunk = penultimate_chunk;
 	}
 }
 
-void clear_chunk_residue_data (Chunk* chunk) {
+void clear_Chunk_residue_Data (Chunk* chunk) {
 	if (NULL == chunk) {
 		perror ("Provided chunk does not exist to clear data from index!\n");
 		exit (EXIT_FAILURE);
@@ -353,18 +353,18 @@ void clear_chunk_residue_data (Chunk* chunk) {
 	Data* data = chunk -> first_data_address + i;
 
 	for ( ; i < chunk -> data_count; i++) {
-		empty_data (data);
+		empty_Data (data);
 	}
 }
 
-size_t count_linked_chunks (Chunk* chunk) {
+size_t count_linked_Chunks (Chunk* chunk) {
 	if (NULL == chunk) {
 		return 0;
 	}
 
 	size_t count = 0;
 
-	chunk = get_first_chunk_reference (chunk);
+	chunk = get_first_Chunk_reference (chunk);
 
 	while (NULL != chunk) {
 		chunk = chunk -> next_chunk;
@@ -374,14 +374,14 @@ size_t count_linked_chunks (Chunk* chunk) {
 	return count;
 }
 
-void delete_linked_chunks (Chunk** chunk_address) {
+void delete_linked_Chunks (Chunk** chunk_address) {
 	if (NULL == *chunk_address) {
 		perror ("Given address does not have any chunk to delete linked chunks!");
 		return;
 	}
 
-	Chunk* chunk = get_first_chunk_reference (*chunk_address);
-	size_t chunk_count = count_linked_chunks (chunk);
+	Chunk* chunk = get_first_Chunk_reference (*chunk_address);
+	size_t chunk_count = count_linked_Chunks (chunk);
 	Chunk* next_chunk;
 
 	while (
@@ -390,7 +390,7 @@ void delete_linked_chunks (Chunk** chunk_address) {
 		next_chunk = chunk -> next_chunk;
 		chunk -> previous_chunk = NULL;
 		chunk -> next_chunk = NULL;
-		delete_chunk (&chunk);
+		delete_Chunk (&chunk);
 		chunk = next_chunk;
 	}
 }

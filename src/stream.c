@@ -1,48 +1,5 @@
 #include "../inc/stream.h"
 
-Stream* create_stream (size_t length, BYTE* base_addr) {
-	Stream* stream = (Stream*) malloc (sizeof (Stream));
-
-	if (stream != NULL) {
-		log_memory (DS_Stream, sizeof (Stream), stream, true);
-
-		stream -> length = 0;
-		stream -> base_addr = NULL;
-	}
-
-	if (length > 0 && base_addr != NULL) {
-		stream -> length = length;
-		stream -> base_addr = (BYTE*) malloc (length * sizeof (BYTE));
-
-		if (stream -> base_addr != NULL) {
-			log_memory (DS_Raw, length * sizeof (BYTE), stream -> base_addr, true);
-
-			copy_raw_byte_stream (length, base_addr, stream -> base_addr);
-		}
-	}
-
-	return stream;
-}
-
-void delete_stream (Stream** stream_address) {
-	if (*stream_address == NULL) {
-		// perror ("Stream is empty to delete!");
-		return;
-	}
-
-	Stream* stream = *stream_address;
-
-	if (stream -> base_addr != NULL && stream -> length > 0) {
-		log_memory (DS_Raw, (stream -> length) * sizeof (BYTE), stream -> base_addr, false);
-		ERASE (&(stream -> base_addr), stream -> length);
-	}
-
-	stream = NULL;
-
-	log_memory (DS_Stream, sizeof (Stream), *stream_address, false);
-	ERASE (stream_address, sizeof (Stream));
-}
-
 void copy_raw_byte_stream (size_t length, BYTE* src_addr, BYTE* dst_addr) {
 	for (size_t i = 0; i < length; i++) {
 		*dst_addr++ = *src_addr++;
@@ -68,7 +25,50 @@ bool compare_raw_byte_stream (size_t length, BYTE* base_addr_1, BYTE* base_addr_
 	return result;
 }
 
-void display_stream (Stream* stream) {
+Stream* create_Stream (size_t length, BYTE* base_addr) {
+	Stream* stream = (Stream*) malloc (sizeof (Stream));
+
+	if (stream != NULL) {
+		log_memory (DS_Stream, sizeof (Stream), stream, true);
+
+		stream -> length = 0;
+		stream -> base_addr = NULL;
+	}
+
+	if (length > 0 && base_addr != NULL) {
+		stream -> length = length;
+		stream -> base_addr = (BYTE*) malloc (length * sizeof (BYTE));
+
+		if (stream -> base_addr != NULL) {
+			log_memory (DS_Raw, length * sizeof (BYTE), stream -> base_addr, true);
+
+			copy_raw_byte_stream (length, base_addr, stream -> base_addr);
+		}
+	}
+
+	return stream;
+}
+
+void delete_Stream (Stream** stream_address) {
+	if (*stream_address == NULL) {
+		// perror ("Stream is empty to delete!");
+		return;
+	}
+
+	Stream* stream = *stream_address;
+
+	if (stream -> base_addr != NULL && stream -> length > 0) {
+		log_memory (DS_Raw, (stream -> length) * sizeof (BYTE), stream -> base_addr, false);
+		ERASE (&(stream -> base_addr), stream -> length);
+	}
+
+	stream = NULL;
+
+	log_memory (DS_Stream, sizeof (Stream), *stream_address, false);
+	ERASE (stream_address, sizeof (Stream));
+}
+
+void display_Stream (Stream* stream) {
 	if (stream == NULL) {
 		return;
 	}
@@ -80,14 +80,14 @@ void display_stream (Stream* stream) {
 	}
 }
 
-void display_stream_details (Stream* stream) {
+void display_Stream_details (Stream* stream) {
 	if (NULL == stream) {
 		perror ("Stream does not exist to display details!");
 		return;
 	}
 
 	printf ("Stream :=> Address: (%p) Length: (%lu) Data: [", stream, stream -> length);
-	display_stream (stream);
+	display_Stream (stream);
 	printf ("]");
 	ENDL();
 }

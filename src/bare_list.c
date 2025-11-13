@@ -1,6 +1,6 @@
 #include "../inc/bare_list.h"
 
-Bare_List* create_bare_list (size_t item_count) {
+Bare_List* create_Bare_List (size_t item_count) {
 	Bare_List* list = (Bare_List*) malloc (sizeof (Bare_List));
 
 	if (list == NULL) {
@@ -13,7 +13,7 @@ Bare_List* create_bare_list (size_t item_count) {
 	list -> capacity = 0;
 	list -> item_addresses = NULL;
 
-	size_t capacity = calculate_bare_list_capacity (item_count);
+	size_t capacity = calculate_Bare_List_capacity (item_count);
 	list -> capacity = capacity;
 
 	list -> item_addresses = (void**) malloc (capacity * sizeof (void*));
@@ -22,7 +22,7 @@ Bare_List* create_bare_list (size_t item_count) {
 	return list;
 }
 
-size_t calculate_bare_list_capacity (size_t item_count) {
+size_t calculate_Bare_List_capacity (size_t item_count) {
 	const size_t MIN_CHUNK_CAP = 10;	// minimum chunk capacity
 	const size_t MAX_CHUNK_CAP = 1000;	// maximum chunk capacity
 
@@ -46,13 +46,13 @@ size_t calculate_bare_list_capacity (size_t item_count) {
 	return capacity;
 }
 
-Bare_List* duplicate_bare_list (Bare_List* old_list) {
+Bare_List* duplicate_Bare_List (Bare_List* old_list) {
 	if (old_list == NULL) {
 		perror ("Bare_List does not exist to Duplicate!");
 		return NULL;
 	}
 
-	Bare_List* new_list = create_bare_list (old_list -> item_count);
+	Bare_List* new_list = create_Bare_List (old_list -> item_count);
 
 	if (new_list != NULL) {
 		for (size_t i = 0; i < new_list -> item_count; i++) {
@@ -63,7 +63,7 @@ Bare_List* duplicate_bare_list (Bare_List* old_list) {
 	return new_list;
 }
 
-void display_bare_list (Bare_List* list) {
+void display_Bare_List (Bare_List* list) {
 	if (list -> item_count == 0) {
 		perror ("Bare_List is Empty!");
 		return;
@@ -80,13 +80,13 @@ void display_bare_list (Bare_List* list) {
 			printf (", ");
 		}
 
-		display_data (data);
+		display_Data (data);
 	}
 
 	printf ("]\n");
 }
 
-void display_bare_list_details (Bare_List* list) {
+void display_Bare_List_details (Bare_List* list) {
 	if (list -> item_count == 0) {
 		perror ("Bare_List is Empty!");
 		return;
@@ -103,13 +103,13 @@ void display_bare_list_details (Bare_List* list) {
 			printf (", ");
 		}
 
-		display_data (data);
+		display_Data (data);
 	}
 
 	printf ("]\n");
 }
 
-void display_bare_list_addresses (Bare_List* list) {
+void display_Bare_List_addresses (Bare_List* list) {
 	if (list == NULL) {
 		//perror ("Bare_List does not exist to display!");
 		return;
@@ -137,7 +137,7 @@ void display_bare_list_addresses (Bare_List* list) {
 	printf ("]");
 }
 
-void forget_bare_list (Bare_List** list_address) {
+void forget_Bare_List (Bare_List** list_address) {
 	if (*list_address == NULL) {
 		perror ("Bare_List does not exist to Forget!");
 		return;
@@ -150,7 +150,7 @@ void forget_bare_list (Bare_List** list_address) {
 	}
 }
 
-void delete_bare_list (Bare_List** list_address) {
+void delete_Bare_List (Bare_List** list_address) {
 	if (*list_address == NULL) {
 		perror ("Bare_List does not exist to Delete!");
 		return;
@@ -161,7 +161,7 @@ void delete_bare_list (Bare_List** list_address) {
 
 	for (size_t i = 0; i < list -> item_count; i++) {
 		data = *(list -> item_addresses + i);
-		delete_data (&data);
+		delete_Data (&data);
 	}
 
 	log_memory (DS_Raw, (list -> capacity) * sizeof (void*), list -> item_addresses, false);
@@ -173,7 +173,7 @@ void delete_bare_list (Bare_List** list_address) {
 	ERASE (list_address, sizeof (Bare_List));
 }
 
-void add_to_bare_list (Bare_List* list, Data* data, bool data_copy_needed) {
+void add_to_Bare_List (Bare_List* list, Data* data, bool data_copy_needed) {
 	if (list == NULL) {
 		perror ("Bare_List does not exist to add data!");
 		return;
@@ -182,7 +182,7 @@ void add_to_bare_list (Bare_List* list, Data* data, bool data_copy_needed) {
 	list -> item_addresses = (void**) realloc (list -> item_addresses, (list -> item_count + 1) * sizeof (void*));
 
 	if (data_copy_needed) {
-		*(list -> item_addresses + list -> item_count) = duplicate_data (data);
+		*(list -> item_addresses + list -> item_count) = duplicate_Data (data);
 	} else {
 		*(list -> item_addresses + list -> item_count) = data;
 	}
@@ -190,8 +190,8 @@ void add_to_bare_list (Bare_List* list, Data* data, bool data_copy_needed) {
 	++ list -> item_count;
 }
 
-bool remove_address_from_bare_list (Bare_List* list, void* address) {	// this does not hard delete memory data, just forgets or removes the address from list
-	int index = search_in_address_bare_list (list, address);
+bool remove_address_from_Bare_List (Bare_List* list, void* address) {	// this does not hard delete memory data, just forgets or removes the address from list
+	int index = search_in_address_Bare_List (list, address);
 
 	if (index < 1) {
 		return false;
@@ -210,7 +210,7 @@ bool remove_address_from_bare_list (Bare_List* list, void* address) {	// this do
 	return true;
 }
 
-size_t search_in_address_bare_list (Bare_List* list, void* address) {
+size_t search_in_address_Bare_List (Bare_List* list, void* address) {
 	if (list == NULL) {
 		perror ("Bare_List does not exist to search address in");
 		return -1;

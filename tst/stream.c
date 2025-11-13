@@ -1,12 +1,12 @@
 #include "../inc/test.h"
 
-void test_stream (void) {
+void test_Stream (void) {
 	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Stream]\n" RESET_STYLE);
 
 	char* text = "Hello, World!\n";
 	size_t length = 14;
 
-	Stream* stream = create_stream (length, (BYTE*) text);
+	Stream* stream = create_Stream (length, (BYTE*) text);
 	Stream* ghost_stream = stream;
 
 	// printf ("%lu %lu\n", length, sizeof (stream -> text));
@@ -21,7 +21,7 @@ void test_stream (void) {
 //	void** stream_addresses = capture_stream_addresses (stream);
 //	TEST (!is_stream_memory_erased (stream_addresses), "Stream existance check");
 	TEST (stream == ghost_stream, "Checked Stream existance");
-	delete_stream (&stream);
+	delete_Stream (&stream);
 	TEST (stream != ghost_stream, "Checked Stream deletion");
 
 	//TEST (is_stream_memory_erased (stream_addresses), "Stream deletion check");

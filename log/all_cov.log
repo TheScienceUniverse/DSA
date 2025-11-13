@@ -13,7 +13,7 @@ Creating 'basic.c.gcov'
 
 Lines executed:100.00% of 16
 
-Function 'test_stream'
+Function 'test_Stream'
 Lines executed:0.00% of 15
 Branches executed:0.00% of 12
 Taken at least once:0.00% of 12
@@ -28,7 +28,7 @@ Creating 'stream.c.gcov'
 
 Lines executed:0.00% of 15
 
-Function 'test_string'
+Function 'test_String'
 Lines executed:100.00% of 123
 Branches executed:100.00% of 68
 Taken at least once:50.00% of 68
@@ -43,7 +43,7 @@ Creating 'string.c.gcov'
 
 Lines executed:100.00% of 123
 
-Function 'test_data'
+Function 'test_Data'
 Lines executed:100.00% of 24
 Branches executed:100.00% of 18
 Taken at least once:50.00% of 18
@@ -58,7 +58,7 @@ Creating 'data.c.gcov'
 
 Lines executed:100.00% of 24
 
-Function 'test_chunk'
+Function 'test_Chunk'
 Lines executed:100.00% of 52
 Branches executed:100.00% of 46
 Taken at least once:56.52% of 46
@@ -73,7 +73,7 @@ Creating 'chunk.c.gcov'
 
 Lines executed:100.00% of 52
 
-Function 'test_bare_list'
+Function 'test_Bare_List'
 Lines executed:100.00% of 26
 Branches executed:100.00% of 16
 Taken at least once:50.00% of 16
@@ -88,7 +88,7 @@ Creating 'bare_list.c.gcov'
 
 Lines executed:100.00% of 26
 
-Function 'test_list'
+Function 'test_List'
 Lines executed:100.00% of 173
 Branches executed:100.00% of 90
 Taken at least once:54.44% of 90
@@ -103,7 +103,7 @@ Creating 'list.c.gcov'
 
 Lines executed:100.00% of 173
 
-Function 'test_iterator'
+Function 'test_Iterator'
 Lines executed:100.00% of 46
 Branches executed:100.00% of 30
 Taken at least once:53.33% of 30
@@ -118,7 +118,7 @@ Creating 'iterator.c.gcov'
 
 Lines executed:100.00% of 46
 
-Function 'test_node'
+Function 'test_Node'
 Lines executed:100.00% of 22
 Branches executed:100.00% of 12
 Taken at least once:50.00% of 12
@@ -133,7 +133,7 @@ Creating 'node.c.gcov'
 
 Lines executed:100.00% of 22
 
-Function 'test_linked_list'
+Function 'test_Linked_List'
 Lines executed:100.00% of 57
 Branches executed:100.00% of 60
 Taken at least once:50.00% of 60
@@ -148,7 +148,7 @@ Creating 'linked_list.c.gcov'
 
 Lines executed:100.00% of 57
 
-Function 'test_stack'
+Function 'test_Stack'
 Lines executed:100.00% of 67
 Branches executed:100.00% of 50
 Taken at least once:50.00% of 50
@@ -163,7 +163,7 @@ Creating 'stack.c.gcov'
 
 Lines executed:100.00% of 67
 
-Function 'test_queue'
+Function 'test_Queue'
 Lines executed:100.00% of 74
 Branches executed:100.00% of 82
 Taken at least once:50.00% of 82
@@ -178,7 +178,7 @@ Creating 'queue.c.gcov'
 
 Lines executed:100.00% of 74
 
-Function 'test_tree'
+Function 'test_Tree'
 Lines executed:100.00% of 80
 Branches executed:100.00% of 8
 Taken at least once:50.00% of 8

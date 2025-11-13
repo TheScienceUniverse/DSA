@@ -1,6 +1,6 @@
 #include "../inc/queue.h"
 
-Queue *create_queue (void) {
+Queue* create_Queue (void) {
 	Queue* queue = (Queue*) malloc (sizeof (Queue));
 
 	if (queue != NULL) {
@@ -15,7 +15,7 @@ Queue *create_queue (void) {
 	return queue;
 }
 
-void display_queue (Queue* queue) {
+void display_Queue (Queue* queue) {
 	if (queue == NULL) {
 		perror ("Queue does not exist to display!");
 		return;
@@ -35,14 +35,14 @@ void display_queue (Queue* queue) {
 			printf (" <- ");
 		}
 
-		display_node (node);
+		display_Node (node);
 		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
 	}
 
 	printf (" ]\n");
 }
 
-void display_queue_details (Queue* queue) {
+void display_Queue_details (Queue* queue) {
 	if (queue == NULL) {
 		perror ("Stack does not exist to display details!");
 		return;
@@ -58,14 +58,14 @@ void display_queue_details (Queue* queue) {
 	Node* node = queue -> front_node;
 
 	for (size_t i = 0; i < queue -> size; i++) {
-		display_node_details (node);
+		display_Node_details (node);
 		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
 	}
 
 	printf ("\n");
 }
 
-void delete_queue (Queue** queue_address) {
+void delete_Queue (Queue** queue_address) {
 	if (*queue_address == NULL) {
 		// perror ("Queue does not exist to delete!");
 		return;
@@ -79,7 +79,7 @@ void delete_queue (Queue** queue_address) {
 	for (size_t i = 0; i < queue -> size; i++) {
 		del_node = node;
 		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
-		delete_node (&del_node);
+		delete_Node (&del_node);
 	}
 
 	queue = NULL;
@@ -88,7 +88,7 @@ void delete_queue (Queue** queue_address) {
 	ERASE (queue_address, sizeof (Queue));
 }
 
-void enqueue (Queue* queue, Node* node) {
+void enQueue (Queue* queue, Node* node) {
 	if (queue == NULL) {
 		perror ("Queue does not exist to attach node at last\n");
 		exit (EXIT_FAILURE);
@@ -99,7 +99,7 @@ void enqueue (Queue* queue, Node* node) {
 		exit (EXIT_FAILURE);
 	}
 
-	Node* new_node = duplicate_node (node);
+	Node* new_node = duplicate_Node (node);
 
 	new_node -> address_list -> head_chunk -> first_data_address -> address = queue -> rear_node;
 
@@ -122,7 +122,7 @@ void enqueue (Queue* queue, Node* node) {
 	queue -> size++;
 }
 
-Node* dequeue (Queue* queue) {
+Node* deQueue (Queue* queue) {
 	if (queue == NULL) {
 		// perror ("Queue does not exist to detach node from first!");
 		// exit (EXIT_FAILURE);
@@ -156,7 +156,7 @@ Node* dequeue (Queue* queue) {
 	return node;
 }
 
-void peek_data_from_queue (Queue* queue) {
+void peek_Data_from_Queue (Queue* queue) {
 	if (NULL == queue) {
 		// perror ("Stack does not exist to peek data from!");
 		// exit (EXIT_FAILURE);
@@ -169,6 +169,6 @@ void peek_data_from_queue (Queue* queue) {
 	}
 
 	printf ("Peeked ");
-	display_data_details (queue -> front_node -> data);
+	display_Data_details (queue -> front_node -> data);
 	printf ("\n");
 }

@@ -1,6 +1,6 @@
 #include "../inc/linked_list.h"
 
-Linked_List *create_linked_list () {
+Linked_List* create_Linked_List (void) {
 	Linked_List* linked_list = (Linked_List*) malloc (sizeof (Linked_List));
 
 	if (linked_list != NULL) {
@@ -15,7 +15,7 @@ Linked_List *create_linked_list () {
 	return linked_list;
 }
 
-void display_linked_list (Linked_List* linked_list) {
+void display_Linked_List (Linked_List* linked_list) {
 	if (linked_list == NULL) {
 		perror ("Linked List does not Exist to display!");
 		return;
@@ -35,14 +35,14 @@ void display_linked_list (Linked_List* linked_list) {
 			printf ("---");
 		}
 
-		display_node (node);
+		display_Node (node);
 		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
 	}
 
 	printf ("\n");
 }
 
-void display_linked_list_details (Linked_List* linked_list) {
+void display_Linked_List_details (Linked_List* linked_list) {
 	if (linked_list == NULL) {
 		perror ("Linked List does not Exist to display details!");
 		return;
@@ -58,14 +58,14 @@ void display_linked_list_details (Linked_List* linked_list) {
 	Node* node = linked_list -> head_node;
 
 	for (size_t i = 0; i < linked_list -> size; i++) {
-		display_node_details (node);
+		display_Node_details (node);
 		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
 	}
 
 	printf ("\n");
 }
 
-void delete_linked_list (Linked_List** linked_list_address) {
+void delete_Linked_List (Linked_List** linked_list_address) {
 	if (*linked_list_address == NULL) {
 		perror ("Linked List does not exist to delete!");
 		return;
@@ -79,7 +79,7 @@ void delete_linked_list (Linked_List** linked_list_address) {
 	for (size_t i = 0; i < linked_list -> size; i++) {
 		del_node = node;
 		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
-		delete_node (&del_node);
+		delete_Node (&del_node);
 	}
 
 	linked_list = NULL;
@@ -88,7 +88,7 @@ void delete_linked_list (Linked_List** linked_list_address) {
 	ERASE (linked_list_address, sizeof (Linked_List));
 }
 
-void attach_node_at_last (Linked_List* linked_list, Node* node) {
+void attach_Node_at_last (Linked_List* linked_list, Node* node) {
 	if (linked_list == NULL) {
 		perror ("Linked-list does not exist to attah node at last\n");
 		exit (EXIT_FAILURE);
@@ -99,7 +99,7 @@ void attach_node_at_last (Linked_List* linked_list, Node* node) {
 		exit (EXIT_FAILURE);
 	}
 
-	Node* new_node = duplicate_node (node);
+	Node* new_node = duplicate_Node (node);
 
 	new_node -> address_list -> head_chunk -> first_data_address -> address = linked_list -> tail_node;
 
@@ -121,7 +121,7 @@ void attach_node_at_last (Linked_List* linked_list, Node* node) {
 	linked_list -> size++;
 }
 
-void attach_node_at_first (Linked_List* linked_list, Node* node) {
+void attach_Node_at_first (Linked_List* linked_list, Node* node) {
 	if (linked_list == NULL) {
 		perror ("Linked-list does not exist to attah node at last\n");
 		exit (EXIT_FAILURE);
@@ -132,7 +132,7 @@ void attach_node_at_first (Linked_List* linked_list, Node* node) {
 		exit (EXIT_FAILURE);
 	}
 
-	Node* new_node = duplicate_node (node);
+	Node* new_node = duplicate_Node (node);
 
 	(new_node -> address_list -> head_chunk -> first_data_address + 1) -> address = linked_list -> head_node;
 
@@ -153,7 +153,7 @@ void attach_node_at_first (Linked_List* linked_list, Node* node) {
 	linked_list -> size++;
 }
 
-Node* detach_head_from_linked_list (Linked_List* linked_list) {
+Node* detach_head_from_Linked_List (Linked_List* linked_list) {
 	if (linked_list == NULL) {
 		// perror ("Linked List does not Exist to detach node from!");
 		// exit (EXIT_FAILURE);
@@ -187,7 +187,7 @@ Node* detach_head_from_linked_list (Linked_List* linked_list) {
 	return node;
 }
 
-Node* detach_tail_from_linked_list (Linked_List* linked_list) {
+Node* detach_tail_from_Linked_List (Linked_List* linked_list) {
 	if (linked_list == NULL) {
 		// perror ("Linked List does not Exist to detach node from!");
 		// exit (EXIT_FAILURE);

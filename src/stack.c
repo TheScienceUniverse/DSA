@@ -1,6 +1,6 @@
 #include "../inc/stack.h"
 
-Stack *create_stack (void) {
+Stack* create_Stack (void) {
 	Stack* stack = (Stack*) malloc (sizeof (Stack));
 
 	if (stack != NULL) {
@@ -14,7 +14,7 @@ Stack *create_stack (void) {
 	return stack;
 }
 
-void display_stack (Stack* stack) {
+void display_Stack (Stack* stack) {
 	if (stack == NULL) {
 		perror ("Stack does not exist to display!");
 		return;
@@ -33,7 +33,7 @@ void display_stack (Stack* stack) {
 
 	for (size_t i = 0; i < stack -> size; i++) {
 		printf ("\n|\t");
-		display_node (node);
+		display_Node (node);
 		printf ("\n+--------+");
 		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
 	}
@@ -41,7 +41,7 @@ void display_stack (Stack* stack) {
 	printf ("\n");
 }
 
-void display_stack_details (Stack* stack) {
+void display_Stack_details (Stack* stack) {
 	if (stack == NULL) {
 		perror ("Stack does not exist to display details!");
 		return;
@@ -57,14 +57,14 @@ void display_stack_details (Stack* stack) {
 	Node* node = stack -> top_node;
 
 	for (size_t i = 0; i < stack -> size; i++) {
-		display_node_details (node);
+		display_Node_details (node);
 		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
 	}
 
 	printf ("\n");
 }
 
-void delete_stack (Stack** stack_address) {
+void delete_Stack (Stack** stack_address) {
 	if (*stack_address == NULL) {
 		perror ("Stack does not exist to delete!");
 		return;
@@ -78,7 +78,7 @@ void delete_stack (Stack** stack_address) {
 	for (size_t i = 0; i < stack -> size; i++) {
 		del_node = node;
 		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
-		delete_node (&del_node);
+		delete_Node (&del_node);
 	}
 
 	stack = NULL;
@@ -87,7 +87,7 @@ void delete_stack (Stack** stack_address) {
 	ERASE (stack_address, sizeof (Stack));
 }
 
-void push_node_onto_stack (Stack* stack, Node* node) {
+void push_Node_onto_Stack (Stack* stack, Node* node) {
 	if (stack == NULL) {
 		perror ("Stack does not exist to push node onto\n");
 		exit (EXIT_FAILURE);
@@ -98,7 +98,7 @@ void push_node_onto_stack (Stack* stack, Node* node) {
 		exit (EXIT_FAILURE);
 	}
 
-	Node* new_node = duplicate_node (node);
+	Node* new_node = duplicate_Node (node);
 
 	(new_node -> address_list -> head_chunk -> first_data_address + 1) -> address = stack -> top_node;
 
@@ -117,7 +117,7 @@ void push_node_onto_stack (Stack* stack, Node* node) {
 	++ stack -> size;
 }
 
-Node* pop_node_from_stack (Stack* stack) {
+Node* pop_Node_from_Stack (Stack* stack) {
 	if (stack == NULL) {
 		// perror ("Stack does not exist to pop node from!");
 		// exit (EXIT_FAILURE);
@@ -150,7 +150,7 @@ Node* pop_node_from_stack (Stack* stack) {
 	return node;
 }
 
-void peek_data_from_stack (Stack* stack) {
+void peek_Data_from_Stack (Stack* stack) {
 	if (NULL == stack) {
 		// perror ("Stack does not exist to peek data from!");
 		// exit (EXIT_FAILURE);
@@ -163,11 +163,11 @@ void peek_data_from_stack (Stack* stack) {
 	}
 
 	printf ("Peeked ");
-	display_data_details (stack -> top_node -> data);
+	display_Data_details (stack -> top_node -> data);
 	printf ("\n");
 }
 
-void push_data_onto_stack (Stack* stack, Data* data) {
+void push_Data_onto_Stack (Stack* stack, Data* data) {
 	if (stack == NULL) {
 		perror ("Stack does not exist to push node onto\n");
 		exit (EXIT_FAILURE);
@@ -178,16 +178,16 @@ void push_data_onto_stack (Stack* stack, Data* data) {
 		exit (EXIT_FAILURE);
 	}
 
-	Node* node = create_node (N_Stack);
+	Node* node = create_Node (N_Stack);
 	node -> data = data;
 
-	push_node_onto_stack (stack, node);
+	push_Node_onto_Stack (stack, node);
 
 	node -> data = NULL;
-	delete_node (&node);
+	delete_Node (&node);
 }
 
-Data* pop_data_from_stack (Stack* stack) {
+Data* pop_Data_from_Stack (Stack* stack) {
 	if (stack == NULL) {
 		// perror ("Stack does not exist to pop node from!");
 		// exit (EXIT_FAILURE);
@@ -200,12 +200,12 @@ Data* pop_data_from_stack (Stack* stack) {
 	}
 
 	Data* data;
-	Node* node = pop_node_from_stack (stack);
+	Node* node = pop_Node_from_Stack (stack);
 
 	data = node -> data;
 
 	node -> data = NULL;
-	delete_node (&node);
+	delete_Node (&node);
 
 	return data;
 }

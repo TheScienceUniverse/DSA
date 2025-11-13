@@ -4,13 +4,13 @@
         -:    0:Runs:1
         -:    1:#include "../inc/test.h"
         -:    2:
-function test_list called 1 returned 100% blocks executed 84%
-        1:    3:void test_list (void) {
+function test_List called 1 returned 100% blocks executed 84%
+        1:    3:void test_List (void) {
         1:    4:	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [List]\n" RESET_STYLE);
         1:    4-block 2
 call    0 returned 1
         -:    5:
-        1:    6:	List* list = create_list (100);
+        1:    6:	List* list = create_List (100);
 call    0 returned 1
         -:    7://	display_chunk_properties (chunk);
         -:    8:
@@ -90,27 +90,27 @@ call    3 never executed
 branch  0 taken 10
 branch  1 taken 1 (fallthrough)
        10:   25:		x ^= 0xffff;
-       10:   26:		data = create_data (DT_Binary, sizeof (uint16_t), &x);
+       10:   26:		data = create_Data (DT_Binary, sizeof (uint16_t), &x);
        10:   26-block 29
 call    0 returned 10
-       10:   27:		insert_data_into_list (list, data);
+       10:   27:		insert_Data_into_List (list, data);
 call    0 returned 10
-       10:   28:		delete_data (&data);
+       10:   28:		delete_Data (&data);
 call    0 returned 10
         -:   29:
        10:   30:		n += 10;
-       10:   31:		data = create_data (DT_Integer, sizeof (int), &n);
+       10:   31:		data = create_Data (DT_Integer, sizeof (int), &n);
 call    0 returned 10
-       10:   32:		insert_data_into_list (list, data);
+       10:   32:		insert_Data_into_List (list, data);
 call    0 returned 10
-       10:   33:		delete_data (&data);
+       10:   33:		delete_Data (&data);
 call    0 returned 10
         -:   34:
-       10:   35:		data = create_data (DT_String, 5, str);
+       10:   35:		data = create_Data (DT_String, 5, str);
 call    0 returned 10
-       10:   36:		insert_data_into_list (list, data);
+       10:   36:		insert_Data_into_List (list, data);
 call    0 returned 10
-       10:   37:		delete_data (&data);
+       10:   37:		delete_Data (&data);
 call    0 returned 10
         -:   38:	}
         -:   39:
@@ -126,10 +126,10 @@ call    2 returned 1
     %%%%%:   43-block 42
 call    3 never executed
         -:   44:
-        1:   45:	data = create_data (DT_String, 5, str);
+        1:   45:	data = create_Data (DT_String, 5, str);
         1:   45-block 43
 call    0 returned 1
-        1:   46:	List* index_list = search_data_in_list (list, data);
+        1:   46:	List* index_list = search_Data_in_List (list, data);
 call    0 returned 1
         -:   47:	// display_list (index_list);
        1*:   48:	TEST (NULL != index_list, "Received search index-list result");
@@ -147,14 +147,14 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   49-block 50
 call    3 never executed
-        1:   50:	delete_list (&index_list);
+        1:   50:	delete_List (&index_list);
         1:   50-block 51
 call    0 returned 1
-        1:   51:	delete_data (&data);
+        1:   51:	delete_Data (&data);
 call    0 returned 1
         -:   52:
         -:   53:
-        1:   54:	data = get_list_data_at_index (list, 10);
+        1:   54:	data = get_List_Data_at_index (list, 10);
 call    0 returned 1
        1*:   55:	TEST (NULL != data, "Fetched data with given index exists");
 branch  0 taken 1 (fallthrough)
@@ -172,14 +172,14 @@ call    2 returned 1
     %%%%%:   56-block 59
 call    3 never executed
         -:   57:	// display_data (data);
-        1:   58:	delete_data (&data);
+        1:   58:	delete_Data (&data);
         1:   58-block 60
 call    0 returned 1
         -:   59:
         -:   60:
-        1:   61:	data = create_data (DT_String, 5, str);
+        1:   61:	data = create_Data (DT_String, 5, str);
 call    0 returned 1
-       1*:   62:	TEST (2 == get_first_list_index_of_data (list, data), "Matched first index of given data");
+       1*:   62:	TEST (2 == get_first_List_index_of_Data (list, data), "Matched first index of given data");
 call    0 returned 1
 branch  1 taken 1 (fallthrough)
 branch  2 taken 0
@@ -187,7 +187,7 @@ branch  2 taken 0
 call    3 returned 1
     %%%%%:   62-block 65
 call    4 never executed
-       1*:   63:	TEST (30 == get_last_list_index_of_data (list, data), "Matched last index of given data");
+       1*:   63:	TEST (30 == get_last_List_index_of_Data (list, data), "Matched last index of given data");
         1:   63-block 66
 call    0 returned 1
 branch  1 taken 0 (fallthrough)
@@ -196,19 +196,19 @@ branch  2 taken 1
 call    3 never executed
         1:   63-block 69
 call    4 returned 1
-        1:   64:	delete_data (&data);
+        1:   64:	delete_Data (&data);
         1:   64-block 70
 call    0 returned 1
         -:   65:
         -:   66:
         1:   67:	char* test_str = "XOXOX";
-        1:   68:	data = create_data (DT_String, 5, test_str);
+        1:   68:	data = create_Data (DT_String, 5, test_str);
 call    0 returned 1
-        1:   69:	insert_into_list_at_index (list, data, 10);
+        1:   69:	insert_into_List_at_index (list, data, 10);
 call    0 returned 1
-        1:   70:	Data* test_data = get_list_data_at_index (list, 10);
+        1:   70:	Data* test_data = get_List_Data_at_index (list, 10);
 call    0 returned 1
-       1*:   71:	TEST (Cmp_Equivalent == compare_data (data, test_data), "Matched inserted data with expected data at position");
+       1*:   71:	TEST (Cmp_Equivalent == compare_Data (data, test_data), "Matched inserted data with expected data at position");
 call    0 returned 1
 branch  1 taken 1 (fallthrough)
 branch  2 taken 0
@@ -217,17 +217,17 @@ call    3 returned 1
     %%%%%:   71-block 77
 call    4 never executed
         -:   72:	// display_list (list);
-        1:   73:	delete_data (&test_data);
+        1:   73:	delete_Data (&test_data);
         1:   73-block 78
 call    0 returned 1
-        1:   74:	delete_data (&data);
+        1:   74:	delete_Data (&data);
 call    0 returned 1
         -:   75:
         -:   76:
-        1:   77:	List* test_list = create_list (10);
+        1:   77:	List* test_list = create_List (10);
 call    0 returned 1
         -:   78:
-        1:   79:	data = create_empty_data ();
+        1:   79:	data = create_empty_Data ();
 call    0 returned 1
         1:   80:	data -> type = DT_Integer;
         1:   81:	data -> size = sizeof (int);
@@ -237,13 +237,13 @@ call    0 returned 1
        11:   84-block 85
 branch  0 taken 10
 branch  1 taken 1 (fallthrough)
-       10:   85:		insert_data_into_list (test_list, data);
+       10:   85:		insert_Data_into_List (test_list, data);
        10:   85-block 83
 call    0 returned 10
         -:   86:	}
         -:   87:
         1:   88:	data -> address = NULL;
-        1:   89:	delete_data (&data);
+        1:   89:	delete_Data (&data);
         1:   89-block 86
 call    0 returned 1
         -:   90:
@@ -265,7 +265,7 @@ call    3 never executed
         -:   93:	// display_list (test_list);
         -:   94:
         -:   95:
-        1:   96:	insert_all_into_list (list, test_list);
+        1:   96:	insert_all_into_List (list, test_list);
         1:   96-block 93
 call    0 returned 1
        1*:   97:	TEST (40 == list -> item_count + test_list -> item_count, "Test list appended into the original list");
@@ -275,7 +275,7 @@ branch  1 taken 1
 call    2 never executed
         1:   97-block 96
 call    3 returned 1
-        1:   98:	data = get_list_data_at_index (list, 31);
+        1:   98:	data = get_List_Data_at_index (list, 31);
         1:   98-block 97
 call    0 returned 1
        1*:   99:	TEST (0 == *((int*)(data -> address)), "Checked inserted first data from list");
@@ -285,10 +285,10 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   99-block 100
 call    3 never executed
-        1:  100:	delete_data (&data);
+        1:  100:	delete_Data (&data);
         1:  100-block 101
 call    0 returned 1
-        1:  101:	data = get_list_data_at_index (list, 40);
+        1:  101:	data = get_List_Data_at_index (list, 40);
 call    0 returned 1
        1*:  102:	TEST (-90 == *((int*)(data -> address)), "Checked inserted last data from list");
 branch  0 taken 1 (fallthrough)
@@ -297,20 +297,20 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:  102-block 105
 call    3 never executed
-        1:  103:	delete_data (&data);
+        1:  103:	delete_Data (&data);
         1:  103-block 106
 call    0 returned 1
-        -:  104:	// display_list (list);
+        -:  104:	// display_List (list);
         -:  105:
-        1:  106:	delete_list (&test_list);
+        1:  106:	delete_List (&test_list);
 call    0 returned 1
         -:  107:
         -:  108:
-        1:  109:	test_list = create_list (10);
+        1:  109:	test_list = create_List (10);
 call    0 returned 1
         1:  110:	char c = 'a';
         -:  111:
-        1:  112:	data = create_empty_data ();
+        1:  112:	data = create_empty_Data ();
 call    0 returned 1
         1:  113:	data -> type = DT_Character;
         1:  114:	data -> size = sizeof (char);
@@ -320,16 +320,16 @@ call    0 returned 1
        11:  117-block 113
 branch  0 taken 10
 branch  1 taken 1 (fallthrough)
-       10:  118:		insert_data_into_list (test_list, data);
+       10:  118:		insert_Data_into_List (test_list, data);
        10:  118-block 111
 call    0 returned 10
         -:  119:	}
         -:  120:
         1:  121:	data -> address = NULL;
-        1:  122:	delete_data (&data);
+        1:  122:	delete_Data (&data);
         1:  122-block 114
 call    0 returned 1
-        -:  123:	// display_list (test_list);
+        -:  123:	// display_List (test_list);
        1*:  124:	TEST (NULL != test_list, "Created test list");
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
@@ -345,14 +345,14 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:  125-block 120
 call    3 never executed
-        -:  126://	display_list_details (test_list);
+        -:  126://	display_List_details (test_list);
         -:  127:
-        -:  128://	display_list_details (list);
-        1:  129:	insert_all_into_list_from_index (list, test_list, 20);
+        -:  128://	display_List_details (list);
+        1:  129:	insert_all_into_List_from_index (list, test_list, 20);
         1:  129-block 121
 call    0 returned 1
-        -:  130://	display_list_details (list);
-        1:  131:	data = get_list_data_at_index (list, 20);
+        -:  130://	display_List_details (list);
+        1:  131:	data = get_List_Data_at_index (list, 20);
 call    0 returned 1
        1*:  132:	TEST ('a' == *((char*)(data -> address)), "Checked inserted list's first data from original list");
 branch  0 taken 1 (fallthrough)
@@ -361,10 +361,10 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:  132-block 125
 call    3 never executed
-        1:  133:	delete_data (&data);
+        1:  133:	delete_Data (&data);
         1:  133-block 126
 call    0 returned 1
-        1:  134:	data = get_list_data_at_index (list, 29);
+        1:  134:	data = get_List_Data_at_index (list, 29);
 call    0 returned 1
        1*:  135:	TEST ('j' == *((char*)(data -> address)), "Checked inserted list's last data from original list");
 branch  0 taken 1 (fallthrough)
@@ -373,15 +373,15 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:  135-block 130
 call    3 never executed
-        1:  136:	delete_data (&data);
+        1:  136:	delete_Data (&data);
         1:  136-block 131
 call    0 returned 1
         -:  137:
-        1:  138:	delete_list (&test_list);
+        1:  138:	delete_List (&test_list);
 call    0 returned 1
         -:  139:
         -:  140:
-        1:  141:	test_list = get_sub_list (list, 10, 20);
+        1:  141:	test_list = get_sub_List (list, 10, 20);
 call    0 returned 1
        1*:  142:	TEST (NULL != test_list, "Created test list");
 branch  0 taken 1 (fallthrough)
@@ -398,12 +398,12 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:  143-block 139
 call    3 never executed
-        1:  144:	data = get_list_data_at_index (list, 10);
+        1:  144:	data = get_List_Data_at_index (list, 10);
         1:  144-block 140
 call    0 returned 1
-        1:  145:	test_data = get_list_data_at_index (test_list, 0);
+        1:  145:	test_data = get_List_Data_at_index (test_list, 0);
 call    0 returned 1
-       1*:  146:	TEST (Cmp_Equivalent == compare_data (data, test_data), "Matched first data of sub-list to copy index from equivalent original list");
+       1*:  146:	TEST (Cmp_Equivalent == compare_Data (data, test_data), "Matched first data of sub-list to copy index from equivalent original list");
 call    0 returned 1
 branch  1 taken 1 (fallthrough)
 branch  2 taken 0
@@ -411,16 +411,16 @@ branch  2 taken 0
 call    3 returned 1
     %%%%%:  146-block 145
 call    4 never executed
-        1:  147:	delete_data (&test_data);
+        1:  147:	delete_Data (&test_data);
         1:  147-block 146
 call    0 returned 1
-        1:  148:	delete_data (&data);
+        1:  148:	delete_Data (&data);
 call    0 returned 1
-        1:  149:	data = get_list_data_at_index (list, 19);
+        1:  149:	data = get_List_Data_at_index (list, 19);
 call    0 returned 1
-        1:  150:	test_data = get_list_data_at_index (test_list, 10);
+        1:  150:	test_data = get_List_Data_at_index (test_list, 10);
 call    0 returned 1
-       1*:  151:	TEST (Cmp_Equivalent == compare_data (data, test_data), "Matched last data of sub-list to copy index from equivalent original list");
+       1*:  151:	TEST (Cmp_Equivalent == compare_Data (data, test_data), "Matched last data of sub-list to copy index from equivalent original list");
 call    0 returned 1
 branch  1 taken 0 (fallthrough)
 branch  2 taken 1
@@ -428,19 +428,19 @@ branch  2 taken 1
 call    3 never executed
         1:  151-block 153
 call    4 returned 1
-        1:  152:	delete_data (&test_data);
+        1:  152:	delete_Data (&test_data);
         1:  152-block 154
 call    0 returned 1
-        1:  153:	delete_data (&data);
+        1:  153:	delete_Data (&data);
 call    0 returned 1
-        -:  154:	//display_list (test_list);
-        1:  155:	delete_list (&test_list);
+        -:  154:	//display_List (test_list);
+        1:  155:	delete_List (&test_list);
 call    0 returned 1
         -:  156:
         -:  157:
-        1:  158:	delete_from_list_at_index (list, 10);
+        1:  158:	delete_from_List_at_index (list, 10);
 call    0 returned 1
-        1:  159:	data = get_list_data_at_index (list, 10);
+        1:  159:	data = get_List_Data_at_index (list, 10);
 call    0 returned 1
        1*:  160:	TEST ('g' != *((char*)(data -> address)), "Deleted data in the original list");
 branch  0 taken 1 (fallthrough)
@@ -449,17 +449,17 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:  160-block 161
 call    3 never executed
-        1:  161:	delete_data (&data);
+        1:  161:	delete_Data (&data);
         1:  161-block 162
 call    0 returned 1
         -:  162:	// display_list (list);
         -:  163:
         -:  164:
-        1:  165:	test_data = get_list_data_at_index (list, 25);
+        1:  165:	test_data = get_List_Data_at_index (list, 25);
 call    0 returned 1
-        1:  166:	data = remove_from_list_at_index (list, 25);
+        1:  166:	data = remove_from_List_at_index (list, 25);
 call    0 returned 1
-       1*:  167:	TEST (Cmp_Equivalent == compare_data (data, test_data), "Matched removed data from original list");
+       1*:  167:	TEST (Cmp_Equivalent == compare_Data (data, test_data), "Matched removed data from original list");
 call    0 returned 1
 branch  1 taken 1 (fallthrough)
 branch  2 taken 0
@@ -467,16 +467,16 @@ branch  2 taken 0
 call    3 returned 1
     %%%%%:  167-block 168
 call    4 never executed
-        -:  168:	// display_list (list);
-        -:  169:	// display_data_details (data);
-        1:  170:	delete_data (&data);
+        -:  168:	// display_List (list);
+        -:  169:	// display_Data_details (data);
+        1:  170:	delete_Data (&data);
         1:  170-block 169
 call    0 returned 1
-        1:  171:	delete_data (&test_data);
+        1:  171:	delete_Data (&test_data);
 call    0 returned 1
         -:  172:
         -:  173:
-        1:  174:	test_list = get_sub_list (list, 0, 30);
+        1:  174:	test_list = get_sub_List (list, 0, 30);
 call    0 returned 1
        1*:  175:	TEST (0 != test_list -> item_count, "Checked item-count in sample list before clearing list");
 branch  0 taken 1 (fallthrough)
@@ -485,7 +485,7 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:  175-block 174
 call    3 never executed
-        1:  176:	clear_list (test_list);
+        1:  176:	clear_List (test_list);
         1:  176-block 175
 call    0 returned 1
        1*:  177:	TEST (0 == test_list -> item_count, "Checked item-count in sample list after clearing list");
@@ -495,34 +495,34 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:  177-block 178
 call    3 never executed
-        -:  178:	// display_list (test_list);
-        1:  179:	delete_list (&test_list);
+        -:  178:	// display_List (test_list);
+        1:  179:	delete_List (&test_list);
         1:  179-block 179
 call    0 returned 1
         -:  180:
         -:  181:
-        1:  182:	data = create_data (DT_String, 5, str);
+        1:  182:	data = create_Data (DT_String, 5, str);
 call    0 returned 1
-        1:  183:	delete_first_instance_from_list (list, data);
+        1:  183:	delete_first_instance_from_List (list, data);
 call    0 returned 1
         -:  184:	// display_list (list);
-        1:  185:	delete_last_instance_from_list (list, data);
+        1:  185:	delete_last_instance_from_List (list, data);
 call    0 returned 1
-        -:  186:	// display_list (list);
-        1:  187:	delete_data (&data);
+        -:  186:	// display_List (list);
+        1:  187:	delete_Data (&data);
 call    0 returned 1
         -:  188:
         -:  189:
-        1:  190:	data = create_data (DT_String, 5, str);
+        1:  190:	data = create_Data (DT_String, 5, str);
 call    0 returned 1
-        1:  191:	delete_all_instances_from_list (list, data);
+        1:  191:	delete_all_instances_from_List (list, data);
 call    0 returned 1
-        -:  192:	// display_list (list);
-        1:  193:	delete_data (&data);
+        -:  192:	// display_List (list);
+        1:  193:	delete_Data (&data);
 call    0 returned 1
         -:  194:
         -:  195:
-       1*:  196:	TEST (true == is_list_empty (list), "List non-emptiness check");
+       1*:  196:	TEST (true == is_List_empty (list), "List non-emptiness check");
 call    0 returned 1
 branch  1 taken 0 (fallthrough)
 branch  2 taken 1
@@ -530,14 +530,14 @@ branch  2 taken 1
 call    3 never executed
         1:  196-block 190
 call    4 returned 1
-        1:  197:	delete_list (&list);
+        1:  197:	delete_List (&list);
         1:  197-block 191
 call    0 returned 1
         -:  198:
         -:  199:
-        1:  200:	list = create_list (0);
+        1:  200:	list = create_List (0);
 call    0 returned 1
-       1*:  201:	TEST (true == is_list_empty (list), "List emptiness check");
+       1*:  201:	TEST (true == is_List_empty (list), "List emptiness check");
 call    0 returned 1
 branch  1 taken 1 (fallthrough)
 branch  2 taken 0
@@ -545,14 +545,14 @@ branch  2 taken 0
 call    3 returned 1
     %%%%%:  201-block 196
 call    4 never executed
-        1:  202:	delete_list (&list);
+        1:  202:	delete_List (&list);
         1:  202-block 197
 call    0 returned 1
         -:  203:
         -:  204:
-        1:  205:	list = create_list (30);
+        1:  205:	list = create_List (30);
 call    0 returned 1
-        1:  206:	test_list = create_list (10);
+        1:  206:	test_list = create_List (10);
 call    0 returned 1
         -:  207:
        11:  208:	for (i = 0; i < 10; i++) {
@@ -560,37 +560,37 @@ call    0 returned 1
 branch  0 taken 10
 branch  1 taken 1 (fallthrough)
        10:  209:		x ^= 0xffff;
-       10:  210:		data = create_data (DT_Binary, sizeof (uint16_t), &x);
+       10:  210:		data = create_Data (DT_Binary, sizeof (uint16_t), &x);
        10:  210-block 201
 call    0 returned 10
-       10:  211:		insert_data_into_list (list, data);
+       10:  211:		insert_Data_into_List (list, data);
 call    0 returned 10
-       10:  212:		insert_data_into_list (test_list, data);
+       10:  212:		insert_Data_into_List (test_list, data);
 call    0 returned 10
-       10:  213:		delete_data (&data);
+       10:  213:		delete_Data (&data);
 call    0 returned 10
         -:  214:
        10:  215:		n += 10;
-       10:  216:		data = create_data (DT_Integer, sizeof (int), &n);
+       10:  216:		data = create_Data (DT_Integer, sizeof (int), &n);
 call    0 returned 10
-       10:  217:		insert_data_into_list (list, data);
+       10:  217:		insert_Data_into_List (list, data);
 call    0 returned 10
-       10:  218:		insert_data_into_list (test_list, data);
+       10:  218:		insert_Data_into_List (test_list, data);
 call    0 returned 10
-       10:  219:		delete_data (&data);
+       10:  219:		delete_Data (&data);
 call    0 returned 10
         -:  220:
-       10:  221:		data = create_data (DT_String, 5, str);
+       10:  221:		data = create_Data (DT_String, 5, str);
 call    0 returned 10
-       10:  222:		insert_data_into_list (list, data);
+       10:  222:		insert_Data_into_List (list, data);
 call    0 returned 10
-       10:  223:		insert_data_into_list (test_list, data);
+       10:  223:		insert_Data_into_List (test_list, data);
 call    0 returned 10
-       10:  224:		delete_data (&data);
+       10:  224:		delete_Data (&data);
 call    0 returned 10
         -:  225:	}
         -:  226:
-       1*:  227:	TEST (compare_lists (list, test_list), "Checked lists are equivalent or not");
+       1*:  227:	TEST (compare_Lists (list, test_list), "Checked lists are equivalent or not");
         1:  227-block 215
 call    0 returned 1
 branch  1 taken 1 (fallthrough)
@@ -599,15 +599,15 @@ branch  2 taken 0
 call    3 returned 1
     %%%%%:  227-block 218
 call    4 never executed
-        1:  228:	delete_list (&test_list);
+        1:  228:	delete_List (&test_list);
         1:  228-block 219
 call    0 returned 1
         -:  229:
         -:  230:
         1:  231:	n += 10;
-        1:  232:	data = create_data (DT_Integer, sizeof (int), &n);
+        1:  232:	data = create_Data (DT_Integer, sizeof (int), &n);
 call    0 returned 1
-       1*:  233:	TEST (does_list_contain_data (list, data), "Found expected data");
+       1*:  233:	TEST (does_List_contain_Data (list, data), "Found expected data");
 call    0 returned 1
 branch  1 taken 1 (fallthrough)
 branch  2 taken 0
@@ -616,7 +616,7 @@ call    3 returned 1
     %%%%%:  233-block 224
 call    4 never executed
         1:  234:	*((int*)(data -> address)) = 1000;
-       1*:  235:	TEST (does_list_contain_data (list, data), "Not found unexpected data");
+       1*:  235:	TEST (does_List_contain_Data (list, data), "Not found unexpected data");
         1:  235-block 225
 call    0 returned 1
 branch  1 taken 1 (fallthrough)
@@ -626,18 +626,18 @@ call    3 returned 1
     %%%%%:  235-block 228
 call    4 never executed
         -:  236:
-        1:  237:	delete_data (&data);
+        1:  237:	delete_Data (&data);
         1:  237-block 229
 call    0 returned 1
-        1:  238:	delete_list (&list);
+        1:  238:	delete_List (&list);
 call    0 returned 1
         -:  239:
         -:  240:
-        1:  241:	list = create_list (2);
+        1:  241:	list = create_List (2);
 call    0 returned 1
         -:  242:	// display_list (list);
         1:  243:	n = -100;
-        1:  244:	data = create_data (DT_Integer, sizeof (int), &n);
+        1:  244:	data = create_Data (DT_Integer, sizeof (int), &n);
 call    0 returned 1
        1*:  245:	TEST (2 == list -> head_chunk -> capacity, "Checked small list chunk size");
 branch  0 taken 1 (fallthrough)
@@ -646,11 +646,11 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:  245-block 235
 call    3 never executed
-        1:  246:	insert_data_into_list (list, data);
+        1:  246:	insert_Data_into_List (list, data);
         1:  246-block 236
 call    0 returned 1
         1:  247:	*((int*)(data -> address)) = +100;
-        1:  248:	insert_data_into_list (list, data);
+        1:  248:	insert_Data_into_List (list, data);
 call    0 returned 1
        1*:  249:	TEST (2 == list -> item_count, "Matched small list item count");
 branch  0 taken 1 (fallthrough)
@@ -662,17 +662,17 @@ call    3 never executed
         -:  250:	// display_list (list);
         -:  251:
         1:  252:	*((int*)(data -> address)) = -200;
-        1:  253:	insert_data_into_list (list, data);
+        1:  253:	insert_Data_into_List (list, data);
         1:  253-block 241
 call    0 returned 1
         1:  254:	*((int*)(data -> address)) = +200;
-        1:  255:	insert_data_into_list (list, data);
+        1:  255:	insert_Data_into_List (list, data);
 call    0 returned 1
-        -:  256:	// display_list (list);
-        1:  257:	test_list = duplicate_list (list);
+        -:  256:	// display_List (list);
+        1:  257:	test_list = duplicate_List (list);
 call    0 returned 1
-        -:  258:	// display_list (test_list);
-       1*:  259:	TEST (Cmp_Equivalent == compare_lists (list, test_list), "Matched duplicate list with original list");
+        -:  258:	// display_List (test_list);
+       1*:  259:	TEST (Cmp_Equivalent == compare_Lists (list, test_list), "Matched duplicate list with original list");
 call    0 returned 1
 branch  1 taken 1 (fallthrough)
 branch  2 taken 0
@@ -680,13 +680,13 @@ branch  2 taken 0
 call    3 returned 1
     %%%%%:  259-block 247
 call    4 never executed
-        1:  260:	delete_list (&test_list);
+        1:  260:	delete_List (&test_list);
         1:  260-block 248
 call    0 returned 1
         -:  261:
-        1:  262:	delete_data (&data);
+        1:  262:	delete_Data (&data);
 call    0 returned 1
-        1:  263:	delete_list (&list);
+        1:  263:	delete_List (&list);
 call    0 returned 1
         -:  264:
         1:  265:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [List]\n" RESET_STYLE);

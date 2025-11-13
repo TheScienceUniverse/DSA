@@ -4,13 +4,13 @@
         -:    0:Runs:1
         -:    1:#include "../inc/test.h"
         -:    2:
-function test_chunk called 1 returned 100% blocks executed 78%
-        1:    3:void test_chunk (void) {
+function test_Chunk called 1 returned 100% blocks executed 78%
+        1:    3:void test_Chunk (void) {
         1:    4:	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Chunk]\n" RESET_STYLE);
         1:    4-block 2
 call    0 returned 1
         -:    5:
-        1:    6:	Chunk* chunk = create_chunk (0, 10);
+        1:    6:	Chunk* chunk = create_Chunk (0, 10);
 call    0 returned 1
         -:    7://	display_chunk_properties (chunk);
         -:    8:
@@ -57,27 +57,27 @@ call    3 never executed
 branch  0 taken 200
 branch  1 taken 1 (fallthrough)
       200:   20:		x ^= 0xffff;
-      200:   21:		data = create_data (DT_Binary, sizeof (uint16_t), &x);
+      200:   21:		data = create_Data (DT_Binary, sizeof (uint16_t), &x);
       200:   21-block 17
 call    0 returned 200
-      200:   22:		insert_data_into_chunk (chunk, data);
+      200:   22:		insert_Data_into_Chunk (chunk, data);
 call    0 returned 200
-      200:   23:		delete_data (&data);
+      200:   23:		delete_Data (&data);
 call    0 returned 200
         -:   24:
       200:   25:		n += 10;
-      200:   26:		data = create_data (DT_Integer, sizeof (int), &n);
+      200:   26:		data = create_Data (DT_Integer, sizeof (int), &n);
 call    0 returned 200
-      200:   27:		insert_data_into_chunk (chunk, data);
+      200:   27:		insert_Data_into_Chunk (chunk, data);
 call    0 returned 200
-      200:   28:		delete_data (&data);
+      200:   28:		delete_Data (&data);
 call    0 returned 200
         -:   29:
-      200:   30:		data = create_data (DT_String, 5, str);
+      200:   30:		data = create_Data (DT_String, 5, str);
 call    0 returned 200
-      200:   31:		insert_data_into_chunk (chunk, data);
+      200:   31:		insert_Data_into_Chunk (chunk, data);
 call    0 returned 200
-      200:   32:		delete_data (&data);
+      200:   32:		delete_Data (&data);
 call    0 returned 200
         -:   33:	}
         -:   34:
@@ -90,7 +90,7 @@ call    2 returned 1
     %%%%%:   35-block 30
 call    3 never executed
         -:   36:
-        1:   37:	Chunk* last_chunk = get_last_chunk_reference (chunk);
+        1:   37:	Chunk* last_chunk = get_last_Chunk_reference (chunk);
         1:   37-block 31
 call    0 returned 1
         -:   38:
@@ -131,15 +131,15 @@ call    3 never executed
       301:   44-block 48
 branch  0 taken 300
 branch  1 taken 1 (fallthrough)
-      300:   45:		data = remove_data_from_chunk (chunk);
+      300:   45:		data = remove_Data_from_Chunk (chunk);
       300:   45-block 45
 call    0 returned 300
         -:   46:		// display_data (data);
-      300:   47:		delete_data (&data);
+      300:   47:		delete_Data (&data);
 call    0 returned 300
         -:   48:	}
         -:   49:
-        1:   50:	last_chunk = get_last_chunk_reference (chunk);
+        1:   50:	last_chunk = get_last_Chunk_reference (chunk);
         1:   50-block 49
 call    0 returned 1
         -:   51:
@@ -180,16 +180,16 @@ call    3 never executed
       501:   57-block 66
 branch  0 taken 500
 branch  1 taken 1 (fallthrough)
-      500:   58:		data = remove_data_from_chunk (chunk);
+      500:   58:		data = remove_Data_from_Chunk (chunk);
       500:   58-block 63
 call    0 returned 500
         -:   59:		// display_data (data);
-      500:   60:		delete_data (&data);
+      500:   60:		delete_Data (&data);
 call    0 returned 500
         -:   61:	}
         -:   62:
         -:   63:	// display_linked_chunks (chunk);
-        1:   64:	last_chunk = get_last_chunk_reference (chunk);
+        1:   64:	last_chunk = get_last_Chunk_reference (chunk);
         1:   64-block 67
 call    0 returned 1
         -:   65:
@@ -226,7 +226,7 @@ call    2 returned 1
 call    3 never executed
         -:   70:
         -:   71:
-        1:   72:	Chunk* test_chunk = duplicate_chunk (chunk);
+        1:   72:	Chunk* test_chunk = duplicate_Chunk (chunk);
         1:   72-block 80
 call    0 returned 1
        1*:   73:	TEST (NULL != test_chunk, "Created duplicate chunk");
@@ -236,7 +236,7 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   73-block 83
 call    3 never executed
-       1*:   74:	TEST (Cmp_Equivalent == compare_chunks (chunk, test_chunk), "Compared duplicated chunk");
+       1*:   74:	TEST (Cmp_Equivalent == compare_Chunks (chunk, test_chunk), "Compared duplicated chunk");
         1:   74-block 84
 call    0 returned 1
 branch  1 taken 1 (fallthrough)
@@ -245,11 +245,11 @@ branch  2 taken 0
 call    3 returned 1
     %%%%%:   74-block 87
 call    4 never executed
-        1:   75:	delete_chunk (&test_chunk);
+        1:   75:	delete_Chunk (&test_chunk);
         1:   75-block 88
 call    0 returned 1
         -:   76:
-        1:   77:	delete_chunk (&chunk);
+        1:   77:	delete_Chunk (&chunk);
 call    0 returned 1
        1*:   78:	TEST (NULL == chunk, "Deleted chunk");
 branch  0 taken 1 (fallthrough)

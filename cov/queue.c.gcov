@@ -4,13 +4,13 @@
         -:    0:Runs:1
         -:    1:#include "../inc/test.h"
         -:    2:
-function test_queue called 1 returned 100% blocks executed 73%
-        1:    3:void test_queue (void) {
+function test_Queue called 1 returned 100% blocks executed 73%
+        1:    3:void test_Queue (void) {
         1:    4:	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Queue]\n" RESET_STYLE);
         1:    4-block 2
 call    0 returned 1
         -:    5:
-        1:    6:	Queue* queue = create_queue ();
+        1:    6:	Queue* queue = create_Queue ();
 call    0 returned 1
         -:    7:
        1*:    8:	TEST (NULL != queue, "Created Queue exists");
@@ -21,21 +21,21 @@ call    2 returned 1
     %%%%%:    8-block 6
 call    3 never executed
         -:    9:
-        1:   10:	Node* node = create_node (N_Queue);
+        1:   10:	Node* node = create_Node (N_Queue);
         1:   10-block 7
 call    0 returned 1
-        1:   11:	set_node_name (node, 1, "A");
+        1:   11:	set_Node_name (node, 1, "A");
 call    0 returned 1
         -:   12:
         1:   13:	int n = 10;
-        1:   14:	Data* data = create_data (DT_Integer, sizeof (int), &n);
+        1:   14:	Data* data = create_Data (DT_Integer, sizeof (int), &n);
 call    0 returned 1
-        1:   15:	set_node_data (node, data);
+        1:   15:	set_Node_Data (node, data);
 call    0 returned 1
-        1:   16:	delete_data (&data);
+        1:   16:	delete_Data (&data);
 call    0 returned 1
         -:   17:
-        1:   18:	enqueue (queue, node);
+        1:   18:	enQueue (queue, node);
 call    0 returned 1
        1*:   19:	TEST ('A' == *((char*)(queue -> front_node -> name -> text + 0)), "Compared enqueued node's name (A) with queue's front node name");
 branch  0 taken 1 (fallthrough)
@@ -71,7 +71,7 @@ call    3 never executed
         -:   23:
         1:   24:	++*(node -> name -> text);
         1:   25:	*((int*)(node -> data -> address)) += 10;
-        1:   26:	enqueue (queue, node);
+        1:   26:	enQueue (queue, node);
         1:   26-block 25
 call    0 returned 1
        1*:   27:	TEST ('A' == *((char*)(queue -> front_node -> name -> text + 0)), "Compared enqueued node's name (A) with queue's front node name");
@@ -108,7 +108,7 @@ call    3 never executed
         -:   31:
         1:   32:	++*(node -> name -> text);
         1:   33:	*((int*)(node -> data -> address)) += 10;
-        1:   34:	enqueue (queue, node);
+        1:   34:	enQueue (queue, node);
         1:   34-block 38
 call    0 returned 1
        1*:   35:	TEST ('A' == *((char*)(queue -> front_node -> name -> text + 0)), "Compared enqueued node's name (A) with queue's front node name");
@@ -143,7 +143,7 @@ call    2 returned 1
     %%%%%:   38-block 50
 call    3 never executed
         -:   39:
-        1:   40:	Node* del_node = dequeue (queue);
+        1:   40:	Node* del_node = deQueue (queue);
         1:   40-block 51
 call    0 returned 1
        1*:   41:	TEST ('A' == *((char*)(del_node -> name -> text + 0)), "Compared served node's name (A) with dequeued node name");
@@ -193,13 +193,13 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   46-block 69
 call    3 never executed
-        1:   47:	delete_node (&del_node);
+        1:   47:	delete_Node (&del_node);
         1:   47-block 70
 call    0 returned 1
         -:   48:
         1:   49:	++*(node -> name -> text);
         1:   50:	*((int*)(node -> data -> address)) += 10;
-        1:   51:	enqueue (queue, node);
+        1:   51:	enQueue (queue, node);
 call    0 returned 1
        1*:   52:	TEST ('B' == *((char*)(queue -> front_node -> name -> text + 0)), "Compared expected node's name (B) with queue's front node name");
 branch  0 taken 1 (fallthrough)
@@ -233,7 +233,7 @@ call    2 returned 1
     %%%%%:   55-block 83
 call    3 never executed
         -:   56:
-        1:   57:	del_node = dequeue (queue);
+        1:   57:	del_node = deQueue (queue);
         1:   57-block 84
 call    0 returned 1
        1*:   58:	TEST ('B' == *((char*)(del_node -> name -> text + 0)), "Compared served node's name (B) with dequeued node name");
@@ -283,11 +283,11 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   63-block 102
 call    3 never executed
-        1:   64:	delete_node (&del_node);
+        1:   64:	delete_Node (&del_node);
         1:   64-block 103
 call    0 returned 1
         -:   65:
-        1:   66:	del_node = dequeue (queue);
+        1:   66:	del_node = deQueue (queue);
 call    0 returned 1
        1*:   67:	TEST ('C' == *((char*)(del_node -> name -> text + 0)), "Compared served node's name (C) with dequeued node name");
 branch  0 taken 1 (fallthrough)
@@ -336,11 +336,11 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   72-block 122
 call    3 never executed
-        1:   73:	delete_node (&del_node);
+        1:   73:	delete_Node (&del_node);
         1:   73-block 123
 call    0 returned 1
         -:   74:
-        1:   75:	del_node = dequeue (queue);
+        1:   75:	del_node = deQueue (queue);
 call    0 returned 1
        1*:   76:	TEST ('D' == *((char*)(del_node -> name -> text + 0)), "Compared served node's name (D) with dequeued node name");
 branch  0 taken 1 (fallthrough)
@@ -357,11 +357,11 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   77-block 130
 call    3 never executed
-        1:   78:	delete_node (&del_node);
+        1:   78:	delete_Node (&del_node);
         1:   78-block 131
 call    0 returned 1
         -:   79:
-        1:   80:	del_node = dequeue (queue);
+        1:   80:	del_node = deQueue (queue);
 call    0 returned 1
        1*:   81:	TEST (0 == queue -> size, "Compared queue's expected size emptiness");
 branch  0 taken 1 (fallthrough)
@@ -378,21 +378,21 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   82-block 138
 call    3 never executed
-        1:   83:	if (NULL == del_node) {delete_node (&del_node);}
+        1:   83:	if (NULL == del_node) {delete_Node (&del_node);}
         1:   83-block 139
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
         1:   83-block 140
 call    2 returned 1
         -:   84:
-        1:   85:	display_queue (queue);
+        1:   85:	display_Queue (queue);
         1:   85-block 141
 call    0 returned 1
         -:   86:
-        1:   87:	delete_node (&node);
+        1:   87:	delete_Node (&node);
 call    0 returned 1
         -:   88:
-        1:   89:	delete_queue (&queue);
+        1:   89:	delete_Queue (&queue);
 call    0 returned 1
        1*:   90:	TEST (NULL == queue, "Deleted queue successfully");
 branch  0 taken 1 (fallthrough)

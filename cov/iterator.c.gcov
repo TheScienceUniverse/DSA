@@ -4,17 +4,17 @@
         -:    0:Runs:1
         -:    1:#include "../inc/test.h"
         -:    2:
-function test_iterator called 1 returned 100% blocks executed 81%
-        1:    3:void test_iterator (void) {
+function test_Iterator called 1 returned 100% blocks executed 81%
+        1:    3:void test_Iterator (void) {
         1:    4:	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Iterator]\n" RESET_STYLE);
         1:    4-block 2
 call    0 returned 1
         -:    5:
-        1:    6:	List* list = create_list (10);
+        1:    6:	List* list = create_List (10);
 call    0 returned 1
         -:    7:
         -:    8:	int i;
-        1:    9:	Data* data = create_empty_data ();
+        1:    9:	Data* data = create_empty_Data ();
 call    0 returned 1
         -:   10:
         1:   11:	data -> type = DT_Integer;
@@ -25,21 +25,21 @@ call    0 returned 1
        21:   15-block 8
 branch  0 taken 20
 branch  1 taken 1 (fallthrough)
-       20:   16:		insert_data_into_list (list, data);
+       20:   16:		insert_Data_into_List (list, data);
        20:   16-block 6
 call    0 returned 20
         -:   17:	}
         -:   18:
         1:   19:	data -> address = NULL;
-        1:   20:	empty_data (data);
+        1:   20:	empty_Data (data);
         1:   20-block 9
 call    0 returned 1
-        1:   21:	delete_data (&data);
+        1:   21:	delete_Data (&data);
 call    0 returned 1
         -:   22:
-        -:   23://	display_list (list);
+        -:   23://	display_List (list);
         -:   24:
-        1:   25:	Iterator* iterator = create_iterator (list, +1);
+        1:   25:	Iterator* iterator = create_Iterator (list, +1);
 call    0 returned 1
        1*:   26:	TEST (NULL != iterator, "Created iterator");
 branch  0 taken 1 (fallthrough)
@@ -62,7 +62,7 @@ call    2 returned 1
 call    3 never executed
         -:   32:
         1:   33:	data = list -> head_chunk -> first_data_address;
-       1*:   34:	TEST (Cmp_Different != compare_data (data, iterator -> data), "Matched first data from list and iterator");
+       1*:   34:	TEST (Cmp_Different != compare_Data (data, iterator -> data), "Matched first data from list and iterator");
         1:   34-block 18
 call    0 returned 1
 branch  1 taken 1 (fallthrough)
@@ -72,12 +72,12 @@ call    3 returned 1
     %%%%%:   34-block 21
 call    4 never executed
         -:   35:
-        1:   36:	move_iterator (iterator);
+        1:   36:	move_Iterator (iterator);
         1:   36-block 22
 call    0 returned 1
         -:   37:
         1:   38:	data = list -> head_chunk -> first_data_address + 1; // should not fail as minimum chunk size is 10
-       1*:   39:	TEST (Cmp_Different != compare_data (data, iterator -> data), "Matched second data from list and iterator");
+       1*:   39:	TEST (Cmp_Different != compare_Data (data, iterator -> data), "Matched second data from list and iterator");
 call    0 returned 1
 branch  1 taken 1 (fallthrough)
 branch  2 taken 0
@@ -94,7 +94,7 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   41-block 29
 call    3 never executed
-        1:   42:	update_iterator_stride (iterator, +5);
+        1:   42:	update_Iterator_stride (iterator, +5);
         1:   42-block 30
 call    0 returned 1
        1*:   43:	TEST (+5 == iterator -> stride, "Checked updated stride value");
@@ -106,12 +106,12 @@ call    2 returned 1
 call    3 never executed
         -:   44:
         -:   45:
-        1:   46:	data = get_list_data_at_index (list, 6);
+        1:   46:	data = get_List_Data_at_index (list, 6);
         1:   46-block 34
 call    0 returned 1
-        1:   47:	move_iterator (iterator);
+        1:   47:	move_Iterator (iterator);
 call    0 returned 1
-       1*:   48:	TEST (Cmp_Different != compare_data (data, iterator -> data), "Matched step (1 + 5) data from list and iterator");
+       1*:   48:	TEST (Cmp_Different != compare_Data (data, iterator -> data), "Matched step (1 + 5) data from list and iterator");
 call    0 returned 1
 branch  1 taken 1 (fallthrough)
 branch  2 taken 0
@@ -119,14 +119,14 @@ branch  2 taken 0
 call    3 returned 1
     %%%%%:   48-block 39
 call    4 never executed
-        1:   49:	delete_data (&data);
+        1:   49:	delete_Data (&data);
         1:   49-block 40
 call    0 returned 1
         -:   50:
         -:   51:
-        1:   52:	data = get_list_data_at_index (list, 12);	// 1 + 5 + 6 > 10
+        1:   52:	data = get_List_Data_at_index (list, 12);	// 1 + 5 + 6 > 10
 call    0 returned 1
-        1:   53:	update_iterator_stride (iterator, 6);
+        1:   53:	update_Iterator_stride (iterator, 6);
 call    0 returned 1
        1*:   54:	TEST (6 == iterator -> stride, "Matched updated stride (+6) from iterator");
 branch  0 taken 1 (fallthrough)
@@ -135,7 +135,7 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   54-block 45
 call    3 never executed
-        1:   55:	move_iterator (iterator);
+        1:   55:	move_Iterator (iterator);
         1:   55-block 46
 call    0 returned 1
        1*:   56:	TEST (1 == iterator -> chunk -> id, "Matched expected forward chunk id (1) from iterator");
@@ -145,7 +145,7 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   56-block 49
 call    3 never executed
-       1*:   57:	TEST (Cmp_Different != compare_data (data, iterator -> data), "Matched further data (6 + 6) from list and iterator");
+       1*:   57:	TEST (Cmp_Different != compare_Data (data, iterator -> data), "Matched further data (6 + 6) from list and iterator");
         1:   57-block 50
 call    0 returned 1
 branch  1 taken 1 (fallthrough)
@@ -154,14 +154,14 @@ branch  2 taken 0
 call    3 returned 1
     %%%%%:   57-block 53
 call    4 never executed
-        1:   58:	delete_data (&data);
+        1:   58:	delete_Data (&data);
         1:   58-block 54
 call    0 returned 1
         -:   59:
         -:   60:
-        1:   61:	data = get_list_data_at_index (list, 7);	// 12 - 5 < 10
+        1:   61:	data = get_List_Data_at_index (list, 7);	// 12 - 5 < 10
 call    0 returned 1
-        1:   62:	update_iterator_stride (iterator, -5);
+        1:   62:	update_Iterator_stride (iterator, -5);
 call    0 returned 1
        1*:   63:	TEST (-5 == iterator -> stride, "Matched updated stride (-5) from iterator");
 branch  0 taken 1 (fallthrough)
@@ -170,7 +170,7 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   63-block 59
 call    3 never executed
-        1:   64:	move_iterator (iterator);
+        1:   64:	move_Iterator (iterator);
         1:   64-block 60
 call    0 returned 1
        1*:   65:	TEST (0 == iterator -> chunk -> id, "Matched expected backward chunk id (0) from iterator");
@@ -180,7 +180,7 @@ branch  1 taken 1
 call    2 never executed
         1:   65-block 63
 call    3 returned 1
-       1*:   66:	TEST (Cmp_Different != compare_data (data, iterator -> data), "Matched backward data (12 - 5) from list and iterator");
+       1*:   66:	TEST (Cmp_Different != compare_Data (data, iterator -> data), "Matched backward data (12 - 5) from list and iterator");
         1:   66-block 64
 call    0 returned 1
 branch  1 taken 0 (fallthrough)
@@ -189,12 +189,12 @@ branch  2 taken 1
 call    3 never executed
         1:   66-block 67
 call    4 returned 1
-        1:   67:	delete_data (&data);
+        1:   67:	delete_Data (&data);
         1:   67-block 68
 call    0 returned 1
         -:   68:
         -:   69:
-        1:   70:	delete_iterator (&iterator);
+        1:   70:	delete_Iterator (&iterator);
 call    0 returned 1
        1*:   71:	TEST (NULL == iterator, "Deleted iterator");
 branch  0 taken 1 (fallthrough)
@@ -203,7 +203,7 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   71-block 72
 call    3 never executed
-        1:   72:	delete_list (&list);
+        1:   72:	delete_List (&list);
         1:   72-block 73
 call    0 returned 1
         -:   73:

@@ -46,7 +46,7 @@ void display_N_characters (char character, size_t repetitions) {
 	}
 }
 
-String* create_string (size_t length, char* text) {
+String* create_String (size_t length, char* text) {
 	String* string = (String*) malloc (sizeof (String));
 
 	if (string != NULL) {
@@ -70,7 +70,7 @@ String* create_string (size_t length, char* text) {
 	return string;
 }
 
-String* duplicate_string (String* old_string) {
+String* duplicate_String (String* old_string) {
 	if (old_string == NULL) {
 		return NULL;
 	}
@@ -94,7 +94,7 @@ String* duplicate_string (String* old_string) {
 	return new_string;
 }
 
-void display_string (String* string) {
+void display_String (String* string) {
 	if (string == NULL) {
 		// perror ("String does not exist to display!");
 		return;
@@ -103,7 +103,7 @@ void display_string (String* string) {
 	display_raw_string (string -> length, string -> text);
 }
 
-void display_string_details (String* string) {
+void display_String_details (String* string) {
 	if (NULL == string) {
 		perror ("String does not exist to display details!");
 		return;
@@ -115,7 +115,7 @@ void display_string_details (String* string) {
 	putchar ('\n');
 }
 
-void delete_string (String** string_address) {
+void delete_String (String** string_address) {
 	if (*string_address == NULL) {
 		// perror ("String is empty to delete!");
 		return;
@@ -134,7 +134,7 @@ void delete_string (String** string_address) {
 	ERASE (string_address, sizeof (String));
 }
 
-String* concatenate_strings (int count, ...) {
+String* concatenate_Strings (int count, ...) {
 	if (
 		count < 2
 		|| count > 10
@@ -162,12 +162,12 @@ String* concatenate_strings (int count, ...) {
 
     va_end (args);	// clears list
 
-	String *big_str = create_string (0, "");
+	String *big_str = create_String (0, "");
 	
 	big_str -> text = (char*) malloc (sizeof (char) * combined_length);
 
 	if (NULL == big_str -> text) {
-		delete_string (&big_str);
+		delete_String (&big_str);
 		perror ("Unable to allocate sufficient memory of combined length!");
 		return NULL;
 	}
@@ -195,7 +195,7 @@ String* concatenate_strings (int count, ...) {
 }
 
 String* append_integer_to_raw_string (char* text, int number) {
-	String* string = create_string (0, NULL);
+	String* string = create_String (0, NULL);
 	int text_length = (text == NULL) ? 0 : strlen (text);
 
 	char* number_str_buffer = NULL;
@@ -217,7 +217,7 @@ String* append_integer_to_raw_string (char* text, int number) {
 	return string;
 }
 
-bool is_string_memory_erased (void** string_addresses) {
+bool is_String_memory_erased (void** string_addresses) {
 	if (NULL == string_addresses) {
 		return false;
 	}
@@ -235,7 +235,7 @@ bool is_string_memory_erased (void** string_addresses) {
 	return status;
 }
 
-void** capture_string_addresses (String* string) {
+void** capture_String_addresses (String* string) {
 	if (NULL == string) {
 		return NULL;
 	}
@@ -250,7 +250,7 @@ void** capture_string_addresses (String* string) {
 	return addresses;
 }
 
-Compare_Status compare_strings (String* string1, String* string2) {
+Compare_Status compare_Strings (String* string1, String* string2) {
 	if (string1 == string2) {
 		return Cmp_Identical;
 	}
@@ -342,7 +342,7 @@ ssize_t get_char_last_index (String* string, char character) {
 	return idx;
 }
 
-String* get_sub_string (String* string, ssize_t start_index, ssize_t end_index) {
+String* get_sub_String (String* string, ssize_t start_index, ssize_t end_index) {
 	/*
 	 * Rules:
 	 * let str [5] = "01234"	// according to index
@@ -382,7 +382,7 @@ String* get_sub_string (String* string, ssize_t start_index, ssize_t end_index) 
 
 	char* src_ptr = string -> text + start_index;
 
-	String* sub_string = create_string (length, NULL);
+	String* sub_string = create_String (length, NULL);
 	sub_string -> text = malloc (length * sizeof (char));
 	sub_string -> length = length;
 
@@ -396,7 +396,7 @@ String* get_sub_string (String* string, ssize_t start_index, ssize_t end_index) 
 	return sub_string;
 }
 
-String* get_sub_str (String* string, ssize_t start_index, ssize_t length) {
+String* get_sub_Str (String* string, ssize_t start_index, ssize_t length) {
 	/*
 	 * Rules:
 	 * let str [5] = "01234"	// according to index
@@ -439,7 +439,7 @@ String* get_sub_str (String* string, ssize_t start_index, ssize_t length) {
 
 	char* src_ptr = string -> text + start_index;
 
-	String* sub_str = create_string (length, NULL);
+	String* sub_str = create_String (length, NULL);
 	sub_str -> text = malloc (length * sizeof (char));
 	sub_str -> length = length;
 
@@ -453,7 +453,7 @@ String* get_sub_str (String* string, ssize_t start_index, ssize_t length) {
 	return sub_str;
 }
 
-String* get_upper_case_string (String* string) {
+String* get_upper_case_String (String* string) {
 	if (NULL == string) {
 		perror ("Given string does not exist to get upper-case string!");
 		return NULL;
@@ -469,7 +469,7 @@ String* get_upper_case_string (String* string) {
 		return NULL;
 	}
 
-	String* upr_str = duplicate_string (string);
+	String* upr_str = duplicate_String (string);
 	char* ptr = upr_str -> text;
 
 	for (size_t i = 0; i < string -> length; i++) {
@@ -480,7 +480,7 @@ String* get_upper_case_string (String* string) {
 	return upr_str;
 }
 
-String* get_lower_case_string (String* string) {
+String* get_lower_case_String (String* string) {
 	if (NULL == string) {
 		perror ("Given string does not exist to get lower-case string!");
 		return NULL;
@@ -496,7 +496,7 @@ String* get_lower_case_string (String* string) {
 		return NULL;
 	}
 
-	String* lwr_str = duplicate_string (string);
+	String* lwr_str = duplicate_String (string);
 	char* ptr = lwr_str -> text;
 
 	for (size_t i = 0; i < string -> length; i++) {
@@ -507,7 +507,7 @@ String* get_lower_case_string (String* string) {
 	return lwr_str;
 }
 
-String* swap_string_case (String* string) {
+String* swap_String_case (String* string) {
 	if (NULL == string) {
 		perror ("Given string does not exist to swap string's case!");
 		return NULL;
@@ -523,7 +523,7 @@ String* swap_string_case (String* string) {
 		return NULL;
 	}
 
-	String* swp_str = duplicate_string (string);
+	String* swp_str = duplicate_String (string);
 	char* ptr = swp_str -> text;
 
 	for (size_t i = 0; i < string -> length; i++) {
@@ -539,7 +539,7 @@ String* swap_string_case (String* string) {
 	return swp_str;
 }
 
-String* capitalize_string (String* string) {
+String* capitalize_String (String* string) {
 	if (NULL == string) {
 		perror ("Given string does not exist to capitalize string!");
 		return NULL;
@@ -555,14 +555,14 @@ String* capitalize_string (String* string) {
 		return NULL;
 	}
 
-	String* cap_str = get_lower_case_string (string);
+	String* cap_str = get_lower_case_String (string);
 
 	*((char*)(cap_str -> text) + 0) = toupper (*((char*)(cap_str -> text) + 0));
 
 	return cap_str;
 }
 
-String* get_title_case_string (String* string) {
+String* get_title_case_String (String* string) {
 	if (NULL == string) {
 		perror ("Given string does not exist to get title-case string!");
 		return NULL;
@@ -578,7 +578,7 @@ String* get_title_case_string (String* string) {
 		return NULL;
 	}
 
-	String* ttl_str = duplicate_string (string);
+	String* ttl_str = duplicate_String (string);
 	char* ptr = ttl_str -> text;
 	bool first_letter = true;
 
@@ -602,7 +602,7 @@ String* get_title_case_string (String* string) {
 	return ttl_str;
 }
 
-String* get_pascal_case_string (String* string) {
+String* get_pascal_case_String (String* string) {
 	if (NULL == string) {
 		perror ("Given string does not exist to get pascal-case string!");
 		return NULL;
@@ -630,7 +630,7 @@ String* get_pascal_case_string (String* string) {
 
 	src_ptr = string -> text;
 
-	String* pcl_str = create_string (0, NULL);
+	String* pcl_str = create_String (0, NULL);
 	pcl_str -> text = malloc (valid_char_count * sizeof (char));
 	pcl_str -> length = valid_char_count;
 
@@ -655,7 +655,7 @@ String* get_pascal_case_string (String* string) {
 	return pcl_str;
 }
 
-String* get_camel_case_string (String* string) {
+String* get_camel_case_String (String* string) {
 	if (NULL == string) {
 		perror ("Given string does not exist to get camel-case string!");
 		return NULL;
@@ -671,7 +671,7 @@ String* get_camel_case_string (String* string) {
 		return NULL;
 	}
 
-	String* cml_str = get_pascal_case_string (string);
+	String* cml_str = get_pascal_case_String (string);
 
 	if (NULL != cml_str) {
 		*((char*)(cml_str -> text) + 0) = tolower (*((char*)(cml_str -> text) + 0));
@@ -680,7 +680,7 @@ String* get_camel_case_string (String* string) {
 	return cml_str;
 }
 
-String* get_snake_case_string (String* string) {
+String* get_snake_case_String (String* string) {
 	if (NULL == string) {
 		perror ("Given string does not exist to get snake-case string!");
 		return NULL;
@@ -753,7 +753,7 @@ String* get_snake_case_string (String* string) {
 
 	src_ptr = string -> text;
 
-	String* snk_str = create_string (0, NULL);
+	String* snk_str = create_String (0, NULL);
 	snk_str -> text = malloc (length * sizeof (char));
 	snk_str -> length = length;
 
@@ -805,7 +805,7 @@ String* get_snake_case_string (String* string) {
 	return snk_str;
 }
 
-String* get_kebab_case_string (String* string) {
+String* get_kebab_case_String (String* string) {
 	if (NULL == string) {
 		perror ("Given string does not exist to get kebab-case string!");
 		return NULL;
@@ -878,7 +878,7 @@ String* get_kebab_case_string (String* string) {
 
 	src_ptr = string -> text;
 
-	String* kbb_str = create_string (0, NULL);
+	String* kbb_str = create_String (0, NULL);
 	kbb_str -> text = malloc (length * sizeof (char));
 	kbb_str -> length = length;
 

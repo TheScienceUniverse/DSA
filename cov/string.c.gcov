@@ -534,6 +534,69 @@ call    4 never executed
         1:  182-block 212
 call    0 returned 1
         -:  183:
-        1:  184:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
+        1:  184:	string = create_String (3, "fun");
 call    0 returned 1
-        1:  185:}
+        1:  185:	str = prepend_chars_to_String (string, 2, '_');
+call    0 returned 1
+       1*:  186:	TEST (true == compare_raw_strings_shh (5, "__fun", 5, str -> text), "Matched string post prepending characters to the string");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  186-block 217
+call    3 returned 1
+    %%%%%:  186-block 218
+call    4 never executed
+        1:  187:	delete_String (&str);
+        1:  187-block 219
+call    0 returned 1
+        1:  188:	str = append_chars_to_String (string, 2, '_');
+call    0 returned 1
+       1*:  189:	TEST (true == compare_raw_strings_shh (5, "fun__", 5, str -> text), "Matched string post appending characters to the string");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  189-block 223
+call    3 returned 1
+    %%%%%:  189-block 224
+call    4 never executed
+        1:  190:	delete_String (&str);
+        1:  190-block 225
+call    0 returned 1
+        1:  191:	delete_String (&string);
+call    0 returned 1
+        -:  192:
+        1:  193:	string = get_String_from_integer (123);
+call    0 returned 1
+       1*:  194:	TEST (true == compare_raw_strings_shh (3, "123", 3, string -> text), "Matched integer to converted string");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  194-block 230
+call    3 returned 1
+    %%%%%:  194-block 231
+call    4 never executed
+        1:  195:	delete_String (&string);
+        1:  195-block 232
+call    0 returned 1
+        -:  196:
+        1:  197:	string = create_String (3, "aBc");
+call    0 returned 1
+        1:  198:	str = reverse_String (string);
+call    0 returned 1
+       1*:  199:	TEST (true == compare_raw_strings_shh (3, "cBa", 3, str -> text), "Matched reversed string with expected output");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:  199-block 237
+call    3 returned 1
+    %%%%%:  199-block 238
+call    4 never executed
+        1:  200:	delete_String (&str);
+        1:  200-block 239
+call    0 returned 1
+        1:  201:	delete_String (&string);
+call    0 returned 1
+        -:  202:
+        1:  203:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
+call    0 returned 1
+        1:  204:}

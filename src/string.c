@@ -929,3 +929,97 @@ String* get_kebab_case_String (String* string) {
 
 	return kbb_str;
 }
+
+String* prepend_chars_to_String (String* string, size_t n, char c) {
+	if (NULL == string) {
+		perror ("No string is provided to prepend characters to!");
+		return NULL;
+	}
+
+	String* new_string = create_String (string -> length + n, string -> text);
+	char* src_ptr = string -> text;
+	char* dst_ptr = new_string -> text;
+
+	for (size_t i = 0; i < n; i++) {
+		*dst_ptr++ = c;
+	}
+
+	for (size_t i = 0; i < string -> length; i++) {
+		*dst_ptr++ = *src_ptr++;
+	}
+
+	return new_string;
+}
+
+String* append_chars_to_String (String* string, size_t n, char c) {
+	if (NULL == string) {
+		perror ("No string is provided to prepend characters to!");
+		return NULL;
+	}
+
+	String* new_string = create_String (string -> length + n, string -> text);
+	char* dst_ptr = new_string -> text + string -> length;
+
+	for (size_t i = 0; i < n; i++) {
+		*dst_ptr++ = c;
+	}
+
+	return new_string;
+}
+
+String* reverse_String (String* string) {
+	if (NULL == string) {
+		perror ("String is not provided to reverse!");
+		return NULL;
+	}
+
+	String* rev_str = duplicate_String (string);
+
+	size_t half_index = (string -> length) >> 1;
+	char c;
+
+	if ((string -> length) & 0x1) {
+		++half_index;
+	}
+
+	char* head_ptr = rev_str -> text;
+	char* tail_ptr = rev_str -> text + rev_str -> length - 1;
+
+	for (size_t i = 0; i < half_index; i++) {
+		c = *head_ptr;
+		*head_ptr = *tail_ptr;
+		*tail_ptr = c;
+
+		head_ptr++;
+		tail_ptr--;
+	}
+
+	return rev_str;
+}
+
+String* get_String_from_integer (int number) {
+	size_t num_digits = get_number_of_digits (number, 10);
+	String* string = create_String (0, NULL);
+
+	string -> text = (char*) malloc (num_digits * sizeof (char));
+
+	if (NULL == string -> text) {
+		perror ("Unable to allocate memory to convert integer to string!");
+	}
+
+	log_memory (DS_Raw, num_digits * sizeof (char), string -> text, true);
+	string -> length = num_digits * sizeof (char);
+
+	char* ptr = string -> text;
+
+	for (size_t i = 0; i < num_digits; i++) {
+		*ptr++ = '0' + (number % 10);
+		number /= 10;
+	}
+
+	String* tmp_str = string;
+	string = reverse_String (string);
+	delete_String (&tmp_str);
+
+	return string;
+}

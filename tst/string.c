@@ -181,5 +181,24 @@ void test_String (void) {
 	TEST (3 == get_char_last_index (string, 'a'), "Matched last index of character in given String");
 	delete_String (&string);
 
+	string = create_String (3, "fun");
+	str = prepend_chars_to_String (string, 2, '_');
+	TEST (true == compare_raw_strings_shh (5, "__fun", 5, str -> text), "Matched string post prepending characters to the string");
+	delete_String (&str);
+	str = append_chars_to_String (string, 2, '_');
+	TEST (true == compare_raw_strings_shh (5, "fun__", 5, str -> text), "Matched string post appending characters to the string");
+	delete_String (&str);
+	delete_String (&string);
+
+	string = get_String_from_integer (123);
+	TEST (true == compare_raw_strings_shh (3, "123", 3, string -> text), "Matched integer to converted string");
+	delete_String (&string);
+
+	string = create_String (3, "aBc");
+	str = reverse_String (string);
+	TEST (true == compare_raw_strings_shh (3, "cBa", 3, str -> text), "Matched reversed string with expected output");
+	delete_String (&str);
+	delete_String (&string);
+
 	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
 }

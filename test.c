@@ -17,8 +17,9 @@ int main (int argc, char* argv[]) {
 		test_route (option);
 	}
 
+	// creating undeleted memory
 	Data* data = create_Data (DT_String, strlen (option), option);
-	display_Data (data);
+//	display_Data (data);
 
 	//	display_memory_log ();
 	manage_memory ();

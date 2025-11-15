@@ -35,6 +35,10 @@ Compare_Status compare_Strings (String* string1, String* string2);
 char get_char_at (String* string, size_t index);	// 0 based index
 ssize_t get_char_first_index (String* string, char character);
 ssize_t get_char_last_index (String* string, char character);
+String* prepend_chars_to_String (String* string, size_t n, char c);
+String* append_chars_to_String (String* string, size_t n, char c);
+String* reverse_String (String* string);
+String* get_String_from_integer (int number);
 // subset related
 String* get_sub_String (String* string, ssize_t start_index, ssize_t end_index);	// inclusive end_index
 String* get_sub_Str (String* string, ssize_t start_index, ssize_t length);

@@ -123,7 +123,7 @@ void delete_String (String** string_address) {
 
 	String* string = *string_address;
 
-	if (string -> text != NULL && string -> length > 0) {
+	if (NULL != string && string -> text != NULL && string -> length > 0) {
 		log_memory (DS_Raw, (string -> length) * sizeof (char), string -> text, false);
 		ERASE (&(string -> text), string -> length);
 	}
@@ -213,6 +213,7 @@ String* append_integer_to_raw_string (char* text, int number) {
 	ptr = memcpy (ptr, number_str_buffer, number_str_length);
 
 	free (number_str_buffer);
+	number_str_buffer = NULL;
 
 	return string;
 }

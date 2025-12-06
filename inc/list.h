@@ -48,5 +48,6 @@ void delete_first_instance_from_List (List* list, Data* data);
 void delete_last_instance_from_List (List* list, Data* data);
 void delete_all_instances_from_List (List* list, Data* data);
 void defragment_List (List* list);
+List* create_address_List (size_t capacity);
 
 #endif	// LIST_H

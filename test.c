@@ -18,11 +18,12 @@ int main (int argc, char* argv[]) {
 	}
 
 	// creating undeleted memory
-	Data* data = create_Data (DT_String, strlen (option), option);
+//	Data* data = create_Data (DT_String, strlen (option), option);
 //	display_Data (data);
+//	ENDL();
 
-	//	display_memory_log ();
-	manage_memory ();
+//	display_memory_log ();
+//	manage_memory ();
 
 	return EXIT_SUCCESS;
 }

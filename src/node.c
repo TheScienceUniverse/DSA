@@ -153,7 +153,8 @@ void display_Node_details (Node* node) {
 		return;
 	}
 
-	printf ("Node :=> Type: (");
+	printf ("Node :=> Address: (%p)", node);
+	printf (" Type: (");
 
 	switch (node -> type) {
 		case N_Undefined:
@@ -178,8 +179,6 @@ void display_Node_details (Node* node) {
 			break;
 	}
 
-	printf (") Address: (");
-	printf ("%p", node);
 	printf (") Name: (\"");
 	
 	if (NULL != node -> name) {
@@ -190,11 +189,12 @@ void display_Node_details (Node* node) {
 
 	printf ("\") Data: (");
 	display_Data (node -> data);
-	printf (") ");
+	printf (") Address List: ");
 
 	if (NULL != node -> address_list) {
-		printf ("Address list: ");
 		display_List (node -> address_list);
+	} else {
+		put_s ("[ None ]");
 	}
 
 	printf ("\n");
@@ -208,11 +208,11 @@ void delete_Node (Node** node_address) {
 
 	Node* node = *node_address;
 
-	delete_String (&node -> name);
-	delete_Data (&node -> data);
+	delete_String (&(node -> name));
+	delete_Data (&(node -> data));
 
 	if (N_Undefined != node -> type) {
-		delete_List (&node -> address_list);
+		delete_List (&(node -> address_list));
 	}
 
 	node = NULL;

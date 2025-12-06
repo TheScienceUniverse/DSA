@@ -1,15 +1,17 @@
 #include "./inc/mgc.h"
 
 void manage_memory (void) {
+	display_size_chart ();
+
 	List* list = collect_garbage_memory ();
 	display_garbage_memory (list);
-	delete_garbage_memory (list);
+//	delete_garbage_memory (list);
 	delete_List (&list);
 
-	list = collect_garbage_memory ();
-	display_garbage_memory (list);
-	// delete_garbage_memory (list);
-	delete_List (&list);
+//	list = collect_garbage_memory ();
+//	display_garbage_memory (list);
+//	delete_garbage_memory (list);
+//	delete_List (&list);
 }
 
 List* collect_garbage_memory (void) {
@@ -107,9 +109,10 @@ List* collect_garbage_memory (void) {
 
 	ENDL();
 
-	data -> type = DT_Undefined;
-	data -> size = 0;
-	data -> address = NULL;
+//	data -> type = DT_Undefined;
+//	data -> size = 0;
+//	data -> address = NULL;
+	empty_Data (data);
 	delete_Data (&data);
 
 //	display_list_subset (list, 0, 19);
@@ -321,4 +324,20 @@ void delete_log_entry (void* address, size_t __attribute__((unused)) size, DS_Ty
 		default:
 			break;
 	}
+}
+
+void display_size_chart (void) {
+	puts ("Data Structure wise size chart:");
+	puts ("\t+-----------------------+");
+	printf ("\t|  <Stream>  | %zu bytes |\n", sizeof (Stream));
+	printf ("\t|  <String>  | %zu bytes |\n", sizeof (String));
+	printf ("\t|   <Data>   | %zu bytes |\n", sizeof (Data));
+	printf ("\t| <BareList> | %zu bytes |\n", sizeof (Bare_List));
+	printf ("\t|   <List>   | %zu bytes |\n", sizeof (List));
+	printf ("\t| <Iterator> | %zu bytes |\n", sizeof (Iterator));
+	printf ("\t|  <Stack>   | %zu bytes |\n", sizeof (Stack));
+	printf ("\t|  <Queue>   | %zu bytes |\n", sizeof (Queue));
+	printf ("\t|  <Tree>    | %zu bytes |\n", sizeof (Tree));
+	printf ("\t|  <Graph>   | %zu bytes |\n", sizeof (Graph));
+	puts ("\t+-----------------------+");
 }

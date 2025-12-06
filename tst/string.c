@@ -1,7 +1,7 @@
 #include "../inc/test.h"
 
 void test_String (void) {
-	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [String]\n" RESET_STYLE);
+	display_unit_test_message ("String", true);
 
 	char* text = "Hello, World!\n";
 	size_t length = 14;
@@ -200,5 +200,5 @@ void test_String (void) {
 	delete_String (&str);
 	delete_String (&string);
 
-	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [String]\n" RESET_STYLE);
+	display_unit_test_message ("String", false);
 }

@@ -1,7 +1,7 @@
 #include "../inc/test.h"
 
 void test_Stream (void) {
-	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Stream]\n" RESET_STYLE);
+	display_unit_test_message ("Stream", true);
 
 	char* text = "Hello, World!\n";
 	size_t length = 14;
@@ -75,5 +75,6 @@ void test_Stream (void) {
 	TEST (3 == get_char_last_index (stream, 'a'), "Matched last index of character in given Stream");
 	delete_stream (&stream);
 */
-	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Stream]\n" RESET_STYLE);
+
+	display_unit_test_message ("Stream", false);
 }

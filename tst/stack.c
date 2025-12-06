@@ -1,7 +1,7 @@
 #include "../inc/test.h"
 
 void test_Stack (void) {
-	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Stack]\n" RESET_STYLE);
+	display_unit_test_message ("Stack", true);
 
 	Stack* stack = create_Stack ();
 
@@ -90,5 +90,5 @@ void test_Stack (void) {
 	delete_Stack (&stack);
 	TEST (NULL == stack, "Deleted stack successfully");
 
-	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Stack]\n" RESET_STYLE);
+	display_unit_test_message ("Stack", false);
 }

@@ -1,7 +1,7 @@
 #include "../inc/test.h"
 
 void test_Bare_List (void) {
-	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Bare List]\n" RESET_STYLE);
+	display_unit_test_message ("Bare List", true);
 
 	Data* data;
 	uint32_t x = 0xa1b2c3d4;
@@ -47,5 +47,5 @@ bool remove_address_from_list2 (List2* list, void* address);
 	/*...*/
 //	printf("%lu\n", sysconf(_SC_PAGESIZE) / sizeof(void*));
 
-	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Bare List]\n" RESET_STYLE);
+	display_unit_test_message ("Bare List", false);
 }

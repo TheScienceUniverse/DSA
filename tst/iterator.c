@@ -1,7 +1,7 @@
 #include "../inc/test.h"
 
 void test_Iterator (void) {
-	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Iterator]\n" RESET_STYLE);
+	display_unit_test_message ("Iterator", true);
 
 	List* list = create_List (10);
 
@@ -71,5 +71,5 @@ void test_Iterator (void) {
 	TEST (NULL == iterator, "Deleted iterator");
 	delete_List (&list);
 
-	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Iterator]\n" RESET_STYLE);
+	display_unit_test_message ("Iterator", false);
 }

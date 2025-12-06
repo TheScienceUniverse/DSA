@@ -1,7 +1,7 @@
 #include "../inc/test.h"
 
 void test_Linked_List (void) {
-	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Linked-List]\n" RESET_STYLE);
+	display_unit_test_message ("Linked-List", true);
 
 	Linked_List* linked_list = create_Linked_List ();
 
@@ -69,5 +69,5 @@ void test_Linked_List (void) {
 	delete_Linked_List (&linked_list);
 	TEST (NULL == linked_list, "Deleted linked-list successfully");
 
-	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Linked-List]\n" RESET_STYLE);
+	display_unit_test_message ("Linked-List", false);
 }

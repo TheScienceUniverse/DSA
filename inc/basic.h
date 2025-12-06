@@ -75,4 +75,7 @@ void display_memory_log (void);
 // shortcut for printing spaces like C++
 #define ENDL(void) { putchar ('\n'); }
 
+// wrapper function for unit test message
+void display_unit_test_message (char* ds_name, bool start_flag);
+
 #endif	// BASIC_H

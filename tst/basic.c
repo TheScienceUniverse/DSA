@@ -1,7 +1,7 @@
 #include "../inc/test.h"
 
 void test_basic (void) {
-	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Basic]\n" RESET_STYLE);
+	display_unit_test_message ("Basic", true);
 
 	const int n = 0xf00ff00f;
 
@@ -21,5 +21,5 @@ void test_basic (void) {
 	TEST (NULL == ptr, "Address nullification check");
 	TEST (n != *((int*) ghost_ptr), "Content check");
 
-	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Basic]\n" RESET_STYLE);
+	display_unit_test_message ("Basic", false);
 }

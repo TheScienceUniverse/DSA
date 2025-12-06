@@ -244,3 +244,17 @@ void display_data_structure_type (DS_Type data_structure_type) {
 			break;
 	}
 }
+
+void display_unit_test_message (char* ds_name, bool start_flag) {
+	printf (
+		BOLD_YELLOW "%sUnit test %s%s" BOLD_MAGENTA " [%s]\n" RESET_STYLE
+		, (start_flag) ? "" : "..."
+		, (start_flag) ? "starts" : "ends !"
+		, (start_flag) ? "..." : ""
+		, ds_name
+	);
+
+	if (!start_flag) {
+		fflush (stdout);
+	}
+}

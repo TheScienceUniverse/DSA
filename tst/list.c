@@ -1,7 +1,7 @@
 #include "../inc/test.h"
 
 void test_List (void) {
-	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [List]\n" RESET_STYLE);
+	display_unit_test_message ("List", true);
 
 	List* list = create_List (100);
 //	display_chunk_properties (chunk);
@@ -262,5 +262,5 @@ void test_List (void) {
 	delete_Data (&data);
 	delete_List (&list);
 
-	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [List]\n" RESET_STYLE);
+	display_unit_test_message ("List", false);
 }

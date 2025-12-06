@@ -1,7 +1,7 @@
 #include "../inc/test.h"
 
 void test_Data (void) {
-	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Data]\n" RESET_STYLE);
+	display_unit_test_message ("Data", true);
 
 	char* str = "Hello, World!\n";
 	size_t len = 14;
@@ -28,5 +28,5 @@ void test_Data (void) {
 	delete_Data (&value);
 	delete_String (&key);
 
-	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Data]\n" RESET_STYLE);
+	display_unit_test_message ("Data", false);
 }

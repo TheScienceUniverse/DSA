@@ -1,0 +1,101 @@
+        -:    0:Source:tst/node.c
+        -:    0:Graph:./cov/test_node.gcno
+        -:    0:Data:./cov/test_node.gcda
+        -:    0:Runs:1
+        -:    1:#include "../inc/test.h"
+        -:    2:
+function test_Node called 1 returned 100% blocks executed 82%
+        1:    3:void test_Node (void) {
+        1:    4:	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Node]\n" RESET_STYLE);
+        1:    4-block 2
+call    0 returned 1
+        -:    5:
+        1:    6:	Node* node = create_Node (N_Undefined);
+call    0 returned 1
+        -:    7:
+       1*:    8:	TEST (NULL != node, "Created node exists");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:    8-block 5
+call    2 returned 1
+    %%%%%:    8-block 6
+call    3 never executed
+        -:    9:
+        1:   10:	char* name_str = "ABC";
+        1:   11:	String* name = create_String (3, name_str);
+        1:   11-block 7
+call    0 returned 1
+        1:   12:	set_Node_name (node, 3, name_str);
+call    0 returned 1
+       1*:   13:	TEST (Cmp_Different != compare_Strings (name, node -> name), "Matched node-name with set name");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:   13-block 11
+call    3 returned 1
+    %%%%%:   13-block 12
+call    4 never executed
+        1:   14:	delete_String (&name);
+        1:   14-block 13
+call    0 returned 1
+        -:   15:
+        1:   16:	uint16_t x = 0x0ff0;
+        1:   17:	Data* data = create_Data (DT_Binary, sizeof (uint16_t), &x);
+call    0 returned 1
+        1:   18:	set_Node_Data (node, data);
+call    0 returned 1
+       1*:   19:	TEST (Cmp_Equivalent == compare_Data (data, node -> data), "Compared node data with set data");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:   19-block 18
+call    3 returned 1
+    %%%%%:   19-block 19
+call    4 never executed
+        1:   20:	delete_Data (&data);
+        1:   20-block 20
+call    0 returned 1
+        -:   21:
+        -:   22:	// display_node_details (node);
+        -:   23:
+        1:   24:	Node* test_node = duplicate_Node (node);
+call    0 returned 1
+        -:   25:
+       1*:   26:	TEST (NULL != test_node, "Created duplicate node exists");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   26-block 23
+call    2 returned 1
+    %%%%%:   26-block 24
+call    3 never executed
+        -:   27:
+        -:   28:	// display_node_details (test_node);
+        -:   29:
+       1*:   30:	TEST (Cmp_Equivalent == compare_Nodes (node, test_node), "Compared duplicated node with original");
+        1:   30-block 25
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:   30-block 27
+call    3 returned 1
+    %%%%%:   30-block 28
+call    4 never executed
+        -:   31:
+        1:   32:	delete_Node (&test_node);
+        1:   32-block 29
+call    0 returned 1
+        1:   33:	delete_Node (&node);
+call    0 returned 1
+        -:   34:
+       1*:   35:	TEST (NULL == node, "Deleted node successfully");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   35-block 32
+call    2 returned 1
+    %%%%%:   35-block 33
+call    3 never executed
+        -:   36:
+        1:   37:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Node]\n" RESET_STYLE);
+        1:   37-block 34
+call    0 returned 1
+        1:   38:}

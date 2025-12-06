@@ -57,6 +57,8 @@ void test_route (char* option) {
 		test_Tree ();
 	} else if (compare_raw_strings_shh (5, "graph", 5, option)) {
 		//test_Graph ();
+	} else if (compare_raw_strings_shh (5, "hashmap", 5, option)) {
+		test_HashMap ();
 	} else if (compare_raw_strings_shh (3, "all", 3, option)) {
 		test_basic ();
 		test_String ();
@@ -70,6 +72,7 @@ void test_route (char* option) {
 		test_Stack ();
 		test_Queue ();
 		test_Tree ();
-		//test_graph ();
+		//test_Graph ();
+		test_HashMap ();
 	}
 }

@@ -1,0 +1,157 @@
+        -:    0:Source:tst/tree.c
+        -:    0:Graph:./cov/test_tree.gcno
+        -:    0:Data:./cov/test_tree.gcda
+        -:    0:Runs:1
+        -:    1:#include "../inc/test.h"
+        -:    2:
+function test_Tree called 1 returned 100% blocks executed 85%
+        1:    3:void test_Tree (void) {
+        1:    4:	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Tree]\n" RESET_STYLE);
+        1:    4-block 2
+call    0 returned 1
+        -:    5:
+        1:    6:	Tree* tree = create_Tree ();
+call    0 returned 1
+       1*:    7:	TEST (NULL != tree, "Created tree");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:    7-block 5
+call    2 returned 1
+    %%%%%:    7-block 6
+call    3 never executed
+        -:    8:
+        1:    9:	Node* node = create_Node (N_Tree);
+        1:    9-block 7
+call    0 returned 1
+        -:   10:	Node* anchor;
+        -:   11:/*
+        -:   12:// String* append_integer_to_raw_string (char* str, int number);
+        -:   13:	set_Node_name (node, 1, "A");
+        -:   14:
+        -:   15:	int n = 10;
+        -:   16:	Data* data = create_Data (DT_Integer, sizeof (int), &n);
+        -:   17:	set_Node_Data (node, data);
+        -:   18:	delete_Data (&data);
+        -:   19:
+        -:   20:	set_Tree_root_Node (tree, node);
+        -:   21:	anchor = tree -> root_node;
+        -:   22:
+        -:   23:	++*(node -> name -> text);
+        -:   24:	*((int*)(node -> data -> address)) += 10;
+        -:   25:	append_child_Node (tree, anchor, node);
+        -:   26:
+        -:   27:	++*(node -> name -> text);
+        -:   28:	*((int*)(node -> data -> address)) += 10;
+        -:   29:	append_child_Node (tree, anchor, node);
+        -:   30:
+        -:   31://	display_node_details (anchor);
+        -:   32:	anchor = (anchor -> address_list -> head_chunk -> first_data_address + 1) -> address;
+        -:   33://	display_node_details (anchor);
+        -:   34:
+        -:   35:	++*(node -> name -> text);
+        -:   36:	*((int*)(node -> data -> address)) += 10;
+        -:   37:	append_child_Node (tree, anchor, node);
+        -:   38:
+        -:   39:	++*(node -> name -> text);
+        -:   40:	*((int*)(node -> data -> address)) += 10;
+        -:   41:	append_child_Node (tree, anchor, node);
+        -:   42:
+        -:   43:	++*(node -> name -> text);
+        -:   44:	*((int*)(node -> data -> address)) += 10;
+        -:   45:	append_child_Node (tree, anchor, node);
+        -:   46:
+        -:   47://	display_list (anchor -> address_list);
+        -:   48:
+        -:   49:
+        -:   50:	data = get_List_Data_at_index (tree -> root_node -> address_list, 2);
+        -:   51:	anchor = data -> address;
+        -:   52:	delete_Data (&data);
+        -:   53:
+        -:   54:	++*(node -> name -> text);
+        -:   55:	*((int*)(node -> data -> address)) += 10;
+        -:   56:	append_child_Node (tree, anchor, node);
+        -:   57:
+        -:   58:	++*(node -> name -> text);
+        -:   59:	*((int*)(node -> data -> address)) += 10;
+        -:   60:	append_child_Node (tree, anchor, node);
+        -:   61:
+        -:   62:
+        -:   63://	display_Node_details (anchor);
+        -:   64://	data = get_List_Data_at_index (anchor -> address_list, 3);
+        -:   65:	//anchor = anchor -> address_list -> tail_chunk -> first_data_address -> address;
+        -:   66://	display_Data (data);
+        -:   67://	anchor = data -> address;
+        -:   68:	//display_Node_details (anchor);
+        -:   69://	delete_Data (&data);
+        -:   70:
+        -:   71:	display_Tree (tree);
+        -:   72:
+        -:   73:	display_path_towards_root (tree, anchor);
+        -:   74:
+        -:   75:	anchor = (tree -> root_node -> address_list -> head_chunk -> first_data_address + 1 ) -> address;
+        -:   76:
+        -:   77:	display_child_Node_List (anchor);
+        -:   78:	
+        -:   79:	delete_Node (&node);
+        -:   80:
+        -:   81:	node = get_parent_Node (anchor);
+        -:   82:	printf ("Parent Node :=> ");
+        -:   83:	display_Node (node);
+        -:   84:	putchar ('\n');
+        -:   85:	delete_Node (&node);
+        -:   86:
+        -:   87:	node = get_first_child_Node (anchor);
+        -:   88:	printf ("First Node :=> ");
+        -:   89:	display_Node (node);
+        -:   90:	putchar ('\n');
+        -:   91:	delete_Node (&node);
+        -:   92:
+        -:   93:	node = get_last_child_Node (anchor);
+        -:   94:	printf ("Last Node :=> ");
+        -:   95:	display_Node (node);
+        -:   96:	putchar ('\n');
+        -:   97:	delete_Node (&node);
+        -:   98:
+        -:   99:	node = get_Nth_child_Node (anchor, 1);
+        -:  100:	printf ("2nd Node :=> ");
+        -:  101:	display_Node (node);
+        -:  102:	putchar ('\n');
+        -:  103:	delete_Node (&node);
+        -:  104:
+        -:  105:	node = remove_child_Node (tree, anchor);
+        -:  106:	printf ("Deleted node: ");
+        -:  107:	display_Node (node);
+        -:  108:	putchar ('\n');
+        -:  109:
+        -:  110:	printf ("Is node belong to tree? %s\n", (does_Tree_contain_Node (tree, anchor)) ? "Yes" : "No");
+        -:  111:	printf ("Is node belong to tree? %s\n", (does_Tree_contain_Node (tree, node)) ? "Yes" : "No");
+        -:  112:
+        -:  113:	delete_Node (&node);
+        -:  114:
+        -:  115:	display_child_Node_List (anchor);
+        -:  116:
+        -:  117:	display_sub_Tree (tree, anchor);
+        -:  118:
+        -:  119:	display_Tree (tree);
+        -:  120:
+        -:  121:	Tree* test_tree = duplicate_Tree (tree);
+        -:  122:	display_Tree (test_tree);
+        -:  123:	delete_Tree (&test_tree);
+        -:  124:*/
+        1:  125:	delete_Node (&node);
+call    0 returned 1
+        1:  126:	delete_Tree (&tree);
+call    0 returned 1
+        -:  127:
+       1*:  128:	TEST (NULL == tree, "Deleted tree");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:  128-block 11
+call    2 returned 1
+    %%%%%:  128-block 12
+call    3 never executed
+        -:  129:
+        1:  130:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Tree]\n" RESET_STYLE);
+        1:  130-block 13
+call    0 returned 1
+        1:  131:}

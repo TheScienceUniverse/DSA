@@ -239,6 +239,9 @@ void display_data_structure_type (DS_Type data_structure_type) {
 		case DS_Graph:
 			put_s ("Graph");
 			break;
+		case DS_HashMap:
+			put_s ("HashMap");
+			break;
 		default:
 			put_s ("~_~");
 			break;

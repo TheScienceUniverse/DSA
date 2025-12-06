@@ -62,6 +62,9 @@ void test_Tree (void);
 #include "./graph.h"
 void test_Graph (void);
 
+#include "./hashmap.h"
+void test_HashMap (void);
+
 void test_route (char* option);
 
 #endif // TEST_H

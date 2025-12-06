@@ -1,0 +1,265 @@
+        -:    0:Source:tst/chunk.c
+        -:    0:Graph:./cov/test_chunk.gcno
+        -:    0:Data:./cov/test_chunk.gcda
+        -:    0:Runs:1
+        -:    1:#include "../inc/test.h"
+        -:    2:
+function test_Chunk called 1 returned 100% blocks executed 78%
+        1:    3:void test_Chunk (void) {
+        1:    4:	display_unit_test_message ("Chunk", true);
+        1:    4-block 2
+call    0 returned 1
+        -:    5:
+        1:    6:	Chunk* chunk = create_Chunk (0, 10);
+call    0 returned 1
+        -:    7://	display_chunk_properties (chunk);
+        -:    8:
+        1:    9:	uint16_t x = 0x0ff0;
+        1:   10:	int n = 0;
+        1:   11:	char* str = "HelloWorld";
+        -:   12:	Data* data;
+        -:   13:
+       1*:   14:	TEST (NULL != chunk, "Chunk created");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   14-block 5
+call    2 returned 1
+    %%%%%:   14-block 6
+call    3 never executed
+       1*:   15:	TEST (0 == chunk -> id, "Chunk start id check");
+        1:   15-block 7
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   15-block 8
+call    2 returned 1
+    %%%%%:   15-block 9
+call    3 never executed
+       1*:   16:	TEST (10 == chunk -> capacity, "Chunk default capacity check");
+        1:   16-block 10
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   16-block 11
+call    2 returned 1
+    %%%%%:   16-block 12
+call    3 never executed
+       1*:   17:	TEST (0 == chunk -> data_count, "Chunk default data count check");
+        1:   17-block 13
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   17-block 14
+call    2 returned 1
+    %%%%%:   17-block 15
+call    3 never executed
+        -:   18:
+      201:   19:	for (int i = 0; i < 200; i++) {
+        1:   19-block 16
+      201:   19-block 27
+branch  0 taken 200
+branch  1 taken 1 (fallthrough)
+      200:   20:		x ^= 0xffff;
+      200:   21:		data = create_Data (DT_Binary, sizeof (uint16_t), &x);
+      200:   21-block 17
+call    0 returned 200
+      200:   22:		insert_Data_into_Chunk (chunk, data);
+call    0 returned 200
+      200:   23:		delete_Data (&data);
+call    0 returned 200
+        -:   24:
+      200:   25:		n += 10;
+      200:   26:		data = create_Data (DT_Integer, sizeof (int), &n);
+call    0 returned 200
+      200:   27:		insert_Data_into_Chunk (chunk, data);
+call    0 returned 200
+      200:   28:		delete_Data (&data);
+call    0 returned 200
+        -:   29:
+      200:   30:		data = create_Data (DT_String, 5, str);
+call    0 returned 200
+      200:   31:		insert_Data_into_Chunk (chunk, data);
+call    0 returned 200
+      200:   32:		delete_Data (&data);
+call    0 returned 200
+        -:   33:	}
+        -:   34:
+       1*:   35:	TEST (10 == chunk -> data_count, "Chunk filled with data");
+        1:   35-block 28
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   35-block 29
+call    2 returned 1
+    %%%%%:   35-block 30
+call    3 never executed
+        -:   36:
+        1:   37:	Chunk* last_chunk = get_last_Chunk_reference (chunk);
+        1:   37-block 31
+call    0 returned 1
+        -:   38:
+       1*:   39:	TEST (NULL != last_chunk, "Last chunk exists");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   39-block 33
+call    2 returned 1
+    %%%%%:   39-block 34
+call    3 never executed
+       1*:   40:	TEST (0 < last_chunk -> id, "Data inserted into chunk");
+        1:   40-block 35
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   40-block 36
+call    2 returned 1
+    %%%%%:   40-block 37
+call    3 never executed
+       1*:   41:	TEST (59 == last_chunk -> id, "Last chunk id check");
+        1:   41-block 38
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   41-block 39
+call    2 returned 1
+    %%%%%:   41-block 40
+call    3 never executed
+       1*:   42:	TEST (10 == last_chunk -> data_count, "Last chunk filled with data");
+        1:   42-block 41
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   42-block 42
+call    2 returned 1
+    %%%%%:   42-block 43
+call    3 never executed
+        -:   43:
+      301:   44:	for (int i = 0; i < 300; i++) {
+        1:   44-block 44
+      301:   44-block 48
+branch  0 taken 300
+branch  1 taken 1 (fallthrough)
+      300:   45:		data = remove_Data_from_Chunk (chunk);
+      300:   45-block 45
+call    0 returned 300
+        -:   46:		// display_data (data);
+      300:   47:		delete_Data (&data);
+call    0 returned 300
+        -:   48:	}
+        -:   49:
+        1:   50:	last_chunk = get_last_Chunk_reference (chunk);
+        1:   50-block 49
+call    0 returned 1
+        -:   51:
+       1*:   52:	TEST (NULL != last_chunk, "Last chunk exists");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   52-block 51
+call    2 returned 1
+    %%%%%:   52-block 52
+call    3 never executed
+       1*:   53:	TEST (29 == last_chunk -> id, "Last chunk id check");
+        1:   53-block 53
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   53-block 54
+call    2 returned 1
+    %%%%%:   53-block 55
+call    3 never executed
+       1*:   54:	TEST (0 < last_chunk -> id, "Data deleted from chunk");
+        1:   54-block 56
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   54-block 57
+call    2 returned 1
+    %%%%%:   54-block 58
+call    3 never executed
+       1*:   55:	TEST (10 == last_chunk -> data_count, "Last chunk filled with data");
+        1:   55-block 59
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   55-block 60
+call    2 returned 1
+    %%%%%:   55-block 61
+call    3 never executed
+        -:   56:
+      501:   57:	for (int i = 0; i < 500; i++) {
+        1:   57-block 62
+      501:   57-block 66
+branch  0 taken 500
+branch  1 taken 1 (fallthrough)
+      500:   58:		data = remove_Data_from_Chunk (chunk);
+      500:   58-block 63
+call    0 returned 500
+        -:   59:		// display_data (data);
+      500:   60:		delete_Data (&data);
+call    0 returned 500
+        -:   61:	}
+        -:   62:
+        -:   63:	// display_linked_chunks (chunk);
+        1:   64:	last_chunk = get_last_Chunk_reference (chunk);
+        1:   64-block 67
+call    0 returned 1
+        -:   65:
+       1*:   66:	TEST (NULL != last_chunk, "Last chunk exists");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   66-block 69
+call    2 returned 1
+    %%%%%:   66-block 70
+call    3 never executed
+       1*:   67:	TEST (0 == last_chunk -> id, "Last chunk id check");
+        1:   67-block 71
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   67-block 72
+call    2 returned 1
+    %%%%%:   67-block 73
+call    3 never executed
+       1*:   68:	TEST (0 == last_chunk -> id, "All chunks empty");
+        1:   68-block 74
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   68-block 75
+call    2 returned 1
+    %%%%%:   68-block 76
+call    3 never executed
+       1*:   69:	TEST (0 == last_chunk -> data_count, "Last chunk empty");
+        1:   69-block 77
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   69-block 78
+call    2 returned 1
+    %%%%%:   69-block 79
+call    3 never executed
+        -:   70:
+        -:   71:
+        1:   72:	Chunk* test_chunk = duplicate_Chunk (chunk);
+        1:   72-block 80
+call    0 returned 1
+       1*:   73:	TEST (NULL != test_chunk, "Created duplicate chunk");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   73-block 82
+call    2 returned 1
+    %%%%%:   73-block 83
+call    3 never executed
+       1*:   74:	TEST (Cmp_Equivalent == compare_Chunks (chunk, test_chunk), "Compared duplicated chunk");
+        1:   74-block 84
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:   74-block 86
+call    3 returned 1
+    %%%%%:   74-block 87
+call    4 never executed
+        1:   75:	delete_Chunk (&test_chunk);
+        1:   75-block 88
+call    0 returned 1
+        -:   76:
+        1:   77:	delete_Chunk (&chunk);
+call    0 returned 1
+       1*:   78:	TEST (NULL == chunk, "Deleted chunk");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   78-block 91
+call    2 returned 1
+    %%%%%:   78-block 92
+call    3 never executed
+        -:   79:
+        1:   80:	display_unit_test_message ("Chunk", false);
+        1:   80-block 93
+call    0 returned 1
+        1:   81:}

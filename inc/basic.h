@@ -40,6 +40,7 @@ typedef enum DATA_STRUCTURE_TYPE {
 	, DS_Queue
 	, DS_Tree
 	, DS_Graph
+	, DS_HashMap
 	, DS_Type_Count	// automatically assign, as these are not custom-assigned
 } DS_Type;
 

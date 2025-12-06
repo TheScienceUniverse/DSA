@@ -253,4 +253,21 @@
 	[[1;32mPASSED[0m]: (Compared dequeued node does not exist)
 	[[1;32mPASSED[0m]: (Deleted queue successfully)
 [1;33m...Unit test ends ![1;35m [Queue]
+[0m[1;33mUnit test starts...[1;35m [Tree]
+[0m	[[1;32mPASSED[0m]: (Created tree)
+	[[1;32mPASSED[0m]: (Deleted tree)
+[1;33m...Unit test ends![1;35m [Tree]
+[0m[1;33mUnit test starts...[1;35m [HashMap]
+[0mHashMap (4 / 10) => 
+	Bucket-[0] -> ([Key: "key-5", Value: "4d2c1b0a"])
+	Bucket-[1] -> Empty!
+	Bucket-[2] -> Empty!
+	Bucket-[3] -> Empty!
+	Bucket-[4] -> Empty!
+	Bucket-[5] -> ([Key: "key-0", Value: "value"])---([Key: "key-0", Value: "100"])
+	Bucket-[6] -> Empty!
+	Bucket-[7] -> ([Key: "key-2", Value: "-200"])
+	Bucket-[8] -> Empty!
+	Bucket-[9] -> Empty!
+[1;33m...Unit test ends ![1;35m [HashMap]
 [0m

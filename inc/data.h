@@ -8,8 +8,7 @@
 // ---------- x ----------
 
 typedef enum DATA_TYPE {
-	DT_Undefined
-	, DT_Empty
+	DT_Empty
 	, DT_Binary
 	, DT_Character
 	, DT_Integer
@@ -18,6 +17,7 @@ typedef enum DATA_TYPE {
 	, DT_Range
 	, DT_Route
 	, DT_Key_Value
+	, DT_Undefined
 } Data_Type;
 
 typedef struct DATA {
@@ -30,6 +30,7 @@ typedef struct DATA {
 
 Data* create_Data (Data_Type data_type, size_t block_size, void* address);
 Data* duplicate_Data (Data* data);
+void display_Data_Type (Data_Type data_type);
 void display_Data (Data* data);
 void display_Data_details (Data* data);
 void display_binary_data (size_t size, BYTE* address);
@@ -48,7 +49,8 @@ Data* create_range_Data (int start, int end);
 void display_range_Data (Data* data);
 Data* create_address_Data (void* address);
 Data* create_key_value_Data (String* key, Data* value);
-void delete_key_value_Data (Data** key_value_data_address);
-void display_key_value_Data (Data* key_value_data);
+Data* duplicate_key_value_Data (Data* kv_data);
+void display_key_value_Data (Data* kv_data);
+void delete_key_value_Data (Data** kv_data_address);
 
 #endif	// DATA_H

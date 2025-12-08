@@ -6,7 +6,7 @@
         -:    2:
 function test_Queue called 1 returned 100% blocks executed 73%
         1:    3:void test_Queue (void) {
-        1:    4:	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Queue]\n" RESET_STYLE);
+        1:    4:	display_unit_test_message ("Queue", true);
         1:    4-block 2
 call    0 returned 1
         -:    5:
@@ -402,7 +402,7 @@ call    2 returned 1
     %%%%%:   90-block 146
 call    3 never executed
         -:   91:
-        1:   92:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Queue]\n" RESET_STYLE);
+        1:   92:	display_unit_test_message ("Queue", false);
         1:   92-block 147
 call    0 returned 1
         1:   93:}

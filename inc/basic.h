@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <inttypes.h>
 #include <stdint.h>
 #include <ctype.h>
 #include <string.h>
@@ -39,6 +40,7 @@ typedef enum DATA_STRUCTURE_TYPE {
 	, DS_Queue
 	, DS_Tree
 	, DS_Graph
+	, DS_HashMap
 	, DS_Type_Count	// automatically assign, as these are not custom-assigned
 } DS_Type;
 
@@ -73,5 +75,8 @@ void display_memory_log (void);
 
 // shortcut for printing spaces like C++
 #define ENDL(void) { putchar ('\n'); }
+
+// wrapper function for unit test message
+void display_unit_test_message (char* ds_name, bool start_flag);
 
 #endif	// BASIC_H

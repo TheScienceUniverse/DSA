@@ -6,7 +6,7 @@
         -:    2:
 function test_List called 1 returned 100% blocks executed 84%
         1:    3:void test_List (void) {
-        1:    4:	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [List]\n" RESET_STYLE);
+        1:    4:	display_unit_test_message ("List", true);
         1:    4-block 2
 call    0 returned 1
         -:    5:
@@ -489,12 +489,12 @@ call    3 never executed
         1:  176-block 175
 call    0 returned 1
        1*:  177:	TEST (0 == test_list -> item_count, "Checked item-count in sample list after clearing list");
-branch  0 taken 1 (fallthrough)
-branch  1 taken 0
-        1:  177-block 177
-call    2 returned 1
-    %%%%%:  177-block 178
-call    3 never executed
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+    %%%%%:  177-block 177
+call    2 never executed
+        1:  177-block 178
+call    3 returned 1
         -:  178:	// display_List (test_list);
         1:  179:	delete_List (&test_list);
         1:  179-block 179
@@ -689,6 +689,6 @@ call    0 returned 1
         1:  263:	delete_List (&list);
 call    0 returned 1
         -:  264:
-        1:  265:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [List]\n" RESET_STYLE);
+        1:  265:	display_unit_test_message ("List", false);
 call    0 returned 1
         1:  266:}

@@ -15,7 +15,7 @@ LOGDIR = ./log
 COVDIR = ./cov
 BLDDIR = ./
 OPTIMIZATION = -O0
-OBJECT_NAMES = basic stream string data chunk bare_list list iterator node linked_list stack queue tree#graph
+OBJECT_NAMES = basic stream string data chunk bare_list list iterator node linked_list stack queue tree hashmap #graph
 OBJECTS := $(foreach f_name, $(OBJECT_NAMES), $(OBJDIR)/$(f_name).o)
 TSTECTS := $(foreach f_name, $(OBJECT_NAMES), $(OBJDIR)/test_$(f_name).o)
 MGCECTS := $(OBJDIR)/mgc.o
@@ -24,7 +24,7 @@ TSTCUTABLE := $(EXEDIR)/tst
 MEMCUTABLE := $(EXEDIR)/mem
 BDGCUTABLE := $(EXEDIR)/bdg
 LIBRARY := $(LIBDIR)/libdsa.so
-CFLAGS = -Wall -Wextra -g $(INCDIR) $(OPTIMIZATION)
+CFLAGS = -Wall -Wextra -g $(INCDIR) $(OPTIMIZATION)# -fanalyzer
 CFLAGS_EXTRA = -fPIC -shared -finput-charset=UTF-8# [1] position-indepedent-code, [2] shared object, [3] input character encoding UTF-8
 CFLAGS_COVERAGE = --coverage
 

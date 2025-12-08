@@ -6,7 +6,7 @@
         -:    2:
 function test_Linked_List called 1 returned 100% blocks executed 72%
         1:    3:void test_Linked_List (void) {
-        1:    4:	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Linked-List]\n" RESET_STYLE);
+        1:    4:	display_unit_test_message ("Linked-List", true);
         1:    4-block 2
 call    0 returned 1
         -:    5:
@@ -301,7 +301,7 @@ call    2 returned 1
     %%%%%:   70-block 108
 call    3 never executed
         -:   71:
-        1:   72:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Linked-List]\n" RESET_STYLE);
+        1:   72:	display_unit_test_message ("Linked-List", false);
         1:   72-block 109
 call    0 returned 1
         1:   73:}

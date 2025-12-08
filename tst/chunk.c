@@ -1,7 +1,7 @@
 #include "../inc/test.h"
 
 void test_Chunk (void) {
-	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Chunk]\n" RESET_STYLE);
+	display_unit_test_message ("Chunk", true);
 
 	Chunk* chunk = create_Chunk (0, 10);
 //	display_chunk_properties (chunk);
@@ -77,5 +77,5 @@ void test_Chunk (void) {
 	delete_Chunk (&chunk);
 	TEST (NULL == chunk, "Deleted chunk");
 
-	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Chunk]\n" RESET_STYLE);
+	display_unit_test_message ("Chunk", false);
 }

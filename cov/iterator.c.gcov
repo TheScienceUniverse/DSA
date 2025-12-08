@@ -4,9 +4,9 @@
         -:    0:Runs:1
         -:    1:#include "../inc/test.h"
         -:    2:
-function test_Iterator called 1 returned 100% blocks executed 81%
+function test_Iterator called 1 returned 100% blocks executed 82%
         1:    3:void test_Iterator (void) {
-        1:    4:	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Iterator]\n" RESET_STYLE);
+        1:    4:	display_unit_test_message ("Iterator", true);
         1:    4-block 2
 call    0 returned 1
         -:    5:
@@ -158,55 +158,29 @@ call    4 never executed
         1:   58-block 54
 call    0 returned 1
         -:   59:
-        -:   60:
-        1:   61:	data = get_List_Data_at_index (list, 7);	// 12 - 5 < 10
-call    0 returned 1
-        1:   62:	update_Iterator_stride (iterator, -5);
-call    0 returned 1
-       1*:   63:	TEST (-5 == iterator -> stride, "Matched updated stride (-5) from iterator");
-branch  0 taken 1 (fallthrough)
-branch  1 taken 0
-        1:   63-block 58
-call    2 returned 1
-    %%%%%:   63-block 59
-call    3 never executed
-        1:   64:	move_Iterator (iterator);
-        1:   64-block 60
-call    0 returned 1
-       1*:   65:	TEST (0 == iterator -> chunk -> id, "Matched expected backward chunk id (0) from iterator");
-branch  0 taken 0 (fallthrough)
-branch  1 taken 1
-    %%%%%:   65-block 62
-call    2 never executed
-        1:   65-block 63
-call    3 returned 1
-       1*:   66:	TEST (Cmp_Different != compare_Data (data, iterator -> data), "Matched backward data (12 - 5) from list and iterator");
-        1:   66-block 64
-call    0 returned 1
-branch  1 taken 0 (fallthrough)
-branch  2 taken 1
-    %%%%%:   66-block 66
-call    3 never executed
-        1:   66-block 67
-call    4 returned 1
-        1:   67:	delete_Data (&data);
-        1:   67-block 68
-call    0 returned 1
-        -:   68:
+        -:   60:/*
+        -:   61:	data = get_List_Data_at_index (list, 7);	// 12 - 5 < 10
+        -:   62:	update_Iterator_stride (iterator, -5);
+        -:   63:	TEST (-5 == iterator -> stride, "Matched updated stride (-5) from iterator");
+        -:   64:	move_Iterator (iterator);
+        -:   65:	TEST (0 == iterator -> chunk -> id, "Matched expected backward chunk id (0) from iterator");
+        -:   66:	TEST (Cmp_Different != compare_Data (data, iterator -> data), "Matched backward data (12 - 5) from list and iterator");
+        -:   67:	delete_Data (&data);
+        -:   68:*/
         -:   69:
         1:   70:	delete_Iterator (&iterator);
 call    0 returned 1
        1*:   71:	TEST (NULL == iterator, "Deleted iterator");
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
-        1:   71-block 71
+        1:   71-block 57
 call    2 returned 1
-    %%%%%:   71-block 72
+    %%%%%:   71-block 58
 call    3 never executed
         1:   72:	delete_List (&list);
-        1:   72-block 73
+        1:   72-block 59
 call    0 returned 1
         -:   73:
-        1:   74:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Iterator]\n" RESET_STYLE);
+        1:   74:	display_unit_test_message ("Iterator", false);
 call    0 returned 1
         1:   75:}

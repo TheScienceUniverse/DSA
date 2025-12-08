@@ -6,7 +6,7 @@
         -:    2:
 function test_Stream called 0 returned 0% blocks executed 0%
     #####:    3:void test_Stream (void) {
-    #####:    4:	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Stream]\n" RESET_STYLE);
+    #####:    4:	display_unit_test_message ("Stream", true);
     %%%%%:    4-block 2
 call    0 never executed
         -:    5:
@@ -126,7 +126,8 @@ call    3 never executed
         -:   75:	TEST (3 == get_char_last_index (stream, 'a'), "Matched last index of character in given Stream");
         -:   76:	delete_stream (&stream);
         -:   77:*/
-    #####:   78:	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Stream]\n" RESET_STYLE);
-    %%%%%:   78-block 24
+        -:   78:
+    #####:   79:	display_unit_test_message ("Stream", false);
+    %%%%%:   79-block 24
 call    0 never executed
-    #####:   79:}
+    #####:   80:}

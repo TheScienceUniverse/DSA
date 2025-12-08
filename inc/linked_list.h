@@ -24,5 +24,6 @@ void attach_Node_at_first (Linked_List* linked_list, Node* node);
 void attach_Node_at_last (Linked_List* linked_list, Node* node);
 Node* detach_head_from_Linked_List (Linked_List* linked_list);
 Node* detach_tail_from_Linked_List (Linked_List* linked_list);
+Node* detach_from_Linked_List (Linked_List* linked_list, Node* node);
 
 #endif	// LINKED_LIST_H

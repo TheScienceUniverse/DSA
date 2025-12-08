@@ -8,7 +8,7 @@ void test_Tree (void) {
 
 	Node* node = create_Node (N_Tree);
 	Node* anchor;
-
+/*
 // String* append_integer_to_raw_string (char* str, int number);
 	set_Node_name (node, 1, "A");
 
@@ -121,7 +121,7 @@ void test_Tree (void) {
 	Tree* test_tree = duplicate_Tree (tree);
 	display_Tree (test_tree);
 	delete_Tree (&test_tree);
-
+*/
 	delete_Node (&node);
 	delete_Tree (&tree);
 

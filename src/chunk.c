@@ -149,6 +149,17 @@ void delete_Chunk (Chunk** chunk_address) {
 	chunk -> previous_chunk = NULL;
 	chunk -> next_chunk = NULL;
 
+	Data* data;
+
+	for (size_t i = 0; i < chunk -> capacity; i++) {
+		data = chunk -> first_data_address + i;
+		log_memory (DS_Raw, data -> size, data -> address, false);
+		ERASE (&(data -> address), data -> size);
+		data -> size = 0;
+	}
+
+	data = NULL;
+
 	log_memory (DS_Raw, (chunk -> capacity) * sizeof (Data), chunk -> first_data_address, false);
 	ERASE (&(chunk -> first_data_address), sizeof (Data) * (chunk -> capacity));
 
@@ -392,5 +403,26 @@ void delete_linked_Chunks (Chunk** chunk_address) {
 		chunk -> next_chunk = NULL;
 		delete_Chunk (&chunk);
 		chunk = next_chunk;
+	}
+}
+
+void clear_linked_Chunks (Chunk* chunk) {
+	if (NULL == chunk) {
+		perror ("Given address does not have any chunk to delete linked chunks!");
+		return;
+	}
+
+	chunk = get_first_Chunk_reference (chunk);
+	size_t chunk_count = count_linked_Chunks (chunk);
+	size_t i;
+
+	while (
+		0 != chunk_count--
+	) {
+		for (i = 0; i < chunk -> capacity; i++) {
+			empty_Data (chunk -> first_data_address + i);
+		}
+
+		chunk = chunk -> next_chunk;
 	}
 }

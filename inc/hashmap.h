@@ -1,0 +1,33 @@
+#ifndef HASHMAP_H
+#define HASHMAP_H
+
+// ---------- x ----------
+
+#include "list.h"
+#include "linked_list.h"
+#include "iterator.h"
+
+// ---------- x ----------
+
+typedef struct HASHMAP {
+	size_t capacity;
+	size_t item_count;
+	size_t bucket_count;
+	List* buckets;
+} HashMap;
+
+// ---------- x ----------
+
+HashMap* create_HashMap (size_t capacity);
+HashMap* duplicate_HashMap (HashMap* hashmap);
+void display_HashMap (HashMap* hashmap);
+void display_HashMap_details (HashMap* hashmap);
+void delete_HashMap (HashMap** hashmap_address);
+uint32_t hash_djb2 (String* key);
+void put_into_HashMap (HashMap* hashmap, String* key, Data* value);
+Data* get_value_from_HashMap (HashMap* hashmap, String* key);
+void get_location_from_HashMap (HashMap* hashmap, String* key, size_t* bucket_index, size_t* linked_list_index);
+Data* get_reference_from_HashMap (HashMap* hashmap, String* key);
+void delete_from_HashMap (HashMap* hashmap, String* key);
+
+#endif	// HASH_MAP_H

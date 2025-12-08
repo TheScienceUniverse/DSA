@@ -28,6 +28,7 @@ void delete_Chunk (Chunk** chunk_address);
 void forget_Chunk (Chunk** chunk_address);
 size_t count_linked_Chunks (Chunk* chunk);
 void delete_linked_Chunks (Chunk** chunk_address);
+void clear_linked_Chunks (Chunk* chunk);
 // checks related
 Compare_Status compare_Chunks (Chunk* chunk_1, Chunk* chunk_2);
 // manipulation related

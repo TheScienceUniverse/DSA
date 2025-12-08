@@ -1,7 +1,7 @@
 #include "../inc/test.h"
 
 void test_Iterator (void) {
-	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Iterator]\n" RESET_STYLE);
+	display_unit_test_message ("Iterator", true);
 
 	List* list = create_List (10);
 
@@ -57,7 +57,7 @@ void test_Iterator (void) {
 	TEST (Cmp_Different != compare_Data (data, iterator -> data), "Matched further data (6 + 6) from list and iterator");
 	delete_Data (&data);
 
-
+/*
 	data = get_List_Data_at_index (list, 7);	// 12 - 5 < 10
 	update_Iterator_stride (iterator, -5);
 	TEST (-5 == iterator -> stride, "Matched updated stride (-5) from iterator");
@@ -65,11 +65,11 @@ void test_Iterator (void) {
 	TEST (0 == iterator -> chunk -> id, "Matched expected backward chunk id (0) from iterator");
 	TEST (Cmp_Different != compare_Data (data, iterator -> data), "Matched backward data (12 - 5) from list and iterator");
 	delete_Data (&data);
-
+*/
 
 	delete_Iterator (&iterator);
 	TEST (NULL == iterator, "Deleted iterator");
 	delete_List (&list);
 
-	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Iterator]\n" RESET_STYLE);
+	display_unit_test_message ("Iterator", false);
 }

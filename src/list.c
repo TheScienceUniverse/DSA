@@ -152,7 +152,9 @@ void delete_List (List** list_address) {
 
 	List* list = *list_address;
 
-	delete_linked_Chunks (&(list -> head_chunk));
+	if (NULL != list -> head_chunk) {
+		delete_linked_Chunks (&(list -> head_chunk));
+	}
 
 	list -> item_count = 0;
 	list -> chunk_count = 0;
@@ -207,6 +209,11 @@ void set_List_Chunk_cap_count (size_t item_count, size_t* chunk_capacity, size_t
 }
 
 bool is_List_empty (List* list) {
+	if (NULL == list) {
+		perror ("List does not exist to check emptiness!");
+		return false;
+	}
+
 	return 0 == list -> item_count;
 }
 
@@ -758,23 +765,7 @@ void clear_List (List* list) {
 		exit (EXIT_FAILURE);
 	}
 
-	size_t list_data_index = 0;
-	size_t chunk_data_index = 0;
-	Chunk* chunk = list -> head_chunk;
-	Data* data = NULL;
-
-	for ( ; list_data_index < list -> item_count; list_data_index++) {
-		data = chunk -> first_data_address + chunk_data_index++;
-		empty_Data (data);
-
-		if (chunk -> data_count == chunk_data_index) {
-			chunk -> data_count = 0;
-			chunk_data_index = 0;
-			chunk = chunk -> next_chunk;
-		}
-	}
-
-	list -> item_count = 0;
+	clear_linked_Chunks (list -> head_chunk);
 }
 
 void delete_first_instance_from_List (List* list, Data* data) {
@@ -956,4 +947,21 @@ void defragment_List (List* list) {
 	}
 
 	list -> tail_chunk = get_last_Chunk_reference (list -> head_chunk);
+}
+
+List* create_address_List (size_t capacity) {
+	if (0 == capacity) {
+		return NULL;
+	}
+
+	List* addr_list = create_List (capacity);
+	Data* addr_data = create_address_Data (NULL);
+
+	for (size_t i = 0; i < capacity; i++) {
+		insert_Data_into_List (addr_list, addr_data);
+	}
+
+	delete_Data (&addr_data);
+
+	return addr_list;
 }

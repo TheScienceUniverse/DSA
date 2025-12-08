@@ -25,5 +25,6 @@ void delete_garbage_memory (List* list);
 void display_log_entry (void* address, size_t size, DS_Type ds_type);
 void delete_log_entry (void* address, size_t size, DS_Type ds_type);
 void delete_data_structure (DS_Type ds_type, BYTE* address, size_t size);
+void display_size_chart (void);
 
 #endif	// MGC_H

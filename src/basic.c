@@ -239,8 +239,23 @@ void display_data_structure_type (DS_Type data_structure_type) {
 		case DS_Graph:
 			put_s ("Graph");
 			break;
+		case DS_HashMap:
+			put_s ("HashMap");
+			break;
 		default:
 			put_s ("~_~");
 			break;
 	}
+}
+
+void display_unit_test_message (char* ds_name, bool start_flag) {
+	printf (
+		BOLD_YELLOW "%sUnit test %s%s" BOLD_MAGENTA " [%s]\n" RESET_STYLE
+		, (start_flag) ? "" : "..."
+		, (start_flag) ? "starts" : "ends !"
+		, (start_flag) ? "..." : ""
+		, ds_name
+	);
+
+	fflush (stdout);
 }

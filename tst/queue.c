@@ -1,7 +1,7 @@
 #include "../inc/test.h"
 
 void test_Queue (void) {
-	printf (BOLD_YELLOW "Unit test starts..." BOLD_MAGENTA " [Queue]\n" RESET_STYLE);
+	display_unit_test_message ("Queue", true);
 
 	Queue* queue = create_Queue ();
 
@@ -89,5 +89,5 @@ void test_Queue (void) {
 	delete_Queue (&queue);
 	TEST (NULL == queue, "Deleted queue successfully");
 
-	printf (BOLD_YELLOW "...Unit test ends!" BOLD_MAGENTA " [Queue]\n" RESET_STYLE);
+	display_unit_test_message ("Queue", false);
 }

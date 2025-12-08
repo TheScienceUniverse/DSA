@@ -253,4 +253,47 @@
 	[[1;32mPASSED[0m]: (Compared dequeued node does not exist)
 	[[1;32mPASSED[0m]: (Deleted queue successfully)
 [1;33m...Unit test ends ![1;35m [Queue]
+[0m[1;33mUnit test starts...[1;35m [Tree]
+[0m	[[1;32mPASSED[0m]: (Created tree)
+	[[1;32mPASSED[0m]: (Deleted tree)
+[1;33m...Unit test ends![1;35m [Tree]
+[0m[1;33mUnit test starts...[1;35m [HashMap]
+[0mData :=> Address: (0x559e4554f030) Type: <Integer> Value: 100
+HashMap (5 / 10) => 
+	Bucket-[0] -> ([Key: "key-5", Value: "4d2c1b0a"])
+	Bucket-[1] -> Empty!
+	Bucket-[2] -> Empty!
+	Bucket-[3] -> Empty!
+	Bucket-[4] -> Empty!
+	Bucket-[5] -> ([Key: "key-000", Value: "-500"])---([Key: "key-04", Value: "4d2c1b0a"])---([Key: "key-0", Value: "value"])
+	Bucket-[6] -> Empty!
+	Bucket-[7] -> ([Key: "key-2", Value: "-200"])
+	Bucket-[8] -> Empty!
+	Bucket-[9] -> Empty!
+[Key: "key-2", Value: "-200"]
+bucket index = 7, linked_list index = 0
+HashMap (5 / 10) => 
+	Bucket-[0] -> ([Key: "key-5", Value: "4d2c1b0a"])
+	Bucket-[1] -> Empty!
+	Bucket-[2] -> Empty!
+	Bucket-[3] -> Empty!
+	Bucket-[4] -> Empty!
+	Bucket-[5] -> ([Key: "key-000", Value: "-500"])---([Key: "key-04", Value: "4d2c1b0a"])---([Key: "key-0", Value: "value"])
+	Bucket-[6] -> Empty!
+	Bucket-[7] -> ([Key: "key-2", Value: "-200"])
+	Bucket-[8] -> Empty!
+	Bucket-[9] -> Empty!
+Data :=> Address: (0x559e4554f2b0) Type: <String> Length: 5 Value: "value"
+HashMap (2 / 10) => 
+	Bucket-[0] -> ([Key: "key-5", Value: "4d2c1b0a"])
+	Bucket-[1] -> Empty!
+	Bucket-[2] -> Empty!
+	Bucket-[3] -> Empty!
+	Bucket-[4] -> Empty!
+	Bucket-[5] -> ([Key: "key-000", Value: "-500"])
+	Bucket-[6] -> Empty!
+	Bucket-[7] -> Empty!
+	Bucket-[8] -> Empty!
+	Bucket-[9] -> Empty!
+[1;33m...Unit test ends ![1;35m [HashMap]
 [0m

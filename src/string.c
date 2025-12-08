@@ -100,6 +100,14 @@ void display_String (String* string) {
 		return;
 	}
 
+	if (
+		0 == string -> length
+		|| NULL == string -> text
+	) {
+		perror ("String text does not exist to display!");
+		return;
+	}
+
 	display_raw_string (string -> length, string -> text);
 }
 

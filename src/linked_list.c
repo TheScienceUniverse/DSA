@@ -229,3 +229,47 @@ Node* detach_tail_from_Linked_List (Linked_List* linked_list) {
 
 	return node;
 }
+
+Node* detach_from_Linked_List (Linked_List* linked_list, Node* node) {
+	if (linked_list == NULL) {
+		return NULL;
+	}
+
+	if (linked_list -> size == 0) {
+		return NULL;
+	}
+
+	if (node == linked_list -> head_node) {
+		return detach_head_from_Linked_List (linked_list);
+	}
+
+	if (node == linked_list -> tail_node) {
+		return detach_tail_from_Linked_List (linked_list);
+	}
+
+	if (linked_list -> head_node == linked_list -> tail_node) {
+		linked_list -> size = 0;
+		node = linked_list -> head_node;
+		linked_list -> head_node = NULL;
+		linked_list -> tail_node = NULL;
+		return node;
+	}
+
+	Node* prev_node = (node -> address_list -> head_chunk -> first_data_address + 0) -> address;
+	Node* next_node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
+
+	if (NULL != prev_node) {
+		(prev_node -> address_list -> head_chunk -> first_data_address + 1) -> address = next_node;
+	}
+
+	if (NULL != next_node) {
+		(next_node -> address_list -> head_chunk -> first_data_address + 0) -> address = prev_node;
+	}
+
+	(node -> address_list -> head_chunk -> first_data_address + 0) -> address = NULL;
+	(node -> address_list -> head_chunk -> first_data_address + 1) -> address = NULL;
+
+	linked_list -> size--;
+
+	return node;
+}

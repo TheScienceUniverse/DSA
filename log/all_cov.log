@@ -194,15 +194,15 @@ Creating 'tree.c.gcov'
 Lines executed:100.00% of 10
 
 Function 'test_HashMap'
-Lines executed:100.00% of 28
+Lines executed:100.00% of 62
 No branches
-Calls executed:100.00% of 23
+Calls executed:100.00% of 56
 
 File 'tst/hashmap.c'
-Lines executed:100.00% of 28
+Lines executed:100.00% of 62
 No branches
-Calls executed:100.00% of 23
+Calls executed:100.00% of 56
 Creating 'hashmap.c.gcov'
 
-Lines executed:100.00% of 28
+Lines executed:100.00% of 62
 

@@ -150,7 +150,7 @@ uint32_t hash_djb2 (String* key) {
 	return hash;
 }
 
-void add_to_HashMap (HashMap* hashmap, String* key, Data* value) {
+void put_into_HashMap (HashMap* hashmap, String* key, Data* value) {
 	if (NULL == hashmap) {
 		perror ("HashMap does not exist to insert key-value into!");
 		return;
@@ -158,15 +158,36 @@ void add_to_HashMap (HashMap* hashmap, String* key, Data* value) {
 
 	if (NULL == hashmap -> buckets) {
 		perror ("HashMap buckets do not exist!");
+		return;
+	}
+
+	Data* kv_data = get_reference_from_HashMap (hashmap, key);
+
+	if (NULL != kv_data) {
+		Data* kv_value = (Data*)((String*)(kv_data -> address) + 1);
+		display_Data_details (kv_value);
+	
+		log_memory (DS_Raw, kv_value -> size, kv_value -> address, false);
+		ERASE (&(kv_value -> address), kv_value -> size);
+
+		kv_value -> type = value -> type;
+		kv_value -> size = value -> size;
+		kv_value -> address = malloc (value -> size);
+
+		if (NULL == kv_value -> address) {
+			perror ("Unable to allocate content memory for updating value in key-value data!");
+			return;
+		}
+
+		log_memory (DS_Raw, kv_value -> size, kv_value -> address, true);
+		copy_raw_bytes (value -> size, value -> address, kv_value -> address);
 
 		return;
 	}
 
-	hashmap -> item_count++;
-
 	uint32_t hash = hash_djb2 (key);
 //	printf ("hash = %" PRIu32 "\n", hash);	// PRIu32 macro from inttypes.h expands depending on compiler and system
-	hash %= 10;
+	hash %= (hashmap -> capacity);
 //	printf ("hash = %" PRIu32 "\n", hash);
 
 	Iterator* iterator = create_Iterator (hashmap -> buckets, 1);
@@ -191,4 +212,183 @@ void add_to_HashMap (HashMap* hashmap, String* key, Data* value) {
 	delete_key_value_Data (&data);
 
 	linked_list = NULL;
+
+	hashmap -> item_count++;
+}
+
+Data* get_reference_from_HashMap (HashMap* hashmap, String* key) {
+	if (NULL == hashmap) {
+		perror ("HashMap does not exist to get key reference!");
+		return NULL;
+	}
+
+	if (NULL == hashmap -> buckets) {
+		perror ("HashMap buckets do not exist to get key reference!");
+		return NULL;
+	}
+
+	if (0 == hashmap -> item_count) {
+//		perror ("HashMap is empty to get key reference!");
+		return NULL;
+	}
+
+	uint32_t hash = hash_djb2 (key) % (hashmap -> capacity);
+
+	Iterator* iterator = create_Iterator (hashmap -> buckets, 1);
+
+	for (size_t i = 0; i < hash; i++) {
+		move_Iterator (iterator);
+	}
+
+	Linked_List* linked_list = iterator -> data -> address;
+
+	delete_Iterator (&iterator);
+
+	Node* node = linked_list -> head_node;
+	Data* kv_data;
+	String* kv_key;
+	bool found_flag = false;
+
+	for (size_t i = 0; i < linked_list -> size; i++) {
+		kv_data = node -> data;
+		kv_key = (String*)(kv_data -> address);
+
+		if (Cmp_Different != compare_Strings (key, kv_key)) {
+			found_flag = true;
+			break;
+		}
+
+		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
+	}
+
+	if (found_flag) {
+		return kv_data;
+	}
+
+	return NULL;
+}
+
+void get_location_from_HashMap (HashMap* hashmap, String* key, size_t* bucket_index, size_t* linked_list_index) {
+	if (NULL == hashmap) {
+		perror ("HashMap does not exist to get key reference!");
+		return;
+	}
+
+	if (NULL == hashmap -> buckets) {
+		perror ("HashMap buckets do not exist to get key reference!");
+		return;
+	}
+
+	if (0 == hashmap -> item_count) {
+		perror ("HashMap is empty to get key reference!");
+		return;
+	}
+
+	uint32_t hash = hash_djb2 (key) % 10;
+	*bucket_index = hash;
+
+	Iterator* iterator = create_Iterator (hashmap -> buckets, 1);
+
+	for (size_t i = 0; i < hash; i++) {
+		move_Iterator (iterator);
+	}
+
+	Linked_List* linked_list = iterator -> data -> address;
+
+	delete_Iterator (&iterator);
+
+	Node* node = linked_list -> head_node;
+	Data* kv_data;
+	String* kv_key;
+	bool found_flag = false;
+
+	for (size_t i = 0; i < linked_list -> size; i++) {
+		kv_data = node -> data;
+		kv_key = (String*)(kv_data -> address);
+
+		if (Cmp_Different != compare_Strings (key, kv_key)) {
+			found_flag = true;
+			*linked_list_index = i;
+			break;
+		}
+
+		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
+	}
+
+	if (!found_flag) {
+		*linked_list_index = -1;
+	}
+}
+
+Data* get_value_from_HashMap (HashMap* hashmap, String* key) {
+	if (NULL == hashmap) {
+		perror ("HashMap does not exist to get key reference!");
+		return NULL;
+	}
+
+	if (NULL == hashmap -> buckets) {
+		perror ("HashMap buckets do not exist to get key reference!");
+		return NULL;
+	}
+
+	if (0 == hashmap -> item_count) {
+		perror ("HashMap is empty to get key reference!");
+		return NULL;
+	}
+
+	Data* kv_data = get_reference_from_HashMap (hashmap, key);
+
+	if (NULL == kv_data) {
+		return NULL;
+	}
+
+	return duplicate_Data ((Data*)((String*)(kv_data -> address) + 1));
+}
+
+void delete_from_HashMap (HashMap* hashmap, String* key) {
+	if (NULL == hashmap) {
+		perror ("HashMap does not exist to delete key-value entry from!");
+		return;
+	}
+
+	if (NULL == key) {
+		perror ("Key does not exist to delete key-value entry from HashMap!");
+		return;
+	}
+
+	uint32_t hash = hash_djb2 (key) % (hashmap -> capacity);
+
+	Iterator* iterator = create_Iterator (hashmap -> buckets, 1);
+
+	for (size_t i = 0; i < hash; i++) {
+		move_Iterator (iterator);
+	}
+
+	Linked_List* linked_list = iterator -> data -> address;
+
+	delete_Iterator (&iterator);
+
+	Node* node = linked_list -> head_node;
+	Data* kv_data;
+	String* kv_key;
+	bool found_flag = false;
+
+	for (size_t i = 0; i < linked_list -> size; i++) {
+		kv_data = node -> data;
+		kv_key = (String*)(kv_data -> address);
+
+		if (Cmp_Different != compare_Strings (key, kv_key)) {
+			found_flag = true;
+			break;
+		}
+
+		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
+	}
+
+	if (found_flag) {
+		node = detach_from_Linked_List (linked_list, node);
+		delete_Node (&node);
+	}
+
+	hashmap -> item_count--;
 }

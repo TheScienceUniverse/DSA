@@ -24,6 +24,10 @@ void display_HashMap (HashMap* hashmap);
 void display_HashMap_details (HashMap* hashmap);
 void delete_HashMap (HashMap** hashmap_address);
 uint32_t hash_djb2 (String* key);
-void add_to_HashMap (HashMap* hashmap, String* key, Data* value);
+void put_into_HashMap (HashMap* hashmap, String* key, Data* value);
+Data* get_value_from_HashMap (HashMap* hashmap, String* key);
+void get_location_from_HashMap (HashMap* hashmap, String* key, size_t* bucket_index, size_t* linked_list_index);
+Data* get_reference_from_HashMap (HashMap* hashmap, String* key);
+void delete_from_HashMap (HashMap* hashmap, String* key);
 
 #endif	// HASH_MAP_H

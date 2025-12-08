@@ -257,7 +257,5 @@ void display_unit_test_message (char* ds_name, bool start_flag) {
 		, ds_name
 	);
 
-	if (!start_flag) {
-		fflush (stdout);
-	}
+	fflush (stdout);
 }

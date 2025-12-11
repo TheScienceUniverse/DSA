@@ -24,7 +24,7 @@ TSTCUTABLE := $(EXEDIR)/tst
 MEMCUTABLE := $(EXEDIR)/mem
 BDGCUTABLE := $(EXEDIR)/bdg
 LIBRARY := $(LIBDIR)/libdsa.so
-CFLAGS = -Wall -Wextra -g $(INCDIR) $(OPTIMIZATION)
+CFLAGS = -Wall -Wextra -g $(INCDIR) $(OPTIMIZATION)# -fanalyzer
 CFLAGS_EXTRA = -fPIC -shared -finput-charset=UTF-8# [1] position-indepedent-code, [2] shared object, [3] input character encoding UTF-8
 CFLAGS_COVERAGE = --coverage
 

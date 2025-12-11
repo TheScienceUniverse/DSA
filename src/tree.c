@@ -36,6 +36,30 @@ void set_Tree_root_Node (Tree* tree, Node* node) {
 	++ tree -> node_count;
 }
 
+void print_Node_depth_whitespace (size_t node_depth) {
+	display_N_characters (' ', 4);
+
+	if (0 == node_depth) {
+		return;
+	}
+
+	for (ssize_t i = 0; i < (ssize_t) node_depth; i++) {
+		putchar ('|');
+		display_N_characters (' ', 4);
+	}
+
+	ENDL();
+	display_N_characters (' ', 4);
+
+	for (ssize_t i = 0; i < (ssize_t)(node_depth - 1); i++) {
+		putchar ('|');
+		display_N_characters (' ', 4);
+	}
+
+	putchar ('+');
+	display_N_characters ('-', 3);
+}
+
 void display_Tree (Tree* tree) {
 	if (tree == NULL) {
 		perror ("Tree does not exist to display");
@@ -47,7 +71,13 @@ void display_Tree (Tree* tree) {
 		return;
 	}
 
-	printf ("Tree :=> node_count: (%lu) breadth: (%lu) height: (%lu)\n", tree -> node_count, tree -> breadth, tree -> height);
+	puts ("Tree :=>");
+	printf ("- node count: %zu\n", tree -> node_count);
+	printf ("- breadth: %zu\n", tree -> breadth);
+	printf ("- height: %zu\n", tree -> height);
+	puts ("- structure:");
+	display_N_characters ('.', 4 * (tree -> height + 3));
+	ENDL();
 
 	ssize_t i;
 	size_t address_count, depth = 0;
@@ -70,24 +100,7 @@ void display_Tree (Tree* tree) {
 		delete_Node (&x_node);
 
 		depth = get_Tree_Node_depth (tree, node);
-
-		printf ("    ");
-
-		if (0 != depth) {
-			for (ssize_t i = 0; i < (ssize_t) depth; i++) {
-				printf ("|    ");
-			}
-
-			printf ("\n    ");
-
-			for (ssize_t i = 0; i < (ssize_t)(depth - 1); i++) {
-				printf ("|    ");
-			}
-
-			putchar ('+');
-			display_N_characters ('-', 3);
-		}
-
+		print_Node_depth_whitespace (depth);
 		display_Node (node);
 		printf ("\n");
 
@@ -113,6 +126,9 @@ void display_Tree (Tree* tree) {
 
 	node = NULL;
 	delete_Stack (&stack);
+
+	display_N_characters ('.', 4 * (tree -> height + 3));
+	ENDL();
 }
 
 void delete_Tree (Tree** tree_address) {
@@ -130,7 +146,7 @@ void delete_Tree (Tree** tree_address) {
 	Tree* tree = *tree_address;
 	ssize_t i;
 	size_t address_count;
-	Node* node;
+	Node* t_node;
 	Node* x_node;
 	Stack* stack = create_Stack ();
 	Node* stack_node = create_Node (N_Stack);
@@ -144,33 +160,36 @@ void delete_Tree (Tree** tree_address) {
 		&& stack -> size > 0
 	) {
 		x_node = pop_Node_from_Stack (stack);
-		node = x_node -> data -> address;
+		t_node = x_node -> data -> address;
 		x_node -> data -> address = NULL;
 		delete_Node (&x_node);
-		address_count = node -> address_list -> item_count;
+
+		address_count = t_node -> address_list -> item_count;
 
 		if (1 > address_count) {
-			delete_Node (&node);
+			clear_Node_address_list (t_node);
+			delete_Node (&t_node);
 			continue;
 		}
 
 		i = address_count;
 
 		while (--i) {	// storing backwards to pick up in proper order
-			Data* data = get_List_Data_at_index (node -> address_list, i);
+			Data* data = get_List_Data_at_index (t_node -> address_list, i);
 			stack_node -> data -> address = data -> address;
 			delete_Data (&data);
 			push_Node_onto_Stack (stack, stack_node);
 		}
 
-		delete_Node (&node);
+		clear_Node_address_list (t_node);
+		delete_Node (&t_node);
 
 		++ visited_node_count;
 	}
 
 	delete_Node (&stack_node);
 
-	node = NULL;
+	t_node = NULL;
 	delete_Stack (&stack);
 
 	log_memory (DS_Tree, sizeof (Tree), *tree_address, false);
@@ -404,6 +423,7 @@ Node* get_parent_Node (Node* child_node) {
 
 	Data* addr_data = get_List_Data_at_index (child_node -> address_list, 0);
 	Node* parent_node = duplicate_Node (addr_data -> address);
+	clear_Node_address_list (parent_node);
 	delete_Data (&addr_data);
 
 	return parent_node;
@@ -429,6 +449,7 @@ Node* get_Nth_child_Node (Node* parent_node, size_t n) {
 
 	Data* addr_data = get_List_Data_at_index (parent_node -> address_list, n + 1);	// 0 based index
 	Node* child_node = duplicate_Node (addr_data -> address);
+	clear_Node_address_list (child_node);
 	delete_Data (&addr_data);
 
 	return child_node;
@@ -454,6 +475,7 @@ Node* get_first_child_Node (Node* parent_node) {
 
 	Data* addr_data = get_List_Data_at_index (parent_node -> address_list, 1);
 	Node* child_node = duplicate_Node (addr_data -> address);
+	clear_Node_address_list (child_node);
 	delete_Data (&addr_data);
 
 	return child_node;
@@ -479,6 +501,7 @@ Node* get_last_child_Node (Node* parent_node) {
 
 	Data* addr_data = get_List_Data_at_index (parent_node -> address_list, address_count - 1);	// 0 based index
 	Node* child_node = duplicate_Node (addr_data -> address);
+	clear_Node_address_list (child_node);
 	delete_Data (&addr_data);
 
 	return child_node;
@@ -634,6 +657,9 @@ Tree* duplicate_Tree (Tree* tree) {
 	}
 
 	Tree* new_tree = create_Tree ();
+	new_tree -> node_count = tree -> node_count;
+	new_tree -> breadth = tree -> breadth;
+	new_tree -> height = tree -> height;
 
 	if (tree -> node_count == 0) {
 		return new_tree;
@@ -647,23 +673,19 @@ Tree* duplicate_Tree (Tree* tree) {
 	Node* x_node;	// to be deleted node
 	Queue* queue = create_Queue ();
 	Node* queue_node = create_Node (N_Queue);
-	// size_t node_count = 0;
 	Node* child_node;
 
-	anchor = duplicate_Node (tree -> root_node);
-	clear_Node_address_list (anchor);
+	new_tree -> root_node = duplicate_Node (tree -> root_node);
+	anchor = new_tree -> root_node;
 
-	new_tree -> root_node = anchor;
-	new_tree -> node_count = 1;
-
-	queue_node -> data = create_address_Data (tree -> root_node);
+	queue_node -> data = create_address_Data (anchor);
 	enQueue (queue, queue_node);
 
 	while (
 		queue -> size > 0
 		&& visited_node_count++ < tree -> node_count
 	) {
-		x_node = deQueue (queue);
+		x_node = deQueue (queue);	// a queue node
 		t_node = x_node -> data -> address;
 		x_node -> data -> address = NULL;
 		delete_Node (&x_node);
@@ -675,16 +697,23 @@ Tree* duplicate_Tree (Tree* tree) {
 		}
 
 		for (ssize_t i = 1; i < (ssize_t) address_count; i++) {
-			Data* data = get_List_Data_at_index (t_node -> address_list, i);
-			queue_node -> data -> address = data -> address;
-			child_node = data -> address;
-			delete_Data (&data);
-			enQueue (queue, queue_node);
+			Data* addr_data = get_List_Data_at_index (t_node -> address_list, i);
 
-append_child_Node (new_tree, anchor, child_node);
+			child_node = addr_data -> address;
+			child_node = duplicate_Node (child_node);
+
+			(child_node -> address_list -> head_chunk -> first_data_address + 0) -> address = t_node;	// parent node
+
+			addr_data -> address = child_node;
+			put_List_Data_at_index (t_node -> address_list, addr_data, i);
+
+			queue_node -> data -> address = addr_data -> address;
+			delete_Data (&addr_data);
+			enQueue (queue, queue_node);
 		}
 	}
 
+	clear_Node_address_list (queue_node);
 	delete_Node (&queue_node);
 	delete_Queue (&queue);
 

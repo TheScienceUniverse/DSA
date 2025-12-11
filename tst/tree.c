@@ -8,7 +8,7 @@ void test_Tree (void) {
 
 	Node* node = create_Node (N_Tree);
 	Node* anchor;
-/*
+
 // String* append_integer_to_raw_string (char* str, int number);
 	set_Node_name (node, 1, "A");
 
@@ -107,8 +107,8 @@ void test_Tree (void) {
 	display_Node (node);
 	putchar ('\n');
 
-	printf ("Is node belong to tree? %s\n", (does_Tree_contain_Node (tree, anchor)) ? "Yes" : "No");
-	printf ("Is node belong to tree? %s\n", (does_Tree_contain_Node (tree, node)) ? "Yes" : "No");
+	printf ("Does node belong to tree? %s\n", (does_Tree_contain_Node (tree, anchor)) ? "Yes" : "No");
+	printf ("Does node belong to tree? %s\n", (does_Tree_contain_Node (tree, node)) ? "Yes" : "No");
 
 	delete_Node (&node);
 
@@ -121,8 +121,8 @@ void test_Tree (void) {
 	Tree* test_tree = duplicate_Tree (tree);
 	display_Tree (test_tree);
 	delete_Tree (&test_tree);
-*/
-	delete_Node (&node);
+
+	display_Tree (tree);
 	delete_Tree (&tree);
 
 	TEST (NULL == tree, "Deleted tree");

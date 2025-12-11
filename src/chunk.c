@@ -423,6 +423,7 @@ void clear_linked_Chunks (Chunk* chunk) {
 			empty_Data (chunk -> first_data_address + i);
 		}
 
+		chunk -> data_count = 0;
 		chunk = chunk -> next_chunk;
 	}
 }

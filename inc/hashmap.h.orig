@@ -1,5 +1,8 @@
+<<<<<<< HEAD
+=======
 #ifndef HASHMAP_H
 #define HASHMAP_H
+>>>>>>> origin/dev
 
 // ---------- x ----------
 
@@ -24,14 +27,10 @@ void display_HashMap (HashMap* hashmap);
 void display_HashMap_details (HashMap* hashmap);
 void delete_HashMap (HashMap** hashmap_address);
 uint32_t hash_djb2 (String* key);
-<<<<<<< HEAD
 void put_into_HashMap (HashMap* hashmap, String* key, Data* value);
 Data* get_value_from_HashMap (HashMap* hashmap, String* key);
 void get_location_from_HashMap (HashMap* hashmap, String* key, size_t* bucket_index, size_t* linked_list_index);
 Data* get_reference_from_HashMap (HashMap* hashmap, String* key);
 void delete_from_HashMap (HashMap* hashmap, String* key);
-=======
-void add_to_HashMap (HashMap* hashmap, String* key, Data* value);
->>>>>>> 48bd6ed (feat (datatype): add HashMap)
 
 #endif	// HASH_MAP_H

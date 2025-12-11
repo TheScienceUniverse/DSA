@@ -79,6 +79,7 @@ void delete_Queue (Queue** queue_address) {
 	for (size_t i = 0; i < queue -> size; i++) {
 		del_node = node;
 		node = (node -> address_list -> head_chunk -> first_data_address + 1) -> address;
+		clear_Node_address_list (del_node);
 		delete_Node (&del_node);
 	}
 

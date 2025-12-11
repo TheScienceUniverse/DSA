@@ -35,6 +35,7 @@ List* search_Data_in_List (List* list, Data* data);
 void delete_Data_from_List (List* list, Data* data);
 Data* remove_Data_from_List (List* list);
 Data* get_List_Data_at_index (List* list, size_t index);
+void put_List_Data_at_index (List* list, Data* data, size_t index);
 size_t get_first_List_index_of_Data (List* list , Data* data);
 size_t get_last_List_index_of_Data (List* list , Data* data);
 void insert_into_List_at_index (List* list, Data* data, size_t index);

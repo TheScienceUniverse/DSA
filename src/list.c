@@ -418,6 +418,32 @@ Data* get_List_Data_at_index (List* list, size_t index) {
 	return duplicate_Data (data);
 }
 
+void put_List_Data_at_index (List* list, Data* data, size_t index) {
+	if (NULL == list) {
+		perror ("List does not exist to put Data into at index!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (NULL == list) {
+		perror ("Data does not exist to put into List at index!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (index >= list -> item_count) {
+		perror ("List Index out of bound to put Data into List at index!\n");
+		exit (EXIT_FAILURE);
+	}
+
+	Chunk* chunk = list -> head_chunk;
+
+	while (index >= chunk -> capacity) {
+		chunk = chunk -> next_chunk;
+		index -= chunk -> capacity;
+	}
+
+	(chunk -> first_data_address + index) -> address = data -> address;
+}
+
 size_t get_first_List_index_of_Data (List* list , Data* data) {
 	if (NULL == list) {
 		perror ("List does not exist to get data index from!\n");
@@ -766,6 +792,7 @@ void clear_List (List* list) {
 	}
 
 	clear_linked_Chunks (list -> head_chunk);
+	list -> item_count = 0;
 }
 
 void delete_first_instance_from_List (List* list, Data* data) {

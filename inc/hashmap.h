@@ -1,6 +1,5 @@
 #ifndef HASHMAP_H
 #define HASHMAP_H
-
 // ---------- x ----------
 
 #include "list.h"
@@ -30,4 +29,4 @@ void get_location_from_HashMap (HashMap* hashmap, String* key, size_t* bucket_in
 Data* get_reference_from_HashMap (HashMap* hashmap, String* key);
 void delete_from_HashMap (HashMap* hashmap, String* key);
 
-#endif	// HASH_MAP_H
+#endif	// HASHMAP_H

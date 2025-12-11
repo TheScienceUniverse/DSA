@@ -489,12 +489,12 @@ call    3 never executed
         1:  176-block 175
 call    0 returned 1
        1*:  177:	TEST (0 == test_list -> item_count, "Checked item-count in sample list after clearing list");
-branch  0 taken 0 (fallthrough)
-branch  1 taken 1
-    %%%%%:  177-block 177
-call    2 never executed
-        1:  177-block 178
-call    3 returned 1
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:  177-block 177
+call    2 returned 1
+    %%%%%:  177-block 178
+call    3 never executed
         -:  178:	// display_List (test_list);
         1:  179:	delete_List (&test_list);
         1:  179-block 179

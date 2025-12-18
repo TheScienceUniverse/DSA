@@ -23,7 +23,7 @@ int main (int argc, char* argv[]) {
 //	ENDL();
 
 //	display_memory_log ();
-//	manage_memory ();
+	manage_memory ();
 
 	return EXIT_SUCCESS;
 }

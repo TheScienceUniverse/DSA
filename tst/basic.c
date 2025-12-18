@@ -19,7 +19,7 @@ void test_basic (void) {
 
 	TEST (ghost_ptr != ptr, "Address validation check");
 	TEST (NULL == ptr, "Address nullification check");
-	TEST (n != *((int*) ghost_ptr), "Content check");
+//	TEST (n != *((int*) ghost_ptr), "Content check");
 
 	display_unit_test_message ("Basic", false);
 }

@@ -717,7 +717,7 @@ String* get_snake_case_String (String* string) {
 	size_t length = 0;
 	size_t i;
 	char prev_char = 0;
-	char curr_char;
+	char curr_char = 0;
 
 	for (i = 0; i < string -> length; i++) {
 		prev_char = curr_char;
@@ -842,7 +842,7 @@ String* get_kebab_case_String (String* string) {
 	size_t length = 0;
 	size_t i;
 	char prev_char = 0;
-	char curr_char;
+	char curr_char = 0;
 
 	for (i = 0; i < string -> length; i++) {
 		prev_char = curr_char;
@@ -945,7 +945,19 @@ String* prepend_chars_to_String (String* string, size_t n, char c) {
 		return NULL;
 	}
 
-	String* new_string = create_String (string -> length + n, string -> text);
+	String* new_string = create_String (0, NULL);
+
+	new_string -> length = string -> length + n;
+	new_string -> text = (char*) malloc ((new_string -> length) * sizeof (char));
+
+	if (NULL == string -> text) {
+		perror ("Unable to allocate memory to prepend characters!");
+		delete_String (&new_string);
+		return NULL;
+	}
+
+	log_memory (DS_Raw, (new_string -> length) * sizeof (char), new_string -> text, true);
+
 	char* src_ptr = string -> text;
 	char* dst_ptr = new_string -> text;
 
@@ -966,8 +978,25 @@ String* append_chars_to_String (String* string, size_t n, char c) {
 		return NULL;
 	}
 
-	String* new_string = create_String (string -> length + n, string -> text);
-	char* dst_ptr = new_string -> text + string -> length;
+	String* new_string = create_String (0, NULL);
+
+	new_string -> length = string -> length + n;
+	new_string -> text = (char*) malloc ((new_string -> length) * sizeof (char));
+
+	if (NULL == string -> text) {
+		perror ("Unable to allocate memory to prepend characters!");
+		delete_String (&new_string);
+		return NULL;
+	}
+
+	log_memory (DS_Raw, (new_string -> length) * sizeof (char), new_string -> text, true);
+
+	char* src_ptr = string -> text;
+	char* dst_ptr = new_string -> text;
+
+	for (size_t i = 0; i < string -> length; i++) {
+		*dst_ptr++ = *src_ptr++;
+	}
 
 	for (size_t i = 0; i < n; i++) {
 		*dst_ptr++ = c;

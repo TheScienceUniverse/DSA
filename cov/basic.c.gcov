@@ -4,7 +4,7 @@
         -:    0:Runs:1
         -:    1:#include "../inc/test.h"
         -:    2:
-function test_basic called 1 returned 100% blocks executed 75%
+function test_basic called 1 returned 100% blocks executed 76%
         1:    3:void test_basic (void) {
         1:    4:	display_unit_test_message ("Basic", true);
         1:    4-block 2
@@ -65,16 +65,9 @@ branch  1 taken 0
 call    2 returned 1
     %%%%%:   21-block 20
 call    3 never executed
-       1*:   22:	TEST (n != *((int*) ghost_ptr), "Content check");
-        1:   22-block 21
-branch  0 taken 1 (fallthrough)
-branch  1 taken 0
-        1:   22-block 22
-call    2 returned 1
-    %%%%%:   22-block 23
-call    3 never executed
+        -:   22://	TEST (n != *((int*) ghost_ptr), "Content check");
         -:   23:
         1:   24:	display_unit_test_message ("Basic", false);
-        1:   24-block 24
+        1:   24-block 21
 call    0 returned 1
         1:   25:}

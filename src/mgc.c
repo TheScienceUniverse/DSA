@@ -5,7 +5,7 @@ void manage_memory (void) {
 
 	List* list = collect_garbage_memory ();
 	display_garbage_memory (list);
-//	delete_garbage_memory (list);
+	delete_garbage_memory (list);
 	delete_List (&list);
 
 //	list = collect_garbage_memory ();
@@ -111,7 +111,7 @@ List* collect_garbage_memory (void) {
 
 //	data -> type = DT_Undefined;
 //	data -> size = 0;
-//	data -> address = NULL;
+	data -> address = NULL;
 	empty_Data (data);
 	delete_Data (&data);
 
@@ -215,7 +215,7 @@ void display_log_entry (void* address, size_t size, DS_Type ds_type) {
 	ENDL();
 
 //	printf ("Data :=> ");
-
+/*
 	switch (ds_type) {
 		case DS_Raw:
 			display_raw_bytes (size, address);
@@ -264,6 +264,7 @@ void display_log_entry (void* address, size_t size, DS_Type ds_type) {
 	}
 
 	ENDL();
+*/
 }
 
 void delete_log_entry (void* address, size_t __attribute__((unused)) size, DS_Type ds_type) {
@@ -328,7 +329,8 @@ void delete_log_entry (void* address, size_t __attribute__((unused)) size, DS_Ty
 
 void display_size_chart (void) {
 	puts ("Data Structure wise size chart:");
-	puts ("\t+-----------------------+");
+	puts ("\t+------------+----------+");
+	printf ("\t|   <Raw>    | ## bytes |\n");
 	printf ("\t|  <Stream>  | %zu bytes |\n", sizeof (Stream));
 	printf ("\t|  <String>  | %zu bytes |\n", sizeof (String));
 	printf ("\t|   <Data>   | %zu bytes |\n", sizeof (Data));
@@ -339,5 +341,5 @@ void display_size_chart (void) {
 	printf ("\t|  <Queue>   | %zu bytes |\n", sizeof (Queue));
 	printf ("\t|  <Tree>    | %zu bytes |\n", sizeof (Tree));
 	printf ("\t|  <Graph>   | %zu bytes |\n", sizeof (Graph));
-	puts ("\t+-----------------------+");
+	puts ("\t+------------+----------+");
 }

@@ -505,7 +505,7 @@ call    0 returned 1
 call    0 returned 1
         1:  183:	delete_first_instance_from_List (list, data);
 call    0 returned 1
-        -:  184:	// display_list (list);
+        -:  184:	// display_List (list);
         1:  185:	delete_last_instance_from_List (list, data);
 call    0 returned 1
         -:  186:	// display_List (list);

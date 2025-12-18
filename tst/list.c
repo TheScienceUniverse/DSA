@@ -181,7 +181,7 @@ void test_List (void) {
 
 	data = create_Data (DT_String, 5, str);
 	delete_first_instance_from_List (list, data);
-	// display_list (list);
+	// display_List (list);
 	delete_last_instance_from_List (list, data);
 	// display_List (list);
 	delete_Data (&data);

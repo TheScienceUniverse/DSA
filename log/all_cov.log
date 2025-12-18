@@ -1,17 +1,17 @@
 Function 'test_basic'
-Lines executed:100.00% of 16
-Branches executed:100.00% of 14
-Taken at least once:50.00% of 14
-Calls executed:60.00% of 15
+Lines executed:100.00% of 15
+Branches executed:100.00% of 12
+Taken at least once:50.00% of 12
+Calls executed:61.54% of 13
 
 File 'tst/basic.c'
-Lines executed:100.00% of 16
-Branches executed:100.00% of 14
-Taken at least once:50.00% of 14
-Calls executed:60.00% of 15
+Lines executed:100.00% of 15
+Branches executed:100.00% of 12
+Taken at least once:50.00% of 12
+Calls executed:61.54% of 13
 Creating 'basic.c.gcov'
 
-Lines executed:100.00% of 16
+Lines executed:100.00% of 15
 
 Function 'test_Stream'
 Lines executed:0.00% of 15

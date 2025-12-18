@@ -179,7 +179,21 @@ void add_to_Bare_List (Bare_List* list, Data* data, bool data_copy_needed) {
 		return;
 	}
 
-	list -> item_addresses = (void**) realloc (list -> item_addresses, (list -> item_count + 1) * sizeof (void*));
+	const unsigned short buffer = 10;
+
+	if (list -> capacity <= list -> item_count) {
+		log_memory (DS_Raw, list -> capacity * sizeof (void*), list -> item_addresses, false);
+
+		list -> capacity += buffer;
+		list -> item_addresses = (void**) realloc (list -> item_addresses, (list -> capacity) * sizeof (void*));
+
+		if (NULL == list -> item_addresses) {
+			perror ("Unable to allocate memory for Bare_List content to add Data!");
+			return;
+		}
+
+		log_memory (DS_Raw, list -> capacity * sizeof (void*), list -> item_addresses, true);
+	}
 
 	if (data_copy_needed) {
 		*(list -> item_addresses + list -> item_count) = duplicate_Data (data);
@@ -187,7 +201,7 @@ void add_to_Bare_List (Bare_List* list, Data* data, bool data_copy_needed) {
 		*(list -> item_addresses + list -> item_count) = data;
 	}
 
-	++ list -> item_count;
+	list -> item_count++;
 }
 
 bool remove_address_from_Bare_List (Bare_List* list, void* address) {	// this does not hard delete memory data, just forgets or removes the address from list

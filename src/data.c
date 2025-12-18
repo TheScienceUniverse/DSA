@@ -157,7 +157,7 @@ void display_Data_details (Data* data) {
 		data -> type = DT_Empty;
 	}
 
-	printf ("Data :=> Address: (%p) Type: ", data);
+	printf ("Data :=> Address: (%p) Content @(%p) Type: ", data, data -> address);
 
 	switch (data -> type) {
 		case DT_Empty:
@@ -644,9 +644,9 @@ void delete_key_value_Data (Data** kv_data_address) {
 	String* key = (String*)(kv_data -> address);
 	Data* value = (Data*)((String*)(kv_data -> address) + 1);
 
-	log_memory (DS_String, key -> length, key -> text, false);
+	log_memory (DS_Raw, key -> length, key -> text, false);
 	ERASE (&(key -> text), key -> length);
-	log_memory (DS_Data, value -> size, value -> address, false);
+	log_memory (DS_Raw, value -> size, value -> address, false);
 	ERASE (&(value -> address), value -> size);
 
 	log_memory (DS_Raw, kv_data -> size, kv_data -> address, false);

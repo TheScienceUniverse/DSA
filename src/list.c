@@ -558,7 +558,13 @@ void insert_into_List_at_index (List* list, Data* data, size_t index) {
 		}
 
 		left_data = chunk -> first_data_address + chunk_data_index--;
-		copy_Data (left_data, right_data);
+
+		right_data -> type = left_data -> type;
+		right_data -> size = left_data -> size;
+		right_data -> address = left_data -> address;
+
+		left_data -> address = NULL;
+
 		right_data = left_data;	// pointer exchange
 	}
 
@@ -714,6 +720,7 @@ void delete_from_List_at_index (List* list, size_t index) {
 		}
 
 		right_data = chunk -> first_data_address + chunk_data_index++;
+		empty_Data (left_data);
 		copy_Data (right_data, left_data);
 		left_data = right_data;
 	}
@@ -755,7 +762,13 @@ Data* remove_from_List_at_index (List* list, size_t index) {
 	}
 
 	left_data = chunk -> first_data_address + chunk_data_index;
-	index_data = duplicate_Data (left_data);
+
+	index_data = create_empty_Data ();	
+	index_data -> type = left_data -> type;
+	index_data -> size = left_data -> size;
+	index_data -> address = left_data -> address;
+	left_data -> address = NULL;
+	empty_Data (left_data);
 
 	// start copying data
 	for ( ; list_data_index < list -> item_count; list_data_index++) {
@@ -766,10 +779,15 @@ Data* remove_from_List_at_index (List* list, size_t index) {
 		}
 
 		right_data = chunk -> first_data_address + chunk_data_index++;
-		copy_Data (right_data, left_data);
+
+		left_data -> type = right_data -> type;
+		left_data -> size = right_data -> size;
+		left_data -> address = right_data -> address;
+
 		left_data = right_data;
 	}
 
+	right_data -> address = NULL;
 	empty_Data (right_data);
 
 	chunk -> data_count--;
@@ -836,6 +854,12 @@ void delete_first_instance_from_List (List* list, Data* data) {
 		}
 	}
 
+display_Data_details (left_data);
+printf ("%p\n", left_data -> address);
+	log_memory (DS_Raw, left_data -> size, left_data -> address, false);
+	ERASE (&(left_data -> address), left_data -> size);
+	//	empty_Data (left_data);
+
 	// start copying data
 	for ( ; list_data_index < list -> item_count; list_data_index++) {
 
@@ -845,11 +869,33 @@ void delete_first_instance_from_List (List* list, Data* data) {
 		}
 
 		right_data = chunk -> first_data_address + chunk_data_index++;
-		copy_Data (right_data, left_data);
+
+		left_data -> address = NULL;
+
+put_s ("before: ");
+printf ("%p (%p)", left_data, left_data -> address);
+printf ("\t%p (%p)\n", right_data, right_data -> address);
+
+//		empty_Data (left_data);
+//		copy_Data (right_data, left_data);
+
+
+		left_data -> type = right_data -> type;
+		left_data -> size = right_data -> size;
+		left_data -> address = right_data -> address;
+
+		right_data -> address = NULL;
+
+put_s ("after: ");
+printf ("%p (%p)", left_data, left_data -> address);
+printf ("\t%p (%p)\n", right_data, right_data -> address);
+
 		left_data = right_data;
 	}
 
-	empty_Data (right_data);
+right_data = chunk -> first_data_address + chunk_data_index++;
+printf ("%p\n", right_data -> address);
+//	empty_Data (right_data);
 
 	chunk -> data_count--;
 	list -> item_count--;

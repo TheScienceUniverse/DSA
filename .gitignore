@@ -4,6 +4,7 @@
 *.gcda
 *.gcno
 helper.txt
+vgcore.*
 
 # except the following
 !*.gcov

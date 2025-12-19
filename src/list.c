@@ -854,8 +854,6 @@ void delete_first_instance_from_List (List* list, Data* data) {
 		}
 	}
 
-display_Data_details (left_data);
-printf ("%p\n", left_data -> address);
 	log_memory (DS_Raw, left_data -> size, left_data -> address, false);
 	ERASE (&(left_data -> address), left_data -> size);
 	//	empty_Data (left_data);
@@ -872,30 +870,16 @@ printf ("%p\n", left_data -> address);
 
 		left_data -> address = NULL;
 
-put_s ("before: ");
-printf ("%p (%p)", left_data, left_data -> address);
-printf ("\t%p (%p)\n", right_data, right_data -> address);
-
-//		empty_Data (left_data);
-//		copy_Data (right_data, left_data);
-
-
 		left_data -> type = right_data -> type;
 		left_data -> size = right_data -> size;
 		left_data -> address = right_data -> address;
 
 		right_data -> address = NULL;
 
-put_s ("after: ");
-printf ("%p (%p)", left_data, left_data -> address);
-printf ("\t%p (%p)\n", right_data, right_data -> address);
-
 		left_data = right_data;
 	}
 
-right_data = chunk -> first_data_address + chunk_data_index++;
-printf ("%p\n", right_data -> address);
-//	empty_Data (right_data);
+	right_data = chunk -> first_data_address + chunk_data_index++;
 
 	chunk -> data_count--;
 	list -> item_count--;

@@ -361,7 +361,7 @@ Tree :=>
 	[[1;32mPASSED[0m]: (Deleted tree)
 [1;33m...Unit test ends![1;35m [Tree]
 [0m[1;33mUnit test starts...[1;35m [HashMap]
-[0mData :=> Address: (0x556e62f27a00) Content @(0x556e62f1ecc0) Type: <Integer> Value: 100
+[0mData :=> Address: (0x564042345a00) Content @(0x56404233ccc0) Type: <Integer> Value: 100
 HashMap (5 / 10) => 
 	Bucket-[0] -> ([Key: "key-5", Value: "4d2c1b0a"])
 	Bucket-[1] -> Empty!
@@ -386,7 +386,7 @@ HashMap (5 / 10) =>
 	Bucket-[7] -> ([Key: "key-2", Value: "-200"])
 	Bucket-[8] -> Empty!
 	Bucket-[9] -> Empty!
-Data :=> Address: (0x556e62f27010) Content @(0x556e62f27970) Type: <String> Length: 5 Value: "value"
+Data :=> Address: (0x564042345010) Content @(0x564042345970) Type: <String> Length: 5 Value: "value"
 HashMap (2 / 10) => 
 	Bucket-[0] -> ([Key: "key-5", Value: "4d2c1b0a"])
 	Bucket-[1] -> Empty!

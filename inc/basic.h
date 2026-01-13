@@ -56,7 +56,7 @@ size_t get_number_of_digits (size_t number, size_t base);
 size_t exponentiate (size_t base, size_t power);
 
 // custom display
-void put_s (char const str [static 1]);	// own puts function without newline
+void put_s (char const str [static 1]);	// our puts function without newline
 void display_data_structure_type (DS_Type data_structure_type);
 
 // memory allocate and release logging for garbage collector program

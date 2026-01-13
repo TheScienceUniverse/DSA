@@ -77,7 +77,7 @@ $(LIBRARY): $(OBJECTS) $(MGCECTS)
 	@gcc $(CFLAGS) $(CFLAGS_EXTRA) -o $@ $^
 
 
-.PHONY: clean again check flow memlog memclear ccov
+.PHONY: clean again check flow memlog memclear ccov ctags
 
 clean:
 	@echo "-> Removing generated files ..."
@@ -153,3 +153,8 @@ flow:
 	@echo "								|";
 	@echo "								+->	tree";
 	@echo "								+->	graph";
+
+ctags:
+	@echo "Generating tags for codebase from source code for CLI IDE's..."
+	@ctags -R --langmap=c:.c.h --languages=C --exclude=Cargo.toml . 2> /dev/null
+

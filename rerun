@@ -4,6 +4,7 @@ make check
 make ccov
 #make memlog
 #make memclear
+make ctags
 
 : '
 gcc -Wall -o ./bin/bdg shield.c

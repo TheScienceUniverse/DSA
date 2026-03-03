@@ -39,6 +39,8 @@ void test_route (char* option) {
 		test_Data ();
 	} else if (compare_raw_strings_shh (5, "chunk", 5, option)) {
 		test_Chunk ();
+	} else if (compare_raw_strings_shh (9, "array_list", 9, option)) {
+		test_ArrayList ();
 	} else if (compare_raw_strings_shh (9, "bare_list", 9, option)) {
 		test_Bare_List ();
 	} else if (compare_raw_strings_shh (4, "list", 4, option)) {
@@ -64,6 +66,7 @@ void test_route (char* option) {
 		test_String ();
 		test_Data ();
 		test_Chunk ();
+		test_ArrayList ();
 		test_Bare_List ();
 		test_List ();
 		test_Iterator ();

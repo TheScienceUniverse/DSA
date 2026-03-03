@@ -35,6 +35,9 @@ void test_Data (void);
 #include "./chunk.h"
 void test_Chunk (void);
 
+#include "./array_list.h"
+void test_ArrayList (void);
+
 #include "./bare_list.h"
 void test_Bare_List (void);
 

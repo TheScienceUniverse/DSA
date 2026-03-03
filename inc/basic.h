@@ -31,6 +31,7 @@ typedef enum DATA_STRUCTURE_TYPE {
 	, DS_String
 	, DS_Data
 	, DS_Bare_List
+	, DS_ArrayList
 	, DS_Chunk
 	, DS_List
 	, DS_Iterator
@@ -41,7 +42,7 @@ typedef enum DATA_STRUCTURE_TYPE {
 	, DS_Tree
 	, DS_Graph
 	, DS_HashMap
-	, DS_Type_Count	// automatically assign, as these are not custom-assigned
+	, DS_Type_Count	// automatically assign count to number of enums
 } DS_Type;
 
 // raw bytes related
@@ -56,7 +57,8 @@ size_t get_number_of_digits (size_t number, size_t base);
 size_t exponentiate (size_t base, size_t power);
 
 // custom display
-void put_s (char const str [static 1]);	// our puts function without newline
+//void put_s (char const str [static 1]);	// C99, not supported by modern compilers
+void put_s (char const *str);	// our puts function without newline
 void display_data_structure_type (DS_Type data_structure_type);
 
 // memory allocate and release logging for garbage collector program

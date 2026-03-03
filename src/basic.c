@@ -110,7 +110,8 @@ size_t exponentiate (size_t base, size_t exponent) {
 	return result;
 }
 
-void put_s (char const str [static 1]) {
+//void put_s (char const str [static 1]) {
+void put_s (char const *str) {
 	for (size_t i = 0; str [i]; ++i) {
 		if (putchar (str [i]) == EOF) {
 			return;

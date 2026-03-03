@@ -1,0 +1,186 @@
+        -:    0:Source:tst/array_list.c
+        -:    0:Graph:./cov/test_array_list.gcno
+        -:    0:Data:./cov/test_array_list.gcda
+        -:    0:Runs:1
+        -:    1:#include "../inc/test.h"
+        -:    2:
+function test_ArrayList called 1 returned 100% blocks executed 81%
+        1:    3:void test_ArrayList (void) {
+        1:    4:	display_unit_test_message ("Array List", true);
+        1:    4-block 2
+call    0 returned 1
+        -:    5:
+        -:    6:	Data* data;
+        1:    7:	uint32_t x = 0xa1b2c3d4;
+        1:    8:	int n = 100;
+        1:    9:	char* str = "Hello, World!";
+        -:   10:
+        1:   11:	ArrayList* array_list = create_ArrayList (0);
+call    0 returned 1
+       1*:   12:	TEST (NULL != array_list, "Created array list");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   12-block 5
+call    2 returned 1
+    %%%%%:   12-block 6
+call    3 never executed
+        -:   13:
+        1:   14:	display_ArrayList (array_list);
+        1:   14-block 7
+call    0 returned 1
+        -:   15:
+        4:   16:	for (int i = 0; i < 3; i++) {
+        4:   16-block 40
+branch  0 taken 3
+branch  1 taken 1 (fallthrough)
+        3:   17:		data = create_Data (DT_Binary, sizeof (uint32_t), &x);
+        3:   17-block 9
+call    0 returned 3
+        3:   18:		add_to_ArrayList (array_list, data);
+call    0 returned 3
+       3*:   19:		TEST ((size_t)(3 * i + 1) == array_list -> item_count, "Expected item count (3i+1) in array_list");
+branch  0 taken 3 (fallthrough)
+branch  1 taken 0
+        3:   19-block 12
+call    2 returned 3
+    %%%%%:   19-block 13
+call    3 never executed
+       3*:   20:		TEST (Cmp_Equivalent == compare_Data (data, (Data*)(array_list -> container) + 0), "Compared inserted data with expected data");
+        3:   20-block 14
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0
+        3:   20-block 16
+call    3 returned 3
+    %%%%%:   20-block 17
+call    4 never executed
+        3:   21:		delete_Data (&data);
+        3:   21-block 18
+call    0 returned 3
+        -:   22:
+        3:   23:		data = create_Data (DT_Integer, sizeof (int), &n);
+call    0 returned 3
+        3:   24:		add_to_ArrayList (array_list, data);
+call    0 returned 3
+       3*:   25:		TEST ((size_t)(3 * i + 2) == array_list -> item_count, "Expected item count (3i+2) in bare array_list");
+branch  0 taken 3 (fallthrough)
+branch  1 taken 0
+        3:   25-block 22
+call    2 returned 3
+    %%%%%:   25-block 23
+call    3 never executed
+       3*:   26:		TEST (Cmp_Equivalent == compare_Data (data, (Data*)(array_list -> container) + 1), "Compared inserted data with expected data");
+        3:   26-block 24
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0
+        3:   26-block 26
+call    3 returned 3
+    %%%%%:   26-block 27
+call    4 never executed
+        3:   27:		delete_Data (&data);
+        3:   27-block 28
+call    0 returned 3
+        -:   28:
+        3:   29:		data = create_Data (DT_String, 5, str);
+call    0 returned 3
+        3:   30:		add_to_ArrayList (array_list, data);
+call    0 returned 3
+       3*:   31:		TEST ((size_t)(3 * i + 3) == array_list -> item_count, "Expected item count (3i+3) in bare array_list");
+branch  0 taken 3 (fallthrough)
+branch  1 taken 0
+        3:   31-block 32
+call    2 returned 3
+    %%%%%:   31-block 33
+call    3 never executed
+       3*:   32:		TEST (Cmp_Equivalent == compare_Data (data, (Data*)(array_list -> container) + 2), "Compared inserted data with expected data");
+        3:   32-block 34
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0
+        3:   32-block 36
+call    3 returned 3
+    %%%%%:   32-block 37
+call    4 never executed
+        3:   33:		delete_Data (&data);
+        3:   33-block 38
+call    0 returned 3
+        -:   34:	}
+        -:   35:
+        1:   36:	n = 500;
+        1:   37:	data = create_Data (DT_Integer, sizeof (int), &n);
+        1:   37-block 41
+call    0 returned 1
+        1:   38:	add_to_ArrayList (array_list, data);
+call    0 returned 1
+       1*:   39:	TEST (10 == array_list -> item_count, "Expected item count (10) in bare array_list");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   39-block 44
+call    2 returned 1
+    %%%%%:   39-block 45
+call    3 never executed
+       1*:   40:	TEST (Cmp_Equivalent == compare_Data (data, (Data*)(array_list -> container) + 9), "Compared inserted data with expected data");
+        1:   40-block 46
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:   40-block 48
+call    3 returned 1
+    %%%%%:   40-block 49
+call    4 never executed
+        -:   41:
+        1:   42:	*(int*)(data -> address) = 1000;
+        1:   43:	add_to_ArrayList (array_list, data);
+        1:   43-block 50
+call    0 returned 1
+       1*:   44:	TEST (11 == array_list -> item_count, "Expected item count (11) in bare array_list");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   44-block 52
+call    2 returned 1
+    %%%%%:   44-block 53
+call    3 never executed
+       1*:   45:	TEST (Cmp_Equivalent == compare_Data (data, (Data*)(array_list -> container) + 10), "Compared inserted data with expected data");
+        1:   45-block 54
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:   45-block 56
+call    3 returned 1
+    %%%%%:   45-block 57
+call    4 never executed
+        1:   46:	delete_Data (&data);
+        1:   46-block 58
+call    0 returned 1
+        -:   47:
+        1:   48:	data = get_ArrayList_Data_at_index (array_list, 5);
+call    0 returned 1
+       1*:   49:	TEST (Cmp_Equivalent == compare_Data (data, (Data*)(array_list -> container) + 5), "Compared search by index data with expected data");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        1:   49-block 62
+call    3 returned 1
+    %%%%%:   49-block 63
+call    4 never executed
+        1:   50:	delete_Data (&data);
+        1:   50-block 64
+call    0 returned 1
+        -:   51:
+        -:   52://	display_ArrayList (array_list);
+        -:   53:
+        1:   54:	delete_ArrayList (&array_list);
+call    0 returned 1
+       1*:   55:	TEST (NULL == array_list, "Deleted array list");
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:   55-block 67
+call    2 returned 1
+    %%%%%:   55-block 68
+call    3 never executed
+        -:   56:
+        1:   57:	display_unit_test_message ("Array List", false);
+        1:   57-block 69
+call    0 returned 1
+        1:   58:}

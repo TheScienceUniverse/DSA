@@ -78,6 +78,33 @@
 	[[1;32mPASSED[0m]: (Compared duplicated chunk)
 	[[1;32mPASSED[0m]: (Deleted chunk)
 [1;33m...Unit test ends ![1;35m [Chunk]
+[0m[1;33mUnit test starts...[1;35m [Array List]
+[0m	[[1;32mPASSED[0m]: (Created array list)
+	[[1;32mPASSED[0m]: (Expected item count (3i+1) in array_list)
+	[[1;32mPASSED[0m]: (Compared inserted data with expected data)
+	[[1;32mPASSED[0m]: (Expected item count (3i+2) in bare array_list)
+	[[1;32mPASSED[0m]: (Compared inserted data with expected data)
+	[[1;32mPASSED[0m]: (Expected item count (3i+3) in bare array_list)
+	[[1;32mPASSED[0m]: (Compared inserted data with expected data)
+	[[1;32mPASSED[0m]: (Expected item count (3i+1) in array_list)
+	[[1;32mPASSED[0m]: (Compared inserted data with expected data)
+	[[1;32mPASSED[0m]: (Expected item count (3i+2) in bare array_list)
+	[[1;32mPASSED[0m]: (Compared inserted data with expected data)
+	[[1;32mPASSED[0m]: (Expected item count (3i+3) in bare array_list)
+	[[1;32mPASSED[0m]: (Compared inserted data with expected data)
+	[[1;32mPASSED[0m]: (Expected item count (3i+1) in array_list)
+	[[1;32mPASSED[0m]: (Compared inserted data with expected data)
+	[[1;32mPASSED[0m]: (Expected item count (3i+2) in bare array_list)
+	[[1;32mPASSED[0m]: (Compared inserted data with expected data)
+	[[1;32mPASSED[0m]: (Expected item count (3i+3) in bare array_list)
+	[[1;32mPASSED[0m]: (Compared inserted data with expected data)
+	[[1;32mPASSED[0m]: (Expected item count (10) in bare array_list)
+	[[1;32mPASSED[0m]: (Compared inserted data with expected data)
+	[[1;32mPASSED[0m]: (Expected item count (11) in bare array_list)
+	[[1;32mPASSED[0m]: (Compared inserted data with expected data)
+	[[1;32mPASSED[0m]: (Compared search by index data with expected data)
+	[[1;32mPASSED[0m]: (Deleted array list)
+[1;33m...Unit test ends ![1;35m [Array List]
 [0m[1;33mUnit test starts...[1;35m [Bare List]
 [0m	[[1;32mPASSED[0m]: (Created bare list)
 	[[1;32mPASSED[0m]: (Expected item count (1) in bare list)
@@ -361,7 +388,7 @@ Tree :=>
 	[[1;32mPASSED[0m]: (Deleted tree)
 [1;33m...Unit test ends![1;35m [Tree]
 [0m[1;33mUnit test starts...[1;35m [HashMap]
-[0mData :=> Address: (0x564042345a00) Content @(0x56404233ccc0) Type: <Integer> Value: 100
+[0mData :=> Address: (0x55928cf57030) Content @(0x55928cf572d0) Type: <Integer> Value: 100
 HashMap (5 / 10) => 
 	Bucket-[0] -> ([Key: "key-5", Value: "4d2c1b0a"])
 	Bucket-[1] -> Empty!
@@ -386,7 +413,7 @@ HashMap (5 / 10) =>
 	Bucket-[7] -> ([Key: "key-2", Value: "-200"])
 	Bucket-[8] -> Empty!
 	Bucket-[9] -> Empty!
-Data :=> Address: (0x564042345010) Content @(0x564042345970) Type: <String> Length: 5 Value: "value"
+Data :=> Address: (0x55928cf58430) Content @(0x55928cf4ff60) Type: <String> Length: 5 Value: "value"
 HashMap (2 / 10) => 
 	Bucket-[0] -> ([Key: "key-5", Value: "4d2c1b0a"])
 	Bucket-[1] -> Empty!
@@ -414,4 +441,4 @@ HashMap (2 / 10) =>
 	|  <Graph>   | 24 bytes |
 	+------------+----------+
 Leftout address count: 0
-(Raw: 0), (Stream: 0), (String: 0), (Data: 0), (Bare_List: 0), (Chunk: 0), (List: 0), (Iterator: 0), (Node: 0), (Linked_List: 0), (Stack: 0), (Queue: 0), (Tree: 0), (Graph: 0), (HashMap: 0), 
+(Raw: 0), (Stream: 0), (String: 0), (Data: 0), (Bare_List: 0), (~_~: 0), (Chunk: 0), (List: 0), (Iterator: 0), (Node: 0), (Linked_List: 0), (Stack: 0), (Queue: 0), (Tree: 0), (Graph: 0), (HashMap: 0), 
